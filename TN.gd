@@ -76,5 +76,9 @@ func _ready():
 		a2d.show_behind_parent=true
 		a2d.position=Vector2(x+(w/2),y+(h/2))
 		add_child(a2d)
-		
+	
+func _unhandled_input(event):
+	if event is InputEventKey:
+		if event.pressed and event.scancode == KEY_ESCAPE:
+			get_tree().quit()
 		
