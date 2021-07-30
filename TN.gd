@@ -51,13 +51,13 @@ func create_polygons(s:Sprite):
 	var c=CollisionPolygon2D.new()
 	p.polygon=polys[0]
 	p.position=s.position - Vector2(s.texture.get_width()/2.0,s.texture.get_height()/2.0)
-	p.color=Color.lightcoral
+	p.color=deselect_color
 	c.polygon=polys[0]
 	c.position=s.position - Vector2(s.texture.get_width()/2.0,s.texture.get_height()/2.0)
 	return [c, p]
 
 func _ready():
-	VisualServer.set_default_clear_color(Color(0))
+	VisualServer.set_default_clear_color(Color("ff000000"))
 	for district in d.keys():
 		var a2d=Area2D.new()
 		var x=d[district][0]
@@ -76,9 +76,46 @@ func _ready():
 		a2d.show_behind_parent=true
 		a2d.position=Vector2(x+(w/2),y+(h/2))
 		add_child(a2d)
+		a2d.connect('input_event', self, 'on_district_select',[district])
 	
 func _unhandled_input(event):
 	if event is InputEventKey:
 		if event.pressed and event.scancode == KEY_ESCAPE:
 			get_tree().quit()
+
+var selected_district:=''
+var selected_district_border_pts:PoolVector2Array
+var selected_color:=Color.darkorange
+var deselect_color:=Color("eeffcc88")
+var border_color=Color.red
+var border_width=10
 		
+func on_district_select(viewport, event, idx, district):
+	if event is InputEventMouseButton and event.pressed:
+		select(district)
+
+func select(district):
+	#deselect district if one is already selected before selecting new one
+	#selecting = change color + add border
+	if district!=selected_district and selected_district!='':
+		deselect()
+	selected_district=district
+	var poly=get_node(selected_district).get_child(0)
+	poly.color=selected_color
+	selected_district_border_pts=PoolVector2Array(poly.polygon)
+	update()
+				
+func deselect():
+	get_node(selected_district).get_child(0).color=deselect_color
+
+func _draw():
+	if not selected_district_border_pts.empty():
+		draw_border()
+
+func draw_border():
+	var cnt=selected_district_border_pts.size()
+	var center_at=Vector2(d[selected_district][0], d[selected_district][1])
+	for i in range(1, cnt):
+		draw_line(selected_district_border_pts[i-1]+center_at, selected_district_border_pts[i]+center_at, border_color, border_width )
+	draw_line(selected_district_border_pts[cnt-1]+center_at, selected_district_border_pts[0]+center_at, border_color, border_width )
+	
