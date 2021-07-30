@@ -77,21 +77,22 @@ func _ready():
 		a2d.position=Vector2(x+(w/2),y+(h/2))
 		add_child(a2d)
 		a2d.connect('input_event', self, 'on_district_select',[district])
+		
 	$Camera2D.position=get_node('Karur').position
 	$Camera2D.zoom=Vector2(2.4, 2.4)
-	
-	
+	update()
+
+var firstrun=true
 func _unhandled_input(event):
 	if event is InputEventKey:
 		if event.pressed and event.scancode == KEY_ESCAPE:
 			get_tree().quit()
 
 var selected_district:=''
-var selected_district_border_pts:PoolVector2Array
 var selected_color:=Color.darkorange
 var deselect_color:=Color("eeffcc88")
-var border_color=Color.red
-var border_width=10
+var border_color
+var border_width
 		
 func on_district_select(viewport, event, idx, district):
 	if event is InputEventMouseButton and event.pressed:
@@ -108,20 +109,30 @@ func select(district):
 	$HUD/Label.rect_global_position =Vector2(330,0)+ gpos/($Camera2D.zoom) 
 	var poly=get_node(selected_district).get_child(0)
 	poly.color=selected_color
-	selected_district_border_pts=PoolVector2Array(poly.polygon)
+	#selected_district_border_pts=PoolVector2Array(poly.polygon)
 	update()
 				
 func deselect():
 	get_node(selected_district).get_child(0).color=deselect_color
 
 func _draw():
-	if not selected_district_border_pts.empty():
-		draw_border()
-
-func draw_border():
-	var cnt=selected_district_border_pts.size()
-	var center_at=Vector2(d[selected_district][0], d[selected_district][1])
+	for i in d.keys():
+		var poly=PoolVector2Array(get_node(i).get_child(0).polygon)
+		if i == selected_district:
+			draw_border(poly, i, true)
+		else:
+			draw_border(poly, i, false)
+			
+func draw_border(poly:PoolVector2Array, dist:String, selected:bool):
+	var cnt=poly.size()
+	var center_at=Vector2(d[dist][0], d[dist][1])
+	if selected:
+		border_color=Color.black
+		border_width=10
+	else:
+		border_color=Color.coral
+		border_width=2
 	for i in range(1, cnt):
-		draw_line(selected_district_border_pts[i-1]+center_at, selected_district_border_pts[i]+center_at, border_color, border_width )
-	draw_line(selected_district_border_pts[cnt-1]+center_at, selected_district_border_pts[0]+center_at, border_color, border_width )
+		draw_line(poly[i-1]+center_at, poly[i]+center_at, border_color, border_width )
+	draw_line(poly[cnt-1]+center_at, poly[0]+center_at, border_color, border_width )
 	
