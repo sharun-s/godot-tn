@@ -1,7 +1,12 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://TN.gd" type="Script" id=1]
 [ext_resource path="res://Camera2D.gd" type="Script" id=2]
+[ext_resource path="res://Xolonium-Regular.ttf" type="DynamicFontData" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 36
+font_data = ExtResource( 3 )
 
 [node name="TN" type="Node2D"]
 script = ExtResource( 1 )
@@ -11,3 +16,17 @@ current = true
 script = ExtResource( 2 )
 
 [node name="Tween" type="Tween" parent="Camera2D"]
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="HUD"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 4
+custom_constants/shadow_offset_y = 3
+custom_constants/shadow_as_outline = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}

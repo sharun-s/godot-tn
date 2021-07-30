@@ -77,6 +77,9 @@ func _ready():
 		a2d.position=Vector2(x+(w/2),y+(h/2))
 		add_child(a2d)
 		a2d.connect('input_event', self, 'on_district_select',[district])
+	$Camera2D.position=get_node('Karur').position
+	$Camera2D.zoom=Vector2(2.4, 2.4)
+	
 	
 func _unhandled_input(event):
 	if event is InputEventKey:
@@ -100,6 +103,9 @@ func select(district):
 	if district!=selected_district and selected_district!='':
 		deselect()
 	selected_district=district
+	$HUD/Label.text=district
+	var gpos=get_node(selected_district).position
+	$HUD/Label.rect_global_position =Vector2(330,0)+ gpos/($Camera2D.zoom) 
 	var poly=get_node(selected_district).get_child(0)
 	poly.color=selected_color
 	selected_district_border_pts=PoolVector2Array(poly.polygon)
