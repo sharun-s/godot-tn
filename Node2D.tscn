@@ -5,7 +5,7 @@
 [ext_resource path="res://Xolonium-Regular.ttf" type="DynamicFontData" id=3]
 
 [sub_resource type="DynamicFont" id=1]
-size = 36
+size = 30
 font_data = ExtResource( 3 )
 
 [sub_resource type="DynamicFont" id=2]
@@ -32,12 +32,13 @@ script = ExtResource( 2 )
 [node name="HUD" type="CanvasLayer" parent="."]
 
 [node name="Label" type="Label" parent="HUD"]
-margin_right = 40.0
-margin_bottom = 14.0
+margin_right = 44.0
+margin_bottom = 44.0
 custom_fonts/font = SubResource( 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_constants/shadow_offset_x = 4
-custom_constants/shadow_offset_y = 3
+custom_colors/font_color = Color( 0.964706, 0.733333, 0.113725, 1 )
+custom_colors/font_color_shadow = Color( 0.145098, 0.145098, 0.145098, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
 custom_constants/shadow_as_outline = 0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -90,4 +91,3 @@ __meta__ = {
 one_shot = true
 
 [connection signal="pressed" from="HUD/Button" to="." method="_on_Button_pressed"]
-[connection signal="pressed" from="HUD/Learn" to="." method="_on_Button_pressed"]

@@ -64,10 +64,20 @@ func create_polygons(s:Sprite):
 	var polys=b.opaque_to_polygons(rect)
 	var p=Polygon2D.new()
 	var c=CollisionPolygon2D.new()
-	p.polygon=polys[0]
+	var shape
+	if s.texture.resource_path=="res://Tirupathur.png":
+		shape=polys[1]
+	elif s.texture.resource_path=="res://Tirunelveli.png":
+		shape=PoolVector2Array()
+		var pts=[ -128.8, -138.5, -128, -138.5, -101, -103.5, -99, -103.5, -54, -105.5, -54, -103.3, -46, -95.3, -46, -92.8, -42.7, -85.5, -30.3, -75.5, -28.2, -75.5, -21.3, -90.5, -15.8, -90.5, 7, -86, 16, -103, 16, -104.8, 7.60001, -114.1, 8.7, -116.5, 9.89999, -116.5, 18.8, -132.5, 22.6, -132.5, 33.6, -125.5, 41, -125.5, 69, -124.5, 69, -122.4, 92, -101.4, 92, -99, 106, -79.1, 106, -73.7, 95, -61.6, 95, -55.5, 98.3, -30.5, 96.4, -30.5, 86.7, -5.7, 95.3, 13.5, 96, 13.5, 105, 24.8, 105, 47.9, 112, 58.9, 112, 63.8, 109.5, 71.2, 119.7, 79.5, 138, 79.5, 138, 90.5, 115.6, 104.5, 113.4, 104.5, 89, 115.7, 85.5, 128.5, 83.7, 128.5, 66.7, 142.5, 63, 142.5, 23.9, 151.5, -6.5, 151.5, -8, 150.9, -8, 149.6, -11, 147.6, -11, 134.5, -12.1, 118.5, -9.3, 118.5, 1.3, 113.9, -12, 92.1, -12, 88.5, -13.8, 72.4, -27, 70.2, -27, 68.5, -35, 62.5, -35, 58.5, -36.8, 46.5, -44, 37.2, -44, 30.3, -44.8, 29.5, -47.3, 29.5, -72, 20.9, -72, 19.7, -103, 3.7, -103, 2.2, -125, -22.7, -125, -25, -138, -47, -138, -53.4, -125, -64.4, -125, -66, -116.2, -82.5, -114.8, -82.5, -109, -88.3, -109, -89.7, -107.4, -96.8, -111.3, -105.5, -111.9, -105.5, -138, -137.4, -138, -151.5, -135.8, -151.5 ]
+		for i in range(0,len(pts),2):
+			shape.append(Vector2(pts[i]+137,pts[i+1]+151))
+	else:
+		shape=polys[0]
+	p.polygon=shape
 	p.position=s.position - Vector2(s.texture.get_width()/2.0,s.texture.get_height()/2.0)
 	p.color=deselect_color
-	c.polygon=polys[0]
+	c.polygon=shape
 	c.position=s.position - Vector2(s.texture.get_width()/2.0,s.texture.get_height()/2.0)
 	return [c, p]
 
@@ -177,10 +187,12 @@ func _on_Button_pressed():
 func start_game():
 	score=0
 	attempts=0
+	if selected_district!='':
+		deselect()
+		$HUD/Label.text=''
 	game_in_progress=true
 	$HUD/Score.text=str(score)
-	$Timer.start()
-	$HUD/Message.text="You have 10 turns\n Find the Districts!"
+	timed_msg("You have 10 turns\n Find the Districts!",3)
 	yield($Timer,"timeout")
 	new_challenge()
 
