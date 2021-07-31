@@ -42,6 +42,21 @@ var d={
 	Virudhunagar=[406.3,1340.1006]
 }
 
+var score=0
+var attempts=0
+var turns=10
+var game_in_progress=false
+var rng=RandomNumberGenerator.new()
+
+var challenge:=''
+var selected_district:=''
+var selected_color:=Color.darkorange
+var deselect_color:=Color.lightyellow#Color("eeffcc88")
+var selected_color_right:=Color.lightgreen
+var selected_color_wrong:=Color.lightcoral
+var border_color
+var border_width
+
 func create_polygons(s:Sprite):
 	var b=BitMap.new()
 	b.create_from_image_alpha(s.texture.get_data())	
@@ -57,6 +72,7 @@ func create_polygons(s:Sprite):
 	return [c, p]
 
 func _ready():
+	rng.randomize()
 	VisualServer.set_default_clear_color(Color("ff000000"))
 	for district in d.keys():
 		var a2d=Area2D.new()
@@ -82,35 +98,52 @@ func _ready():
 	$Camera2D.zoom=Vector2(2.4, 2.4)
 	update()
 
-var firstrun=true
 func _unhandled_input(event):
 	if event is InputEventKey:
 		if event.pressed and event.scancode == KEY_ESCAPE:
 			get_tree().quit()
-
-var selected_district:=''
-var selected_color:=Color.darkorange
-var deselect_color:=Color("eeffcc88")
-var border_color
-var border_width
 		
 func on_district_select(viewport, event, idx, district):
 	if event is InputEventMouseButton and event.pressed:
 		select(district)
 
 func select(district):
-	#deselect district if one is already selected before selecting new one
-	#selecting = change color + add border
-	if district!=selected_district and selected_district!='':
-		deselect()
-	selected_district=district
-	$HUD/Label.text=district
-	var gpos=get_node(selected_district).position
-	$HUD/Label.rect_global_position =Vector2(330,0)+ gpos/($Camera2D.zoom) 
-	var poly=get_node(selected_district).get_child(0)
-	poly.color=selected_color
-	#selected_district_border_pts=PoolVector2Array(poly.polygon)
-	update()
+	if game_in_progress:
+		if district == challenge:
+			score+=1
+			attempts+=1
+			$HUD/Score.text=str(score)+' / '+str(attempts)
+			get_node(district).get_child(0).color=selected_color_right
+			$HUD/Label.text=district
+			var gpos=get_node(district).position
+			$HUD/Label.rect_global_position =Vector2(330,0)+ gpos/($Camera2D.zoom) 
+			timed_msg("Correct!", 2)
+			yield($Timer, "timeout")
+			if attempts < turns:
+				new_challenge()
+		else:
+			attempts+=1
+			$HUD/Score.text=str(score)+' / '+str(attempts)
+			get_node(district).get_child(0).color=selected_color_wrong
+			$HUD/Message.text='That was '+district
+		if attempts==turns:
+			timed_msg('Not bad! \nYou scored '+str(score)+' / '+str(attempts),3)
+			yield($Timer, "timeout")
+			game_in_progress=false
+			game_over()
+	else:
+		#deselect district if one is already selected before selecting new one
+		#selecting = change color + add border
+		if district!=selected_district and selected_district!='':
+			deselect()
+		selected_district=district
+		$HUD/Label.text=district
+		var gpos=get_node(selected_district).position
+		$HUD/Label.rect_global_position =Vector2(330,0)+ gpos/($Camera2D.zoom) 
+		var poly=get_node(selected_district).get_child(0)
+		poly.color=selected_color
+		#selected_district_border_pts=PoolVector2Array(poly.polygon)
+		update()
 				
 func deselect():
 	get_node(selected_district).get_child(0).color=deselect_color
@@ -128,11 +161,40 @@ func draw_border(poly:PoolVector2Array, dist:String, selected:bool):
 	var center_at=Vector2(d[dist][0], d[dist][1])
 	if selected:
 		border_color=Color.black
-		border_width=10
+		border_width=5
 	else:
-		border_color=Color.coral
-		border_width=2
+		border_color=Color.black
+		border_width=2 
 	for i in range(1, cnt):
 		draw_line(poly[i-1]+center_at, poly[i]+center_at, border_color, border_width )
 	draw_line(poly[cnt-1]+center_at, poly[0]+center_at, border_color, border_width )
 	
+func _on_Button_pressed():
+	$HUD/Button.hide()
+	$HUD/Learn.hide()
+	start_game()
+
+func start_game():
+	score=0
+	attempts=0
+	game_in_progress=true
+	$HUD/Score.text=str(score)
+	$Timer.start()
+	$HUD/Message.text="You have 10 turns\n Find the Districts!"
+	yield($Timer,"timeout")
+	new_challenge()
+
+func new_challenge():
+	challenge=d.keys()[rng.randi_range(0,len(d)-1)]
+	$HUD/Message.text=challenge+" ???"
+
+func game_over():
+	$HUD/Score.text=''
+	$HUD/Message.text=''
+	$HUD/Button.show()
+	$HUD/Learn.show()
+
+func timed_msg(msg, showafter):
+	$Timer.wait_time=showafter
+	$Timer.start()
+	$HUD/Message.text=msg
