@@ -91,3 +91,4 @@ __meta__ = {
 one_shot = true
 
 [connection signal="pressed" from="HUD/Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="HUD/Learn" to="." method="_on_Learn_pressed"]

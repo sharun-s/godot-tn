@@ -210,3 +210,46 @@ func timed_msg(msg, showafter):
 	$Timer.wait_time=showafter
 	$Timer.start()
 	$HUD/Message.text=msg
+
+func _on_Learn_pressed():
+	score=0
+	attempts=0
+	$HUD/Button.hide()
+	$HUD/Learn.hide()
+	if selected_district!='':
+		deselect()
+		$HUD/Label.text=''
+	var current='Chennai'
+	var visited=[current]	
+	while len(visited) < len(d):
+		var i:Area2D=get_node(current)
+		var gpos=i.position
+		#print(gpos, $Camera2D.position, $HUD/Label.rect_global_position,' ', $HUD/Label.get_viewport_rect())
+		#print(gpos,$Camera2D.position, $Camera2D.global_position)
+		#$Camera2D.position=gpos
+		#$HUD/Label.text=current
+		#$HUD/Label.rect_global_position=Vector2(330,0)+(gpos/$Camera2D.zoom)#.set_position(gpos)
+		$Camera2D/Tween.interpolate_property($Camera2D,"position",$Camera2D.position,gpos,1)
+		$Camera2D/Tween.start()
+		$HUD/Label.text=current
+		$HUD/Label.set_position(Vector2(780,384))
+		var poly=i.get_child(0)
+		poly.color=selected_color
+		var neighbours=i.get_overlapping_areas()
+		for n in neighbours:
+			if n.name in visited:
+				continue
+			else:
+				current=n.name
+				visited.append(n.name)
+				break
+		timed_msg(i.name+' -> '+current+' '+str(len(visited))+' '+str(len(d)),1 )
+		yield($Timer, "timeout")
+		if(i.name == current):
+			current=visited[-2]
+		if(i.name == current):
+			while true:
+				var jump=d.keys()[rng.randi_range(0,len(d)-1)]
+				if visited.has(jump) == false:
+					current=jump
+					break
