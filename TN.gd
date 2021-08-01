@@ -56,6 +56,7 @@ var selected_color_right:=Color.lightgreen
 var selected_color_wrong:=Color.lightcoral
 var border_color
 var border_width
+var tw:=Tween.new()
 
 func create_polygons(s:Sprite):
 	var b=BitMap.new()
@@ -83,6 +84,7 @@ func create_polygons(s:Sprite):
 
 func _ready():
 	rng.randomize()
+	add_child(tw)
 	VisualServer.set_default_clear_color(Color("ff000000"))
 	for district in d.keys():
 		var a2d=Area2D.new()
@@ -148,15 +150,25 @@ func select(district):
 			deselect()
 		selected_district=district
 		$HUD/Label.text=district
-		var gpos=get_node(selected_district).position
+		var sd:Area2D=get_node(selected_district)
+		var gpos=sd.position
 		$HUD/Label.rect_global_position =Vector2(330,0)+ gpos/($Camera2D.zoom) 
-		var poly=get_node(selected_district).get_child(0)
+		var poly=sd.get_child(0)
 		poly.color=selected_color
 		#selected_district_border_pts=PoolVector2Array(poly.polygon)
+		var oa=sd.get_overlapping_areas()
+		for i in oa:
+			tw.interpolate_property(i.get_child(0), 'color', deselect_color, deselect_color.blend("aa66aa22"),1)
+			tw.start()
+			#yield(tw,"tween_completed")
 		update()
 				
 func deselect():
-	get_node(selected_district).get_child(0).color=deselect_color
+	var sd=get_node(selected_district)
+	sd.get_child(0).color=deselect_color
+	var oa=sd.get_overlapping_areas()
+	for i in oa:
+		i.get_child(0).color=deselect_color
 
 func _draw():
 	for i in d.keys():
@@ -253,3 +265,4 @@ func _on_Learn_pressed():
 				if visited.has(jump) == false:
 					current=jump
 					break
+	game_over()
