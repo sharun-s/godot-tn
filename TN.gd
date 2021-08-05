@@ -84,6 +84,7 @@ func create_polygons(s:Sprite):
 	return [c, p]
 
 func _ready():
+	init_label_font()
 	rng.randomize()
 	add_child(tw)
 	add_child(walkpath)
@@ -106,6 +107,7 @@ func _ready():
 		a2d.show_behind_parent=true
 		a2d.position=Vector2(x+(w/2),y+(h/2))
 		add_child(a2d)
+		add_label(district, x, y, w, h)
 		a2d.connect('input_event', self, 'on_district_select',[district])
 		
 	$Camera2D.position=get_node('Karur').position
@@ -126,7 +128,7 @@ func select(district):
 		if district == challenge:
 			score+=1
 			attempts+=1
-			$HUD/Score.text=str(score)+' / '+str(attempts)
+			$HUD/Score.text=str(score)+' / '+str(turns)
 			get_node(district).get_child(0).color=selected_color_right
 			$HUD/Label.text=district
 			var gpos=get_node(district).position
@@ -137,19 +139,27 @@ func select(district):
 				new_challenge()
 		else:
 			attempts+=1
-			$HUD/Score.text=str(score)+' / '+str(attempts)
+			$HUD/Score.text=str(score)+' / '+str(turns)
 			get_node(district).get_child(0).color=selected_color_wrong
 			$HUD/Message.text='That was '+district
 		if attempts==turns:
-			timed_msg('Not bad! \nYou scored '+str(score)+' / '+str(attempts),3)
+			timed_msg('Not bad! \nYou scored '+str(score)+' / '+str(turns),3)
 			yield($Timer, "timeout")
 			game_in_progress=false
 			game_over()
 	else:
+		get_tree().set_group("dlabels", "visible", false)
 		#deselect district if one is already selected before selecting new one
 		#selecting = change color + add border
 		if district!=selected_district and selected_district!='':
 			deselect()
+		else:
+			if district==selected_district:
+				# already selected so deselect
+				deselect()
+				$HUD/Label.text=''
+				selected_district=''
+				return
 		selected_district=district
 		$HUD/Label.text=district
 		var sd:Area2D=get_node(selected_district)
@@ -159,7 +169,14 @@ func select(district):
 		poly.color=selected_color
 		#selected_district_border_pts=PoolVector2Array(poly.polygon)
 		var oa=sd.get_overlapping_areas()
+		#get_tree().set_group("dlabels", "visible", false)
+		#wait for set completion
+		var tmp=$Timer.wait_time
+		$Timer.start(.3)
+		yield($Timer, 'timeout')
+		$Timer.wait_time=tmp
 		for i in oa:
+			get_node('lbl'+i.name).visible=true
 			tw.interpolate_property(i.get_child(0), 'color', deselect_color, deselect_color.blend("aa66aa22"),1)
 			tw.start()
 			#yield(tw,"tween_completed")
@@ -279,3 +296,31 @@ func _on_Learn_pressed():
 					break
 			visited.append(jump)
 	game_over()
+
+var df
+func init_label_font():
+	var f=load("res://Xolonium-Regular.ttf")
+	df=DynamicFont.new()
+	df.font_data=f
+	df.size=44
+
+func add_label(district, x, y, w, h):
+	var l:Label=Label.new()
+	l.set("custom_fonts/font",df)
+	l.set("custom_colors/font_color", 'f6b016')
+	l.set("custom_colors/font_color_shadow", Color.black)
+	l.set("custom_constants/shadow_offset_x",3)
+	l.set("custom_constants/shadow_offset_y",3)
+	l.set("custom_constants/shadow_as_outline",0)
+	l.visible=false
+	l.text=district
+	l.name='lbl'+district
+	l.rect_position=Vector2(x+w/2, y+h/2)
+	l.add_to_group('dlabels')
+	add_child(l)
+	
+func _on_Labels_toggled(button_pressed):
+	if button_pressed:
+		get_tree().set_group("dlabels","visible",true)
+	else:
+		get_tree().set_group("dlabels","visible",false)
