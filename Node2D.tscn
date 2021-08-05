@@ -13,7 +13,7 @@ size = 36
 font_data = ExtResource( 3 )
 
 [sub_resource type="DynamicFont" id=3]
-size = 40
+size = 30
 font_data = ExtResource( 3 )
 
 [sub_resource type="DynamicFont" id=4]
@@ -71,7 +71,7 @@ margin_top = 60.0
 margin_right = 200.0
 margin_bottom = 115.0
 custom_fonts/font = SubResource( 3 )
-text = "Learn Map"
+text = "Walk"
 __meta__ = {
 "_edit_use_anchors_": false
 }

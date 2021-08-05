@@ -57,6 +57,7 @@ var selected_color_wrong:=Color.lightcoral
 var border_color
 var border_width
 var tw:=Tween.new()
+var walkpath:=Line2D.new()
 
 func create_polygons(s:Sprite):
 	var b=BitMap.new()
@@ -85,6 +86,7 @@ func create_polygons(s:Sprite):
 func _ready():
 	rng.randomize()
 	add_child(tw)
+	add_child(walkpath)
 	VisualServer.set_default_clear_color(Color("ff000000"))
 	for district in d.keys():
 		var a2d=Area2D.new()
@@ -115,7 +117,7 @@ func _unhandled_input(event):
 		if event.pressed and event.scancode == KEY_ESCAPE:
 			get_tree().quit()
 		
-func on_district_select(viewport, event, idx, district):
+func on_district_select(_viewport, event, _idx, district):
 	if event is InputEventMouseButton and event.pressed:
 		select(district)
 
@@ -164,11 +166,13 @@ func select(district):
 		update()
 				
 func deselect():
-	var sd=get_node(selected_district)
-	sd.get_child(0).color=deselect_color
-	var oa=sd.get_overlapping_areas()
-	for i in oa:
-		i.get_child(0).color=deselect_color
+	for district in d.keys():
+		get_node(district).get_child(0).color=deselect_color
+	#var sd=get_node(selected_district)
+	#sd.get_child(0).color=deselect_color
+	#var oa=sd.get_overlapping_areas()
+	#for i in oa:
+	#	i.get_child(0).color=deselect_color
 
 func _draw():
 	for i in d.keys():
@@ -213,8 +217,11 @@ func new_challenge():
 	$HUD/Message.text=challenge+" ???"
 
 func game_over():
+	deselect()
+	walkpath.clear_points()
 	$HUD/Score.text=''
 	$HUD/Message.text=''
+	$HUD/Label.text=''
 	$HUD/Button.show()
 	$HUD/Learn.show()
 
@@ -222,6 +229,9 @@ func timed_msg(msg, showafter):
 	$Timer.wait_time=showafter
 	$Timer.start()
 	$HUD/Message.text=msg
+
+func process(_delta):
+	walkpath.show()
 
 func _on_Learn_pressed():
 	score=0
@@ -236,6 +246,7 @@ func _on_Learn_pressed():
 	while len(visited) < len(d):
 		var i:Area2D=get_node(current)
 		var gpos=i.position
+		walkpath.add_point(gpos)
 		#print(gpos, $Camera2D.position, $HUD/Label.rect_global_position,' ', $HUD/Label.get_viewport_rect())
 		#print(gpos,$Camera2D.position, $Camera2D.global_position)
 		#$Camera2D.position=gpos
@@ -260,9 +271,11 @@ func _on_Learn_pressed():
 		if(i.name == current):
 			current=visited[-2]
 		if(i.name == current):
+			var jump
 			while true:
-				var jump=d.keys()[rng.randi_range(0,len(d)-1)]
+				jump=d.keys()[rng.randi_range(0,len(d)-1)]
 				if visited.has(jump) == false:
 					current=jump
 					break
+			visited.append(jump)
 	game_over()
