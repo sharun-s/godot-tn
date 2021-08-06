@@ -59,6 +59,17 @@ var border_width
 var tw:=Tween.new()
 var walkpath:=Line2D.new()
 
+var compass_colors={North=Color.orange, 
+South=Color.violet, 
+East='00bb99', 
+West="0099bb"}
+
+func _compass_toggled(pressed, dir):
+	if pressed:
+		get_tree().set_group(dir, 'modulate', compass_colors[dir])
+	else:
+		get_tree().set_group(dir, 'modulate', Color(1.0,1.0,1.0))
+		
 func create_polygons(s:Sprite):
 	var b=BitMap.new()
 	b.create_from_image_alpha(s.texture.get_data())	
@@ -109,7 +120,10 @@ func _ready():
 		add_child(a2d)
 		add_label(district, x, y, w, h)
 		a2d.connect('input_event', self, 'on_district_select',[district])
-		
+	$HUD/N.connect("toggled", self, "_compass_toggled", ["North"])
+	$HUD/S.connect("toggled",self, "_compass_toggled", ["South"])
+	$HUD/E.connect("toggled",self, "_compass_toggled", ["East"])
+	$HUD/W.connect("toggled",self, "_compass_toggled", ["West"])	
 	$Camera2D.position=get_node('Karur').position
 	$Camera2D.zoom=Vector2(2.4, 2.4)
 	update()
@@ -324,3 +338,46 @@ func _on_Labels_toggled(button_pressed):
 		get_tree().set_group("dlabels","visible",true)
 	else:
 		get_tree().set_group("dlabels","visible",false)
+
+func _on_TN_ready():
+	$Timer.start(1)
+	yield($Timer,"timeout")
+	var rd=get_node('Tiruvannamalai')
+	var oa=rd.get_overlapping_areas()
+	print(oa.size())
+	for i in oa:
+		i.add_to_group("North")
+	get_node('Chennai').add_to_group('North')
+	get_node('Tiruvallur').add_to_group('North')
+	get_node('Tiruvannamalai').add_to_group('North')
+	
+	oa=get_node('Virudhunagar').get_overlapping_areas()
+	print(oa.size())
+	for i in oa:
+		i.add_to_group("South")
+	get_node('Virudhunagar').add_to_group('South')
+	oa=get_node('Tirunelveli').get_overlapping_areas()
+	print(oa.size())
+	for i in oa:
+		i.add_to_group("South")
+	get_node('Tirunelveli').add_to_group('South')
+	
+	oa=get_node('Ariyalur').get_overlapping_areas()
+	print(oa.size())
+	for i in oa:
+		i.add_to_group("East")
+	get_node('Ariyalur').add_to_group('East')
+	get_node('Pudukotai').add_to_group('East')
+	get_node('Tiruvarur').add_to_group('East')
+	get_node('Mayiladithurai').add_to_group('East')
+	get_node('Nagapattinam').add_to_group('East')
+		
+	oa=get_node('Tiruppur').get_overlapping_areas()
+	print(oa.size())
+	for i in oa:
+		i.add_to_group("West")
+	get_node('Tiruppur').add_to_group('West')
+	get_node('Namakkal').add_to_group('West')
+	get_node('Salem').add_to_group('West')
+	get_node('Nilgiris').add_to_group('West')
+		
