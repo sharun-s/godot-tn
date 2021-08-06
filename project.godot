@@ -12,11 +12,12 @@ config_version=4
 
 config/name="tn"
 run/main_scene="res://Node2D.tscn"
-config/icon="res://icon.png"
+config/icon="res://tn-icon-centered.png"
 
 [display]
 
 window/size/fullscreen=true
+window/handheld/orientation="sensor"
 
 [input]
 
