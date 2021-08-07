@@ -54,10 +54,12 @@ var selected_color:=Color.darkorange
 var deselect_color:=Color.lightyellow#Color("eeffcc88")
 var selected_color_right:=Color.lightgreen
 var selected_color_wrong:=Color.lightcoral
+var district_label_text_color:=Color('f6b016')
 var border_color
 var border_width
 var tw:=Tween.new()
 var walkpath:=Line2D.new()
+
 
 var compass_colors={North=Color.orange, 
 South=Color.violet, 
@@ -135,9 +137,9 @@ func _unhandled_input(event):
 		
 func on_district_select(_viewport, event, _idx, district):
 	if event is InputEventMouseButton and event.pressed:
-		select(district)
+		select(district, event)
 
-func select(district):
+func select(district, event):
 	if game_in_progress:
 		if district == challenge:
 			score+=1
@@ -155,7 +157,7 @@ func select(district):
 			attempts+=1
 			$HUD/Score.text=str(score)+' / '+str(turns)
 			get_node(district).get_child(0).color=selected_color_wrong
-			$HUD/Message.text='That was '+district
+			$HUD/Message.text=challenge+"??? Try Again!\nThat was "+district
 		if attempts==turns:
 			timed_msg('Not bad! \nYou scored '+str(score)+' / '+str(turns),3)
 			yield($Timer, "timeout")
@@ -178,7 +180,7 @@ func select(district):
 		$HUD/Label.text=district
 		var sd:Area2D=get_node(selected_district)
 		var gpos=sd.position
-		$HUD/Label.rect_global_position =Vector2(330,0)+ gpos/($Camera2D.zoom) 
+		$HUD/Label.rect_global_position=event.position
 		var poly=sd.get_child(0)
 		poly.color=selected_color
 		#selected_district_border_pts=PoolVector2Array(poly.polygon)
@@ -227,16 +229,7 @@ func draw_border(poly:PoolVector2Array, dist:String, selected:bool):
 	draw_line(poly[cnt-1]+center_at, poly[0]+center_at, border_color, border_width )
 	
 func _on_Button_pressed():
-	$HUD/Button.hide()
-	$HUD/Learn.hide()
-	start_game()
-
-func start_game():
-	score=0
-	attempts=0
-	if selected_district!='':
-		deselect()
-		$HUD/Label.text=''
+	reset()
 	game_in_progress=true
 	$HUD/Score.text=str(score)
 	timed_msg("You have 10 turns\n Find the Districts!",3)
@@ -264,7 +257,7 @@ func timed_msg(msg, showafter):
 func process(_delta):
 	walkpath.show()
 
-func _on_Learn_pressed():
+func reset():
 	score=0
 	attempts=0
 	$HUD/Button.hide()
@@ -272,17 +265,17 @@ func _on_Learn_pressed():
 	if selected_district!='':
 		deselect()
 		$HUD/Label.text=''
+		get_tree().set_group("dlabels","visible",false)
+		
+
+func _on_Learn_pressed():
+	reset()
 	var current='Chennai'
 	var visited=[current]	
 	while len(visited) < len(d):
 		var i:Area2D=get_node(current)
 		var gpos=i.position
 		walkpath.add_point(gpos)
-		#print(gpos, $Camera2D.position, $HUD/Label.rect_global_position,' ', $HUD/Label.get_viewport_rect())
-		#print(gpos,$Camera2D.position, $Camera2D.global_position)
-		#$Camera2D.position=gpos
-		#$HUD/Label.text=current
-		#$HUD/Label.rect_global_position=Vector2(330,0)+(gpos/$Camera2D.zoom)#.set_position(gpos)
 		$Camera2D/Tween.interpolate_property($Camera2D,"position",$Camera2D.position,gpos,1)
 		$Camera2D/Tween.start()
 		$HUD/Label.text=current
@@ -297,7 +290,7 @@ func _on_Learn_pressed():
 				current=n.name
 				visited.append(n.name)
 				break
-		timed_msg(i.name+' -> '+current+' '+str(len(visited))+' '+str(len(d)),1 )
+		timed_msg('Districts visited\n'+str(len(visited))+' out of '+str(len(d)),1 )
 		yield($Timer, "timeout")
 		if(i.name == current):
 			current=visited[-2]
@@ -321,7 +314,7 @@ func init_label_font():
 func add_label(district, x, y, w, h):
 	var l:Label=Label.new()
 	l.set("custom_fonts/font",df)
-	l.set("custom_colors/font_color", 'f6b016')
+	l.set("custom_colors/font_color", district_label_text_color)
 	l.set("custom_colors/font_color_shadow", Color.black)
 	l.set("custom_constants/shadow_offset_x",3)
 	l.set("custom_constants/shadow_offset_y",3)
@@ -332,13 +325,16 @@ func add_label(district, x, y, w, h):
 	l.rect_position=Vector2(x+w/2, y+h/2)
 	l.add_to_group('dlabels')
 	add_child(l)
-	
+
 func _on_Labels_toggled(button_pressed):
 	if button_pressed:
 		get_tree().set_group("dlabels","visible",true)
+		#$HUD/Labels["custom_styles/normal"].bg_color = Color("#bada55")
+		$HUD/Labels["modulate"]=district_label_text_color
 	else:
 		get_tree().set_group("dlabels","visible",false)
-
+		$HUD/Labels["modulate"]=Color(1.0, 1.0, 1.0)
+		
 func _on_TN_ready():
 	$Timer.start(1)
 	yield($Timer,"timeout")
