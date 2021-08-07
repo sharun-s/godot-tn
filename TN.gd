@@ -45,7 +45,7 @@ var d={
 var score=0
 var attempts=0
 var turns=10
-var game_in_progress=false
+var game_in_progress=0
 var rng=RandomNumberGenerator.new()
 
 var challenge:=''
@@ -61,16 +61,33 @@ var tw:=Tween.new()
 var walkpath:=Line2D.new()
 
 
-var compass_colors={North=Color.orange, 
-South=Color.violet, 
-East='00bb99', 
-West="0099bb"}
+var compass_colors={
+	North=[Color.orange,'N'], 
+	South=[Color.violet, 'S'], 
+	East=['00bb99', 'E'], 
+	West=["0099bb", 'W']
+}
+
+func hide_compass():
+	$HUD/E.hide()
+	$HUD/N.hide()
+	$HUD/W.hide()
+	$HUD/S.hide()
+
+func show_compass():
+	$HUD/E.show()
+	$HUD/N.show()
+	$HUD/W.show()
+	$HUD/S.show()
 
 func _compass_toggled(pressed, dir):
-	if pressed:
-		get_tree().set_group(dir, 'modulate', compass_colors[dir])
-	else:
-		get_tree().set_group(dir, 'modulate', Color(1.0,1.0,1.0))
+	if game_in_progress==0:
+		if pressed:
+			get_node("HUD/"+compass_colors[dir][1])['modulate']=compass_colors[dir][0]
+			get_tree().set_group(dir, 'modulate', compass_colors[dir][0])
+		else:
+			get_node("HUD/"+compass_colors[dir][1])['modulate']=Color(1.0,1.0,1.0)
+			get_tree().set_group(dir, 'modulate', Color(1.0,1.0,1.0))
 		
 func create_polygons(s:Sprite):
 	var b=BitMap.new()
@@ -140,7 +157,7 @@ func on_district_select(_viewport, event, _idx, district):
 		select(district, event)
 
 func select(district, event):
-	if game_in_progress:
+	if game_in_progress==1:
 		if district == challenge:
 			score+=1
 			attempts+=1
@@ -161,8 +178,9 @@ func select(district, event):
 		if attempts==turns:
 			timed_msg('Not bad! \nYou scored '+str(score)+' / '+str(turns),3)
 			yield($Timer, "timeout")
-			game_in_progress=false
 			game_over()
+	elif game_in_progress==2:
+		pass
 	else:
 		get_tree().set_group("dlabels", "visible", false)
 		#deselect district if one is already selected before selecting new one
@@ -192,20 +210,18 @@ func select(district, event):
 		yield($Timer, 'timeout')
 		$Timer.wait_time=tmp
 		for i in oa:
+			if i.name=='Gopal':
+				continue
 			get_node('lbl'+i.name).visible=true
-			tw.interpolate_property(i.get_child(0), 'color', deselect_color, deselect_color.blend("aa66aa22"),1)
-			tw.start()
+			i.get_child(0).color=deselect_color.blend("aa66aa22")
+			#tw.interpolate_property(i.get_child(0), 'color', deselect_color, deselect_color.blend("aa66aa22"),1)
+			#tw.start()
 			#yield(tw,"tween_completed")
 		update()
 				
 func deselect():
 	for district in d.keys():
 		get_node(district).get_child(0).color=deselect_color
-	#var sd=get_node(selected_district)
-	#sd.get_child(0).color=deselect_color
-	#var oa=sd.get_overlapping_areas()
-	#for i in oa:
-	#	i.get_child(0).color=deselect_color
 
 func _draw():
 	for i in d.keys():
@@ -230,7 +246,7 @@ func draw_border(poly:PoolVector2Array, dist:String, selected:bool):
 	
 func _on_Button_pressed():
 	reset()
-	game_in_progress=true
+	game_in_progress=1
 	$HUD/Score.text=str(score)
 	timed_msg("You have 10 turns\n Find the Districts!",3)
 	yield($Timer,"timeout")
@@ -248,6 +264,9 @@ func game_over():
 	$HUD/Label.text=''
 	$HUD/Button.show()
 	$HUD/Learn.show()
+	$Camera2D.position=get_node('Karur').position
+	show_compass()
+	game_in_progress=0
 
 func timed_msg(msg, showafter):
 	$Timer.wait_time=showafter
@@ -262,6 +281,7 @@ func reset():
 	attempts=0
 	$HUD/Button.hide()
 	$HUD/Learn.hide()
+	hide_compass()
 	if selected_district!='':
 		deselect()
 		$HUD/Label.text=''
@@ -270,6 +290,7 @@ func reset():
 
 func _on_Learn_pressed():
 	reset()
+	game_in_progress=2
 	var current='Chennai'
 	var visited=[current]	
 	while len(visited) < len(d):
@@ -279,11 +300,13 @@ func _on_Learn_pressed():
 		$Camera2D/Tween.interpolate_property($Camera2D,"position",$Camera2D.position,gpos,1)
 		$Camera2D/Tween.start()
 		$HUD/Label.text=current
-		$HUD/Label.set_position(Vector2(780,384))
+		$HUD/Label.set_position(Vector2(get_viewport().size.x/2,get_viewport().size.x/2))
 		var poly=i.get_child(0)
 		poly.color=selected_color
 		var neighbours=i.get_overlapping_areas()
 		for n in neighbours:
+			if n.name == 'Gopal':
+				continue
 			if n.name in visited:
 				continue
 			else:
@@ -342,6 +365,8 @@ func _on_TN_ready():
 	var oa=rd.get_overlapping_areas()
 	print(oa.size())
 	for i in oa:
+		if i.name=='Gopal':
+			continue
 		i.add_to_group("North")
 	get_node('Chennai').add_to_group('North')
 	get_node('Tiruvallur').add_to_group('North')
@@ -350,17 +375,23 @@ func _on_TN_ready():
 	oa=get_node('Virudhunagar').get_overlapping_areas()
 	print(oa.size())
 	for i in oa:
+		if i.name=='Gopal':
+			continue
 		i.add_to_group("South")
 	get_node('Virudhunagar').add_to_group('South')
 	oa=get_node('Tirunelveli').get_overlapping_areas()
 	print(oa.size())
 	for i in oa:
+		if i.name=='Gopal':
+			continue
 		i.add_to_group("South")
 	get_node('Tirunelveli').add_to_group('South')
 	
 	oa=get_node('Ariyalur').get_overlapping_areas()
 	print(oa.size())
 	for i in oa:
+		if i.name=='Gopal':
+			continue
 		i.add_to_group("East")
 	get_node('Ariyalur').add_to_group('East')
 	get_node('Pudukotai').add_to_group('East')
@@ -371,9 +402,14 @@ func _on_TN_ready():
 	oa=get_node('Tiruppur').get_overlapping_areas()
 	print(oa.size())
 	for i in oa:
+		if i.name=='Gopal':
+			continue
 		i.add_to_group("West")
 	get_node('Tiruppur').add_to_group('West')
 	get_node('Namakkal').add_to_group('West')
 	get_node('Salem').add_to_group('West')
 	get_node('Nilgiris').add_to_group('West')
 		
+func _on_Player_hit(name):
+	#$HUD/Message.text='Gopal has wandered into '+ name
+	print('Gopal has wandered into '+ name)

@@ -163,6 +163,7 @@ __meta__ = {
 one_shot = true
 
 [connection signal="ready" from="." to="." method="_on_TN_ready"]
+[connection signal="hit" from="Camera2D/Player" to="." method="_on_Player_hit"]
 [connection signal="pressed" from="HUD/Button" to="." method="_on_Button_pressed"]
 [connection signal="toggled" from="HUD/Labels" to="." method="_on_Labels_toggled"]
 [connection signal="pressed" from="HUD/Learn" to="." method="_on_Learn_pressed"]

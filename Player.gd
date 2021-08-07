@@ -49,4 +49,7 @@ func start(pos):
 	show()
 	$CollisionShape2D.disabled = false
 
-
+func _on_Player_area_entered(area):
+	emit_signal('hit',area.name)
+	#print(area.name+' entered')
+	#pass # Replace with function body.
