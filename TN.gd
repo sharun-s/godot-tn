@@ -163,11 +163,12 @@ func select(district):
 			score+=1
 			attempts+=1
 			$HUD/Score.text=str(score)+' / '+str(attempts)
-			get_node(district).get_child(0).color=selected_color_right
+			#get_node(district).get_child(0).color=selected_color_right
+			blink(district, selected_color_right)
 			$Label.text=district
 			var gpos=get_node(district).position
 			$Label.rect_global_position =gpos
-			timed_msg("Correct!", 2)
+			timed_msg("Correct!", 2, 15)
 			yield($Timer, "timeout")
 			if attempts < turns:
 				new_challenge()
@@ -175,9 +176,9 @@ func select(district):
 			attempts+=1
 			$HUD/Score.text=str(score)+' / '+str(attempts)
 			get_node(district).get_child(0).color=selected_color_wrong
-			$HUD/Message.text=challenge+"???\n Try Again!\nThat was "+district
+			$HUD/Message.text=challenge+"???\n  Try Again!\nThat was "+district
 		if attempts==turns:
-			timed_msg('Not bad! \nYou scored '+str(score)+' / '+str(turns),3)
+			timed_msg('Not bad! \nYou scored '+str(score)+' / '+str(turns),3, 25, Color.orangered)
 			yield($Timer, "timeout")
 			challenges_completed.clear()
 			game_over()
@@ -279,11 +280,29 @@ func game_over():
 	show_compass()
 	game_in_progress=0
 
-func timed_msg(msg, showafter):
+func blink(district, color):
+	var d=get_node(district).get_child(0)
+	for i in 15:
+		d.modulate=color
+		yield(get_tree(), "idle_frame")
+		d.modulate= Color(1.0, 1.0, 1.0)
+		yield(get_tree(), "idle_frame")
+	d.modulate=Color(1.0, 1.0, 1.0)
+	d.color=color
+
+func timed_msg(msg, showafter, blink:=0, blinkcolor:=Color.green):
 	$Timer.wait_time=showafter
 	$Timer.start()
+	$HUD/Message.modulate= Color(1.0, 1.0, 1.0)
 	$HUD/Message.text=msg
-
+	if blink:
+		for i in blink:
+			$HUD/Message.modulate = blinkcolor
+			yield(get_tree(), "idle_frame")
+			$HUD/Message.modulate= Color(1.0, 1.0, 1.0)
+			yield(get_tree(), "idle_frame")
+		
+	
 func process(_delta):
 	walkpath.show()
 
