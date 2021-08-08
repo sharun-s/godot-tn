@@ -62,9 +62,9 @@ var walkpath:=Line2D.new()
 
 
 var compass_colors={
-	North=[Color.orange,'N'], 
-	South=[Color.violet, 'S'], 
-	East=['00bb99', 'E'], 
+	North=[Color.orange,'N'],
+	South=[Color.violet, 'S'],
+	East=['00bb99', 'E'],
 	West=["0099bb", 'W']
 }
 
@@ -91,7 +91,7 @@ func _compass_toggled(pressed, dir):
 		
 func create_polygons(s:Sprite):
 	var b=BitMap.new()
-	b.create_from_image_alpha(s.texture.get_data())	
+	b.create_from_image_alpha(s.texture.get_data())
 	var rect=Rect2(0, 0, s.texture.get_width(), s.texture.get_height())
 	var polys=b.opaque_to_polygons(rect)
 	var p=Polygon2D.new()
@@ -142,9 +142,10 @@ func _ready():
 	$HUD/N.connect("toggled", self, "_compass_toggled", ["North"])
 	$HUD/S.connect("toggled",self, "_compass_toggled", ["South"])
 	$HUD/E.connect("toggled",self, "_compass_toggled", ["East"])
-	$HUD/W.connect("toggled",self, "_compass_toggled", ["West"])	
+	$HUD/W.connect("toggled",self, "_compass_toggled", ["West"])
 	$Camera2D.position=get_node('Karur').position
 	$Camera2D.zoom=Vector2(2.4, 2.4)
+	$Label.rect_scale=$Camera2D.zoom
 	update()
 
 func _unhandled_input(event):
@@ -154,27 +155,27 @@ func _unhandled_input(event):
 		
 func on_district_select(_viewport, event, _idx, district):
 	if event is InputEventMouseButton and event.pressed:
-		select(district, event)
+		select(district)
 
-func select(district, event):
+func select(district):
 	if game_in_progress==1:
 		if district == challenge:
 			score+=1
 			attempts+=1
-			$HUD/Score.text=str(score)+' / '+str(turns)
+			$HUD/Score.text=str(score)+' / '+str(attempts)
 			get_node(district).get_child(0).color=selected_color_right
-			$HUD/Label.text=district
+			$Label.text=district
 			var gpos=get_node(district).position
-			$HUD/Label.rect_global_position =Vector2(330,0)+ gpos/($Camera2D.zoom) 
+			$Label.rect_global_position =gpos
 			timed_msg("Correct!", 2)
 			yield($Timer, "timeout")
 			if attempts < turns:
 				new_challenge()
 		else:
 			attempts+=1
-			$HUD/Score.text=str(score)+' / '+str(turns)
+			$HUD/Score.text=str(score)+' / '+str(attempts)
 			get_node(district).get_child(0).color=selected_color_wrong
-			$HUD/Message.text=challenge+"??? Try Again!\nThat was "+district
+			$HUD/Message.text=challenge+"???\n Try Again!\nThat was "+district
 		if attempts==turns:
 			timed_msg('Not bad! \nYou scored '+str(score)+' / '+str(turns),3)
 			yield($Timer, "timeout")
@@ -185,25 +186,27 @@ func select(district, event):
 		get_tree().set_group("dlabels", "visible", false)
 		#deselect district if one is already selected before selecting new one
 		#selecting = change color + add border
-		if district!=selected_district and selected_district!='':
-			deselect()
-		else:
-			if district==selected_district:
-				# already selected so deselect
-				deselect()
-				$HUD/Label.text=''
-				selected_district=''
-				return
-		selected_district=district
-		$HUD/Label.text=district
-		var sd:Area2D=get_node(selected_district)
-		var gpos=sd.position
-		$HUD/Label.rect_global_position=event.position
-		var poly=sd.get_child(0)
-		poly.color=selected_color
-		#selected_district_border_pts=PoolVector2Array(poly.polygon)
-		var oa=sd.get_overlapping_areas()
-		#get_tree().set_group("dlabels", "visible", false)
+		highlight_district(district)
+
+func highlight_district(district, show_neighbours:=true):
+	if district!=selected_district and selected_district!='':
+		deselect()
+	else:
+		if district==selected_district:
+			# already selected so deselect
+			#deselect()
+			$Label.text=''
+			#selected_district=''
+			return
+	selected_district=district
+	$Label.text=district
+	var sd:Area2D=get_node(selected_district)
+	$Label.rect_global_position=sd.position
+	var poly=sd.get_child(0)
+	poly.color=selected_color
+	#selected_district_border_pts=PoolVector2Array(poly.polygon)
+	if show_neighbours:
+		var oa=sd.get_overlapping_areas()		#get_tree().set_group("dlabels", "visible", false)
 		#wait for set completion
 		var tmp=$Timer.wait_time
 		$Timer.start(.3)
@@ -217,8 +220,8 @@ func select(district, event):
 			#tw.interpolate_property(i.get_child(0), 'color', deselect_color, deselect_color.blend("aa66aa22"),1)
 			#tw.start()
 			#yield(tw,"tween_completed")
-		update()
-				
+	update()
+			
 func deselect():
 	for district in d.keys():
 		get_node(district).get_child(0).color=deselect_color
@@ -239,7 +242,7 @@ func draw_border(poly:PoolVector2Array, dist:String, selected:bool):
 		border_width=5
 	else:
 		border_color=Color.black
-		border_width=2 
+		border_width=2
 	for i in range(1, cnt):
 		draw_line(poly[i-1]+center_at, poly[i]+center_at, border_color, border_width )
 	draw_line(poly[cnt-1]+center_at, poly[0]+center_at, border_color, border_width )
@@ -261,7 +264,7 @@ func game_over():
 	walkpath.clear_points()
 	$HUD/Score.text=''
 	$HUD/Message.text=''
-	$HUD/Label.text=''
+	$Label.text=''
 	$HUD/Button.show()
 	$HUD/Learn.show()
 	$Camera2D.position=get_node('Karur').position
@@ -284,23 +287,27 @@ func reset():
 	hide_compass()
 	if selected_district!='':
 		deselect()
-		$HUD/Label.text=''
+		$Label.text=''
 		get_tree().set_group("dlabels","visible",false)
 		
-
 func _on_Learn_pressed():
 	reset()
 	game_in_progress=2
 	var current='Chennai'
-	var visited=[current]	
+	var visited=[current]
+	$Camera2D/Gopal/CollisionShape2D.disabled = true
+	$Camera2D/Gopal.position=Vector2(0,0)
+	#$Camera2D/Gopal/AnimatedSprite.animation = "walk"
+	#$Camera2D/Gopal/AnimatedSprite.play()
 	while len(visited) < len(d):
 		var i:Area2D=get_node(current)
 		var gpos=i.position
 		walkpath.add_point(gpos)
-		$Camera2D/Tween.interpolate_property($Camera2D,"position",$Camera2D.position,gpos,1)
+		$Camera2D/Tween.interpolate_property($Camera2D,"position",$Camera2D.position,gpos,1.4)
 		$Camera2D/Tween.start()
-		$HUD/Label.text=current
-		$HUD/Label.set_position(Vector2(get_viewport().size.x/2,get_viewport().size.x/2))
+		# not required gopal will highlight
+		$Label.text=current
+		$Label.rect_global_position=get_node(current).position
 		var poly=i.get_child(0)
 		poly.color=selected_color
 		var neighbours=i.get_overlapping_areas()
@@ -325,6 +332,8 @@ func _on_Learn_pressed():
 					current=jump
 					break
 			visited.append(jump)
+	$Camera2D/Gopal/CollisionShape2D.disabled = false
+	#$Camera2D/Gopal/AnimatedSprite.stop()
 	game_over()
 
 var df
@@ -409,7 +418,11 @@ func _on_TN_ready():
 	get_node('Namakkal').add_to_group('West')
 	get_node('Salem').add_to_group('West')
 	get_node('Nilgiris').add_to_group('West')
+	#if OS.get_name()=='Android':
+	#	$HUD/Message.anchor_left=.45
 		
 func _on_Player_hit(name):
 	#$HUD/Message.text='Gopal has wandered into '+ name
-	print('Gopal has wandered into '+ name)
+	if $Camera2D/Gopal != null:
+		#print('Gopal has wandered into '+ name+' '+str($Camera2D/Gopal.global_position))		
+		highlight_district(name, false)

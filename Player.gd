@@ -26,8 +26,8 @@ func _process(delta):
 	else:
 		$AnimatedSprite.stop()
 	position += velocity * delta
-	position.x = clamp(position.x, 0, screen_size.x)
-	position.y = clamp(position.y, 0, screen_size.y)
+	#position.x = clamp(position.x, 0, screen_size.x)
+	#position.y = clamp(position.y, 0, screen_size.y)
 	
 	if velocity.x != 0:
 		$AnimatedSprite.animation = "walk"
@@ -39,10 +39,10 @@ func _process(delta):
 		$AnimatedSprite.flip_v = velocity.y > 0
 
 
-func _on_Player_body_entered(body):
-	hide()#pass # Replace with function body.
-	emit_signal("hit")
-	$CollisionShape2D.set_deferred("disabled",true)
+#func _on_Player_body_entered(body):
+#	hide()#pass # Replace with function body.
+#	emit_signal("hit")
+#	$CollisionShape2D.set_deferred("disabled",true)
 	
 func start(pos):
 	position = pos

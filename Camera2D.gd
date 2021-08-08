@@ -1,5 +1,4 @@
 extends Camera2D
-#export (NodePath) var target
 
 var min_zoom=1.9
 var max_zoom=3.3
@@ -24,6 +23,7 @@ func _unhandled_input(event):
 	if event.is_action_pressed("zoom_in"):
 		zoom_level = clamp(zoom_level - zoom_factor, min_zoom, max_zoom)
 		zoom = Vector2(zoom_level, zoom_level)
+		get_parent().get_node("Label").rect_scale=zoom
 #		tween.interpolate_property(self,"zoom",zoom,Vector2(zoom_level, zoom_level),
 #		zoom_level, zoom_duration, tween.TRANS_LINEAR,
 #		# Easing out means we start fast and slow down as we reach the target value.
@@ -32,6 +32,7 @@ func _unhandled_input(event):
 	if event.is_action_pressed("zoom_out"):
 		zoom_level = clamp(zoom_level + zoom_factor, min_zoom, max_zoom)
 		zoom = Vector2(zoom_level, zoom_level)
+		get_parent().get_node("Label").rect_scale=zoom
 #		tween.interpolate_property(self,"zoom",zoom,Vector2(zoom_level, zoom_level),
 #		zoom_level, zoom_duration, tween.TRANS_SINE,
 #		# Easing out means we start fast and slow down as we reach the target value.
