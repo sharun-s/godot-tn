@@ -179,6 +179,7 @@ func select(district):
 		if attempts==turns:
 			timed_msg('Not bad! \nYou scored '+str(score)+' / '+str(turns),3)
 			yield($Timer, "timeout")
+			challenges_completed.clear()
 			game_over()
 	elif game_in_progress==2:
 		pass
@@ -194,9 +195,9 @@ func highlight_district(district, show_neighbours:=true):
 	else:
 		if district==selected_district:
 			# already selected so deselect
-			#deselect()
+			deselect()
 			$Label.text=''
-			#selected_district=''
+			selected_district=''
 			return
 	selected_district=district
 	$Label.text=district
@@ -255,8 +256,15 @@ func _on_Button_pressed():
 	yield($Timer,"timeout")
 	new_challenge()
 
+var challenges_completed:=[]
 func new_challenge():
-	challenge=d.keys()[rng.randi_range(0,len(d)-1)]
+	while true:
+		challenge=d.keys()[rng.randi_range(0,len(d)-1)]
+		if challenge in challenges_completed:
+			continue
+		else:
+			challenges_completed.append(challenge)
+			break
 	$HUD/Message.text=challenge+" ???"
 
 func game_over():
