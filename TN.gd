@@ -113,8 +113,15 @@ func create_polygons(s:Sprite):
 	c.position=s.position - Vector2(s.texture.get_width()/2.0,s.texture.get_height()/2.0)
 	return [c, p]
 
+#var shore:ShaderMaterial
+#func applyshore(district):
+#	var dp:Polygon2D=get_node(district).get_child(0)
+#	dp.material=shore
+
 func _ready():
 	init_label_font()
+	#shore=ShaderMaterial.new()
+	#shore.shader=load("res://shore.shader")
 	rng.randomize()
 	add_child(tw)
 	add_child(walkpath)
@@ -156,6 +163,15 @@ func _unhandled_input(event):
 func on_district_select(_viewport, event, _idx, district):
 	if event is InputEventMouseButton and event.pressed:
 		select(district)
+		walkpath.clear_points()
+		walkpath.add_point(get_node(district).position)
+	
+	#if event is InputEventMouseMotion:
+			#walkpath.add_point(get_node(district).position)
+	if event is InputEventScreenDrag:
+		walkpath.add_point(get_node(district).position)
+		highlight_district(district, false, true)
+		#print(event, district)
 
 func select(district):
 	if game_in_progress==1:
@@ -188,18 +204,21 @@ func select(district):
 		get_tree().set_group("dlabels", "visible", false)
 		#deselect district if one is already selected before selecting new one
 		#selecting = change color + add border
-		highlight_district(district)
+		highlight_district(district, false)
 
-func highlight_district(district, show_neighbours:=true):
-	if district!=selected_district and selected_district!='':
-		deselect()
-	else:
-		if district==selected_district:
-			# already selected so deselect
+func highlight_district(district, show_neighbours:=true, path:=false):
+	if not path:
+		if district!=selected_district and selected_district!='':
 			deselect()
-			$Label.text=''
-			selected_district=''
-			return
+		else:
+			if district==selected_district:
+				# already selected so deselect
+				deselect()
+				$Label.text=''
+				selected_district=''
+				return
+	else:
+		get_node('lbl'+district).show()
 	selected_district=district
 	$Label.text=district
 	var sd:Area2D=get_node(selected_district)
@@ -281,14 +300,14 @@ func game_over():
 	game_in_progress=0
 
 func blink(district, color):
-	var d=get_node(district).get_child(0)
-	for i in 15:
-		d.modulate=color
+	var dx=get_node(district).get_child(0)
+	for i in 5:
+		dx.modulate=color
 		yield(get_tree(), "idle_frame")
-		d.modulate= Color(1.0, 1.0, 1.0)
+		dx.modulate= Color(1.0, 1.0, 1.0)
 		yield(get_tree(), "idle_frame")
-	d.modulate=Color(1.0, 1.0, 1.0)
-	d.color=color
+	dx.modulate=Color(1.0, 1.0, 1.0)
+	dx.color=color
 
 func timed_msg(msg, showafter, blink:=0, blinkcolor:=Color.green):
 	$Timer.wait_time=showafter
