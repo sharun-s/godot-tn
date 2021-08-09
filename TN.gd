@@ -69,7 +69,6 @@ func revert_transform(poly:Polygon2D):
 		
 func merge_poly(g):
 	var main:Polygon2D=Polygon2D.new()
-	print('merging ',g[0], g[1])
 	var t=Transform2D()
 	var t2=Transform2D()
 	var ddims=d[g[0]]
@@ -87,7 +86,6 @@ func merge_poly(g):
 	#add_child(test)
 	var cnt=1
 	for i in range(2,len(g)):
-		print('merging ',g[i])
 		ddims=d[g[i]]
 		t.origin=Vector2(ddims[0],ddims[1])
 		var tp=t.xform(get_node(g[i]).get_child(0).polygon)
@@ -98,7 +96,7 @@ func merge_poly(g):
 		#test.color=Color(rng.randi_range(70,200))
 		#add_child(test)
 		#cnt=cnt+1
-	main.color=Color(rng.randf_range(0.5,1.0), rng.randf_range(0.5,1.0), rng.randf_range(0.0,1.0))
+	main.color=Color(rng.randf_range(0.6,1.0), rng.randf_range(0.0,1.0), rng.randf_range(0.0,0.26))
 	return main
 	
 var compass_colors={
@@ -184,7 +182,7 @@ func _ready():
 		a2d.show_behind_parent=true
 		a2d.position=Vector2(x+(w/2),y+(h/2))
 		add_child(a2d)
-		add_label(district, x, y, w, h)
+		add_label(district, x, y, w, h, "dlabels")
 		a2d.connect('input_event', self, 'on_district_select',[district])
 	$HUD/N.connect("toggled", self, "_compass_toggled", ["North"])
 	$HUD/S.connect("toggled",self, "_compass_toggled", ["South"])
@@ -193,27 +191,30 @@ func _ready():
 	$Camera2D.position=get_node('Karur').position
 	$Camera2D.zoom=Vector2(2.4, 2.4)
 	$Label.rect_scale=$Camera2D.zoom
-	var salem:Polygon2D=merge_poly(['Salem','Dharmapuri','Namakkal','Krishnagiri'])
-	add_child(salem)
-	var coim:Polygon2D=merge_poly(['Coimbatore','Erode','Tiruppur'])
-	add_child(coim)
-	var mad:Polygon2D=merge_poly(['Madurai','Dindigul','Theni'])
-	add_child(mad)
-	var ram:Polygon2D=merge_poly(['Ramanathapuram','Sivagangai','Virudhunagar'])
-	add_child(ram)
-	var neli:Polygon2D=merge_poly(['Tirunelveli','Thoothukudi','Tenkasi'])
-	add_child(neli)
-	var na:Polygon2D=merge_poly(['Tiruvannamalai','Vellore','Tirupathur','Ranipet'])
-	add_child(na)
-	var sa:Polygon2D=merge_poly(['Cuddalore','Vilippuram','Kallakurichi'])
-	add_child(sa)
-	var ch:Polygon2D=merge_poly(['Kanchipuram','Tiruvallur','Chengalpattu'])
-	add_child(ch)
-	var tri:Polygon2D=merge_poly(['Tiruchirapalli','Karur','Perumbalur','Ariyalur'])
-	add_child(tri)
-	var tanj:Polygon2D=merge_poly(['Thanjavur','Pudukotai','Tiruvarur','Nagapattinam','Mayiladithurai'])
-	add_child(tanj)
-	update()
+	add1956districts()
+	#update()
+
+func add1956districts():
+	var d1956={
+		Salem=['Salem','Dharmapuri','Namakkal','Krishnagiri'],
+		Coimbatore=['Tiruppur','Coimbatore','Erode'],
+		Madurai=['Madurai','Dindigul','Theni'],
+		Ramanathapuram=['Ramanathapuram','Sivagangai','Virudhunagar'],
+		Tirunelveli=['Tirunelveli','Thoothukudi','Tenkasi'],
+		"North Arcot":['Tiruvannamalai','Vellore','Tirupathur','Ranipet'],
+		"South Arcot":['Cuddalore','Vilippuram','Kallakurichi'],
+		"Chinglepet":['Kanchipuram','Tiruvallur','Chengalpattu'],
+		Trichy=['Tiruchirapalli','Karur','Perumbalur','Ariyalur'],
+		Thanjavur=['Pudukotai','Thanjavur','Tiruvarur','Nagapattinam','Mayiladithurai']
+	}
+	var tmp:Polygon2D
+	for i in d1956:
+		tmp=merge_poly(d1956[i])
+		tmp.hide()
+		tmp.add_to_group("1956")
+		add_child(tmp)
+		add_label(i, d[d1956[i][0]][0], d[d1956[i][0]][1], 0.0, 0.0, '1956')
+		
 
 func _unhandled_input(event):
 	if event is InputEventKey:
@@ -395,8 +396,8 @@ func reset():
 		deselect()
 		$Label.text=''
 		get_tree().set_group("dlabels","visible",false)
-		
-func _on_Learn_pressed():
+
+func fullwalktest():
 	reset()
 	game_in_progress=2
 	var current='Chennai'
@@ -449,7 +450,7 @@ func init_label_font():
 	df.font_data=f
 	df.size=44
 
-func add_label(district, x, y, w, h):
+func add_label(district, x, y, w, h, groupname):
 	var l:Label=Label.new()
 	l.set("custom_fonts/font",df)
 	l.set("custom_colors/font_color", district_label_text_color)
@@ -461,7 +462,7 @@ func add_label(district, x, y, w, h):
 	l.text=district
 	l.name='lbl'+district
 	l.rect_position=Vector2(x+w/2, y+h/2)
-	l.add_to_group('dlabels')
+	l.add_to_group(groupname)
 	add_child(l)
 
 func _on_Labels_toggled(button_pressed):
@@ -532,3 +533,11 @@ func _on_Player_hit(name):
 	if $Camera2D/Gopal != null:
 		#print('Gopal has wandered into '+ name+' '+str($Camera2D/Gopal.global_position))		
 		highlight_district(name, false)
+
+
+func _on_Learn_toggled(button_pressed):
+	if button_pressed:
+		get_tree().call_group("1956","show")
+	else:
+		get_tree().call_group("1956","hide")
+
