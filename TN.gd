@@ -60,7 +60,47 @@ var border_width
 var tw:=Tween.new()
 var walkpath:=Line2D.new()
 
-
+func revert_transform(poly:Polygon2D):
+	if poly.transform != Transform2D.IDENTITY:
+		var transformed_polygon = poly.transform.xform(poly.polygon)
+		poly.transform = Transform2D.IDENTITY
+		poly.polygon = transformed_polygon
+		return poly
+		
+func merge_poly(g):
+	var main:Polygon2D=Polygon2D.new()
+	print('merging ',g[0], g[1])
+	var t=Transform2D()
+	var t2=Transform2D()
+	var ddims=d[g[0]]
+	var p1=get_node(g[0]).get_child(0)
+	t.origin=Vector2(ddims[0],ddims[1])
+	ddims=d[g[1]]
+	var p2=get_node(g[1]).get_child(0)
+	t2.origin=Vector2(ddims[0],ddims[1])
+	var m=Geometry.merge_polygons_2d(t.xform(p1.polygon), 
+									t2.xform(p2.polygon) )
+	main.polygon=m[0]
+	#debug
+	#var test=main.duplicate()
+	#test.color=Color.blueviolet
+	#add_child(test)
+	var cnt=1
+	for i in range(2,len(g)):
+		print('merging ',g[i])
+		ddims=d[g[i]]
+		t.origin=Vector2(ddims[0],ddims[1])
+		var tp=t.xform(get_node(g[i]).get_child(0).polygon)
+		m=Geometry.merge_polygons_2d(main.polygon, tp)
+		main.polygon=m[0]
+		#debug
+#		#test=main.duplicate()
+		#test.color=Color(rng.randi_range(70,200))
+		#add_child(test)
+		#cnt=cnt+1
+	main.color=Color(rng.randf_range(0.5,1.0), rng.randf_range(0.5,1.0), rng.randf_range(0.0,1.0))
+	return main
+	
 var compass_colors={
 	North=[Color.orange,'N'],
 	South=[Color.violet, 'S'],
@@ -153,6 +193,26 @@ func _ready():
 	$Camera2D.position=get_node('Karur').position
 	$Camera2D.zoom=Vector2(2.4, 2.4)
 	$Label.rect_scale=$Camera2D.zoom
+	var salem:Polygon2D=merge_poly(['Salem','Dharmapuri','Namakkal','Krishnagiri'])
+	add_child(salem)
+	var coim:Polygon2D=merge_poly(['Coimbatore','Erode','Tiruppur'])
+	add_child(coim)
+	var mad:Polygon2D=merge_poly(['Madurai','Dindigul','Theni'])
+	add_child(mad)
+	var ram:Polygon2D=merge_poly(['Ramanathapuram','Sivagangai','Virudhunagar'])
+	add_child(ram)
+	var neli:Polygon2D=merge_poly(['Tirunelveli','Thoothukudi','Tenkasi'])
+	add_child(neli)
+	var na:Polygon2D=merge_poly(['Tiruvannamalai','Vellore','Tirupathur','Ranipet'])
+	add_child(na)
+	var sa:Polygon2D=merge_poly(['Cuddalore','Vilippuram','Kallakurichi'])
+	add_child(sa)
+	var ch:Polygon2D=merge_poly(['Kanchipuram','Tiruvallur','Chengalpattu'])
+	add_child(ch)
+	var tri:Polygon2D=merge_poly(['Tiruchirapalli','Karur','Perumbalur','Ariyalur'])
+	add_child(tri)
+	var tanj:Polygon2D=merge_poly(['Thanjavur','Pudukotai','Tiruvarur','Nagapattinam','Mayiladithurai'])
+	add_child(tanj)
 	update()
 
 func _unhandled_input(event):
