@@ -250,8 +250,67 @@ var dhistory=[{
 		Virudhunagar=[['Virudhunagar'],Color('bbfa90')], #fffacd
 		Dindigul=[['Dindigul'],Color.lawngreen],
 		Madurai=[['Madurai','Theni'], Color.lightgreen]#90ee90	
+	},
+	{
+		Tirunelveli=[['Tirunelveli','Tenkasi'],Color.honeydew],#f0fff0
+		Thoothukudi=[['Thoothukudi'],Color.darkkhaki]#f0fff0
+	},
+	{
+		#"North Arcot":[[],Color.transparent],
+		Tiruvannamalai=[['Tiruvannamalai','Tirupathur'],Color.indigo],
+		Vellore=[['Vellore','Ranipet'],Color.papayawhip]
+	},
+	{
+		Thanjavur=[['Thanjavur'],Color.skyblue], #ffda89 
+		Tiruvarur=[['Tiruvarur','Mayiladithurai'],Color.peachpuff], #ffda89
+		Nagapattinam=[['Nagapattinam'],Color.floralwhite] #ffda89
+	},
+	{
+		#"South Arcot":[[],Color.transparent],
+		"Cuddalore":[['Cuddalore'], Color.violet],
+		"Viluppuram":[['Vilippuram','Kallakurichi'], Color.violet]
+	},
+	{	
+		'Tiruchirapalli':[['Tiruchirapalli'],Color('ffd711')],
+		"Perambalur":[['Perumbalur','Ariyalur'],Color('ddd711')],
+		"Karur":[['Karur'],Color('ccc711')]
+	},
+	{
+		Madurai=[['Madurai'], Color.lightgreen],#90ee90
+		Theni=[['Theni'], Color.green]#90ee90
+	}, 
+	{	
+		"Namakkal":[['Namakkal'], Color.yellow],
+		Salem=[['Salem'], Color.greenyellow],
+		#"Chinglepet":[[],Color.transparent],
+		"Tiruvallur":[['Tiruvallur'],Color('aa22aa')],
+		"Kanchipuram":[['Chengalpattu','Kanchipuram'],Color('bb55bb')],
+	},  
+	{	Dharmapuri=[['Dharmapuri'],Color.mediumspringgreen], 
+		"Krishnagiri":[['Krishnagiri'],Color.springgreen] 
+	},
+	{	
+		"Perambalur":[['Perumbalur'],Color('ddd711')],
+		"Ariyalur":[['Ariyalur'],Color('ddd711')],
+		"Tiruppur":[['Tiruppur'], Color.darkgreen],
+		Coimbatore=[['Coimbatore'], Color.darkseagreen]
+	},
+	{
+		"Tenkasi":[['Tenkasi'],Color.honeydew],
+		Tirunelveli=[['Tirunelveli'],Color.honeydew],
+		"Kallakurichi":[['Kallakurichi'], Color.palevioletred],
+		"Viluppuram":[['Vilippuram'], Color.violet],
+		"Tirupattur":[['Tirupathur'],Color.coral],
+		Tiruvannamalai=[['Tiruvannamalai'],Color.indigo],
+		Vellore=[['Vellore'],Color.white],
+		"Ranipet":[['Ranipet'],Color.papayawhip],
+		"Kanchipuram":[['Kanchipuram'],Color('bb55bb')],
+		"Chengalpattu":[['Chengalpattu'],Color('9955bb')],
+	},
+	{
+		"Mayiladuthurai":[['Mayiladithurai'],Color.peachpuff], #ffda89
+		Tiruvarur=[['Tiruvarur'],Color.peru], #ffda89	
 	}
-	
 	]	
 
 static func merge_dict(target, patch):
@@ -579,10 +638,21 @@ func _on_Player_hit(name):
 		#print('Gopal has wandered into '+ name+' '+str($Camera2D/Gopal.global_position))		
 		highlight_district(name, false)
 
-var years=["1956","1965","1974","1979","1985","1986","1989","1991","1993","1995","1996","1997","2004","2007","2019","2020"]
+var years=["1956","1965","1974","1979",
+"1985","1986","1989","1991",
+"1993","1995","1996","1997",
+"2004","2007","2019","2020"]
 var current_year=0
 func _on_Learn_toggled():
-	if current_year ==0:
+	if current_year>=len(years):
+		for i in range(1,len(years)):
+			get_tree().call_group(years[i],"hide")
+			get_tree().call_group(years[i],"queue_free")
+			current_year=0
+			get_tree().call_group('1956',"hide")
+			$HUD/Learn.text='1956'
+		return
+	if current_year==0:
 		get_tree().call_group(years[current_year],"show")
 		current_year=current_year+1
 		return
