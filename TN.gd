@@ -55,8 +55,9 @@ var deselect_color:=Color.lightyellow#Color("eeffcc88")
 var selected_color_right:=Color.lightgreen
 var selected_color_wrong:=Color.lightcoral
 var district_label_text_color:=Color('f6b016')
-var border_color
-var border_width
+var border_color=Color.black#Color.firebrick
+var border_width:=2
+var border_width_highlight:=5
 var tw:=Tween.new()
 var walkpath:=Line2D.new()
 
@@ -67,36 +68,44 @@ func revert_transform(poly:Polygon2D):
 		poly.polygon = transformed_polygon
 		return poly
 		
-func merge_poly(g):
+func merge_poly(group):
+	var g=group[0]
+	var clr=group[1]
 	var main:Polygon2D=Polygon2D.new()
 	var t=Transform2D()
-	var t2=Transform2D()
 	var ddims=d[g[0]]
 	var p1=get_node(g[0]).get_child(0)
 	t.origin=Vector2(ddims[0],ddims[1])
-	ddims=d[g[1]]
-	var p2=get_node(g[1]).get_child(0)
-	t2.origin=Vector2(ddims[0],ddims[1])
-	var m=Geometry.merge_polygons_2d(t.xform(p1.polygon), 
-									t2.xform(p2.polygon) )
-	main.polygon=m[0]
-	#debug
-	#var test=main.duplicate()
-	#test.color=Color.blueviolet
-	#add_child(test)
-	var cnt=1
-	for i in range(2,len(g)):
-		ddims=d[g[i]]
-		t.origin=Vector2(ddims[0],ddims[1])
-		var tp=t.xform(get_node(g[i]).get_child(0).polygon)
-		m=Geometry.merge_polygons_2d(main.polygon, tp)
+	var m
+	if g.size()==1:
+		m=t.xform(p1.polygon)
+		main.polygon=m
+	else:
+		var t2=Transform2D()	
+		ddims=d[g[1]]
+		var p2=get_node(g[1]).get_child(0)
+		t2.origin=Vector2(ddims[0],ddims[1])
+		m=Geometry.merge_polygons_2d(t.xform(p1.polygon), 
+										t2.xform(p2.polygon) )
 		main.polygon=m[0]
 		#debug
-#		#test=main.duplicate()
-		#test.color=Color(rng.randi_range(70,200))
+		#var test=main.duplicate()
+		#test.color=Color.blueviolet
 		#add_child(test)
-		#cnt=cnt+1
-	main.color=Color(rng.randf_range(0.6,1.0), rng.randf_range(0.0,1.0), rng.randf_range(0.0,0.26))
+		for i in range(2,len(g)):
+			ddims=d[g[i]]
+			t.origin=Vector2(ddims[0],ddims[1])
+			var tp=t.xform(get_node(g[i]).get_child(0).polygon)
+			m=Geometry.merge_polygons_2d(main.polygon, tp)
+			main.polygon=m[0]
+			#debug
+	#		#test=main.duplicate()
+			#test.color=Color(rng.randi_range(70,200))
+			#add_child(test)
+			#cnt=cnt+1
+		#main.color=Color(rng.randf_range(0.6,1.0), rng.randf_range(0.0,1.0), rng.randf_range(0.0,0.26))
+	main.color=clr
+	#Color(rng.randf_range(0.1,0.54), rng.randf_range(0.3,0.8), rng.randf_range(0.2,0.91))
 	return main
 	
 var compass_colors={
@@ -163,7 +172,7 @@ func _ready():
 	rng.randomize()
 	add_child(tw)
 	add_child(walkpath)
-	VisualServer.set_default_clear_color(Color("ff000000"))
+	VisualServer.set_default_clear_color('001f3f')#Color("ff222222"))
 	for district in d.keys():
 		var a2d=Area2D.new()
 		var x=d[district][0]
@@ -191,30 +200,72 @@ func _ready():
 	$Camera2D.position=get_node('Karur').position
 	$Camera2D.zoom=Vector2(2.4, 2.4)
 	$Label.rect_scale=$Camera2D.zoom
-	add1956districts()
+	add_historic_districts("1956", dhistory[0])
 	#update()
 
-func add1956districts():
-	var d1956={
-		Salem=['Salem','Dharmapuri','Namakkal','Krishnagiri'],
-		Coimbatore=['Tiruppur','Coimbatore','Erode'],
-		Madurai=['Madurai','Dindigul','Theni'],
-		Ramanathapuram=['Ramanathapuram','Sivagangai','Virudhunagar'],
-		Tirunelveli=['Tirunelveli','Thoothukudi','Tenkasi'],
-		"North Arcot":['Tiruvannamalai','Vellore','Tirupathur','Ranipet'],
-		"South Arcot":['Cuddalore','Vilippuram','Kallakurichi'],
-		"Chinglepet":['Kanchipuram','Tiruvallur','Chengalpattu'],
-		Trichy=['Tiruchirapalli','Karur','Perumbalur','Ariyalur'],
-		Thanjavur=['Pudukotai','Thanjavur','Tiruvarur','Nagapattinam','Mayiladithurai']
-	}
-	var tmp:Polygon2D
-	for i in d1956:
-		tmp=merge_poly(d1956[i])
-		tmp.hide()
-		tmp.add_to_group("1956")
-		add_child(tmp)
-		add_label(i, d[d1956[i][0]][0], d[d1956[i][0]][1], 0.0, 0.0, '1956')
+var dhistory=[{
+#		Salem=[['Salem','Dharmapuri','Namakkal','Krishnagiri'],Color.mediumspringgreen],
+#		Coimbatore=[['Tiruppur','Coimbatore','Erode'], Color.darkgreen],
+#		Madurai=[['Madurai','Dindigul','Theni'], Color.lightgreen],
+#		Ramanathapuram=[['Ramanathapuram','Sivagangai','Virudhunagar'],Color.lemonchiffon],
+#		Tirunelveli=[['Tirunelveli','Thoothukudi','Tenkasi'],Color.honeydew],
+#		"North Arcot":[['Tiruvannamalai','Vellore','Tirupathur','Ranipet'],Color.violet],
+#		"South Arcot":[['Cuddalore','Vilippuram','Kallakurichi'], Color.lightblue],
+#		"Chinglepet":[['Chengalpattu','Kanchipuram','Tiruvallur'],Color.lightgoldenrod],
+#		Trichy=[['Tiruchirapalli','Karur','Perumbalur','Ariyalur'],Color.salmon],
+#		Thanjavur=[['Pudukotai','Thanjavur','Tiruvarur','Nagapattinam','Mayiladithurai'],Color.peachpuff],
+#		Madras=[['Chennai'], Color.yellow],
+#		Nilgiris=[['Nilgiris'],Color.greenyellow],
+#		Kanyakumari=[['Kanyakumari'],Color.gold],
 		
+	Salem=[['Salem','Dharmapuri','Namakkal','Krishnagiri'],Color.mediumspringgreen],
+	Coimbatore=[['Tiruppur','Coimbatore','Erode'], Color.darkgreen],#006400
+	Madurai=[['Madurai','Dindigul','Theni'], Color.lightgreen],#90ee90
+	Ramanathapuram=[['Ramanathapuram','Sivagangai','Virudhunagar'],Color('fffa90')], #fffacd
+	Tirunelveli=[['Tirunelveli','Thoothukudi','Tenkasi'],Color.honeydew],#f0fff0
+	"North Arcot":[['Tiruvannamalai','Vellore','Tirupathur','Ranipet'],Color.indigo],
+	"South Arcot":[['Cuddalore','Vilippuram','Kallakurichi'], Color.violet],
+	"Chinglepet":[['Chengalpattu','Kanchipuram','Tiruvallur'],Color('aa22aa')],
+	Trichy=[['Karur','Tiruchirapalli','Perumbalur','Ariyalur'],Color('ffd711')], #fa8072
+	Thanjavur=[['Pudukotai','Thanjavur','Tiruvarur','Nagapattinam','Mayiladithurai'],Color.peachpuff], #ffda89
+	Madras=[['Chennai'], Color.lightgoldenrod],
+	Nilgiris=[['Nilgiris'],Color('adff2f')],
+	Kanyakumari=[['Kanyakumari'],Color.gold],	
+	},
+	{
+		Salem=[['Salem','Namakkal'], Color.greenyellow], 
+		Dharmapuri=[['Dharmapuri','Krishnagiri'],Color.mediumspringgreen] 
+	},
+	{	
+		Thanjavur=[['Thanjavur','Tiruvarur','Nagapattinam','Mayiladithurai'],Color.peachpuff], #ffda89
+		Pudukotai=[['Pudukotai'], Color.plum]
+	},
+	{
+		Erode=[['Erode'], Color.beige],
+		Coimbatore=[['Tiruppur','Coimbatore'], Color.darkgreen]#006400
+	},
+	{
+		Ramanathapuram=[['Ramanathapuram'], Color('fffa90')],
+		Sivagangai=[['Sivagangai'],Color('ddfa90')],
+		Virudhunagar=[['Virudhunagar'],Color('bbfa90')], #fffacd
+		Dindigul=[['Dindigul'],Color.lawngreen],
+		Madurai=[['Madurai','Theni'], Color.lightgreen]#90ee90	
+	}
+	
+	]	
+
+static func merge_dict(target, patch):
+	for key in patch:
+		target[key] = patch[key]
+
+func add_historic_districts(year, data):
+	var tmp:Polygon2D
+	for i in data.keys():
+		tmp=merge_poly(data[i])
+		tmp.hide()
+		tmp.add_to_group(year)
+		add_child(tmp)
+		add_label(i, d[data[i][0][0]][0], d[data[i][0][0]][1], 0.0, 0.0, year)
 
 func _unhandled_input(event):
 	if event is InputEventKey:
@@ -277,6 +328,7 @@ func highlight_district(district, show_neighbours:=true, path:=false):
 				deselect()
 				$Label.text=''
 				selected_district=''
+				update() # redraw borders
 				return
 	else:
 		get_node('lbl'+district).show()
@@ -302,32 +354,25 @@ func highlight_district(district, show_neighbours:=true, path:=false):
 			#tw.interpolate_property(i.get_child(0), 'color', deselect_color, deselect_color.blend("aa66aa22"),1)
 			#tw.start()
 			#yield(tw,"tween_completed")
-	update()
+	update() # redraw borders
 			
 func deselect():
 	for district in d.keys():
 		get_node(district).get_child(0).color=deselect_color
 
 func _draw():
-	for i in d.keys():
-		var poly=PoolVector2Array(get_node(i).get_child(0).polygon)
-		if i == selected_district:
-			draw_border(poly, i, true)
-		else:
-			draw_border(poly, i, false)
-			
-func draw_border(poly:PoolVector2Array, dist:String, selected:bool):
-	var cnt=poly.size()
-	var center_at=Vector2(d[dist][0], d[dist][1])
-	if selected:
-		border_color=Color.black
-		border_width=5
-	else:
-		border_color=Color.black
-		border_width=2
-	for i in range(1, cnt):
-		draw_line(poly[i-1]+center_at, poly[i]+center_at, border_color, border_width )
-	draw_line(poly[cnt-1]+center_at, poly[0]+center_at, border_color, border_width )
+	for dx in d.keys():
+		var poly=PoolVector2Array(get_node(dx).get_child(0).polygon)
+		var cnt=poly.size()
+		var center_at=Vector2(d[dx][0], d[dx][1])
+		if dx != selected_district:
+			for i in range(1, cnt):
+				draw_line(poly[i-1]+center_at, poly[i]+center_at, border_color, border_width )
+			draw_line(poly[cnt-1]+center_at, poly[0]+center_at, border_color, border_width )
+		else:		
+			for i in range(1, cnt):
+				draw_line(poly[i-1]+center_at, poly[i]+center_at, border_color, border_width_highlight )
+			draw_line(poly[cnt-1]+center_at, poly[0]+center_at, border_color, border_width_highlight )
 	
 func _on_Button_pressed():
 	reset()
@@ -534,10 +579,17 @@ func _on_Player_hit(name):
 		#print('Gopal has wandered into '+ name+' '+str($Camera2D/Gopal.global_position))		
 		highlight_district(name, false)
 
-
-func _on_Learn_toggled(button_pressed):
-	if button_pressed:
-		get_tree().call_group("1956","show")
-	else:
-		get_tree().call_group("1956","hide")
-
+var years=["1956","1965","1974","1979","1985","1986","1989","1991","1993","1995","1996","1997","2004","2007","2019","2020"]
+var current_year=0
+func _on_Learn_toggled():
+	if current_year ==0:
+		get_tree().call_group(years[current_year],"show")
+		current_year=current_year+1
+		return
+	get_tree().call_group(years[current_year-1],"hide")
+	merge_dict(dhistory[0], dhistory[current_year])
+	add_historic_districts(years[current_year], dhistory[0])
+	$HUD/Learn.text=years[current_year]
+	current_year=current_year+1
+	get_tree().call_group(years[current_year-1],"show")
+		
