@@ -198,6 +198,7 @@ func _ready():
 	$HUD/E.connect("toggled",self, "_compass_toggled", ["East"])
 	$HUD/W.connect("toggled",self, "_compass_toggled", ["West"])
 	$Camera2D.position=get_node('Karur').position
+	$Camera2D/Gopal.position=Vector2(-1*get_viewport().size.x/2+50,0)
 	$Camera2D.zoom=Vector2(2.4, 2.4)
 	$Label.rect_scale=$Camera2D.zoom
 	add_historic_districts("1956", dhistory[0])
@@ -322,6 +323,8 @@ func add_historic_districts(year, data):
 	for i in data.keys():
 		tmp=merge_poly(data[i])
 		tmp.hide()
+		tmp.show_behind_parent=true
+		tmp.name=i+'history'#year
 		tmp.add_to_group(year)
 		add_child(tmp)
 		add_label(i, d[data[i][0][0]][0], d[data[i][0][0]][1], 0.0, 0.0, year)
@@ -420,18 +423,29 @@ func deselect():
 		get_node(district).get_child(0).color=deselect_color
 
 func _draw():
-	for dx in d.keys():
-		var poly=PoolVector2Array(get_node(dx).get_child(0).polygon)
-		var cnt=poly.size()
-		var center_at=Vector2(d[dx][0], d[dx][1])
-		if dx != selected_district:
+	if current_year > 0:
+		for dx in dhistory[0]:
+			var poly=PoolVector2Array(get_node(dx+'history').polygon)
+			var cnt=poly.size()
+			var x=0.0 #d[ dhistory[0][dx][0][0] ][0]
+			var y=0.0 #d[ dhistory[0][dx][0][0] ][1]
+			var center_at=Vector2(x, y)
 			for i in range(1, cnt):
-				draw_line(poly[i-1]+center_at, poly[i]+center_at, border_color, border_width )
-			draw_line(poly[cnt-1]+center_at, poly[0]+center_at, border_color, border_width )
-		else:		
-			for i in range(1, cnt):
-				draw_line(poly[i-1]+center_at, poly[i]+center_at, border_color, border_width_highlight )
-			draw_line(poly[cnt-1]+center_at, poly[0]+center_at, border_color, border_width_highlight )
+				draw_line(poly[i-1]+center_at, poly[i]+center_at, border_color, border_width)
+			draw_line(poly[cnt-1]+center_at, poly[0]+center_at, border_color, border_width)
+	else:
+		for dx in d.keys():
+			var poly=PoolVector2Array(get_node(dx).get_child(0).polygon)
+			var cnt=poly.size()
+			var center_at=Vector2(d[dx][0], d[dx][1])
+			if dx != selected_district:
+				for i in range(1, cnt):
+					draw_line(poly[i-1]+center_at, poly[i]+center_at, border_color, border_width )
+				draw_line(poly[cnt-1]+center_at, poly[0]+center_at, border_color, border_width )
+			else:		
+				for i in range(1, cnt):
+					draw_line(poly[i-1]+center_at, poly[i]+center_at, border_color, border_width_highlight )
+				draw_line(poly[cnt-1]+center_at, poly[0]+center_at, border_color, border_width_highlight )
 	
 func _on_Button_pressed():
 	reset()
@@ -659,6 +673,7 @@ func _on_Learn_toggled():
 	get_tree().call_group(years[current_year-1],"hide")
 	merge_dict(dhistory[0], dhistory[current_year])
 	add_historic_districts(years[current_year], dhistory[0])
+	update()
 	$HUD/Learn.text=years[current_year]
 	current_year=current_year+1
 	get_tree().call_group(years[current_year-1],"show")
