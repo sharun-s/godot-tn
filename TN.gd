@@ -201,8 +201,7 @@ func _ready():
 	$Camera2D/Gopal.position=Vector2(-1*get_viewport().size.x/2+50,0)
 	$Camera2D.zoom=Vector2(2.4, 2.4)
 	$Label.rect_scale=$Camera2D.zoom
-	add_historic_districts("1956", dhistory[0])
-	#update()
+
 
 var dhistory=[{
 #		Salem=[['Salem','Dharmapuri','Namakkal','Krishnagiri'],Color.mediumspringgreen],
@@ -219,12 +218,12 @@ var dhistory=[{
 #		Nilgiris=[['Nilgiris'],Color.greenyellow],
 #		Kanyakumari=[['Kanyakumari'],Color.gold],
 		
-	Salem=[['Salem','Dharmapuri','Namakkal','Krishnagiri'],Color.mediumspringgreen],
-	Coimbatore=[['Tiruppur','Coimbatore','Erode'], Color.darkgreen],#006400
-	Madurai=[['Madurai','Dindigul','Theni'], Color.lightgreen],#90ee90
-	Ramanathapuram=[['Ramanathapuram','Sivagangai','Virudhunagar'],Color('fffa90')], #fffacd
-	Tirunelveli=[['Tirunelveli','Thoothukudi','Tenkasi'],Color.honeydew],#f0fff0
-	"North Arcot":[['Tiruvannamalai','Vellore','Tirupathur','Ranipet'],Color.indigo],
+	Salem=[['Salem', 'Dharmapuri', 'Namakkal', 'Krishnagiri'],Color.mediumspringgreen],
+	Coimbatore=[['Tiruppur', 'Coimbatore', 'Erode'], Color.darkgreen],#006400
+	Madurai=[['Madurai', 'Dindigul', 'Theni'], Color.lightgreen],#90ee90
+	Ramanathapuram=[['Ramanathapuram', 'Sivagangai','Virudhunagar'], Color('fffa90')], #fffacd
+	Tirunelveli=[['Tirunelveli', 'Thoothukudi', 'Tenkasi'], Color.honeydew],#f0fff0
+	"North Arcot":[['Tiruvannamalai', 'Vellore', 'Tirupathur','Ranipet'],Color.indigo],
 	"South Arcot":[['Cuddalore','Vilippuram','Kallakurichi'], Color.violet],
 	"Chinglepet":[['Chengalpattu','Kanchipuram','Tiruvallur'],Color('aa22aa')],
 	Trichy=[['Karur','Tiruchirapalli','Perumbalur','Ariyalur'],Color('ffd711')], #fa8072
@@ -234,51 +233,51 @@ var dhistory=[{
 	Kanyakumari=[['Kanyakumari'],Color.gold],	
 	},
 	{
-		Salem=[['Salem','Namakkal'], Color.greenyellow], 
+		Salem=[['Salem','Namakkal'], Color.mediumspringgreen.lightened(.2)], 
 		Dharmapuri=[['Dharmapuri','Krishnagiri'],Color.mediumspringgreen] 
 	},
 	{	
 		Thanjavur=[['Thanjavur','Tiruvarur','Nagapattinam','Mayiladithurai'],Color.peachpuff], #ffda89
-		Pudukotai=[['Pudukotai'], Color.plum]
+		Pudukotai=[['Pudukotai'], Color.peachpuff.lightened(.2)]
 	},
 	{
-		Erode=[['Erode'], Color.beige],
+		Erode=[['Erode'], Color.darkgreen.lightened(.2)],
 		Coimbatore=[['Tiruppur','Coimbatore'], Color.darkgreen]#006400
 	},
 	{
 		Ramanathapuram=[['Ramanathapuram'], Color('fffa90')],
-		Sivagangai=[['Sivagangai'],Color('ddfa90')],
-		Virudhunagar=[['Virudhunagar'],Color('bbfa90')], #fffacd
-		Dindigul=[['Dindigul'],Color.lawngreen],
+		Sivagangai=[['Sivagangai'], Color('fffa90').lightened(.2)],
+		Virudhunagar=[['Virudhunagar'], Color.lightgreen.lightened(.3)], #fffacd
+		Dindigul=[['Dindigul'], Color.lightgreen.lightened(.1)],
 		Madurai=[['Madurai','Theni'], Color.lightgreen]#90ee90	
 	},
 	{
 		Tirunelveli=[['Tirunelveli','Tenkasi'],Color.honeydew],#f0fff0
-		Thoothukudi=[['Thoothukudi'],Color.darkkhaki]#f0fff0
+		Thoothukudi=[['Thoothukudi'],Color.honeydew.darkened(.2)]#f0fff0
 	},
 	{
 		#"North Arcot":[[],Color.transparent],
 		Tiruvannamalai=[['Tiruvannamalai','Tirupathur'],Color.indigo],
-		Vellore=[['Vellore','Ranipet'],Color.papayawhip]
+		Vellore=[['Vellore','Ranipet'],Color.indigo.lightened(.3)]
 	},
 	{
-		Thanjavur=[['Thanjavur'],Color.skyblue], #ffda89 
-		Tiruvarur=[['Tiruvarur','Mayiladithurai'],Color.peachpuff], #ffda89
-		Nagapattinam=[['Nagapattinam'],Color.floralwhite] #ffda89
+		Thanjavur=[['Thanjavur'], Color.skyblue], #ffda89 
+		Tiruvarur=[['Tiruvarur','Mayiladithurai'], Color.skyblue.darkened(.2)], #ffda89
+		Nagapattinam=[['Nagapattinam'], Color.skyblue.darkened(.4)] #ffda89
 	},
 	{
 		#"South Arcot":[[],Color.transparent],
 		"Cuddalore":[['Cuddalore'], Color.violet],
-		"Viluppuram":[['Vilippuram','Kallakurichi'], Color.violet]
+		"Viluppuram":[['Vilippuram','Kallakurichi'], Color.violet.lightened(.3)]
 	},
 	{	
-		'Tiruchirapalli':[['Tiruchirapalli'],Color('ffd711')],
-		"Perambalur":[['Perumbalur','Ariyalur'],Color('ddd711')],
-		"Karur":[['Karur'],Color('ccc711')]
+		'Tiruchirapalli':[['Tiruchirapalli'], Color('ffd711').contrasted()],
+		"Perambalur":[['Perumbalur','Ariyalur'], Color('ffd711').darkened(.2)],
+		"Karur":[['Karur'], Color('ffd711').darkened(.4)]
 	},
 	{
 		Madurai=[['Madurai'], Color.lightgreen],#90ee90
-		Theni=[['Theni'], Color.green]#90ee90
+		Theni=[['Theni'], Color.lightgreen.darkened(.3)]#90ee90
 	}, 
 	{	
 		"Namakkal":[['Namakkal'], Color.yellow],
@@ -327,7 +326,9 @@ func add_historic_districts(year, data):
 		tmp.name=i+'history'#year
 		tmp.add_to_group(year)
 		add_child(tmp)
-		add_label(i, d[data[i][0][0]][0], d[data[i][0][0]][1], 0.0, 0.0, year)
+		if i in dhistory[current_year]:
+			#print(year,' adding ', i)
+			add_label(i, d[data[i][0][0]][0], d[data[i][0][0]][1], 0.0, 0.0, year)
 
 func _unhandled_input(event):
 	if event is InputEventKey:
@@ -423,16 +424,14 @@ func deselect():
 		get_node(district).get_child(0).color=deselect_color
 
 func _draw():
-	if current_year > 0:
+	if game_in_progress==2:
 		for dx in dhistory[0]:
-			var poly=PoolVector2Array(get_node(dx+'history').polygon)
-			var cnt=poly.size()
-			var x=0.0 #d[ dhistory[0][dx][0][0] ][0]
-			var y=0.0 #d[ dhistory[0][dx][0][0] ][1]
-			var center_at=Vector2(x, y)
-			for i in range(1, cnt):
-				draw_line(poly[i-1]+center_at, poly[i]+center_at, border_color, border_width)
-			draw_line(poly[cnt-1]+center_at, poly[0]+center_at, border_color, border_width)
+			if dx in dhistory[current_year-1]:
+				var poly=PoolVector2Array(get_node(dx+'history').polygon)
+				var cnt=poly.size()
+				for i in range(1, cnt):
+					draw_line(poly[i-1], poly[i], border_color, border_width_highlight)
+				draw_line(poly[cnt-1], poly[0], border_color, border_width_highlight)
 	else:
 		for dx in d.keys():
 			var poly=PoolVector2Array(get_node(dx).get_child(0).polygon)
@@ -477,6 +476,7 @@ func game_over():
 	$Camera2D.position=get_node('Karur').position
 	show_compass()
 	game_in_progress=0
+	update() # redraw borders
 
 func blink(district, color):
 	var dx=get_node(district).get_child(0)
@@ -504,11 +504,12 @@ func timed_msg(msg, showafter, blink:=0, blinkcolor:=Color.green):
 func process(_delta):
 	walkpath.show()
 
-func reset():
+func reset(game_num:=100):
 	score=0
 	attempts=0
 	$HUD/Button.hide()
-	$HUD/Learn.hide()
+	if game_num!=2:
+		$HUD/Learn.hide()
 	hide_compass()
 	if selected_district!='':
 		deselect()
@@ -597,7 +598,6 @@ func _on_TN_ready():
 	yield($Timer,"timeout")
 	var rd=get_node('Tiruvannamalai')
 	var oa=rd.get_overlapping_areas()
-	print(oa.size())
 	for i in oa:
 		if i.name=='Gopal':
 			continue
@@ -607,14 +607,12 @@ func _on_TN_ready():
 	get_node('Tiruvannamalai').add_to_group('North')
 	
 	oa=get_node('Virudhunagar').get_overlapping_areas()
-	print(oa.size())
 	for i in oa:
 		if i.name=='Gopal':
 			continue
 		i.add_to_group("South")
 	get_node('Virudhunagar').add_to_group('South')
 	oa=get_node('Tirunelveli').get_overlapping_areas()
-	print(oa.size())
 	for i in oa:
 		if i.name=='Gopal':
 			continue
@@ -622,7 +620,6 @@ func _on_TN_ready():
 	get_node('Tirunelveli').add_to_group('South')
 	
 	oa=get_node('Ariyalur').get_overlapping_areas()
-	print(oa.size())
 	for i in oa:
 		if i.name=='Gopal':
 			continue
@@ -634,7 +631,6 @@ func _on_TN_ready():
 	get_node('Nagapattinam').add_to_group('East')
 		
 	oa=get_node('Tiruppur').get_overlapping_areas()
-	print(oa.size())
 	for i in oa:
 		if i.name=='Gopal':
 			continue
@@ -658,18 +654,29 @@ var years=["1956","1965","1974","1979",
 "2004","2007","2019","2020"]
 var current_year=0
 func _on_Learn_toggled():
+	if game_in_progress!=2:
+		game_in_progress=2
+		reset(2)
+		#TODO if groups already exist dont recreate simply
+		add_historic_districts("1956", dhistory[0])
+		get_tree().call_group(years[current_year],"show")
+		current_year=current_year+1
+		update() # careful draw uses current_year - 1 
+		return
+	print(get_tree().get_node_count())
 	if current_year>=len(years):
-		for i in range(1,len(years)):
+		for i in range(0,len(years)):
 			get_tree().call_group(years[i],"hide")
 			get_tree().call_group(years[i],"queue_free")
 			current_year=0
 			get_tree().call_group('1956',"hide")
 			$HUD/Learn.text='1956'
+		game_over()
 		return
-	if current_year==0:
-		get_tree().call_group(years[current_year],"show")
-		current_year=current_year+1
-		return
+	#if current_year==0:
+	#	get_tree().call_group(years[current_year],"show")
+	#	current_year=current_year+1
+	#	return
 	get_tree().call_group(years[current_year-1],"hide")
 	merge_dict(dhistory[0], dhistory[current_year])
 	add_historic_districts(years[current_year], dhistory[0])
