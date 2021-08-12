@@ -67,10 +67,10 @@ func revert_transform(poly:Polygon2D):
 		poly.transform = Transform2D.IDENTITY
 		poly.polygon = transformed_polygon
 		return poly
-		
-func merge_poly(group):
-	var g=group[0]
-	var clr=group[1]
+
+func merge_poly(history_item):
+	var g=history_item[0]
+	var clr=history_item[1]
 	var main:Polygon2D=Polygon2D.new()
 	var t=Transform2D()
 	var ddims=d[g[0]]
@@ -271,7 +271,7 @@ var dhistory=[{
 		"Viluppuram":[['Vilippuram','Kallakurichi'], Color.violet.lightened(.3)]
 	},
 	{	
-		'Tiruchirapalli':[['Tiruchirapalli'], Color('ffd711').contrasted()],
+		'Tiruchirapalli':[['Tiruchirapalli'], Color('ffd711')],
 		"Perambalur":[['Perumbalur','Ariyalur'], Color('ffd711').darkened(.2)],
 		"Karur":[['Karur'], Color('ffd711').darkened(.4)]
 	},
@@ -280,36 +280,36 @@ var dhistory=[{
 		Theni=[['Theni'], Color.lightgreen.darkened(.3)]#90ee90
 	}, 
 	{	
-		"Namakkal":[['Namakkal'], Color.yellow],
-		Salem=[['Salem'], Color.greenyellow],
+		"Namakkal":[['Namakkal'], Color.mediumspringgreen.darkened(.3)],
+		Salem=[['Salem'], Color.mediumspringgreen],
 		#"Chinglepet":[[],Color.transparent],
 		"Tiruvallur":[['Tiruvallur'],Color('aa22aa')],
 		"Kanchipuram":[['Chengalpattu','Kanchipuram'],Color('bb55bb')],
 	},  
-	{	Dharmapuri=[['Dharmapuri'],Color.mediumspringgreen], 
-		"Krishnagiri":[['Krishnagiri'],Color.springgreen] 
+	{	Dharmapuri=[['Dharmapuri'],Color.mediumspringgreen.darkened(.4)], 
+		"Krishnagiri":[['Krishnagiri'],Color.mediumspringgreen.darkened(.7)] 
 	},
 	{	
 		"Perambalur":[['Perumbalur'],Color('ddd711')],
-		"Ariyalur":[['Ariyalur'],Color('ddd711')],
-		"Tiruppur":[['Tiruppur'], Color.darkgreen],
-		Coimbatore=[['Coimbatore'], Color.darkseagreen]
+		"Ariyalur":[['Ariyalur'],Color('ddd711').lightened(.3)],
+		"Tiruppur":[['Tiruppur'], Color.darkgreen.lightened(.5)],
+		Coimbatore=[['Coimbatore'], Color.darkgreen]
 	},
 	{
-		"Tenkasi":[['Tenkasi'],Color.honeydew],
+		"Tenkasi":[['Tenkasi'],Color.honeydew.darkened(.3)],
 		Tirunelveli=[['Tirunelveli'],Color.honeydew],
-		"Kallakurichi":[['Kallakurichi'], Color.palevioletred],
-		"Viluppuram":[['Vilippuram'], Color.violet],
-		"Tirupattur":[['Tirupathur'],Color.coral],
+		"Kallakurichi":[['Kallakurichi'], Color.violet.lightened(.8)],
+		"Viluppuram":[['Vilippuram'], Color.violet.lightened(.3)],
+		"Tirupattur":[['Tirupathur'],Color.indigo.darkened(.4)],
 		Tiruvannamalai=[['Tiruvannamalai'],Color.indigo],
-		Vellore=[['Vellore'],Color.white],
-		"Ranipet":[['Ranipet'],Color.papayawhip],
+		Vellore=[['Vellore'],Color.indigo.lightened(.3)],
+		"Ranipet":[['Ranipet'],Color.indigo.lightened(.6)],
 		"Kanchipuram":[['Kanchipuram'],Color('bb55bb')],
-		"Chengalpattu":[['Chengalpattu'],Color('9955bb')],
+		"Chengalpattu":[['Chengalpattu'],Color('bb55bb').darkened(.4)],
 	},
 	{
-		"Mayiladuthurai":[['Mayiladithurai'],Color.peachpuff], #ffda89
-		Tiruvarur=[['Tiruvarur'],Color.peru], #ffda89	
+		"Mayiladuthurai":[['Mayiladithurai'],Color.skyblue.darkened(.6)], #ffda89
+		Tiruvarur=[['Tiruvarur'],Color.skyblue.darkened(.2)], #ffda89	
 	}
 	]	
 
@@ -325,9 +325,13 @@ func add_historic_districts(year, data):
 		tmp.show_behind_parent=true
 		tmp.name=i+'history'#year
 		tmp.add_to_group(year)
+		if has_node(i+'history'):
+			remove_child(get_node(i+'history'))
 		add_child(tmp)
-		if i in dhistory[current_year]:
-			#print(year,' adding ', i)
+		if has_node('lbl'+i):
+			get_node('lbl'+i).show()
+			get_node('lbl'+i).add_to_group(year)
+		else:
 			add_label(i, d[data[i][0][0]][0], d[data[i][0][0]][1], 0.0, 0.0, year)
 
 func _unhandled_input(event):
@@ -425,13 +429,12 @@ func deselect():
 
 func _draw():
 	if game_in_progress==2:
-		for dx in dhistory[0]:
-			if dx in dhistory[current_year-1]:
-				var poly=PoolVector2Array(get_node(dx+'history').polygon)
-				var cnt=poly.size()
-				for i in range(1, cnt):
-					draw_line(poly[i-1], poly[i], border_color, border_width_highlight)
-				draw_line(poly[cnt-1], poly[0], border_color, border_width_highlight)
+		for dx in dhistory[current_year-1]:
+			var poly=PoolVector2Array(get_node(dx+'history').polygon)
+			var cnt=poly.size()
+			for i in range(1, cnt):
+				draw_line(poly[i-1], poly[i], border_color, border_width_highlight)
+			draw_line(poly[cnt-1], poly[0], border_color, border_width_highlight)
 	else:
 		for dx in d.keys():
 			var poly=PoolVector2Array(get_node(dx).get_child(0).polygon)
@@ -653,17 +656,19 @@ var years=["1956","1965","1974","1979",
 "1993","1995","1996","1997",
 "2004","2007","2019","2020"]
 var current_year=0
+
 func _on_Learn_toggled():
-	if game_in_progress!=2:
+	print('STEP ***********', get_tree().get_node_count())
+	if game_in_progress!=2: 
 		game_in_progress=2
 		reset(2)
+		print('resetting ', current_year)
 		#TODO if groups already exist dont recreate simply
-		add_historic_districts("1956", dhistory[0])
+		add_historic_districts(years[current_year], dhistory[0])
 		get_tree().call_group(years[current_year],"show")
 		current_year=current_year+1
 		update() # careful draw uses current_year - 1 
 		return
-	print(get_tree().get_node_count())
 	if current_year>=len(years):
 		for i in range(0,len(years)):
 			get_tree().call_group(years[i],"hide")
@@ -672,14 +677,17 @@ func _on_Learn_toggled():
 			get_tree().call_group('1956',"hide")
 			$HUD/Learn.text='1956'
 		game_over()
+		print('after queue free ***********', get_tree().get_node_count())
 		return
 	#if current_year==0:
 	#	get_tree().call_group(years[current_year],"show")
 	#	current_year=current_year+1
 	#	return
-	get_tree().call_group(years[current_year-1],"hide")
-	merge_dict(dhistory[0], dhistory[current_year])
-	add_historic_districts(years[current_year], dhistory[0])
+	get_tree().set_group(years[current_year-1],"modulate",Color(0.3,1.0,0.0,.2))
+	#get_tree().call_group(years[current_year-1],"hide")
+	
+	#merge_dict(dhistory[0], dhistory[current_year])
+	add_historic_districts(years[current_year], dhistory[current_year])
 	update()
 	$HUD/Learn.text=years[current_year]
 	current_year=current_year+1
