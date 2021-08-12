@@ -204,19 +204,6 @@ func _ready():
 
 
 var dhistory=[{
-#		Salem=[['Salem','Dharmapuri','Namakkal','Krishnagiri'],Color.mediumspringgreen],
-#		Coimbatore=[['Tiruppur','Coimbatore','Erode'], Color.darkgreen],
-#		Madurai=[['Madurai','Dindigul','Theni'], Color.lightgreen],
-#		Ramanathapuram=[['Ramanathapuram','Sivagangai','Virudhunagar'],Color.lemonchiffon],
-#		Tirunelveli=[['Tirunelveli','Thoothukudi','Tenkasi'],Color.honeydew],
-#		"North Arcot":[['Tiruvannamalai','Vellore','Tirupathur','Ranipet'],Color.violet],
-#		"South Arcot":[['Cuddalore','Vilippuram','Kallakurichi'], Color.lightblue],
-#		"Chinglepet":[['Chengalpattu','Kanchipuram','Tiruvallur'],Color.lightgoldenrod],
-#		Trichy=[['Tiruchirapalli','Karur','Perumbalur','Ariyalur'],Color.salmon],
-#		Thanjavur=[['Pudukotai','Thanjavur','Tiruvarur','Nagapattinam','Mayiladithurai'],Color.peachpuff],
-#		Madras=[['Chennai'], Color.yellow],
-#		Nilgiris=[['Nilgiris'],Color.greenyellow],
-#		Kanyakumari=[['Kanyakumari'],Color.gold],
 		
 	Salem=[['Salem', 'Dharmapuri', 'Namakkal', 'Krishnagiri'],Color.mediumspringgreen],
 	Coimbatore=[['Tiruppur', 'Coimbatore', 'Erode'], Color.darkgreen],#006400
@@ -233,12 +220,12 @@ var dhistory=[{
 	Kanyakumari=[['Kanyakumari'],Color.gold],	
 	},
 	{
-		Salem=[['Salem','Namakkal'], Color.mediumspringgreen.lightened(.2)], 
-		Dharmapuri=[['Dharmapuri','Krishnagiri'],Color.mediumspringgreen] 
+		Salem=[['Salem','Namakkal'], Color.mediumspringgreen], 
+		Dharmapuri=[['Dharmapuri','Krishnagiri'],Color.mediumspringgreen.darkened(.4)] 
 	},
 	{	
 		Thanjavur=[['Thanjavur','Tiruvarur','Nagapattinam','Mayiladithurai'],Color.peachpuff], #ffda89
-		Pudukotai=[['Pudukotai'], Color.peachpuff.lightened(.2)]
+		Pudukotai=[['Pudukotai'], Color.peachpuff.darkened(.3)]
 	},
 	{
 		Erode=[['Erode'], Color.darkgreen.lightened(.2)],
@@ -595,7 +582,8 @@ func _on_Labels_toggled(button_pressed):
 	else:
 		get_tree().set_group("dlabels","visible",false)
 		$HUD/Labels["modulate"]=Color(1.0, 1.0, 1.0)
-		
+
+var cell=preload("res://cell.tscn")
 func _on_TN_ready():
 	$Timer.start(1)
 	yield($Timer,"timeout")
@@ -644,6 +632,16 @@ func _on_TN_ready():
 	get_node('Nilgiris').add_to_group('West')
 	#if OS.get_name()=='Android':
 	#	$HUD/Message.anchor_left=.45
+	var c=cell.instance()
+	add_child(c)
+	c.start(
+		[{node=get_node('Salem'),loc=d['Salem']}],
+		[{node=get_node('Salem'),loc=d['Salem']}, 
+		{node=get_node('Dharmapuri'),loc=d['Dharmapuri']}, 
+		#{node=get_node('Krishnagiri'),loc=d['Krishnagiri']}, 
+		#{node=get_node('Namakkal'),loc=d['Namakkal']}
+		])
+	
 		
 func _on_Player_hit(name):
 	#$HUD/Message.text='Gopal has wandered into '+ name
