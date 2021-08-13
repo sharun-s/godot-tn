@@ -16,7 +16,7 @@ func movecell(x):
 
 var inc=0.0
 var drawcenters=false
-var speed=0.01
+var speed=0.05
 
 func _draw():
 	if drawpoly:
@@ -39,7 +39,7 @@ func start(o, n):
 	oldpolys=o
 	newpolys=n	
 	for i in oldpolys:
-		oldcenters.append(i.node.position)
+		oldcenters.append(i.loc)
 	for i in newpolys:
 		#$Tween.interpolate_method(self, "movecell", oldcenters[0], Vector2(i.loc[0], i.loc[1]), .8)	
 		$Tween.interpolate_method(self, "movecell", oldcenters[0], i.loc, .8)
@@ -51,6 +51,7 @@ func _on_Tween_tween_all_completed():
 	drawcenters=false
 	$Tween.remove_all()
 	todraw.clear()
+	oldcenters.clear()
 	for i in newpolys:
 		#var t=Transform2D()
 		var ddims=Vector2(i.loc[0],i.loc[1])
