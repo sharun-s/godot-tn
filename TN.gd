@@ -204,7 +204,6 @@ func _ready():
 
 
 var dhistory=[{
-		
 	Salem=[['Salem', 'Dharmapuri', 'Namakkal', 'Krishnagiri'],Color.mediumspringgreen],
 	Coimbatore=[['Tiruppur', 'Coimbatore', 'Erode'], Color.darkgreen],#006400
 	Madurai=[['Madurai', 'Dindigul', 'Theni'], Color.lightgreen],#90ee90
@@ -337,7 +336,6 @@ func on_district_select(_viewport, event, _idx, district):
 	if event is InputEventScreenDrag:
 		walkpath.add_point(get_node(district).position)
 		highlight_district(district, false, true)
-		#print(event, district)
 
 func select(district):
 	if game_in_progress==1:
@@ -415,7 +413,7 @@ func deselect():
 		get_node(district).get_child(0).color=deselect_color
 
 func _draw():
-	if game_in_progress==2:
+	if game_in_progress==2 and clear_borders==false:
 		for dx in dhistory[current_year-1]:
 			var poly=PoolVector2Array(get_node(dx+'history').polygon)
 			var cnt=poly.size()
@@ -467,6 +465,13 @@ func game_over():
 	show_compass()
 	game_in_progress=0
 	update() # redraw borders
+	var tree=get_tree()
+#	for i in years:
+#		var ng=tree.get_nodes_in_group(i)
+#		print(i,' ', tree.has_group(i), ' ',ng.size())
+#		for j in ng:
+#			print(j.name)
+	print('GAME OVER ******',tree.get_node_count())
 
 func blink(district, color):
 	var dx=get_node(district).get_child(0)
@@ -494,12 +499,26 @@ func timed_msg(msg, showafter, blink:=0, blinkcolor:=Color.green):
 func process(_delta):
 	walkpath.show()
 
+func borders(show):
+	if show:
+		clear_borders=false
+		border_width=2
+		border_color=Color.black
+		update()
+	else:
+		clear_borders=true
+		border_width=0
+		border_color=Color.transparent
+		update()
+
 func reset(game_num:=100):
 	score=0
 	attempts=0
 	$HUD/Button.hide()
 	if game_num!=2:
 		$HUD/Learn.hide()
+	else:
+		borders(false)
 	hide_compass()
 	if selected_district!='':
 		deselect()
@@ -508,7 +527,7 @@ func reset(game_num:=100):
 
 func fullwalktest():
 	reset()
-	game_in_progress=2
+	game_in_progress=3
 	var current='Chennai'
 	var visited=[current]
 	$Camera2D/Gopal/CollisionShape2D.disabled = true
@@ -584,6 +603,8 @@ func _on_Labels_toggled(button_pressed):
 		$HUD/Labels["modulate"]=Color(1.0, 1.0, 1.0)
 
 var cell=preload("res://cell.tscn")
+var district_animator
+
 func _on_TN_ready():
 	$Timer.start(1)
 	yield($Timer,"timeout")
@@ -632,16 +653,8 @@ func _on_TN_ready():
 	get_node('Nilgiris').add_to_group('West')
 	#if OS.get_name()=='Android':
 	#	$HUD/Message.anchor_left=.45
-	var c=cell.instance()
-	add_child(c)
-	c.start(
-		[{node=get_node('Salem'),loc=d['Salem']}],
-		[{node=get_node('Salem'),loc=d['Salem']}, 
-		{node=get_node('Dharmapuri'),loc=d['Dharmapuri']}, 
-		#{node=get_node('Krishnagiri'),loc=d['Krishnagiri']}, 
-		#{node=get_node('Namakkal'),loc=d['Namakkal']}
-		])
-	
+	district_animator=cell.instance()
+	add_child(district_animator)
 		
 func _on_Player_hit(name):
 	#$HUD/Message.text='Gopal has wandered into '+ name
@@ -655,14 +668,40 @@ var years=["1956","1965","1974","1979",
 "2004","2007","2019","2020"]
 var current_year=0
 
+func name(n):
+	#print(n.name)
+	if n.name == 'North Arcothistory':
+		return 'Tiruvannamalai'
+	elif n.name == 'South Arcothistory':
+		return 'Cuddalore'
+	elif n.name == 'Chinglepethistory':
+		return 'Kanchipuram' 
+	elif n.name == 'Trichyhistory':
+		return 'Tiruchirapalli' 
+	elif n.name == 'Madrashistory':
+		return 'Chennai' 
+	else:
+		return n.name.replace('history','')
+
+var clear_borders:=false
 func _on_Learn_toggled():
-	print('STEP ***********', get_tree().get_node_count())
-	if game_in_progress!=2: 
+	#print('STEP ***********', get_tree().get_node_count())
+	var old
+	var newlist
+	if game_in_progress!=2:		 
 		game_in_progress=2
 		reset(2)
-		print('resetting ', current_year)
-		#TODO if groups already exist dont recreate simply
 		add_historic_districts(years[current_year], dhistory[0])
+		# using karur as proxy center
+		old=[{node=get_node('Karur'),loc=d['Karur']}]
+		newlist=[]
+		for n in get_tree().get_nodes_in_group(years[current_year]):
+			if n is Polygon2D:
+				#newlist.append({node=n, loc=d[name(n)]})
+				newlist.append({node=n, loc=get_node(name(n)).position}) #d[name(n)]})
+		district_animator.start(old, newlist)
+		yield(district_animator, "move_complete")
+		borders(true)
 		get_tree().call_group(years[current_year],"show")
 		current_year=current_year+1
 		update() # careful draw uses current_year - 1 
@@ -677,16 +716,23 @@ func _on_Learn_toggled():
 		game_over()
 		print('after queue free ***********', get_tree().get_node_count())
 		return
-	#if current_year==0:
-	#	get_tree().call_group(years[current_year],"show")
-	#	current_year=current_year+1
-	#	return
-	get_tree().set_group(years[current_year-1],"modulate",Color(0.3,1.0,0.0,.2))
+	get_tree().set_group(years[current_year-1],"modulate",Color(0.3,1.0,0.0,.7))
 	#get_tree().call_group(years[current_year-1],"hide")
-	
-	#merge_dict(dhistory[0], dhistory[current_year])
+	newlist=[]
+	#for key in dhistory[current_year]:
+	#	old.append({node=get_node(key+'history'), loc=get_node(key).position})
+	var key=dhistory[current_year].keys()[0]
+	old=[{node=get_node(key+'history'), loc=get_node(key).position}]
 	add_historic_districts(years[current_year], dhistory[current_year])
-	update()
+	for n in get_tree().get_nodes_in_group(years[current_year]):
+		if n is Polygon2D:
+			#newlist.append({node=n, loc=d[name(n)]})
+			newlist.append({node=n, loc=get_node(name(n)).position}) #d[name(n)]})
+	print(years[current_year], ' ',newlist.size())
+	district_animator.start(old, newlist)
+	yield(district_animator, "move_complete")
+	get_tree().call_group(years[current_year],"show")
+	borders(true)
 	$HUD/Learn.text=years[current_year]
 	current_year=current_year+1
 	get_tree().call_group(years[current_year-1],"show")
