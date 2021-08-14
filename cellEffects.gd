@@ -6,6 +6,9 @@ var oldcenters=[]
 var newcenters=[]
 signal move_complete
 var drawpoly=false
+var inc=0.0
+var drawcenters=false
+var speed=0.01
 
 func _process(_delta):
 	update()
@@ -14,15 +17,12 @@ func movecell(x):
 	newcenters.append(x)
 	update()
 
-var inc=0.0
-var drawcenters=false
-var speed=0.05
-
 func _draw():
 	if drawpoly:
 		inc=inc+speed
 		inc=clamp(inc,0.0, 1.0)
-		draw_poly_with_lines()
+		#draw_poly_with_lines()
+		draw_move_along_lines()
 		if inc== 1.0:
 			newpolys.clear()
 			emit_signal("move_complete")
@@ -73,3 +73,7 @@ func draw_poly_with_lines():
 			draw_line(i.origin.linear_interpolate(i.p[idx-1], inc) , 
 			i.origin.linear_interpolate(i.p[idx], inc), Color.black , 13)
 			
+func draw_move_along_lines():
+	for i in todraw:
+		for idx in range(1, i.p.size()*inc):
+			draw_line(i.p[idx-1] , i.p[idx], Color.firebrick , 6)

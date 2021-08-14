@@ -427,17 +427,30 @@ func highlight_district(district, show_neighbours:=true, path:=false):
 func deselect():
 	for district in d.keys():
 		get_node(district).get_child(0).color=deselect_color
-
+var cache={}
 func _draw():
 	if game_in_progress==2 and clear_borders==false:
+#		var drawuptil=0
+#		for i in current_year-1:
+#			drawuptil+=dhistory[i].size()
+#		print(cache.size(), drawuptil)
+		for idx in cache:
+			var poly=cache[idx]
+			var cnt=poly.size()
+			for i in range(1, cnt):
+				draw_line(poly[i-1], poly[i], Color.darkgray, 1)
+			draw_line(poly[cnt-1], poly[0], Color.darkgray, 1)
+		#draw newly merged
 		for dx in dhistory[current_year-1]:
 			if dhistory[current_year-1][dx][0].size() > 0: 
 				var poly=PoolVector2Array(get_node(dx+'history').polygon)
+				cache[dx]=poly
 				var cnt=poly.size()
 				for i in range(1, cnt):
 					draw_line(poly[i-1], poly[i], border_color, border_width_highlight)
 				draw_line(poly[cnt-1], poly[0], border_color, border_width_highlight)
 	else:
+		cache.clear()
 		for dx in d.keys():
 			var poly=PoolVector2Array(get_node(dx).get_child(0).polygon)
 			var cnt=poly.size()
@@ -519,8 +532,8 @@ func process(_delta):
 func borders(show):
 	if show:
 		clear_borders=false
-		border_width=2
-		border_color=Color.black
+		border_width=1
+		border_color=Color.darkgray
 		update()
 	else:
 		clear_borders=true
@@ -734,7 +747,7 @@ func _on_Learn_toggled():
 				get_tree().call_group('1956',"hide")
 				$HUD/Learn.text='1956'
 			game_over()
-			print('after queue free ***********', get_tree().get_node_count())
+			#print('after queue free ***********', get_tree().get_node_count())
 			return
 		#get_tree().set_group(years[current_year-1],"modulate",Color(0.0,0.0,0.0))
 		get_tree().call_group(years[current_year-1],"hide")
@@ -749,8 +762,10 @@ func _on_Learn_toggled():
 				newlist.append({node=n, loc=get_node(name(n)).position}) #d[name(n)]})
 		district_animator.start(old, newlist)
 		yield(district_animator, "move_complete")
-		get_tree().call_group(years[current_year],"show")
+		
 		borders(true)
 		$HUD/Learn.text=years[current_year]
+		$HUD/Message.text=years[current_year]+'\n Districts created: '+str(cache.size())
+		get_tree().call_group(years[current_year],"show")
 		current_year=current_year+1
 		
