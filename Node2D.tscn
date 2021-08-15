@@ -18,7 +18,7 @@ size = 30
 font_data = ExtResource( 3 )
 
 [sub_resource type="DynamicFont" id=4]
-size = 40
+size = 24
 font_data = ExtResource( 3 )
 
 [sub_resource type="DynamicFont" id=5]
@@ -106,6 +106,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Clock" type="Label" parent="HUD"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = 3.0
+margin_top = 37.0
+margin_right = 43.0
+margin_bottom = 86.0
+custom_fonts/font = SubResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="E" type="Button" parent="HUD"]
 margin_left = 128.0
 margin_top = 64.0
@@ -155,8 +167,11 @@ __meta__ = {
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
 
+[node name="QuizTimer" type="Timer" parent="."]
+
 [connection signal="ready" from="." to="." method="_on_TN_ready"]
 [connection signal="hit" from="Camera2D/Player" to="." method="_on_Player_hit"]
 [connection signal="pressed" from="HUD/Button" to="." method="_on_Button_pressed"]
 [connection signal="toggled" from="HUD/Labels" to="." method="_on_Labels_toggled"]
 [connection signal="pressed" from="HUD/Learn" to="." method="_on_Learn_toggled"]
+[connection signal="timeout" from="QuizTimer" to="." method="_on_QuizTimer_timeout"]

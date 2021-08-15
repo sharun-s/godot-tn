@@ -354,7 +354,7 @@ func on_district_select(_viewport, event, _idx, district):
 		highlight_district(district, false, true)
 
 func select(district):
-	if game_in_progress==1:
+	if game_in_progress==1 and attempts < turns:
 		if district == challenge:
 			score+=1
 			attempts+=1
@@ -374,7 +374,11 @@ func select(district):
 			get_node(district).get_child(0).color=selected_color_wrong
 			$HUD/Message.text=challenge+"???\n  Try Again!\nThat was "+district
 		if attempts==turns:
-			timed_msg('Not bad! \nYou scored '+str(score)+' / '+str(turns),3, 25, Color.orangered)
+			if timedquiz:
+				$QuizTimer.stop()
+				timed_msg('Not bad! \nYou scored '+str(score)+' / '+str(turns)+'\n Taking '+str(seconds)+' seconds',3, 25, Color.orangered)
+			else:
+				timed_msg('Not bad! \nYou scored '+str(score)+' / '+str(turns),3, 25, Color.orangered)
 			yield($Timer, "timeout")
 			challenges_completed.clear()
 			game_over()
@@ -471,6 +475,8 @@ func _on_Button_pressed():
 	timed_msg("You have 10 turns\n Find the Districts!",3)
 	yield($Timer,"timeout")
 	new_challenge()
+	if timedquiz:
+		$QuizTimer.start()
 
 var challenges_completed:=[]
 func new_challenge():
@@ -487,6 +493,7 @@ func game_over():
 	deselect()
 	walkpath.clear_points()
 	$HUD/Score.text=''
+	$HUD/Clock.text=''
 	$HUD/Message.text=''
 	$Label.text=''
 	$HUD/Button.show()
@@ -501,7 +508,7 @@ func game_over():
 #		print(i,' ', tree.has_group(i), ' ',ng.size())
 #		for j in ng:
 #			print(j.name)
-	print('GAME OVER ******',tree.get_node_count())
+#	print('GAME OVER ******',tree.get_node_count())
 
 func blink(district, color):
 	var dx=get_node(district).get_child(0)
@@ -768,4 +775,9 @@ func _on_Learn_toggled():
 		$HUD/Message.text=years[current_year]+'\n Districts created: '+str(cache.size())
 		get_tree().call_group(years[current_year],"show")
 		current_year=current_year+1
-		
+
+var seconds:=0
+var timedquiz:=false
+func _on_QuizTimer_timeout():
+	seconds=seconds+1
+	$HUD/Clock.text=str(seconds)
