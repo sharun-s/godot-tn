@@ -720,20 +720,29 @@ func _on_Learn_toggled():
 	#print('STEP ***********', get_tree().get_node_count())
 	var old
 	var newlist
+	var names=[]
 	while true:
 		if game_in_progress!=2:		 
 			game_in_progress=2
 			reset(2)
+			$HUD/Message.set("custom_fonts/font/size",14)
 			add_historic_districts(years[current_year], dhistory[0])
 			# using karur as proxy center
 			old=[{node=get_node('Karur'),loc=get_node('Karur').position}] #d['Karur']}]
 			newlist=[]
+			$HUD/Message.text=years[current_year]
 			for n in get_tree().get_nodes_in_group(years[current_year]):
 				if n is Polygon2D:
 					#newlist.append({node=n, loc=d[name(n)]})
+					names.append(n.name.replace('history',''))		
 					newlist.append({node=n, loc=get_node(name(n)).position}) #d[name(n)]})
 			district_animator.start(old, newlist)
 			yield(district_animator, "move_complete")
+			for s in range(0, names.size(),2):
+				if s+1 < names.size():
+					$HUD/Message.text=$HUD/Message.text+'\n  '+names[s]+' '+names[s+1]
+				else:	
+					$HUD/Message.text=$HUD/Message.text+'\n  '+names[s]
 			borders(true)
 			get_tree().call_group(years[current_year],"show")
 			current_year=current_year+1
@@ -745,27 +754,32 @@ func _on_Learn_toggled():
 				get_tree().call_group(years[i],"queue_free")
 				current_year=0
 				get_tree().call_group('1956',"hide")
-				$HUD/Learn.text='1956'
+				$HUD/Learn.text='History'
 			game_over()
 			#print('after queue free ***********', get_tree().get_node_count())
 			return
 		#get_tree().set_group(years[current_year-1],"modulate",Color(0.0,0.0,0.0))
 		get_tree().call_group(years[current_year-1],"hide")
 		newlist=[]
+		names.clear()
 		var key=dhistory[current_year].keys()[0]	
 		old=[{node=get_node(key+'history'), loc=get_node(name(get_node(key+'history'))).position}]#get_node(name(key)).position}] #get_node(key).position}]
 		add_historic_districts(years[current_year], dhistory[current_year])
-		
+		$HUD/Message.text=$HUD/Message.text+'\n'+years[current_year]
 		for n in get_tree().get_nodes_in_group(years[current_year]):
 			if n is Polygon2D:
+				names.append(n.name.replace('history',''))
 				#newlist.append({node=n, loc=d[name(n)]})
 				newlist.append({node=n, loc=get_node(name(n)).position}) #d[name(n)]})
 		district_animator.start(old, newlist)
 		yield(district_animator, "move_complete")
-		
+		for s in range(0, names.size(),2):
+			if s+1< names.size():
+				$HUD/Message.text=$HUD/Message.text+'\n  '+names[s]+' '+names[s+1]
+			else:	
+				$HUD/Message.text=$HUD/Message.text+'\n  '+names[s]	
 		borders(true)
 		$HUD/Learn.text=years[current_year]
-		$HUD/Message.text=years[current_year]+'\n Districts created: '+str(cache.size())
 		get_tree().call_group(years[current_year],"show")
 		current_year=current_year+1
 		
