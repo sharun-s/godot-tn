@@ -1,14 +1,49 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Mayiladithurai.png" type="Texture" id=1]
 [ext_resource path="res://Xolonium-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://InfoCenter.gd" type="Script" id=3]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="StyleBoxFlat" id=1]
+content_margin_left = 14.0
+content_margin_right = 14.0
+content_margin_top = 14.0
+content_margin_bottom = 14.0
+bg_color = Color( 0.12549, 0.294118, 0.337255, 0.784314 )
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color( 1, 0.8, 0.266667, 1 )
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="DynamicFont" id=4]
+size = 36
+font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0.0313726, 0.105882, 0.32549, 1 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.0941176, 0.243137, 0.427451, 0.619608 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0.996078, 0.701961, 0.196078, 1 )
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="DynamicFont" id=2]
 size = 30
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=3]
 size = 30
 font_data = ExtResource( 2 )
 
@@ -29,22 +64,36 @@ margin_bottom = 600.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="imgbox" type="TextureRect" parent="VBoxContainer"]
+[node name="NameBox" type="Label" parent="VBoxContainer"]
 margin_right = 510.0
-margin_bottom = 298.0
+margin_bottom = 119.0
+size_flags_vertical = 1
+custom_styles/normal = SubResource( 1 )
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 1, 0.67451, 0.223529, 1 )
+text = "test
+asdm,asd"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+margin_top = 123.0
+margin_right = 510.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 6 )
+
+[node name="imgbox" type="TextureRect" parent="VBoxContainer/PanelContainer"]
+margin_right = 510.0
+margin_bottom = 477.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource( 1 )
 expand = true
 stretch_mode = 6
-
-[node name="NameBox" type="Label" parent="VBoxContainer"]
-margin_top = 302.0
-margin_right = 510.0
-margin_bottom = 600.0
-size_flags_vertical = 3
-text = "test
-asdm,asd"
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="."]
 margin_left = 514.0
@@ -52,21 +101,48 @@ margin_right = 1024.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_constants/separation = 11
 
 [node name="FactBox" type="Label" parent="VBoxContainer2"]
 margin_right = 510.0
-margin_bottom = 298.0
+margin_bottom = 440.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 1 )
-text = "klks sdfklw sdflklsdf"
+custom_styles/normal = SubResource( 5 )
+custom_fonts/font = SubResource( 2 )
+text = "Welcome! This district is known for"
+autowrap = true
 
-[node name="ActionBox" type="Label" parent="VBoxContainer2"]
-margin_top = 302.0
+[node name="MarginContainer" type="VBoxContainer" parent="VBoxContainer2"]
+margin_top = 451.0
 margin_right = 510.0
 margin_bottom = 600.0
+custom_constants/separation = 10
+
+[node name="Back" type="Button" parent="VBoxContainer2/MarginContainer"]
+margin_right = 510.0
+margin_bottom = 43.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 2 )
-text = "sdfsdf vvvcv
-klkl"
+custom_fonts/font = SubResource( 3 )
+text = "Back to Map"
+
+[node name="Neighbours" type="Button" parent="VBoxContainer2/MarginContainer"]
+margin_top = 53.0
+margin_right = 510.0
+margin_bottom = 96.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 3 )
+text = "Show Neighbours"
+
+[node name="Neighbours2" type="Button" parent="VBoxContainer2/MarginContainer"]
+margin_top = 106.0
+margin_right = 510.0
+margin_bottom = 149.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 3 )
+text = "Clue"
+
+[connection signal="pressed" from="VBoxContainer2/MarginContainer/Back" to="." method="_on_Back_pressed"]
