@@ -502,7 +502,7 @@ func game_over():
 	show_compass()
 	game_in_progress=0
 	update() # redraw borders
-	var tree=get_tree()
+	#var tree=get_tree()
 #	for i in years:
 #		var ng=tree.get_nodes_in_group(i)
 #		print(i,' ', tree.has_group(i), ' ',ng.size())
@@ -642,6 +642,7 @@ func _on_Labels_toggled(button_pressed):
 var cell=preload("res://cell.tscn")
 var district_animator
 
+
 func _on_TN_ready():
 	$Timer.start(1)
 	yield($Timer,"timeout")
@@ -698,7 +699,11 @@ func _on_Player_hit(name):
 	if $Camera2D/Gopal != null:
 		#print('Gopal has wandered into '+ name+' '+str($Camera2D/Gopal.global_position))		
 		highlight_district(name, false)
-
+		#print($Timer.wait_time)
+		#$Timer.start()
+		#yield($Timer, 'timeout')
+		$HUD/Grid.reload(name)
+		
 var years=["1956","1965","1974","1979","1985",
 "1985x2","1986","1989","1991",
 "1993","1995","1996","1997","1997x2",
@@ -723,11 +728,21 @@ func name(n):
 		return n.name.replace('history','')
 
 var clear_borders:=false
+
+func add_to_dist_timeline(names):
+	for s in range(0, names.size(),2):
+		if s+1 < names.size():
+			if s+1 == names.size() -1:
+				$HUD/Message.text=$HUD/Message.text+'    '+names[s]+' '+names[s+1]
+			else:
+				$HUD/Message.text=$HUD/Message.text+'      '+names[s]+' '+names[s+1]+'\n'
+		else:	
+			$HUD/Message.text=$HUD/Message.text+'      '+names[s]
+				
 func _on_Learn_toggled():
 	#print('STEP ***********', get_tree().get_node_count())
 	var old
 	var newlist
-	var names=[]
 	while true:
 		if game_in_progress!=2:		 
 			game_in_progress=2
@@ -738,6 +753,7 @@ func _on_Learn_toggled():
 			old=[{node=get_node('Karur'),loc=get_node('Karur').position}] #d['Karur']}]
 			newlist=[]
 			$HUD/Message.text=years[current_year]
+			var names=[]
 			for n in get_tree().get_nodes_in_group(years[current_year]):
 				if n is Polygon2D:
 					#newlist.append({node=n, loc=d[name(n)]})
@@ -745,11 +761,7 @@ func _on_Learn_toggled():
 					newlist.append({node=n, loc=get_node(name(n)).position}) #d[name(n)]})
 			district_animator.start(old, newlist)
 			yield(district_animator, "move_complete")
-			for s in range(0, names.size(),2):
-				if s+1 < names.size():
-					$HUD/Message.text=$HUD/Message.text+'\n  '+names[s]+' '+names[s+1]
-				else:	
-					$HUD/Message.text=$HUD/Message.text+'\n  '+names[s]
+			add_to_dist_timeline(names)
 			borders(true)
 			get_tree().call_group(years[current_year],"show")
 			current_year=current_year+1
@@ -768,11 +780,11 @@ func _on_Learn_toggled():
 		#get_tree().set_group(years[current_year-1],"modulate",Color(0.0,0.0,0.0))
 		get_tree().call_group(years[current_year-1],"hide")
 		newlist=[]
-		names.clear()
 		var key=dhistory[current_year].keys()[0]	
 		old=[{node=get_node(key+'history'), loc=get_node(name(get_node(key+'history'))).position}]#get_node(name(key)).position}] #get_node(key).position}]
 		add_historic_districts(years[current_year], dhistory[current_year])
 		$HUD/Message.text=$HUD/Message.text+'\n'+years[current_year]
+		var names=[]
 		for n in get_tree().get_nodes_in_group(years[current_year]):
 			if n is Polygon2D:
 				names.append(n.name.replace('history',''))
@@ -780,11 +792,7 @@ func _on_Learn_toggled():
 				newlist.append({node=n, loc=get_node(name(n)).position}) #d[name(n)]})
 		district_animator.start(old, newlist)
 		yield(district_animator, "move_complete")
-		for s in range(0, names.size(),2):
-			if s+1< names.size():
-				$HUD/Message.text=$HUD/Message.text+'\n  '+names[s]+' '+names[s+1]
-			else:	
-				$HUD/Message.text=$HUD/Message.text+'\n  '+names[s]	
+		add_to_dist_timeline(names)
 		borders(true)
 		$HUD/Learn.text=years[current_year]
 		get_tree().call_group(years[current_year],"show")

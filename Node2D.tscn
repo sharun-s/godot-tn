@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://TN.gd" type="Script" id=1]
 [ext_resource path="res://Camera2D.gd" type="Script" id=2]
 [ext_resource path="res://Xolonium-Regular.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://InfoCenter.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=6]
 
 [sub_resource type="DynamicFont" id=1]
@@ -163,6 +164,11 @@ text = "S"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Grid" parent="HUD" instance=ExtResource( 4 )]
+margin_top = 8.0
+margin_right = 840.0
+margin_bottom = 448.0
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
