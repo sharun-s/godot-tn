@@ -185,6 +185,7 @@ func _ready():
 		d[district].append(w)
 		d[district].append(h)
 		var polys=create_polygons(s)
+		s.free()
 		a2d.add_child(polys[1])
 		a2d.add_child(polys[0])
 		a2d.name=district
@@ -327,7 +328,8 @@ func add_historic_districts(year, data):
 			tmp.name=i+'history'#year
 			tmp.add_to_group(year)
 		if has_node(i+'history'):
-			remove_child(get_node(i+'history'))
+			#remove_child(get_node(i+'history'))
+			get_node(i+'history').free()
 		if tmp!=null:
 			add_child(tmp)
 			if has_node('lbl'+i):

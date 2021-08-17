@@ -20,14 +20,14 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=2]
 size = 36
 font_data = ExtResource( 2 )
 
-[sub_resource type="StyleBoxFlat" id=6]
+[sub_resource type="StyleBoxFlat" id=3]
 bg_color = Color( 0.0313726, 0.105882, 0.32549, 1 )
 
-[sub_resource type="StyleBoxFlat" id=5]
+[sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 0.0941176, 0.243137, 0.427451, 0.619608 )
 border_width_left = 2
 border_width_top = 2
@@ -39,11 +39,11 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=5]
 size = 30
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=6]
 size = 30
 font_data = ExtResource( 2 )
 
@@ -69,7 +69,7 @@ margin_right = 510.0
 margin_bottom = 119.0
 size_flags_vertical = 1
 custom_styles/normal = SubResource( 1 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 1, 0.67451, 0.223529, 1 )
 text = "test
 asdm,asd"
@@ -84,7 +84,7 @@ margin_right = 510.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 6 )
+custom_styles/panel = SubResource( 3 )
 
 [node name="imgbox" type="TextureRect" parent="VBoxContainer/PanelContainer"]
 margin_right = 510.0
@@ -108,8 +108,8 @@ margin_right = 510.0
 margin_bottom = 440.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/normal = SubResource( 5 )
-custom_fonts/font = SubResource( 2 )
+custom_styles/normal = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 text = "Welcome! This district is known for"
 autowrap = true
 
@@ -124,7 +124,7 @@ margin_right = 510.0
 margin_bottom = 43.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 6 )
 text = "Back to Map"
 
 [node name="Neighbours" type="Button" parent="VBoxContainer2/MarginContainer"]
@@ -133,7 +133,7 @@ margin_right = 510.0
 margin_bottom = 96.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 6 )
 text = "Show Neighbours"
 
 [node name="Neighbours2" type="Button" parent="VBoxContainer2/MarginContainer"]
@@ -142,7 +142,7 @@ margin_right = 510.0
 margin_bottom = 149.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 6 )
 text = "Clue"
 
 [connection signal="pressed" from="VBoxContainer2/MarginContainer/Back" to="." method="_on_Back_pressed"]
