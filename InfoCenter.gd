@@ -33,9 +33,7 @@ var facts:={
 			"Rameshwaram/Dhanushkodi"
 		],
 		Thanjavur=[
-			"Athangudi Tiles",
 			"Brihadeshwara temple",
-			"Chettinad Cuisine",
 			"Seat of the Chola Empire",
 			"Thanjavur dolls popularly known as Thalaiyatti Bommai are made of clay which is found along the river Cauvery"
 		],
@@ -57,10 +55,11 @@ var facts:={
 			"Arni silk production",
 			"Largest Rice producers"
 		],
-		Sivagangai=[
+		Sivagangai=['Chettinad formed by a prosperous banking and business community built from trading with Burma, Ceylon and Malaysia',
+		'Athangudi tiles', 'Known for the famous Chettinad cuisine',
 			'Found here is the 2500 year old Keezhadi excavation site, including plates with the Tamil-Brahmi script'
 		],
-		Vilippuram=[
+		Vilippuram=["Pondicherry, Auroville ",
 			"Gingee Fort is found here. Sivaji called it the most impregnable fortress in India"
 		],
 		Virudhunagar=[
@@ -75,20 +74,24 @@ var facts:={
 		"Veerapandiya Kattabomman","great poet Subramanya Bharathi",
 		"V.O.Chidambaram Pillai Swadeshi Steamship Company"],
 		Karur=["Capital of the Chera Kings"],
-		Mayiladuthurai=[ 'Ancient Port town of Poombuhar where the Kaveri meets the sea '],
+		Mayiladithurai=[ 'Ancient Port town of Poombuhar where the Kaveri meets the sea '],
 		Tiruppur=["Textile export hub"],
-		Tirupathur=[],
-		Tiruchirappali=['Rockfort Temple'],
-		Pudukottai=[],
+		Tirupathur=['Surrounded by the Javadhu and Yelagiri Hills known for rivers, waterfalls and sandal wood trees', 'Ambur Biriyani'],
+		Tiruchirapalli=['Rockfort Temple'],
+		Pudukottai=['Was a independent princely state ruled by the Thondaimans since the 17th century'],
 		Tenkasi=['Old Courtallam Falls'],
-		Perambalur=[],
+		Perumbalur=['Leads the state in Small Onion production'],
 		Ariyalur=['prehistoric fossils','Gangaikondacholapuram'],
 		Ranipet=['Ceramics'],
-		Kallakurichi=[],
-		Cuddalore=['Beaches'],
+		Kallakurichi=['Mainly a rural area 50 years ago increased road connectivity has turned into an emerging agricultural hub.',
+		'The Kalvarayan Hills are pristine unexplored area with the Vellimalai hilltop becoming a popular tourist spot for locals during the monsoon season.'],
+		Cuddalore=['Koodalur means confluence in Tamil. It is the place where the Pennaiyar, Kedilam, Paravanar and Uppanaar rivers join',
+		'Ports, Beaches, fishing villages','Was known as Naadu Nadu or the middle kingdom betweene Cholas in the South and the Pallavas in the North', 
+		"Fort St David in Cuddalore was one of the main British trading posts controling their activities in South India in the early 1700. So Cuddalore became the site of multiple wars with the French based 25kms North in Pondicherry",
+		"Silver Beach is one of the longest beaches found on the Coromandel Coast. 2700 people lost their life here during the 2004 Tsunami"],
 		Dindigul=['Famous Kodaikanal hill station'],
 		Dharmapuri=["Hogenakkal"],
-		Nagapattinum=['Velankanni festival', 'Was hit by the 2004 Tsunami 6000 lives lost', 'Danish Fort' ],
+		Nagapattinam=['Velankanni festival', 'Was hit by the 2004 Tsunami 6000 lives lost', 'Danish Fort' ],
 		Nilgiris=[
 			'coffee, tea, rubber, eucalyptus plantaination',
 			'Mudumalai Tiger Reserve is the largest in TN with 160 using the corridor and 103 resident ' ]
@@ -97,13 +100,14 @@ var facts:={
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
 	hide()# Replace with function body.
-
-func reload(district):
+var n=[]
+func reload(district, neighbours):
+	n.clear()
+	n=neighbours
 	$VBoxContainer/PanelContainer/imgbox.texture=load("res://"+district+".png")
 	$VBoxContainer/NameBox.text=district
-	if district in facts:
+	if district in facts and facts[district].size() > 0:
 		var idx=int(rand_range(0, facts[district].size()))
 		$VBoxContainer2/FactBox.text=facts[district][idx]
 	else:
@@ -117,3 +121,18 @@ func _unhandled_input(event):
 
 func _on_Back_pressed():
 	hide()
+
+func format_neighbours():
+	var textstr=''
+	for s in range(0, n.size(),2):
+		if s+1 < n.size():
+			if s+1 == n.size() -1:
+				textstr=textstr+' '+n[s]+' '+n[s+1]
+			else:
+				textstr=textstr+' '+n[s]+' '+n[s+1]+'\n'
+		else:	
+			textstr=textstr+' '+n[s]
+	return textstr
+
+func _on_Neighbours_pressed():
+	$VBoxContainer2/FactBox.text=format_neighbours()	

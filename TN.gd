@@ -346,14 +346,14 @@ func _unhandled_input(event):
 func on_district_select(_viewport, event, _idx, district):
 	if event is InputEventMouseButton and event.pressed:
 		select(district)
-		walkpath.clear_points()
-		walkpath.add_point(get_node(district).position)
+#		walkpath.clear_points()
+#		walkpath.add_point(get_node(district).position)
 	
-	#if event is InputEventMouseMotion:
-			#walkpath.add_point(get_node(district).position)
-	if event is InputEventScreenDrag:
-		walkpath.add_point(get_node(district).position)
-		highlight_district(district, false, true)
+#	#if event is InputEventMouseMotion:
+#			#walkpath.add_point(get_node(district).position)
+#	if event is InputEventScreenDrag:
+#		walkpath.add_point(get_node(district).position)
+#		highlight_district(district, false, true)
 
 func select(district):
 	if game_in_progress==1 and attempts < turns:
@@ -391,6 +391,7 @@ func select(district):
 		#deselect district if one is already selected before selecting new one
 		#selecting = change color + add border
 		highlight_district(district, false)
+		$HUD/Grid.reload(district, neighbours(district))
 
 func highlight_district(district, show_neighbours:=true, path:=false):
 	if not path:
@@ -704,8 +705,15 @@ func _on_Player_hit(name):
 		#print($Timer.wait_time)
 		#$Timer.start()
 		#yield($Timer, 'timeout')
-		$HUD/Grid.reload(name)
-		
+		$HUD/Grid.reload(name, neighbours(name))
+
+func neighbours(districtname):
+	var l=get_node(districtname).get_overlapping_areas()
+	var n=[]
+	for i in l:
+		if i.name !='Gopal':
+			n.append(i.name)
+	return n
 var years=["1956","1965","1974","1979","1985",
 "1985x2","1986","1989","1991",
 "1993","1995","1996","1997","1997x2",

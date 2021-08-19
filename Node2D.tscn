@@ -120,6 +120,7 @@ __meta__ = {
 }
 
 [node name="E" type="Button" parent="HUD"]
+visible = false
 margin_left = 128.0
 margin_top = 64.0
 margin_right = 192.0
@@ -132,6 +133,7 @@ __meta__ = {
 }
 
 [node name="N" type="Button" parent="HUD"]
+visible = false
 margin_left = 64.0
 margin_right = 128.0
 margin_bottom = 64.0
@@ -143,6 +145,7 @@ __meta__ = {
 }
 
 [node name="W" type="Button" parent="HUD"]
+visible = false
 margin_top = 64.0
 margin_right = 65.0
 margin_bottom = 125.0
@@ -154,6 +157,7 @@ __meta__ = {
 }
 
 [node name="S" type="Button" parent="HUD"]
+visible = false
 margin_left = 65.0
 margin_top = 128.0
 margin_right = 128.0
