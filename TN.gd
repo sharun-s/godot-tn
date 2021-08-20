@@ -60,6 +60,7 @@ var border_width:=2
 var border_width_highlight:=5
 var tw:=Tween.new()
 var walkpath:=Line2D.new()
+var path=[]
 
 func revert_transform(poly:Polygon2D):
 	if poly.transform != Transform2D.IDENTITY:
@@ -169,8 +170,6 @@ func _ready():
 		a2d.connect('input_event', self, 'on_district_select',[district])
 	
 	$Camera2D.position=get_node('Karur').position
-	$Camera2D/Gopal.position=Vector2(-1*get_viewport().size.x/2-150,0)
-	print(get_viewport_rect().size)#.y/get_viewport_rect().size.x)
 	$Camera2D.zoom=Vector2(2.6, 2.6)
 	$Label.rect_scale=$Camera2D.zoom
 
@@ -315,15 +314,26 @@ func _unhandled_input(event):
 			get_tree().quit()
 		
 func on_district_select(_viewport, event, _idx, district):
-	if event is InputEventMouseButton and event.pressed:
-		select(district)
-#		walkpath.clear_points()
-#		walkpath.add_point(get_node(district).position)
+	if event is InputEventMouseButton:
+		if event.pressed:
+			#select(district)
+			path.clear()
+			path.append(district)
+		else:
+			#on release touch check whats in path and move if required
+			select(district)
+				#gotoDistrict()
+		#walkpath.clear_points()
+		#walkpath.add_point(get_node(district).position)
 	
 #	#if event is InputEventMouseMotion:
 #			#walkpath.add_point(get_node(district).position)
-#	if event is InputEventScreenDrag:
-#		walkpath.add_point(get_node(district).position)
+	if event is InputEventScreenDrag:
+		if district in path:
+			pass
+		else:
+			path.append(district)
+		#walkpath.add_point(get_node(district).position)
 #		highlight_district(district, false, true)
 
 func select(district):
@@ -337,7 +347,7 @@ func select(district):
 			$Label.text=district
 			var gpos=get_node(district).position
 			$Label.rect_global_position =gpos
-			timed_msg("Correct!", 2, 15)
+			timed_msg("Correct!", 1, 2)
 			yield($Timer, "timeout")
 			if attempts < turns:
 				new_challenge()
@@ -349,35 +359,36 @@ func select(district):
 		if attempts==turns:
 			if timedquiz:
 				$QuizTimer.stop()
-				timed_msg('Not bad! \nYou scored '+str(score)+' / '+str(turns)+'\n Taking '+str(seconds)+' seconds',3, 25, Color.orangered)
+				timed_msg('Not bad! \nYou scored '+str(score)+' / '+str(turns)+'\n Taking '+str(seconds)+' seconds',1, 2, Color.orangered)
 			else:
-				timed_msg('Not bad! \nYou scored '+str(score)+' / '+str(turns),3, 25, Color.orangered)
+				timed_msg('Not bad! \nYou scored '+str(score)+' / '+str(turns),1, 2, Color.orangered)
 			yield($Timer, "timeout")
 			challenges_completed.clear()
 			game_over()
 	elif game_in_progress==2:
+		#history
+		pass
+	elif game_in_progress==3:
+		#main game treasure hunt
 		pass
 	else:
-		get_tree().set_group("dlabels", "visible", false)
-		#deselect district if one is already selected before selecting new one
-		#selecting = change color + add border
-		highlight_district(district, false)
-		$HUD/Grid.reload(district, neighbours(district))
-
-func highlight_district(district, show_neighbours:=true, path:=false):
-	if not path:
-		if district!=selected_district and selected_district!='':
-			deselect()
-		else:
-			if district==selected_district:
-				# already selected so deselect
-				deselect()
-				$Label.text=''
-				selected_district=''
-				update() # redraw borders
-				return
+		#get_tree().set_group("dlabels", "visible", false)
+		#check if path has anything and move
+		gotoDistrict()
+		
+#deselect district if one is already selected before selecting new one
+#selecting = change color + add border
+func highlight_district(district, show_neighbours:=true):
+	if district!=selected_district and selected_district!='':
+		deselect()
 	else:
-		get_node('lbl'+district).show()
+		if district==selected_district:
+			# already selected so deselect
+			deselect()
+			$Label.text=''
+			selected_district=''
+			update() # redraw borders
+			return
 	selected_district=district
 	$Label.text=district
 	var sd:Area2D=get_node(selected_district)
@@ -446,11 +457,11 @@ func _on_Button_pressed():
 	reset()
 	game_in_progress=1
 	$HUD/Score.text=str(score)
-	timed_msg("You have 10 turns\n Find the Districts!",3)
+	timed_msg("You have 10 turns\n Find the Districts!",1)
 	yield($Timer,"timeout")
+	timedquiz=false
 	new_challenge()
-	if timedquiz:
-		$QuizTimer.start()
+
 
 var challenges_completed:=[]
 func new_challenge():
@@ -465,13 +476,16 @@ func new_challenge():
 
 func game_over():
 	deselect()
-	walkpath.clear_points()
+	path.clear()
+	#walkpath.clear_points()
 	$HUD/Score.text=''
 	$HUD/Clock.text=''
 	$HUD/Message.text=''
 	$Label.text=''
-	$HUD/Button.show()
+	$HUD/Quiz.show()
+	$HUD/Timed.show()
 	$HUD/Learn.show()
+	$HUD/Info.show()
 	$Camera2D.position=get_node('Karur').position
 	#show_compass()
 	game_in_progress=0
@@ -505,10 +519,9 @@ func timed_msg(msg, showafter, blink:=0, blinkcolor:=Color.green):
 			yield(get_tree(), "idle_frame")
 			$HUD/Message.modulate= Color(1.0, 1.0, 1.0)
 			yield(get_tree(), "idle_frame")
-		
-	
-func process(_delta):
-	walkpath.show()
+
+#func process(_delta):
+#	walkpath.show()
 
 func borders(show):
 	if show:
@@ -525,7 +538,9 @@ func borders(show):
 func reset(game_num:=100):
 	score=0
 	attempts=0
-	$HUD/Button.hide()
+	$HUD/Quiz.hide()
+	$HUD/Timed.hide()
+	$HUD/Info.hide()
 	if game_num!=2:
 		$HUD/Learn.hide()
 	else:
@@ -536,6 +551,30 @@ func reset(game_num:=100):
 		$Label.text=''
 		get_tree().set_group("dlabels","visible",false)
 
+func gotoDistrict():
+	#reset()
+	var current
+	var distance
+	var time
+	$Gopal/CollisionShape2D.disabled = true
+	print(path)
+	while path.size() > 0 :
+		current=path.pop_front()
+		highlight_district(current,false)
+		var gpos=get_node(current).position
+		distance=$Gopal.position.distance_to(gpos)
+		time=distance/$Gopal.speed
+		if OS.get_name()=='Android':
+			tw.interpolate_property($Gopal,"position",$Gopal.position,gpos,0.2)
+		else:	
+			tw.interpolate_property($Gopal,"position",$Gopal.position,gpos,time)
+		tw.start()
+		var x=yield(tw, 'tween_completed')
+	$Gopal/CollisionShape2D.disabled = false
+	game_in_progress=0
+	#$Camera2D/Gopal/AnimatedSprite.stop()
+	#game_over()
+	
 func fullwalktest():
 	reset()
 	game_in_progress=3
@@ -624,17 +663,7 @@ func _on_TN_ready():
 	#	$HUD/Message.anchor_left=.45
 	district_animator=cell.instance()
 	add_child(district_animator)
-		
-func _on_Player_hit(name):
-	#$HUD/Message.text='Gopal has wandered into '+ name
-	if $Camera2D/Gopal != null:
-		#print('Gopal has wandered into '+ name+' '+str($Camera2D/Gopal.global_position))		
-		highlight_district(name, false)
-		#print($Timer.wait_time)
-		#$Timer.start()
-		#yield($Timer, 'timeout')
-		$HUD/Grid.reload(name, neighbours(name))
-
+	
 func neighbours(districtname):
 	var l=get_node(districtname).get_overlapping_areas()
 	var n=[]
@@ -742,3 +771,18 @@ var timedquiz:=false
 func _on_QuizTimer_timeout():
 	seconds=seconds+1
 	$HUD/Clock.text=str(seconds)
+
+func _on_Info_pressed():
+	if selected_district!='':
+		$HUD/Grid.reload(selected_district, neighbours(selected_district))
+
+func _on_Timed_pressed():
+	reset()
+	game_in_progress=1
+	$HUD/Score.text=str(score)
+	timed_msg("You have 10 turns\n Find the Districts!",1)
+	yield($Timer,"timeout")
+	new_challenge()
+	timedquiz=true
+	$QuizTimer.start()
+

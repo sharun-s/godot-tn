@@ -55,6 +55,7 @@ var facts:={
 			"Arni silk production",
 			"Largest Rice producers"
 		],
+		Namakkal=['Cauvery flows thro, Tiruchengode...','Known for its Poutry Farms and  Lorry body building industry', 'Namakkal derives from Namagiri, the name of the single 65m high rock formation at the center of the Namakkal town. A Fort covering one and half acres was built on top of the rock in the 17th century'],
 		Sivagangai=['Chettinad formed by a prosperous banking and business community built from trading with Burma, Ceylon and Malaysia',
 		'Athangudi tiles', 'Known for the famous Chettinad cuisine',
 			'Found here is the 2500 year old Keezhadi excavation site, including plates with the Tamil-Brahmi script'

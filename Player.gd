@@ -6,7 +6,6 @@ export var speed = 400
 var screen_size
 
 func _ready():
-	name='Gopal'
 	screen_size = get_viewport_rect().size
 	show()
 	
