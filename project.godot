@@ -12,12 +12,18 @@ config_version=4
 
 config/name="tn"
 run/main_scene="res://Node2D.tscn"
+boot_splash/image="res://tn-icon.png"
+boot_splash/fullsize=false
+boot_splash/bg_color=Color( 0, 0.121569, 0.247059, 1 )
 config/icon="res://tn-icon-centered.png"
+
+[debug]
+
+settings/stdout/verbose_stdout=true
 
 [display]
 
 window/size/fullscreen=true
-window/handheld/orientation="sensor"
 
 [input]
 
