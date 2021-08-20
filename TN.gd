@@ -359,9 +359,9 @@ func select(district):
 		if attempts==turns:
 			if timedquiz:
 				$QuizTimer.stop()
-				timed_msg('Not bad! \nYou scored '+str(score)+' / '+str(turns)+'\n Taking '+str(seconds)+' seconds',1, 2, Color.orangered)
+				timed_msg('Not bad! \nYou scored '+str(score)+' / '+str(turns)+'\n Taking '+str(seconds)+' seconds',2, 8, Color.orangered)
 			else:
-				timed_msg('Not bad! \nYou scored '+str(score)+' / '+str(turns),1, 2, Color.orangered)
+				timed_msg('Not bad! \nYou scored '+str(score)+' / '+str(turns),2, 8, Color.orangered)
 			yield($Timer, "timeout")
 			challenges_completed.clear()
 			game_over()
@@ -557,24 +557,27 @@ func gotoDistrict():
 	var distance
 	var time
 	$Gopal/CollisionShape2D.disabled = true
-	print(path)
+	$Gopal.initiated_by_code=true
 	while path.size() > 0 :
 		current=path.pop_front()
 		highlight_district(current,false)
 		var gpos=get_node(current).position
 		distance=$Gopal.position.distance_to(gpos)
+		var direction=$Gopal.position.direction_to(gpos)
+		$Gopal.velocity=direction
 		time=distance/$Gopal.speed
-		if OS.get_name()=='Android':
-			tw.interpolate_property($Gopal,"position",$Gopal.position,gpos,0.2)
-		else:	
-			tw.interpolate_property($Gopal,"position",$Gopal.position,gpos,time)
+		#if OS.get_name()=='Android':
+		#	tw.interpolate_property($Gopal,"position",$Gopal.position,gpos,0.2)
+		#else:
+		tw.interpolate_property($Gopal,"position",$Gopal.position,gpos,time)
 		tw.start()
 		var x=yield(tw, 'tween_completed')
+	$Gopal.velocity=Vector2(0,0)
+	$Gopal.initiated_by_code=false
 	$Gopal/CollisionShape2D.disabled = false
 	game_in_progress=0
-	#$Camera2D/Gopal/AnimatedSprite.stop()
 	#game_over()
-	
+		
 func fullwalktest():
 	reset()
 	game_in_progress=3
@@ -654,7 +657,6 @@ func _on_Labels_toggled(button_pressed):
 
 var cell=preload("res://cell.tscn")
 var district_animator
-
 
 func _on_TN_ready():
 	$Timer.start(1)
