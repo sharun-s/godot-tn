@@ -8,11 +8,21 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "RichTextEffect",
+"class": "RichTextPulse",
+"language": "GDScript",
+"path": "res://pulse.gd"
+} ]
+_global_script_class_icons={
+"RichTextPulse": ""
+}
+
 [application]
 
 config/name="tn"
 run/main_scene="res://Node2D.tscn"
-boot_splash/image="res://tn-icon.png"
+boot_splash/image="res://tn-icon-centered.png"
 boot_splash/fullsize=false
 boot_splash/bg_color=Color( 0, 0.121569, 0.247059, 1 )
 config/icon="res://tn-icon-centered.png"

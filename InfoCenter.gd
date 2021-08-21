@@ -38,6 +38,8 @@ var facts:={
 			"Thanjavur dolls popularly known as Thalaiyatti Bommai are made of clay which is found along the river Cauvery"
 		],
 		Madurai=[
+			'The Meenakshi Amman Temple is one of the largest temple complexes in the state with 14 Gopurams (Gateway Towers), 33000 scupltures, a thousand pillared hall, tank legend, parrots...',
+			'Many areas well known for conducting the Jallikattu (bull taming) ceremony during the Pongal (harvest festival) season',
 			'Jasmine (Madurai Malli)'
 		],
 		Tirunelveli=["Halwa"],
@@ -65,7 +67,8 @@ var facts:={
 		],
 		Virudhunagar=[
 			"K. Kamaraj was from here. He was TN CM from 54-63, and Indian National Congress President after Jawaharlal Nehru's death. He made education free for the poor having had to drop out of school at age 11 to support his family",
-			'Sivakasi Fireworks'
+			'Sivakasi Fireworks',
+			'The 192 ft Gopuram of the Srivilliputhur Temple built here, dedicated to Andal the only female among the poet saints of south india, is the symbol of the Tamil Nadu Govt'
 		],
 		Vellore=[
 			"Top exporter of finished Leather goods in the country",
@@ -78,9 +81,10 @@ var facts:={
 		Mayiladithurai=[ 'Ancient Port town of Poombuhar where the Kaveri meets the sea '],
 		Tiruppur=["Textile export hub"],
 		Tirupathur=['Surrounded by the Javadhu and Yelagiri Hills known for rivers, waterfalls and sandal wood trees', 'Ambur Biriyani'],
-		Tiruchirapalli=['Rockfort Temple'],
+		Tiruchirapalli=['The Srirangam temple complex covers 156 acres making it the largest templex complex in the country. Famous for festivals conducted throughout the year', 
+		'Rockfort Temple'],
 		Pudukottai=['Was a independent princely state ruled by the Thondaimans since the 17th century'],
-		Tenkasi=['Old Courtallam Falls'],
+		Tenkasi=['Old Courtallam Falls', 'Thirukutralam'],
 		Perumbalur=['Leads the state in Small Onion production'],
 		Ariyalur=['prehistoric fossils','Gangaikondacholapuram'],
 		Ranipet=['Ceramics'],
@@ -89,7 +93,7 @@ var facts:={
 		Cuddalore=['Koodalur means confluence in Tamil. It is the place where the Pennaiyar, Kedilam, Paravanar and Uppanaar rivers join',
 		'Ports, Beaches, fishing villages','Was known as Naadu Nadu or the middle kingdom betweene Cholas in the South and the Pallavas in the North', 
 		"Fort St David in Cuddalore was one of the main British trading posts controling their activities in South India in the early 1700. So Cuddalore became the site of multiple wars with the French based 25kms North in Pondicherry",
-		"Silver Beach is one of the longest beaches found on the Coromandel Coast. 2700 people lost their life here during the 2004 Tsunami"],
+		"Silver Beach is one of the longest beaches found on the Coromandel Coast. 2700 people lost their life here during the 2004 Tsunami", 'Chidambaram temple','Pichawaram Mangrove forests'],
 		Dindigul=['Famous Kodaikanal hill station'],
 		Dharmapuri=["Hogenakkal"],
 		Nagapattinam=['Velankanni festival', 'Was hit by the 2004 Tsunami 6000 lives lost', 'Danish Fort' ],

@@ -145,7 +145,7 @@ func _ready():
 	#shore.shader=load("res://shore.shader")
 	rng.randomize()
 	add_child(tw)
-	add_child(walkpath)
+	#add_child(walkpath)
 	VisualServer.set_default_clear_color('001f3f')#Color("ff222222"))
 	for district in d.keys():
 		var a2d=Area2D.new()
@@ -347,7 +347,7 @@ func select(district):
 			$Label.text=district
 			var gpos=get_node(district).position
 			$Label.rect_global_position =gpos
-			timed_msg("Correct!", 1, 2)
+			timed_msg("[color=#"+selected_color_right.to_html(false)+"]Correct![/color]", 1, 2)
 			yield($Timer, "timeout")
 			if attempts < turns:
 				new_challenge()
@@ -355,13 +355,16 @@ func select(district):
 			attempts+=1
 			$HUD/Score.text=str(score)+' / '+str(attempts)
 			get_node(district).get_child(0).color=selected_color_wrong
-			$HUD/Message.text=challenge+"???\n  Try Again!\nThat was "+district
+			$HUD/Message.bbcode_text=challenge+"???\n  [color=#ee2211]Try Again![/color]\nThat was "+district
 		if attempts==turns:
 			if timedquiz:
 				$QuizTimer.stop()
-				timed_msg('Not bad! \nYou scored '+str(score)+' / '+str(turns)+'\n Taking '+str(seconds)+' seconds',2, 8, Color.orangered)
+				#TODO perf optimize pulse
+				#timed_msg('[color=#ffcc99][pulse color=#ffcc33 freq=10]Not bad! \nYou scored '+str(score)+' / '+str(turns)+'\n Taking '+str(seconds)+' seconds[/pulse][/color]',2, 8, Color.orangered)
+				timed_msg('[color=#'+Color.orangered.to_html(false) +']Not bad! \nYou scored '+str(score)+' / '+str(turns)+'\n Taking '+str(seconds)+' seconds[/color]',2.5)
 			else:
-				timed_msg('Not bad! \nYou scored '+str(score)+' / '+str(turns),2, 8, Color.orangered)
+				#timed_msg('[pulse freq=5][color=#ffcc55]Not bad! \nYou scored '+str(score)+' / '+str(turns)+'[/color][/pulse]',2, 8, Color.orangered)
+				timed_msg('Not bad! \nYou scored '+str(score)+' / '+str(turns),2.5)
 			yield($Timer, "timeout")
 			challenges_completed.clear()
 			game_over()
@@ -418,6 +421,7 @@ func deselect():
 		get_node(district).get_child(0).color=deselect_color
 var cache={}
 func _draw():
+	#history
 	if game_in_progress==2 and clear_borders==false:
 #		var drawuptil=0
 #		for i in current_year-1:
@@ -457,7 +461,7 @@ func _on_Button_pressed():
 	reset()
 	game_in_progress=1
 	$HUD/Score.text=str(score)
-	timed_msg("You have 10 turns\n Find the Districts!",1)
+	timed_msg("[pulse color=#22ff44 height=-10 freq=10]You have 10 turns\n Find the Districts![/pulse]",2)
 	yield($Timer,"timeout")
 	timedquiz=false
 	new_challenge()
@@ -472,7 +476,7 @@ func new_challenge():
 		else:
 			challenges_completed.append(challenge)
 			break
-	$HUD/Message.text=challenge+" ???"
+	$HUD/Message.bbcode_text=challenge+" ???"
 
 func game_over():
 	deselect()
@@ -480,7 +484,7 @@ func game_over():
 	#walkpath.clear_points()
 	$HUD/Score.text=''
 	$HUD/Clock.text=''
-	$HUD/Message.text=''
+	$HUD/Message.bbcode_text=''
 	$Label.text=''
 	$HUD/Quiz.show()
 	$HUD/Timed.show()
@@ -488,6 +492,7 @@ func game_over():
 	$HUD/Info.show()
 	$Camera2D.position=get_node('Karur').position
 	#show_compass()
+	$Gopal.show()
 	game_in_progress=0
 	update() # redraw borders
 	#var tree=get_tree()
@@ -508,17 +513,18 @@ func blink(district, color):
 	dx.modulate=Color(1.0, 1.0, 1.0)
 	dx.color=color
 
-func timed_msg(msg, showafter, blink:=0, blinkcolor:=Color.green):
-	$Timer.wait_time=showafter
+func timed_msg(msg, period, blink:=0, blinkcolor:=Color.green):
+	$HUD/Message.bbcode_text=msg
+	$Timer.wait_time=period
 	$Timer.start()
-	$HUD/Message.modulate= Color(1.0, 1.0, 1.0)
-	$HUD/Message.text=msg
-	if blink:
-		for i in blink:
-			$HUD/Message.modulate = blinkcolor
-			yield(get_tree(), "idle_frame")
-			$HUD/Message.modulate= Color(1.0, 1.0, 1.0)
-			yield(get_tree(), "idle_frame")
+#	$HUD/Message.modulate= Color(1.0, 1.0, 1.0)
+#	$HUD/Message.text=msg
+#	if blink:
+#		for i in blink:
+#			$HUD/Message.modulate = blinkcolor
+#			yield(get_tree(), "idle_frame")
+#			$HUD/Message.modulate= Color(1.0, 1.0, 1.0)
+#			yield(get_tree(), "idle_frame")
 
 #func process(_delta):
 #	walkpath.show()
@@ -535,15 +541,18 @@ func borders(show):
 		border_color=Color.transparent
 		update()
 
-func reset(game_num:=100):
+func reset():
 	score=0
 	attempts=0
+	$Gopal.hide()
 	$HUD/Quiz.hide()
 	$HUD/Timed.hide()
 	$HUD/Info.hide()
-	if game_num!=2:
-		$HUD/Learn.hide()
-	else:
+	#since the learn button is used to show years
+	#if game_num!=2:
+	#	$HUD/Learn.hide()
+	#else:
+	if game_in_progress==2:
 		borders(false)
 	#hide_compass()
 	if selected_district!='':
@@ -609,7 +618,7 @@ func fullwalktest():
 				visited.append(n.name)
 				break
 		timed_msg('Districts visited\n'+str(len(visited))+' out of '+str(len(d)),1 )
-		yield($Timer, "timeout")
+		#yield($Timer, "timeout")
 		if(i.name == current):
 			current=visited[-2]
 		if(i.name == current):
@@ -700,29 +709,40 @@ func name(n):
 var clear_borders:=false
 
 func add_to_dist_timeline(names):
-	for s in range(0, names.size(),2):
+	if names.size()==2:
+		$HUD/Message.append_bbcode(' '+names[0]+' '+names[1])
+		return
+	if names.size()==3:
+		$HUD/Message.append_bbcode(' '+names[0]+' '+names[1]+'\n        '+names[2])
+		return
+	$HUD/Message.append_bbcode(' '+names[0]+' '+names[1]+'\n')
+	for s in range(2, names.size(),2):
 		if s+1 < names.size():
-			if s+1 == names.size() -1:
-				$HUD/Message.text=$HUD/Message.text+'    '+names[s]+' '+names[s+1]
-			else:
-				$HUD/Message.text=$HUD/Message.text+'      '+names[s]+' '+names[s+1]+'\n'
+#			if s+1 == names.size() -1:
+#				#final line
+##				$HUD/Message.text=$HUD/Message.text+'    '+names[s]+' '+names[s+1]
+#				$HUD/Message.append_bbcode(' '+names[s]+' '+names[s+1])
+#			else:
+#				$HUD/Message.text=$HUD/Message.text+'      '+names[s]+' '+names[s+1]+'\n'
+				$HUD/Message.append_bbcode('         '+names[s]+' '+names[s+1]+'\n')
 		else:	
-			$HUD/Message.text=$HUD/Message.text+'      '+names[s]
+#			$HUD/Message.text=$HUD/Message.text+'      '+names[s]
+			$HUD/Message.append_bbcode('         '+names[s])
 				
 func _on_Learn_toggled():
-	#print('STEP ***********', get_tree().get_node_count())
+	$HUD/Learn.hide()
 	var old
 	var newlist
 	while true:
 		if game_in_progress!=2:		 
 			game_in_progress=2
-			reset(2)
-			$HUD/Message.set("custom_fonts/font/size",14)
+			reset()
+			$HUD/Message.set("custom_fonts/normal_font/size",14)
 			add_historic_districts(years[current_year], dhistory[0])
 			# using karur as proxy center
 			old=[{node=get_node('Karur'),loc=get_node('Karur').position}] #d['Karur']}]
 			newlist=[]
-			$HUD/Message.text=years[current_year]
+			$HUD/Message.bbcode_text='[color=yellow]'+years[current_year]+'[/color]'
 			var names=[]
 			for n in get_tree().get_nodes_in_group(years[current_year]):
 				if n is Polygon2D:
@@ -743,8 +763,9 @@ func _on_Learn_toggled():
 				get_tree().call_group(years[i],"queue_free")
 				current_year=0
 				get_tree().call_group('1956',"hide")
-				$HUD/Learn.text='History'
+				#$HUD/Learn.text='History'
 			game_over()
+			$HUD/Message.set("custom_fonts/normal_font/size",32)
 			#print('after queue free ***********', get_tree().get_node_count())
 			return
 		#get_tree().set_group(years[current_year-1],"modulate",Color(0.0,0.0,0.0))
@@ -753,7 +774,8 @@ func _on_Learn_toggled():
 		var key=dhistory[current_year].keys()[0]	
 		old=[{node=get_node(key+'history'), loc=get_node(name(get_node(key+'history'))).position}]#get_node(name(key)).position}] #get_node(key).position}]
 		add_historic_districts(years[current_year], dhistory[current_year])
-		$HUD/Message.text=$HUD/Message.text+'\n'+years[current_year]
+#		$HUD/Message.text=$HUD/Message.text+'\n'+years[current_year]
+		$HUD/Message.append_bbcode('\n[color=yellow]'+years[current_year]+'[/color]')
 		var names=[]
 		for n in get_tree().get_nodes_in_group(years[current_year]):
 			if n is Polygon2D:
@@ -764,9 +786,10 @@ func _on_Learn_toggled():
 		yield(district_animator, "move_complete")
 		add_to_dist_timeline(names)
 		borders(true)
-		$HUD/Learn.text=years[current_year]
+		#$HUD/Learn.text=years[current_year]
 		get_tree().call_group(years[current_year],"show")
 		current_year=current_year+1
+	$HUD/Message.set("custom_fonts/normal_font/size",32)
 
 var seconds:=0
 var timedquiz:=false
@@ -782,9 +805,8 @@ func _on_Timed_pressed():
 	reset()
 	game_in_progress=1
 	$HUD/Score.text=str(score)
-	timed_msg("You have 10 turns\n Find the Districts!",1)
+	timed_msg("[pulse color=#44dd22 height=-15 freq=5]You have 10 turns\n Find the Districts![/pulse]",2)
 	yield($Timer,"timeout")
 	new_challenge()
 	timedquiz=true
 	$QuizTimer.start()
-
