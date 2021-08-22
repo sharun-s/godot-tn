@@ -21,9 +21,9 @@ func _draw():
 	if drawpoly:
 		inc=inc+speed
 		inc=clamp(inc,0.0, 1.0)
-		#draw_poly_with_lines()
+		draw_poly_with_lines()
 		#draw_move_along_lines()
-		draw_poly_intersect()
+		#draw_poly_intersect()
 		if inc== 1.0:
 			newpolys.clear()
 			emit_signal("move_complete")

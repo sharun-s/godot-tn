@@ -481,6 +481,8 @@ func new_challenge():
 func game_over():
 	deselect()
 	path.clear()
+	seconds=0
+	$HUD/Timeline.bbcode_text=''
 	#walkpath.clear_points()
 	$HUD/Score.text=''
 	$HUD/Clock.text=''
@@ -668,8 +670,8 @@ var cell=preload("res://cell.tscn")
 var district_animator
 
 func _on_TN_ready():
-	$Timer.start(1)
-	yield($Timer,"timeout")
+	#$Timer.start(1)
+	#yield($Timer,"timeout")
 	#if OS.get_name()=='Android':
 	#	$HUD/Message.anchor_left=.45
 	district_animator=cell.instance()
@@ -710,24 +712,17 @@ var clear_borders:=false
 
 func add_to_dist_timeline(names):
 	if names.size()==2:
-		$HUD/Message.append_bbcode(' '+names[0]+' '+names[1])
+		$HUD/Timeline.append_bbcode(' '+names[0]+', '+names[1])
 		return
 	if names.size()==3:
-		$HUD/Message.append_bbcode(' '+names[0]+' '+names[1]+'\n        '+names[2])
+		$HUD/Timeline.append_bbcode(' '+names[0]+', '+names[1]+'\n        '+names[2])
 		return
-	$HUD/Message.append_bbcode(' '+names[0]+' '+names[1]+'\n')
+	$HUD/Timeline.append_bbcode(' '+names[0]+', '+names[1]+'\n')
 	for s in range(2, names.size(),2):
 		if s+1 < names.size():
-#			if s+1 == names.size() -1:
-#				#final line
-##				$HUD/Message.text=$HUD/Message.text+'    '+names[s]+' '+names[s+1]
-#				$HUD/Message.append_bbcode(' '+names[s]+' '+names[s+1])
-#			else:
-#				$HUD/Message.text=$HUD/Message.text+'      '+names[s]+' '+names[s+1]+'\n'
-				$HUD/Message.append_bbcode('         '+names[s]+' '+names[s+1]+'\n')
+			$HUD/Timeline.append_bbcode('         '+names[s]+', '+names[s+1]+'\n')
 		else:	
-#			$HUD/Message.text=$HUD/Message.text+'      '+names[s]
-			$HUD/Message.append_bbcode('         '+names[s])
+			$HUD/Timeline.append_bbcode('         '+names[s])
 				
 func _on_Learn_toggled():
 	$HUD/Learn.hide()
@@ -737,12 +732,11 @@ func _on_Learn_toggled():
 		if game_in_progress!=2:		 
 			game_in_progress=2
 			reset()
-			$HUD/Message.set("custom_fonts/normal_font/size",14)
 			add_historic_districts(years[current_year], dhistory[0])
 			# using karur as proxy center
 			old=[{node=get_node('Karur'),loc=get_node('Karur').position}] #d['Karur']}]
 			newlist=[]
-			$HUD/Message.bbcode_text='[color=yellow]'+years[current_year]+'[/color]'
+			$HUD/Timeline.bbcode_text='[color=yellow]'+years[current_year]+'[/color]'
 			var names=[]
 			for n in get_tree().get_nodes_in_group(years[current_year]):
 				if n is Polygon2D:
@@ -765,7 +759,6 @@ func _on_Learn_toggled():
 				get_tree().call_group('1956',"hide")
 				#$HUD/Learn.text='History'
 			game_over()
-			$HUD/Message.set("custom_fonts/normal_font/size",32)
 			#print('after queue free ***********', get_tree().get_node_count())
 			return
 		#get_tree().set_group(years[current_year-1],"modulate",Color(0.0,0.0,0.0))
@@ -775,7 +768,7 @@ func _on_Learn_toggled():
 		old=[{node=get_node(key+'history'), loc=get_node(name(get_node(key+'history'))).position}]#get_node(name(key)).position}] #get_node(key).position}]
 		add_historic_districts(years[current_year], dhistory[current_year])
 #		$HUD/Message.text=$HUD/Message.text+'\n'+years[current_year]
-		$HUD/Message.append_bbcode('\n[color=yellow]'+years[current_year]+'[/color]')
+		$HUD/Timeline.append_bbcode('\n[color=yellow]'+years[current_year]+'[/color]')
 		var names=[]
 		for n in get_tree().get_nodes_in_group(years[current_year]):
 			if n is Polygon2D:
@@ -789,7 +782,7 @@ func _on_Learn_toggled():
 		#$HUD/Learn.text=years[current_year]
 		get_tree().call_group(years[current_year],"show")
 		current_year=current_year+1
-	$HUD/Message.set("custom_fonts/normal_font/size",32)
+	print(current_year, ' done')
 
 var seconds:=0
 var timedquiz:=false

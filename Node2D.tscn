@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://TN.gd" type="Script" id=1]
 [ext_resource path="res://Camera2D.gd" type="Script" id=2]
@@ -17,6 +17,9 @@ font_data = ExtResource( 3 )
 
 [sub_resource type="RichTextEffect" id=3]
 script = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=7]
+font_data = ExtResource( 3 )
 
 [sub_resource type="DynamicFont" id=4]
 size = 30
@@ -56,6 +59,18 @@ anchor_bottom = 1.0
 rect_min_size = Vector2( 400, 0 )
 size_flags_horizontal = 3
 custom_fonts/normal_font = SubResource( 2 )
+bbcode_enabled = true
+scroll_active = false
+custom_effects = [ SubResource( 3 ) ]
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timeline" type="RichTextLabel" parent="HUD"]
+anchor_bottom = 1.0
+rect_min_size = Vector2( 400, 0 )
+size_flags_horizontal = 3
+custom_fonts/normal_font = SubResource( 7 )
 bbcode_enabled = true
 scroll_active = false
 custom_effects = [ SubResource( 3 ) ]
