@@ -166,4 +166,5 @@ custom_fonts/font = SubResource( 6 )
 text = "Back to Map"
 
 [connection signal="pressed" from="VBoxContainer2/MarginContainer/Neighbours" to="." method="_on_Neighbours_pressed"]
+[connection signal="pressed" from="VBoxContainer2/MarginContainer/clue" to="." method="_on_clue_pressed"]
 [connection signal="pressed" from="VBoxContainer2/MarginContainer/Back" to="." method="_on_Back_pressed"]

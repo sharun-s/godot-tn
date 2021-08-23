@@ -74,7 +74,7 @@ var facts:={
 			"Top exporter of finished Leather goods in the country",
 			"500 year old Vellore Fort is a popular tourist attraction. Was location of the 1806 Sepoy Mutiny against the British"
 		],
-		Thoothukudi=["Known in the past as the Pearl Fishery Coast", 
+		Thoothukudi=["ISRO is building its new space port here at Kulasekharapatnam ","Known in the past as the Pearl Fishery Coast", 
 		"Veerapandiya Kattabomman","great poet Subramanya Bharathi",
 		"V.O.Chidambaram Pillai Swadeshi Steamship Company"],
 		Karur=["Capital of the Chera Kings"],
@@ -83,7 +83,7 @@ var facts:={
 		Tirupathur=['Surrounded by the Javadhu and Yelagiri Hills known for rivers, waterfalls and sandal wood trees', 'Ambur Biriyani'],
 		Tiruchirapalli=['The Srirangam temple complex covers 156 acres making it the largest templex complex in the country. Famous for festivals conducted throughout the year', 
 		'Rockfort Temple'],
-		Pudukottai=['Was a independent princely state ruled by the Thondaimans since the 17th century'],
+		Pudukotai=['Was a independent princely state ruled by the Thondaimans since the 17th century'],
 		Tenkasi=['Old Courtallam Falls', 'Thirukutralam'],
 		Perumbalur=['Leads the state in Small Onion production'],
 		Ariyalur=['prehistoric fossils','Gangaikondacholapuram'],
@@ -141,3 +141,11 @@ func format_neighbours():
 
 func _on_Neighbours_pressed():
 	$VBoxContainer2/FactBox.text=format_neighbours()	
+
+
+func _on_clue_pressed():
+	var d=int(rand_range(0, facts.keys().size()))
+	var target=facts.keys()[d]
+	var idx=int(rand_range(0, facts[target].size()))
+	$VBoxContainer2/FactBox.text='Head to the district known for - \n'+facts[target][idx]
+	
