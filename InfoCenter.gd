@@ -1,6 +1,4 @@
 extends GridContainer
-
-#class DB:
 var facts:={
 		Chennai=["State Capital"],
 		Chengalpattu=[
@@ -102,7 +100,6 @@ var facts:={
 			'Mudumalai Tiger Reserve is the largest in TN with 160 using the corridor and 103 resident ' ]
 	}
 	
-	
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	hide()# Replace with function body.
@@ -110,7 +107,7 @@ var n=[]
 func reload(district, neighbours):
 	n.clear()
 	n=neighbours
-	$VBoxContainer/PanelContainer/imgbox.texture=load("res://"+district+".png")
+	#$VBoxContainer/PanelContainer/imgbox.texture=load("res://"+district+".png")
 	$VBoxContainer/NameBox.text=district
 	if district in facts and facts[district].size() > 0:
 		var idx=int(rand_range(0, facts[district].size()))

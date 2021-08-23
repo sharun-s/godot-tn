@@ -224,8 +224,8 @@ func _ready():
 	addstateborder(keralaborder)
 	addstateborder(kaborder)
 	addstateborder(apborder)
-	$Camera2D.position=get_node('Karur').position
-	$Camera2D.zoom=Vector2(2.6, 2.6)
+	$Camera2D.position=get_node('Dindigul').position
+	$Camera2D.zoom=Vector2(2.85, 2.85)
 	$Label.rect_scale=$Camera2D.zoom
 
 
@@ -604,6 +604,7 @@ func reset():
 	$HUD/Quiz.hide()
 	$HUD/Timed.hide()
 	$HUD/Info.hide()
+	$HUD/Learn.hide()
 	#since the learn button is used to show years
 	#if game_num!=2:
 	#	$HUD/Learn.hide()
