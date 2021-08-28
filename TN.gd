@@ -105,7 +105,7 @@ var border_color=Color.darkgray#.black#Color.firebrick
 var border_width:=1
 var border_width_highlight:=5
 var tw:=Tween.new()
-var walkpath:=Line2D.new()
+#var walkpath:=Line2D.new()
 var path=[]
 
 func revert_transform(poly:Polygon2D):

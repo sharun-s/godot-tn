@@ -100,6 +100,18 @@ var facts:={
 			'Mudumalai Tiger Reserve is the largest in TN with 160 using the corridor and 103 resident ' ]
 	}
 	
+func sea():
+	var a:AnimatedTexture = AnimatedTexture.new()
+	a.frames=10
+	for i in range(1,11):
+		a.set_frame_texture(i-1, load("res://sea_"+str(i)+".png"))
+	return a
+	
+var dummyimg=[
+	preload("res://sea_1.png"),
+	preload("res://nat.png"),
+	sea(),
+	]
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	hide()# Replace with function body.
@@ -107,7 +119,7 @@ var n=[]
 func reload(district, neighbours):
 	n.clear()
 	n=neighbours
-	#$VBoxContainer/PanelContainer/imgbox.texture=load("res://"+district+".png")
+	$VBoxContainer/PanelContainer/imgbox.texture=dummyimg[int(rand_range(0, dummyimg.size()))]
 	$VBoxContainer/NameBox.text=district
 	if district in facts and facts[district].size() > 0:
 		var idx=int(rand_range(0, facts[district].size()))
