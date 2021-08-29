@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://TN.gd" type="Script" id=1]
 [ext_resource path="res://Camera2D.gd" type="Script" id=2]
@@ -27,10 +27,6 @@ font_data = ExtResource( 3 )
 
 [sub_resource type="DynamicFont" id=6]
 size = 24
-font_data = ExtResource( 3 )
-
-[sub_resource type="DynamicFont" id=7]
-size = 32
 font_data = ExtResource( 3 )
 
 [node name="TN" type="Node2D"]
@@ -79,10 +75,12 @@ __meta__ = {
 }
 
 [node name="Quiz" type="Button" parent="HUD"]
-anchor_top = 1.0
-anchor_bottom = 1.0
-margin_top = -55.0
-margin_right = 192.0
+anchor_left = 1.0
+anchor_top = 0.1
+anchor_right = 1.0
+anchor_bottom = 0.1
+margin_left = -192.0
+margin_bottom = 55.0
 custom_fonts/font = SubResource( 5 )
 text = "Quiz"
 __meta__ = {
@@ -103,10 +101,12 @@ __meta__ = {
 }
 
 [node name="Timed" type="Button" parent="HUD"]
-anchor_top = 0.9
-anchor_bottom = 0.9
-margin_top = -55.0
-margin_right = 192.0
+anchor_left = 1.0
+anchor_top = 0.2
+anchor_right = 1.0
+anchor_bottom = 0.2
+margin_left = -192.0
+margin_bottom = 55.0
 custom_fonts/font = SubResource( 5 )
 text = "Timed Quiz"
 __meta__ = {
@@ -161,58 +161,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="E" type="Button" parent="HUD"]
-visible = false
-margin_left = 128.0
-margin_top = 64.0
-margin_right = 192.0
-margin_bottom = 128.0
-custom_fonts/font = SubResource( 7 )
-toggle_mode = true
-text = "E"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="N" type="Button" parent="HUD"]
-visible = false
-margin_left = 64.0
-margin_right = 128.0
-margin_bottom = 64.0
-custom_fonts/font = SubResource( 7 )
-toggle_mode = true
-text = "N"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="W" type="Button" parent="HUD"]
-visible = false
-margin_top = 64.0
-margin_right = 65.0
-margin_bottom = 125.0
-custom_fonts/font = SubResource( 7 )
-toggle_mode = true
-text = "W"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="S" type="Button" parent="HUD"]
-visible = false
-margin_left = 65.0
-margin_top = 128.0
-margin_right = 128.0
-margin_bottom = 192.0
-custom_fonts/font = SubResource( 7 )
-toggle_mode = true
-text = "S"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Grid" parent="HUD" instance=ExtResource( 4 )]
-visible = false
+anchor_right = 0.3
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
@@ -230,3 +180,4 @@ scale = Vector2( 1.4, 1.4 )
 [connection signal="toggled" from="HUD/Labels" to="." method="_on_Labels_toggled"]
 [connection signal="pressed" from="HUD/Learn" to="." method="_on_Learn_toggled"]
 [connection signal="timeout" from="QuizTimer" to="." method="_on_QuizTimer_timeout"]
+[connection signal="hit" from="Gopal" to="." method="_on_Gopal_hit"]

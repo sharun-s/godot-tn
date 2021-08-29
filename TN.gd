@@ -397,8 +397,7 @@ func select(district):
 			score+=1
 			attempts+=1
 			$HUD/Score.text=str(score)+' / '+str(attempts)
-			#get_node(district).get_child(0).color=selected_color_right
-			blink(district, selected_color_right)
+			get_node(district).get_child(0).color=selected_color_right
 			$Label.text=district
 			$Label.rect_global_position=center(district)
 			timed_msg("[color=#"+selected_color_right.to_html(false)+"]Correct![/color]", 1, 2)
@@ -559,28 +558,10 @@ func game_over():
 #			print(j.name)
 #	print('GAME OVER ******',tree.get_node_count())
 
-func blink(district, color):
-	var dx=get_node(district).get_child(0)
-	for i in 5:
-		dx.modulate=color
-		yield(get_tree(), "idle_frame")
-		dx.modulate= Color(1.0, 1.0, 1.0)
-		yield(get_tree(), "idle_frame")
-	dx.modulate=Color(1.0, 1.0, 1.0)
-	dx.color=color
-
 func timed_msg(msg, period, blink:=0, blinkcolor:=Color.green):
 	$HUD/Message.bbcode_text=msg
 	$Timer.wait_time=period
 	$Timer.start()
-#	$HUD/Message.modulate= Color(1.0, 1.0, 1.0)
-#	$HUD/Message.text=msg
-#	if blink:
-#		for i in blink:
-#			$HUD/Message.modulate = blinkcolor
-#			yield(get_tree(), "idle_frame")
-#			$HUD/Message.modulate= Color(1.0, 1.0, 1.0)
-#			yield(get_tree(), "idle_frame")
 
 #func process(_delta):
 #	walkpath.show()
@@ -605,6 +586,7 @@ func reset():
 	$HUD/Timed.hide()
 	$HUD/Info.hide()
 	$HUD/Learn.hide()
+	$HUD/Grid.hide()
 	#since the learn button is used to show years
 	#if game_num!=2:
 	#	$HUD/Learn.hide()
@@ -861,3 +843,6 @@ func _on_Timed_pressed():
 	new_challenge()
 	timedquiz=true
 	$QuizTimer.start()
+
+func _on_Gopal_hit(district):
+	$HUD/Grid.reload(district, neighbours(district))
