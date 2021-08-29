@@ -1,0 +1,55 @@
+[gd_scene load_steps=blah blah format=2]
+[ext_resource path="res://Xolonium-Regular.ttf" type="DynamicFontData" id=3]
+[sub_resource type="DynamicFont" id=7]
+size = 32
+font_data = ExtResource( 3 )
+
+[node name="E" type="Button" parent="HUD"]
+visible = false
+margin_left = 128.0
+margin_top = 64.0
+margin_right = 192.0
+margin_bottom = 128.0
+custom_fonts/font = SubResource( 7 )
+toggle_mode = true
+text = "E"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="N" type="Button" parent="HUD"]
+visible = false
+margin_left = 64.0
+margin_right = 128.0
+margin_bottom = 64.0
+custom_fonts/font = SubResource( 7 )
+toggle_mode = true
+text = "N"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="W" type="Button" parent="HUD"]
+visible = false
+margin_top = 64.0
+margin_right = 65.0
+margin_bottom = 125.0
+custom_fonts/font = SubResource( 7 )
+toggle_mode = true
+text = "W"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="S" type="Button" parent="HUD"]
+visible = false
+margin_left = 65.0
+margin_top = 128.0
+margin_right = 128.0
+margin_bottom = 192.0
+custom_fonts/font = SubResource( 7 )
+toggle_mode = true
+text = "S"
+__meta__ = {
+"_edit_use_anchors_": false
+}
