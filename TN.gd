@@ -227,6 +227,7 @@ func _ready():
 	$Camera2D.position=get_node('Dindigul').position
 	$Camera2D.zoom=Vector2(2.85, 2.85)
 	$Label.rect_scale=$Camera2D.zoom
+	path.append('Dindigul')
 
 
 var dhistory=[{
@@ -544,7 +545,7 @@ func game_over():
 	$HUD/Quiz.show()
 	$HUD/Timed.show()
 	$HUD/Learn.show()
-	$HUD/Info.show()
+	$HUD/Quest.show()
 	$Camera2D.position=get_node('Karur').position
 	#show_compass()
 	$Gopal.show()
@@ -584,7 +585,7 @@ func reset():
 	$Gopal.hide()
 	$HUD/Quiz.hide()
 	$HUD/Timed.hide()
-	$HUD/Info.hide()
+	$HUD/Quest.hide()
 	$HUD/Learn.hide()
 	$HUD/Grid.hide()
 	#since the learn button is used to show years
@@ -713,7 +714,10 @@ func _on_TN_ready():
 	#	$HUD/Message.anchor_left=.45
 	district_animator=cell.instance()
 	add_child(district_animator)
+	gotoDistrict()
 	
+	
+
 func neighbours(districtname):
 	var l=get_node(districtname).get_overlapping_areas()
 	var n=[]
@@ -830,10 +834,14 @@ func _on_QuizTimer_timeout():
 	seconds=seconds+1
 	$HUD/Clock.text=str(seconds)
 
+var quest_in_progress:=false
 func _on_Info_pressed():
 	if selected_district!='':
-		$HUD/Grid.reload(selected_district, neighbours(selected_district))
-
+		$HUD/Score.text='Your Quest Starts Now!\n Hit the Clue button for more hints \n\n   Good Luck!'
+		$HUD/Grid.reload(selected_district, neighbours(selected_district), 0)
+		quest_in_progress=true
+		$HUD/Quest.hide()
+		
 func _on_Timed_pressed():
 	reset()
 	game_in_progress=1
@@ -845,4 +853,21 @@ func _on_Timed_pressed():
 	$QuizTimer.start()
 
 func _on_Gopal_hit(district):
-	$HUD/Grid.reload(district, neighbours(district))
+	print('gopal hit', district, ' ', quest_in_progress)
+	if quest_in_progress:
+		$HUD/Score.text=''
+		$HUD/Grid.reload(district, neighbours(district), 1)
+	else:
+		$HUD/Grid.reload(district, neighbours(district), 2)
+
+func _on_quest_over(turnstaken, cluessolved):
+	$HUD/Grid.hide()
+	timed_msg("[pulse color=#22dd44 height=-15 freq=5]You took "+str(turnstaken)+" turns\nAnd solved "+str(cluessolved)+" clues ![/pulse]",3)
+	yield($Timer,"timeout")
+	$HUD/Quest.show()
+	$HUD/Message.bbcode_text=''
+	quest_in_progress=false
+	game_over()
+
+func _off_track(d):
+	get_node(d).get_child(0).color=selected_color_wrong

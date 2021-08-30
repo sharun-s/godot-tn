@@ -9,11 +9,11 @@ content_margin_right = 14.0
 content_margin_top = 14.0
 content_margin_bottom = 14.0
 bg_color = Color( 0, 0, 0, 1 )
-border_width_left = 6
-border_width_top = 6
-border_width_right = 6
-border_width_bottom = 6
-border_color = Color( 1, 0.8, 0.266667, 1 )
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color( 0.909804, 0.619608, 0.168627, 1 )
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -31,18 +31,18 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color( 0.909804, 0.619608, 0.168627, 1 )
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 0.00784314, 0.137255, 0.290196, 1 )
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color( 0.996078, 0.701961, 0.196078, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0.909804, 0.619608, 0.168627, 1 )
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -117,7 +117,7 @@ custom_constants/separation = 2
 
 [node name="FactBox" type="Label" parent="VBoxContainer2"]
 margin_right = 1024.0
-margin_bottom = 100.0
+margin_bottom = 147.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/normal = SubResource( 4 )
@@ -126,7 +126,7 @@ text = "Welcome! This district is known for"
 autowrap = true
 
 [node name="MarginContainer" type="VBoxContainer" parent="VBoxContainer2"]
-margin_top = 102.0
+margin_top = 149.0
 margin_right = 1024.0
 margin_bottom = 298.0
 custom_constants/separation = 10
@@ -149,6 +149,7 @@ custom_fonts/font = SubResource( 6 )
 text = "History"
 
 [node name="clue" type="Button" parent="VBoxContainer2/MarginContainer"]
+visible = false
 margin_top = 106.0
 margin_right = 1024.0
 margin_bottom = 143.0
@@ -160,9 +161,9 @@ custom_colors/font_color = Color( 1, 0.8, 0.0666667, 1 )
 text = "Clue"
 
 [node name="Back" type="Button" parent="VBoxContainer2/MarginContainer"]
-margin_top = 153.0
+margin_top = 106.0
 margin_right = 1024.0
-margin_bottom = 196.0
+margin_bottom = 149.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 6 )

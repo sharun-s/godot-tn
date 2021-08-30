@@ -1,13 +1,13 @@
 extends GridContainer
 var facts:={
 		Ariyalur=['prehistoric fossils','Gangaikondacholapuram'],
-		Chennai=["State Capital"],
+		Chennai=["State Capital", "Marina Beach"],
 		Chengalpattu=[
 			"Named after the Sengazhuneer poo (Red White Lily) that grows in abundance along the river banks",
 			"Mahaballipuram site of some of the earliest Rock Temples and Stone Sculpture that influenced the style of Temple Architecture throughout South India"],
 		Coimbatore=[
 			'Eastern end of the Palakkad Gap, the lowest pass through the Western Ghats linking Kerala and Tamil Nadu. Also called Kovai',
-			'Coimbatore is called the Manchester of South India due to extensive textile industry, fed by the surrounding cotton fields'
+			'Manchester of South India due to extensive textile industry, fed by the surrounding cotton fields'
 		],
 		Cuddalore=[
 			'Nataraja dance at thilai Natyanjali Dance Festival feb march on mahashivratri expand...',
@@ -17,7 +17,7 @@ var facts:={
 		"Fort St David in Cuddalore was one of the main British trading posts controling their activities in South India in the early 1700. So Cuddalore became the site of multiple wars with the French based 25kms North in Pondicherry",
 		"Silver Beach is one of the longest beaches found on the Coromandel Coast. 2700 people lost their life here during the 2004 Tsunami", 'Chidambaram temple','Pichawaram Mangrove forests'],
 		Dindigul=['Famous Kodaikanal hill station'],
-		Dharmapuri=["Hogenakkal"],
+		Dharmapuri=["Hogenakkal falls"],
 		Erode=[
 			"Turmeric",
 			"Agri powerhouse due to rivers and dams",
@@ -36,10 +36,11 @@ var facts:={
 			"Kailasanathar Temple and the Vaikunta Perumal Temple found here are nearly 1350 years old"
 		],
 		Krishnagiri=[
-			"Krishnagiri district is one of the largest producers of Mangoes in India"
+			"Largest producers of Mangoes in India"
 		],
-		Kallakurichi=['Mainly a rural area 50 years ago increased road connectivity has turned into an emerging agricultural hub.',
-		'The Kalvarayan Hills are pristine unexplored area with the Vellimalai hilltop becoming a popular tourist spot for locals during the monsoon season.'],
+		Kallakurichi=[
+			'Mainly a rural area 50 years ago increased road connectivity has turned into an emerging agricultural hub.',
+			'The Kalvarayan Hills are pristine unexplored area with the Vellimalai hilltop becoming a popular tourist spot for locals during the monsoon season.'],
 		Karur=["Capital of the Chera Kings"],
 		Perumbalur=['Leads the state in Small Onion production'],
 		Pudukotai=['Was a independent princely state ruled by the Thondaimans since the 17th century'],
@@ -54,7 +55,9 @@ var facts:={
 		Nilgiris=[
 			'coffee, tea, rubber, eucalyptus plantaination',
 			'Mudumalai Tiger Reserve is the largest in TN with 160 using the corridor and 103 resident ' ],
-		Namakkal=['Cauvery flows thro, Tiruchengode...','Known for its Poutry Farms and  Lorry body building industry', 'Namakkal derives from Namagiri, the name of the single 65m high rock formation at the center of the Namakkal town. A Fort covering one and half acres was built on top of the rock in the 17th century'],
+		Namakkal=['Cauvery flows thro, Tiruchengode...',
+		'Known for its Poutry Farms and  Lorry body building industry', 
+		'Its name derives from Namagiri, the name of the single 65m high rock formation at the center of the Namakkal town. A Fort covering one and half acres was built on top of the rock in the 17th century'],
 		Ranipet=['Ceramics'],
 		Ramanathapuram=[
 			"Birth place of A.P.J Abdul Kalam, rocket man, pokhran 2, peoples president...",
@@ -63,17 +66,19 @@ var facts:={
 			"Mandapam - Pamban Bridge - Pamban-Rameshwaram/Dhanushkodi",
 			"In 1964 a cyclone hit Pamban Island with 25 ft waves washing away the town of Danushkodi. Today the remain of the ghost town are a tourist attraction."
 		],
-		Salem=['Steal', 'Shevaroy Hills - near salem - yercaud - orchidarium - old coffee plantations highest peak of the southern eastern ghats in TN - lots of species of snake, lizard, frogs and birds not found anywhere else'],
+		Salem=['Steal industry', 
+		'Shevaroy Hills - yercaud - orchidarium - old coffee plantations highest peak of the southern eastern ghats in TN - lots of species of snake, lizard, frogs and birds not found anywhere else'],
 		Sivagangai=['Kaniyan - Yaadhum Oore Yaavarum Kelir',
 			'Chettinad formed by a prosperous banking and business community built from trading with Burma, Ceylon and Malaysia',
-		'Athangudi tiles', 'Known for the famous Chettinad cuisine',
+			'Athangudi tiles', 
+			'Known for the famous Chettinad cuisine',
 			'Found here is the 2500 year old Keezhadi excavation site, including plates with the Tamil-Brahmi script'
 		],
 		Theni=['Indian Neutrino Observatory',
 		'Meghamalai Wildlife Sanctuary'],
 		Tiruvarur=[
 			'Somaskanda iconography',
-			'Thyagaraja Temple Chariot in Thiruvarur stands 96 feet tall',
+			'Thyagaraja Temple Chariot found here stands 96 feet tall',
 			'Birthplace of Saint Thyagaraja, the composer of Carnatic music'	
 		],
 		Thanjavur=[
@@ -99,7 +104,7 @@ var facts:={
 		"V.O.Chidambaram Pillai Swadeshi Steamship Company",
 		"dugong sea grass medows"],
 		Tiruppur=["Textile export hub"],
-		Tirupathur=['Surrounded by the Javadhu and Yelagiri Hills known for rivers, waterfalls and sandal wood trees', 'Ambur Biriyani'],
+		Tirupathur=['Surrounded by the Javadhu and Yelagiri Hills known for rivers, waterfalls and sandal wood trees'],
 		Tiruchirapalli=['The Srirangam temple complex covers 156 acres making it the largest templex complex in the country. Famous for festivals conducted throughout the year', 
 		'Rockfort Temple'],
 		Tenkasi=['Old Courtallam Falls', 'Thirukutralam'],	
@@ -107,7 +112,7 @@ var facts:={
 			"Gingee Fort is found here. Sivaji called it the most impregnable fortress in India"
 		],
 		Virudhunagar=[
-			"K. Kamaraj was from here. He was TN CM from 54-63, and Indian National Congress President after Jawaharlal Nehru's death. He made education free for the poor having had to drop out of school at age 11 to support his family",
+			"Birth place of K. Kamaraj TN CM from 54-63, and Indian National Congress President after Jawaharlal Nehru's death. He made education free for the poor having had to drop out of school at age 11 to support his family",
 			'Sivakasi Fireworks',
 			'The 192 ft Gopuram of the Srivilliputhur Temple built here, dedicated to Andal the only female among the poet saints of south india, is the symbol of the Tamil Nadu Govt'
 		],
@@ -117,7 +122,10 @@ var facts:={
 			"500 year old Vellore Fort is a popular tourist attraction. Was location of the 1806 Sepoy Mutiny against the British"
 		]
 	}
-	
+
+signal quest_over;	
+signal off_track;	
+
 func sea():
 	var a:AnimatedTexture = AnimatedTexture.new()
 	a.frames=10
@@ -148,18 +156,62 @@ var dummyimg=[
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	hide()# Replace with function body.
+
 var n=[]
-func reload(district, neighbours):
+enum state{
+	NEW_QUEST,
+	IN_QUEST,
+	NON_QUEST
+}
+var rng=RandomNumberGenerator.new()
+var targets=[]
+var NumberOfTargets:=3
+var AttemptsAllowed:=10
+var attempts:=AttemptsAllowed
+
+func reload(district, neighbours, mode=state.NON_QUEST):
 	n.clear()
 	n=neighbours
-	$VBoxContainer/PanelContainer/imgbox.texture=dummyimg[int(rand_range(0, dummyimg.size()))]
 	$VBoxContainer/NameBox.text=district
+	$VBoxContainer/PanelContainer/imgbox.texture=dummyimg[int(rand_range(0, dummyimg.size()))]
+	if mode==state.NEW_QUEST:
+		rng.randomize()
+		while targets.size() != NumberOfTargets:
+			var idx=rng.randi_range(0, facts.size()-1)
+			if (facts.keys()[idx] in targets) == false:
+				targets.append(facts.keys()[idx])
+		print('targets set', targets)
+		$VBoxContainer2/MarginContainer/clue.show()
+		_on_clue_pressed()
+	elif mode==state.IN_QUEST:
+		attempts=attempts-1
+		if targets[0] == district:
+			targets.pop_front()
+			print('targets left', targets)
+			_on_clue_pressed("Well done. You are on track!!!\n\n")
+			show()
+			#emit_signal("on_track")
+		else:
+			show_fact(district)
+			show()
+			emit_signal("off_track",district)
+		if attempts==0 or targets.size()==0:
+			$VBoxContainer2/MarginContainer/clue.hide()
+			emit_signal('quest_over',AttemptsAllowed-attempts, NumberOfTargets - targets.size()) # send clues solved
+			attempts=AttemptsAllowed
+			targets.clear()
+	else:
+		#$VBoxContainer2/MarginContainer/clue.hide()
+		show_fact(district)
+		show()
+
+func show_fact(district):
 	if district in facts and facts[district].size() > 0:
-		var idx=int(rand_range(0, facts[district].size()))
+		var idx=rng.randi_range(0, facts[district].size()-1)
 		$VBoxContainer2/FactBox.text=facts[district][idx]
 	else:
+		#district or fact is missing from the db
 		$VBoxContainer2/FactBox.text=''
-	show()
 
 func _unhandled_input(event):
 	if event is InputEventKey:
@@ -184,10 +236,10 @@ func format_neighbours():
 func _on_Neighbours_pressed():
 	$VBoxContainer2/FactBox.text=format_neighbours()	
 
-
-func _on_clue_pressed():
-	var d=int(rand_range(0, facts.keys().size()))
-	var target=facts.keys()[d]
-	var idx=int(rand_range(0, facts[target].size()))
-	$VBoxContainer2/FactBox.text='Head to the district known for - \n'+facts[target][idx]
+func _on_clue_pressed(prefix=''):
+	#var d=int(rand_range(0, facts.keys().size()))
+	#var target=facts.keys()[d]
+	if targets.size() >0:
+		var idx= rng.randi_range(0, facts[targets[0]].size()-1)
+		$VBoxContainer2/FactBox.text=prefix+'Head to the district known for - \n'+facts[targets[0]][idx]
 	
