@@ -401,7 +401,7 @@ func select(district):
 			get_node(district).get_child(0).color=selected_color_right
 			$Label.text=district
 			$Label.rect_global_position=center(district)
-			timed_msg("[color=#"+selected_color_right.to_html(false)+"]Correct![/color]", 1, 2)
+			timed_msg("[color=#"+selected_color_right.to_html(false)+"]Correct![/color]", 1)#, 2)
 			yield($Timer, "timeout")
 			if attempts < turns:
 				new_challenge()
@@ -559,7 +559,7 @@ func game_over():
 #			print(j.name)
 #	print('GAME OVER ******',tree.get_node_count())
 
-func timed_msg(msg, period, blink:=0, blinkcolor:=Color.green):
+func timed_msg(msg, period):#, blink:=0, blinkcolor:=Color.green):
 	$HUD/Message.bbcode_text=msg
 	$Timer.wait_time=period
 	$Timer.start()
@@ -828,6 +828,26 @@ func _on_Learn_toggled():
 		current_year=current_year+1
 	print(current_year, ' done')
 
+var histcache:={}
+func get_history(dd):
+	var cur_year=0
+	var text:=''
+	if dd in histcache:
+		return histcache[dd]
+	while true:
+		if cur_year>=len(years):
+			histcache[dd]=text
+			return text
+		if dd in dhistory[current_year]:
+			if cur_year==0:
+				text='Created in ' + years[cur_year] +'\n'
+			else:
+				text=text+'Divided in '+ years[cur_year] + ' with '  
+				var tmp=dhistory[cur_year].keys().duplicate()
+				tmp.erase(dd)
+				text=text +' '+ str(tmp).replace('[','').replace(']','') +'\n'	
+		cur_year=cur_year+1
+		
 var seconds:=0
 var timedquiz:=false
 func _on_QuizTimer_timeout():
@@ -837,8 +857,11 @@ func _on_QuizTimer_timeout():
 var quest_in_progress:=false
 func _on_Info_pressed():
 	if selected_district!='':
-		$HUD/Score.text='Your Quest Starts Now!\n Hit the Clue button for more hints \n\n   Good Luck!'
-		$HUD/Grid.reload(selected_district, neighbours(selected_district), 0)
+		$HUD/Quiz.hide()
+		$HUD/Timed.hide()
+		$HUD/Learn.hide()
+		$HUD/Score.text='Your Quest Starts NOW!\nHit the CLUE button for more hints\n\nGood Luck!'
+		$HUD/Grid.reload(selected_district, neighbours(selected_district),get_history(selected_district), 0)
 		quest_in_progress=true
 		$HUD/Quest.hide()
 		
@@ -853,12 +876,12 @@ func _on_Timed_pressed():
 	$QuizTimer.start()
 
 func _on_Gopal_hit(district):
-	print('gopal hit', district, ' ', quest_in_progress)
 	if quest_in_progress:
 		$HUD/Score.text=''
-		$HUD/Grid.reload(district, neighbours(district), 1)
+		$HUD/Grid.reload(district, neighbours(district),get_history(district), 1)
 	else:
-		$HUD/Grid.reload(district, neighbours(district), 2)
+		$HUD/Grid.reload(district, neighbours(district),get_history(district), 2) # non quest just show info without clue
+	get_history(district)
 
 func _on_quest_over(turnstaken, cluessolved):
 	$HUD/Grid.hide()
@@ -871,3 +894,9 @@ func _on_quest_over(turnstaken, cluessolved):
 
 func _off_track(d):
 	get_node(d).get_child(0).color=selected_color_wrong
+
+func _on_Grid_show_neighbours(show):
+	for i in neighbours(selected_district):
+		get_node('lbl'+i).visible=true
+		get_node(i).get_child(0).color=deselect_color.blend("aa66aa22")
+	update()

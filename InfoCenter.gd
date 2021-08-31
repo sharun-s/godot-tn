@@ -125,6 +125,7 @@ var facts:={
 
 signal quest_over;	
 signal off_track;	
+signal show_neighbours;
 
 func sea():
 	var a:AnimatedTexture = AnimatedTexture.new()
@@ -152,12 +153,19 @@ var dummyimg=[
 	preload("res://elephant.png"),
 	preload("res://flame.png"),
 	sea(),
+	preload("res://kolam.png"),
+	#preload("res://dugong.png"),
+	#preload("res://paddy.png"),
+	#preload("res://temple.png"),
+	#preload("res://templecar.png"),
+	#preload("res://handloom.png"),
 	]
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	hide()# Replace with function body.
 
 var n=[]
+var historytext:=''
 enum state{
 	NEW_QUEST,
 	IN_QUEST,
@@ -169,8 +177,9 @@ var NumberOfTargets:=3
 var AttemptsAllowed:=10
 var attempts:=AttemptsAllowed
 
-func reload(district, neighbours, mode=state.NON_QUEST):
+func reload(district, neighbours, hist='',mode=state.NON_QUEST):
 	n.clear()
+	historytext=hist
 	n=neighbours
 	$VBoxContainer/NameBox.text=district
 	$VBoxContainer/PanelContainer/imgbox.texture=dummyimg[int(rand_range(0, dummyimg.size()))]
@@ -234,7 +243,7 @@ func format_neighbours():
 	return textstr
 
 func _on_Neighbours_pressed():
-	$VBoxContainer2/FactBox.text=format_neighbours()	
+	$VBoxContainer2/FactBox.text=format_neighbours()
 
 func _on_clue_pressed(prefix=''):
 	#var d=int(rand_range(0, facts.keys().size()))
@@ -242,4 +251,10 @@ func _on_clue_pressed(prefix=''):
 	if targets.size() >0:
 		var idx= rng.randi_range(0, facts[targets[0]].size()-1)
 		$VBoxContainer2/FactBox.text=prefix+'Head to the district known for - \n'+facts[targets[0]][idx]
+	
+func _on_history_pressed():
+	$VBoxContainer2/FactBox.text=historytext
+
+func _on_Neighbours_toggled(button_pressed):
+	emit_signal('show_neighbours', button_pressed)
 	
