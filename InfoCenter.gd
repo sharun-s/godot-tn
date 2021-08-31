@@ -181,6 +181,7 @@ func reload(district, neighbours, hist='',mode=state.NON_QUEST):
 	n.clear()
 	historytext=hist
 	n=neighbours
+	$VBoxContainer2/MarginContainer/Neighbours.pressed=false
 	$VBoxContainer/NameBox.text=district
 	$VBoxContainer/PanelContainer/imgbox.texture=dummyimg[int(rand_range(0, dummyimg.size()))]
 	if mode==state.NEW_QUEST:

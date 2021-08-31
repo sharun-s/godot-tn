@@ -100,7 +100,7 @@ var selected_color:=Color.darkorange
 var deselect_color:=Color.lightyellow#Color("eeffcc88")
 var selected_color_right:=Color.lightgreen
 var selected_color_wrong:=Color.lightcoral
-var district_label_text_color:=Color('f6b016')
+var district_label_text_color:=Color('f6b000')
 var border_color=Color.darkgray#.black#Color.firebrick
 var border_width:=1
 var border_width_highlight:=5
@@ -224,11 +224,12 @@ func _ready():
 	addstateborder(keralaborder)
 	addstateborder(kaborder)
 	addstateborder(apborder)
+	var randstartidx=rng.randi_range(0,d.size()-1)
+	var startat = d.keys()[randstartidx]
 	$Camera2D.position=get_node('Dindigul').position
 	$Camera2D.zoom=Vector2(2.85, 2.85)
 	$Label.rect_scale=$Camera2D.zoom
-	path.append('Dindigul')
-
+	path.append(startat)
 
 var dhistory=[{
 	Salem=[['Salem', 'Dharmapuri', 'Namakkal', 'Krishnagiri'],Color.mediumspringgreen],
@@ -454,8 +455,7 @@ func highlight_district(district, show_neighbours:=true):
 	poly.color=selected_color
 	#selected_district_border_pts=PoolVector2Array(poly.polygon)
 	if show_neighbours:
-		var oa=sd.get_overlapping_areas()		#get_tree().set_group("dlabels", "visible", false)
-		#wait for set completion
+		var oa=sd.get_overlapping_areas()
 		var tmp=$Timer.wait_time
 		$Timer.start(.3)
 		yield($Timer, 'timeout')
@@ -472,6 +472,7 @@ func highlight_district(district, show_neighbours:=true):
 			
 func deselect():
 	for district in d.keys():
+		get_node('lbl'+district).visible=false
 		get_node(district).get_child(0).color=deselect_color
 var cache={}
 func _draw():
@@ -838,7 +839,7 @@ func get_history(dd):
 		if cur_year>=len(years):
 			histcache[dd]=text
 			return text
-		if dd in dhistory[current_year]:
+		if dd in dhistory[cur_year]:
 			if cur_year==0:
 				text='Created in ' + years[cur_year] +'\n'
 			else:
@@ -861,7 +862,7 @@ func _on_Info_pressed():
 		$HUD/Timed.hide()
 		$HUD/Learn.hide()
 		$HUD/Score.text='Your Quest Starts NOW!\nHit the CLUE button for more hints\n\nGood Luck!'
-		$HUD/Grid.reload(selected_district, neighbours(selected_district),get_history(selected_district), 0)
+		$HUD/Grid.reload(selected_district, neighbours(selected_district), get_history(selected_district), 0)
 		quest_in_progress=true
 		$HUD/Quest.hide()
 		
@@ -878,10 +879,9 @@ func _on_Timed_pressed():
 func _on_Gopal_hit(district):
 	if quest_in_progress:
 		$HUD/Score.text=''
-		$HUD/Grid.reload(district, neighbours(district),get_history(district), 1)
+		$HUD/Grid.reload(district, neighbours(district), get_history(district), 1)
 	else:
-		$HUD/Grid.reload(district, neighbours(district),get_history(district), 2) # non quest just show info without clue
-	get_history(district)
+		$HUD/Grid.reload(district, neighbours(district), get_history(district), 2) # non quest just show info without clue
 
 func _on_quest_over(turnstaken, cluessolved):
 	$HUD/Grid.hide()
@@ -896,7 +896,14 @@ func _off_track(d):
 	get_node(d).get_child(0).color=selected_color_wrong
 
 func _on_Grid_show_neighbours(show):
-	for i in neighbours(selected_district):
-		get_node('lbl'+i).visible=true
-		get_node(i).get_child(0).color=deselect_color.blend("aa66aa22")
-	update()
+	if show:
+		for i in neighbours(selected_district):
+			get_node('lbl'+i).visible=true
+			get_node(i).get_child(0).color=deselect_color.blend("79e9a5")
+	else:
+		for district in d.keys():
+			get_node('lbl'+district).visible=false
+			if district != selected_district:
+				get_node(district).get_child(0).color=deselect_color
+
+	#update()
