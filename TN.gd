@@ -861,7 +861,7 @@ func _on_Info_pressed():
 		$HUD/Quiz.hide()
 		$HUD/Timed.hide()
 		$HUD/Learn.hide()
-		$HUD/Score.text='Your Quest Starts NOW!\nHit the CLUE button for more hints\n\nGood Luck!'
+		$HUD/Score.text='YOUR QUEST STARTS NOW!\nCheck the InfoBox for Instructions\n\nGOOD LUCK!'
 		$HUD/Grid.reload(selected_district, neighbours(selected_district), get_history(selected_district), 0)
 		quest_in_progress=true
 		$HUD/Quest.hide()
@@ -893,6 +893,7 @@ func _on_quest_over(turnstaken, cluessolved):
 	game_over()
 
 func _off_track(d):
+	$HUD/Score.text="Oops! Wrong direction!!!\nPress CLUE for more hints"
 	get_node(d).get_child(0).color=selected_color_wrong
 
 func _on_Grid_show_neighbours(show):
