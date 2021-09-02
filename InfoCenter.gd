@@ -73,7 +73,7 @@ var facts:={
 		"The famous Ambur biryani. The Mughals ruled this region and influenced the cuisine. Unique due to local type of rice used, and cooking meat and rice together unlike other biriyanis separately",
 		"Arcot Makkan Peda is a speciality - a flattened gulab jamun but filled with grated dry fruits soaked in sugar syrup",
 		"Leather goods manufacturing hub",
-		'End point of the first Paseenger Railway Line built in South India in 1854 - Walajahpet-Veyasarapady (Chennai)',
+		'End point of the first Passenger Railway Line built in South India in 1854 - Walajahpet-Veyasarapady (Chennai)',
 		'Built on the Palar River banks, by the Nawab of Arcot, in honour of the Rani of Gingee who committed Sati after her husband Desingh died in the Battle of Gingee'],
 		Ramanathapuram=[
 			"Birth place of A.P.J Abdul Kalam, rocket man, pokhran 2, peoples president...",
@@ -99,7 +99,7 @@ var facts:={
 		],
 		Thanjavur=[
 			"The Rice Bowl of Tamil Nadu",
-			"Made popular Ghee Pongal, Puliyodarai (tamarind rice)",
+			"Popularized Ghee Pongal and Puliyodarai (tamarind rice)",
 			"Kumbakonam, every 12 years Mahamaham festival draws millions of devotees for a dip in the huge temple tank complex spanning 20 sq acres",
 			"The 1000 year old Brihadeshwara temple",
 			"Seat of the Chola Empire",
@@ -145,7 +145,8 @@ var facts:={
 	}
 
 signal quest_over;	
-signal off_track;	
+signal off_track;
+signal on_track;
 signal show_neighbours;
 
 func sea():
@@ -183,6 +184,8 @@ var dummyimg=[
 	]
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	if OS.get_name()=='Android':
+		$VBoxContainer2/FactBox.set("custom_fonts/font/size",18)
 	hide()# Replace with function body.
 
 var n=[]
@@ -199,32 +202,32 @@ var AttemptsAllowed:=10
 var attempts:=AttemptsAllowed
 
 func reload(district, neighbours, hist='',mode=state.NON_QUEST):
-	n.clear()
+	show()
 	historytext=hist
 	n=neighbours
 	$VBoxContainer2/MarginContainer/Neighbours.pressed=false
-	$VBoxContainer/NameBox.text=district
 	$VBoxContainer/PanelContainer/imgbox.texture=dummyimg[int(rand_range(0, dummyimg.size()))]
 	if mode==state.NEW_QUEST:
+		$VBoxContainer/NameBox.text="New Quest!"
 		rng.randomize()
 		while targets.size() != NumberOfTargets:
 			var idx=rng.randi_range(0, facts.size()-1)
 			if (facts.keys()[idx] in targets) == false:
 				targets.append(facts.keys()[idx])
-		print('targets set', targets)
+		#print('targets set', targets)
 		$VBoxContainer2/MarginContainer/clue.show()
 		_on_clue_pressed()
 	elif mode==state.IN_QUEST:
 		attempts=attempts-1
 		if targets[0] == district:
 			targets.pop_front()
-			print('targets left', targets)
-			_on_clue_pressed("Well done. You are on track!!!\n\n")
-			show()
-			#emit_signal("on_track")
+			$VBoxContainer/NameBox.text="Solved:"+str(NumberOfTargets-targets.size())+'/'+str(NumberOfTargets)+" Turns:"+str(AttemptsAllowed-attempts)+'/'+str(AttemptsAllowed)
+			#print('targets left', targets)
+			_on_clue_pressed("")#"Well done. You are on track!!!\n\n")
+			emit_signal("on_track", district)
 		else:
+			$VBoxContainer/NameBox.text=district
 			show_fact(district)
-			show()
 			emit_signal("off_track",district)
 		if attempts==0 or targets.size()==0:
 			$VBoxContainer2/MarginContainer/clue.hide()
@@ -233,8 +236,8 @@ func reload(district, neighbours, hist='',mode=state.NON_QUEST):
 			targets.clear()
 	else:
 		#$VBoxContainer2/MarginContainer/clue.hide()
+		$VBoxContainer/NameBox.text=district
 		show_fact(district)
-		show()
 
 func show_fact(district):
 	if district in facts and facts[district].size() > 0:

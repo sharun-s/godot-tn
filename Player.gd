@@ -1,5 +1,5 @@
 extends Area2D
-signal hit
+#signal hit
 
 # Declare member variables here. Examples:
 export var speed = 400
@@ -53,7 +53,7 @@ func place_at(pos):
 	show()
 	$CollisionShape2D.disabled = false
 
-func _on_Player_area_entered(area):
-	emit_signal('hit',area.name)
+#func _on_Player_area_entered(area):
+#	emit_signal('hit',area.name)
 	#print(area.name+' entered')
 	#pass # Replace with function body.

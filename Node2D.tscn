@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://TN.gd" type="Script" id=1]
 [ext_resource path="res://Camera2D.gd" type="Script" id=2]
@@ -25,7 +25,27 @@ font_data = ExtResource( 3 )
 size = 30
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="StyleBoxFlat" id=6]
+content_margin_left = 0.0
+content_margin_right = 0.0
+content_margin_top = 0.0
+content_margin_bottom = 0.0
+bg_color = Color( 0.0470588, 0.054902, 0.054902, 0.682353 )
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color( 0.996078, 0.929412, 0.372549, 1 )
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+expand_margin_left = 8.0
+expand_margin_right = 8.0
+expand_margin_top = 2.0
+expand_margin_bottom = 4.0
+
+[sub_resource type="DynamicFont" id=7]
 size = 24
 font_data = ExtResource( 3 )
 
@@ -139,13 +159,17 @@ __meta__ = {
 }
 
 [node name="Score" type="Label" parent="HUD"]
+visible = false
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -20.0
 margin_right = 20.0
-margin_bottom = 14.0
-custom_fonts/font = SubResource( 6 )
-custom_colors/font_color = Color( 0.317647, 0.913725, 0.929412, 1 )
+custom_styles/normal = SubResource( 6 )
+custom_fonts/font = SubResource( 7 )
+custom_colors/font_color = Color( 0.996078, 0.929412, 0.372549, 1 )
+text = "test"
+align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -157,7 +181,9 @@ margin_left = 3.0
 margin_top = 37.0
 margin_right = 43.0
 margin_bottom = 86.0
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 7 )
+align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -176,12 +202,12 @@ scale = Vector2( 1.4, 1.4 )
 
 [connection signal="ready" from="." to="." method="_on_TN_ready"]
 [connection signal="pressed" from="HUD/Quiz" to="." method="_on_Button_pressed"]
-[connection signal="pressed" from="HUD/Quest" to="." method="_on_Info_pressed"]
+[connection signal="pressed" from="HUD/Quest" to="." method="_on_Quest_pressed"]
 [connection signal="pressed" from="HUD/Timed" to="." method="_on_Timed_pressed"]
 [connection signal="toggled" from="HUD/Labels" to="." method="_on_Labels_toggled"]
 [connection signal="pressed" from="HUD/Learn" to="." method="_on_Learn_toggled"]
 [connection signal="off_track" from="HUD/Grid" to="." method="_off_track"]
+[connection signal="on_track" from="HUD/Grid" to="." method="_on_Grid_on_track"]
 [connection signal="quest_over" from="HUD/Grid" to="." method="_on_quest_over"]
 [connection signal="show_neighbours" from="HUD/Grid" to="." method="_on_Grid_show_neighbours"]
 [connection signal="timeout" from="QuizTimer" to="." method="_on_QuizTimer_timeout"]
-[connection signal="hit" from="Gopal" to="." method="_on_Gopal_hit"]

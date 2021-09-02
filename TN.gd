@@ -215,21 +215,15 @@ func _ready():
 		add_child(a2d)
 		add_label(district, x, y, w, h, "dlabels")
 		a2d.connect('input_event', self, 'on_district_select',[district])
-#	for i in range(0, keralaborder.size(),2):
-#		walkpath.add_point(t.xform(Vector2(keralaborder[i],keralaborder[i+1])))
-#	walkpath.width=1
-#	walkpath.default_color=Color.gray
-#	add_child(walkpath)
-#	walkpath.show()
 	addstateborder(keralaborder)
 	addstateborder(kaborder)
 	addstateborder(apborder)
-	var randstartidx=rng.randi_range(0,d.size()-1)
-	var startat = d.keys()[randstartidx]
 	$Camera2D.position=get_node('Dindigul').position
-	$Camera2D.zoom=Vector2(2.85, 2.85)
+	if OS.get_name()=="Android":
+		$Camera2D.zoom=Vector2(2.85, 2.85)
+	else:
+		$Camera2D.zoom=Vector2(2.0, 2.0)
 	$Label.rect_scale=$Camera2D.zoom
-	path.append(startat)
 
 var dhistory=[{
 	Salem=[['Salem', 'Dharmapuri', 'Namakkal', 'Krishnagiri'],Color.mediumspringgreen],
@@ -373,13 +367,11 @@ func _unhandled_input(event):
 func on_district_select(_viewport, event, _idx, district):
 	if event is InputEventMouseButton:
 		if event.pressed:
-			#select(district)
 			path.clear()
 			path.append(district)
 		else:
 			#on release touch check whats in path and move if required
 			select(district)
-				#gotoDistrict()
 		#walkpath.clear_points()
 		#walkpath.add_point(get_node(district).position)
 	
@@ -516,6 +508,7 @@ func _on_Button_pressed():
 	reset()
 	game_in_progress=1
 	$HUD/Score.text=str(score)
+	$HUD/Score.visible=true
 	timed_msg("[pulse color=#22ff44 height=-10 freq=10]You have 10 turns\n Find the Districts![/pulse]",2)
 	yield($Timer,"timeout")
 	timedquiz=false
@@ -540,6 +533,7 @@ func game_over():
 	$HUD/Timeline.bbcode_text=''
 	#walkpath.clear_points()
 	$HUD/Score.text=''
+	$HUD/Score.visible=false
 	$HUD/Clock.text=''
 	$HUD/Message.bbcode_text=''
 	$Label.text=''
@@ -602,7 +596,7 @@ func reset():
 		get_tree().set_group("dlabels","visible",false)
 
 func gotoDistrict():
-	#reset()
+	disableui()
 	var current
 	var distance
 	var time
@@ -622,11 +616,13 @@ func gotoDistrict():
 		tw.interpolate_property($Gopal,"position",$Gopal.position,gpos,time)
 		tw.start()
 		var x=yield(tw, 'tween_completed')
+		showinfo(current)
 	$Gopal.velocity=Vector2(0,0)
 	$Gopal.initiated_by_code=false
 	$Gopal/CollisionShape2D.disabled = false
 	game_in_progress=0
-	#game_over()
+	if not quest_in_progress:
+		enableui()
 		
 func fullwalktest():
 	reset()
@@ -709,15 +705,26 @@ var cell=preload("res://cell.tscn")
 var district_animator
 
 func _on_TN_ready():
-	#$Timer.start(1)
-	#yield($Timer,"timeout")
-	#if OS.get_name()=='Android':
-	#	$HUD/Message.anchor_left=.45
 	district_animator=cell.instance()
 	add_child(district_animator)
+	var randstartidx=rng.randi_range(0,d.size()-1)
+	var startat = d.keys()[randstartidx]
+	path.append(startat)
 	gotoDistrict()
-	
-	
+
+func disableui():
+	$HUD/Learn.disabled=true
+	$HUD/Quest.disabled=true
+	$HUD/Quiz.disabled=true
+	$HUD/Labels.disabled=true
+	$HUD/Timed.disabled=true
+
+func enableui():
+	$HUD/Learn.disabled=false
+	$HUD/Quest.disabled=false
+	$HUD/Quiz.disabled=false
+	$HUD/Labels.disabled=false
+	$HUD/Timed.disabled=false
 
 func neighbours(districtname):
 	var l=get_node(districtname).get_overlapping_areas()
@@ -799,7 +806,13 @@ func _on_Learn_toggled():
 		if current_year>=len(years):
 			for i in range(0,len(years)):
 				get_tree().call_group(years[i],"hide")
-				get_tree().call_group(years[i],"queue_free")
+				#get_tree().call_group(years[i],"queue_free")
+				for tmpx in get_tree().get_nodes_in_group(years[i]):
+					if tmpx is Polygon2D:
+						print('freeing', tmpx.name)
+						tmpx.queue_free()
+					else:
+						print('not freeing', tmpx.name)	
 				current_year=0
 				get_tree().call_group('1956',"hide")
 				#$HUD/Learn.text='History'
@@ -856,44 +869,55 @@ func _on_QuizTimer_timeout():
 	$HUD/Clock.text=str(seconds)
 
 var quest_in_progress:=false
-func _on_Info_pressed():
-	if selected_district!='':
-		$HUD/Quiz.hide()
-		$HUD/Timed.hide()
-		$HUD/Learn.hide()
-		$HUD/Score.text='YOUR QUEST STARTS NOW!\nCheck the InfoBox for Instructions\n\nGOOD LUCK!'
-		$HUD/Grid.reload(selected_district, neighbours(selected_district), get_history(selected_district), 0)
-		quest_in_progress=true
-		$HUD/Quest.hide()
+func _on_Quest_pressed():
+	disableui()
+	$HUD/Score.visible=true
+	$HUD/Score.text='YOUR QUEST STARTS NOW!\nCheck the InfoBox for Instructions\nGOOD LUCK!'
+	quest_in_progress=true
+	if selected_district=='':
+		$HUD/Grid.show()
+		$HUD/Grid.reload('', '', '', 0)
+	else:
+		$HUD/Grid.reload(selected_district, '', '', 0)
+		
 		
 func _on_Timed_pressed():
 	reset()
 	game_in_progress=1
 	$HUD/Score.text=str(score)
+	$HUD/Score.visible=true
 	timed_msg("[pulse color=#44dd22 height=-15 freq=5]You have 10 turns\n Find the Districts![/pulse]",2)
 	yield($Timer,"timeout")
 	new_challenge()
 	timedquiz=true
 	$QuizTimer.start()
 
-func _on_Gopal_hit(district):
+#when player node moves into area 
+func showinfo(district):
 	if quest_in_progress:
-		$HUD/Score.text=''
+		$HUD/Score.visible=true
 		$HUD/Grid.reload(district, neighbours(district), get_history(district), 1)
 	else:
+		$HUD/Score.visible=false
 		$HUD/Grid.reload(district, neighbours(district), get_history(district), 2) # non quest just show info without clue
 
 func _on_quest_over(turnstaken, cluessolved):
 	$HUD/Grid.hide()
+	$HUD/Score.visible=false
 	timed_msg("[pulse color=#22dd44 height=-15 freq=5]You took "+str(turnstaken)+" turns\nAnd solved "+str(cluessolved)+" clues ![/pulse]",3)
 	yield($Timer,"timeout")
 	$HUD/Quest.show()
 	$HUD/Message.bbcode_text=''
 	quest_in_progress=false
+	$HUD/Score["custom_styles/normal"].border_color="feed5f"#selected_color_right
+	$HUD/Score["custom_colors/font_color"]="feed5f"#selected_color_right
+	enableui()
 	game_over()
 
 func _off_track(d):
 	$HUD/Score.text="Oops! Wrong direction!!!\nPress CLUE for more hints"
+	$HUD/Score["custom_styles/normal"].border_color=Color.red
+	$HUD/Score["custom_colors/font_color"]=Color.red
 	get_node(d).get_child(0).color=selected_color_wrong
 
 func _on_Grid_show_neighbours(show):
@@ -906,5 +930,10 @@ func _on_Grid_show_neighbours(show):
 			get_node('lbl'+district).visible=false
 			if district != selected_district:
 				get_node(district).get_child(0).color=deselect_color
-
 	#update()
+
+func _on_Grid_on_track(d):
+	$HUD/Score.text="Well done!\nYou are on track"
+	$HUD/Score["custom_styles/normal"].border_color=selected_color_right
+	$HUD/Score["custom_colors/font_color"]=selected_color_right
+	get_node(d).get_child(0).color=selected_color_right
