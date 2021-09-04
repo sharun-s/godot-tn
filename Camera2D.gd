@@ -1,7 +1,7 @@
 extends Camera2D
 
 var min_zoom=1.9
-var max_zoom=3.3
+var max_zoom=4.9
 var zoom_level= 1.0
 var zoom_factor=0.1
 var zoom_duration=0.2
