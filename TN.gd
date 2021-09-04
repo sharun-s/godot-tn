@@ -596,6 +596,7 @@ func reset():
 	$HUD/Quest.hide()
 	$HUD/Learn.hide()
 	$HUD/Grid.hide()
+	disappear()
 	#since the learn button is used to show years
 	#if game_num!=2:
 	#	$HUD/Learn.hide()
@@ -881,6 +882,14 @@ func _on_QuizTimer_timeout():
 	seconds=seconds+1
 	$HUD/Clock.text=str(seconds)
 
+func appear():
+	tw.interpolate_property($HUD/Grid, "rect_position:y", get_viewport_rect().size.y, 0,.3)
+	tw.start()
+
+func disappear():
+	tw.interpolate_property($HUD/Grid, "rect_position:y", 0, get_viewport_rect().size.y,.3)
+	tw.start()
+
 var quest_in_progress:=false
 func _on_Quest_pressed():
 	disableui()
@@ -892,9 +901,10 @@ func _on_Quest_pressed():
 	if selected_district=='':
 		$HUD/Grid.show()
 		$HUD/Grid.reload('', '', '', 0)
+		appear()
 	else:
 		$HUD/Grid.reload(selected_district, '', '', 0)
-		
+		appear()
 		
 func _on_Timed_pressed():
 	reset()
@@ -909,6 +919,7 @@ func _on_Timed_pressed():
 
 #when player node moves into area 
 func showinfo(district):
+	appear()
 	if quest_in_progress:
 		$HUD/Score.visible=true
 		$HUD/Grid.reload(district, neighbours(district), get_history(district), 1)
@@ -920,6 +931,7 @@ func _on_quest_over(turnstaken, cluessolved):
 	$HUD/Grid/VBoxContainer2/MarginContainer/Neighbours.visible=true
 	$HUD/Grid/VBoxContainer2/MarginContainer/history.visible=true
 	$HUD/Grid.hide()
+	disappear()
 	$HUD/Score.visible=false
 	timed_msg("[pulse color=#22dd44 height=-15 freq=5]You took "+str(turnstaken)+" turns\nAnd solved "+str(cluessolved)+" clues ![/pulse]",3)
 	yield($Timer,"timeout")

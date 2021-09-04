@@ -42,7 +42,8 @@ var facts:={
 		Krishnagiri=[
 			"Birthplace of C. Raja Gopalachari popularly known as Rajaji, the first Governor General of India and first Chief Minister of Tamil Nadu",
 			"Largest producers of Mangoes in India",
-			"Largest city here is Hosur 40 km from Bangalore and a major manufacturing hub"
+			"Largest city here is Hosur 40 km from Bangalore and a major manufacturing hub",
+			"The TVS 50, Indias first two seat moped was manufactured here in Hosur and was a big hit. More than 10 million mopeds being sold since."
 		],
 		Kallakurichi=[
 			'Mainly a rural area 50 years ago increased road connectivity has turned into an emerging agricultural hub.',
