@@ -171,7 +171,8 @@ func panther():
 	return a
 
 var dummyimg=[
-	panther(),
+	#panther(),
+	preload("res://panther_2.png"),
 	preload("res://nat.png"),
 	preload("res://elephant.png"),
 	preload("res://flame.png"),

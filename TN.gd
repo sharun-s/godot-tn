@@ -87,6 +87,7 @@ var kewest=[30.07,88.62, 34.83,98.85,36.57,106.64,39.07,114.28,41.11,122.00,46.5
 var kawest:=[149.30,-140.35,139.53,-131.47,132.87,-125.48,124.01,-122.21,119.64,-114.02,109.42,-109.59,106.57,-100.83,97.43,-101.07,86.52,-104.44,75.57,-107.44,74.46,-94.61,71.73,-87.90,59.51,-86.20,50.05,-85.76,42.31,-80.27,31.32,-74.03,22.43,-75.01,14.25,-69.74,17.78,-59.63,19.31,-51.75,18.31,-43.28,11.63,-38.73,11.60,-31.83,14.27,-20.46,12.24,-11.10,5.42,-4.52,0.43,0.10,9.54,7.54,13.50,18.54,15.02,30.09,21.58,42.10,23.63,52.83,23.95,63.03,26.07,76.72,30.07,88.62]
 var ka_ap:=[396.96,-162.69,391.27,-158.05,386.29,-153.53,379.33,-147.00,373.82,-138.52,371.14,-129.77,361.96,-129.59,356.07,-131.23,346.57,-133.42,347.11,-122.56,339.80,-116.40,327.68,-114.71,316.02,-110.13,302.25,-109.79,288.97,-107.48,285.64,-101.77,293.93,-95.99,297.92,-86.95,286.03,-82.75,275.56,-83.40,266.73,-80.93,274.27,-73.98,269.27,-70.83,259.98,-78.51,252.21,-71.11,247.83,-62.31,236.26,-64.49,222.28,-62.82,219.75,-50.97,210.29,-48.93,201.24,-39.88,188.51,-42.62,177.12,-37.01,166.11,-35.44,152.08,-35.79,139.35,-36.68,127.94,-31.95,126.93,-20.99,129.61,-9.76,126.25,-0.13,115.05,-2.18,116.51,9.48,116.99,20.96,120.17,27.96,128.09,29.62,137.67,33.15,142.84,34.48,138.51,42.65,132.14,41.61,122.75,35.76,120.84,39.54,121.33,50.46,129.26,45.45,138.94,52.18,149.23,51.76,158.82,46.38,162.79,49.21,165.09,57.79,174.13,60.95,177.47,72.43,184.48,79.69]
 var apeast=[257.15,64.23,255.84,50.32,253.61,36.57,256.15,29.11,255.62,15.28,252.58,1.70,256.00,-11.67,262.68,-23.81,273.40,-31.07,282.31,-27.04,286.42,-28.69,290.93,-30.07,299.34,-40.62,308.52,-48.66,305.21,-50.66,318.79,-48.44,326.05,-48.40,338.56,-54.30,343.64,-59.29,345.23,-72.46,341.95,-69.27,349.82,-79.81,360.56,-88.63,373.36,-94.11,383.77,-102.47,392.83,-112.79,404.66,-120.19,416.33,-127.49,425.10,-136.85,433.26,-147.87,441.19,-158.11,436.00,-157.52,428.06,-150.88,416.82,-146.93,405.85,-152.80,398.14,-161.60]
+
 var score=0
 var attempts=0
 var turns=10
@@ -173,35 +174,47 @@ func create_polygons(district):
 	c.polygon=shape
 	return [c, p]
 
-#var shore:ShaderMaterial
+var shore:ShaderMaterial
 #func applyshore(district):
 #	var dp:Polygon2D=get_node(district).get_child(0)
 #	dp.material=shore
 
 func addstateborder(b, nm='x'):
+	
 	var t:=Transform2D()
 	t=t.scaled(Vector2(8,8))
 	t.origin=Vector2(-620,-430)# magic bs use standard geojson
-
 	var borderpath:=Line2D.new()
-	#var borderpoly:=Polygon2D.new()
-	#var shape:=PoolVector2Array()
 	for i in range(0, b.size(),2):
 		borderpath.add_point(t.xform(Vector2(b[i],b[i+1])))
-		#shape.append(t.xform(Vector2(b[i],b[i+1])))
-	#borderpoly.polygon=shape
-	#borderpoly.color=deselect_color.darkened(.83)
-	#borderpoly.z_index=-1
-	#borderpoly.name=nm
-	#add_child(borderpoly)
-	borderpath.width=4
-	borderpath.default_color="ffcc55"
+	
+	borderpath.default_color=Color.white
+	if nm!='x':
+		borderpath.width=50		
+		borderpath.texture_mode=Line2D.LINE_TEXTURE_STRETCH
+		borderpath.material=shore
+	else:
+		borderpath.width=1
 	add_child(borderpath)
 
+func addstatepoly(b, nm='x'):
+	var t:=Transform2D()
+	t=t.scaled(Vector2(8,8))
+	t.origin=Vector2(-620,-430)# magic bs use standard geojson
+	var borderpoly:=Polygon2D.new()
+	var shape:=PoolVector2Array()
+	for i in range(0, b.size(),2):
+		shape.append(t.xform(Vector2(b[i],b[i+1])))
+	borderpoly.polygon=shape
+	borderpoly.color=deselect_color.darkened(.83)
+	borderpoly.z_index=-1
+	#borderpoly.name=nm
+	add_child(borderpoly)
+	
 func _ready():
 	init_label_font()
-	#shore=ShaderMaterial.new()
-	#shore.shader=load("res://shore.shader")
+	shore=ShaderMaterial.new()
+	shore.shader=load("res://shore1.shader")
 	rng.randomize()
 	add_child(tw)
 	VisualServer.set_default_clear_color('001f3f')#Color("ff222222"))
@@ -222,9 +235,9 @@ func _ready():
 		add_label(district, x, y, w, h, "dlabels")
 		a2d.connect('input_event', self, 'on_district_select',[district])
 	addstateborder(ka_ke)
-	addstateborder(kewest)	
-	addstateborder(kawest)
-	addstateborder(apeast)
+	addstateborder(kewest, 'kewest')
+	addstateborder(kawest, 'kawest')
+	addstateborder(apeast, 'apes')
 	addstateborder(ka_ap)
 	$Camera2D.position=get_node('Dindigul').position
 	if OS.get_name()=="Android":
@@ -596,7 +609,7 @@ func reset():
 	$HUD/Quest.hide()
 	$HUD/Learn.hide()
 	$HUD/Grid.hide()
-	disappear()
+	#disappear()
 	#since the learn button is used to show years
 	#if game_num!=2:
 	#	$HUD/Learn.hide()
@@ -901,10 +914,10 @@ func _on_Quest_pressed():
 	if selected_district=='':
 		$HUD/Grid.show()
 		$HUD/Grid.reload('', '', '', 0)
-		appear()
+		#appear()
 	else:
 		$HUD/Grid.reload(selected_district, '', '', 0)
-		appear()
+		#appear()
 		
 func _on_Timed_pressed():
 	reset()
@@ -919,7 +932,7 @@ func _on_Timed_pressed():
 
 #when player node moves into area 
 func showinfo(district):
-	appear()
+	#appear()
 	if quest_in_progress:
 		$HUD/Score.visible=true
 		$HUD/Grid.reload(district, neighbours(district), get_history(district), 1)
@@ -931,7 +944,7 @@ func _on_quest_over(turnstaken, cluessolved):
 	$HUD/Grid/VBoxContainer2/MarginContainer/Neighbours.visible=true
 	$HUD/Grid/VBoxContainer2/MarginContainer/history.visible=true
 	$HUD/Grid.hide()
-	disappear()
+	#disappear()
 	$HUD/Score.visible=false
 	timed_msg("[pulse color=#22dd44 height=-15 freq=5]You took "+str(turnstaken)+" turns\nAnd solved "+str(cluessolved)+" clues ![/pulse]",3)
 	yield($Timer,"timeout")
