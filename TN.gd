@@ -871,8 +871,10 @@ func _on_QuizTimer_timeout():
 var quest_in_progress:=false
 func _on_Quest_pressed():
 	disableui()
+	$HUD/Grid/VBoxContainer2/MarginContainer/Neighbours.visible=false
+	$HUD/Grid/VBoxContainer2/MarginContainer/history.visible=false
 	$HUD/Score.visible=true
-	$HUD/Score.text='YOUR QUEST STARTS NOW!\nCheck the InfoBox for Instructions\nGOOD LUCK!'
+	$HUD/Score.text='Check the InfoBox for Instructions\nHit Clue for hints.\nGOOD LUCK!'
 	quest_in_progress=true
 	if selected_district=='':
 		$HUD/Grid.show()
@@ -902,6 +904,8 @@ func showinfo(district):
 		$HUD/Grid.reload(district, neighbours(district), get_history(district), 2) # non quest just show info without clue
 
 func _on_quest_over(turnstaken, cluessolved):
+	$HUD/Grid/VBoxContainer2/MarginContainer/Neighbours.visible=true
+	$HUD/Grid/VBoxContainer2/MarginContainer/history.visible=true
 	$HUD/Grid.hide()
 	$HUD/Score.visible=false
 	timed_msg("[pulse color=#22dd44 height=-15 freq=5]You took "+str(turnstaken)+" turns\nAnd solved "+str(cluessolved)+" clues ![/pulse]",3)
@@ -914,11 +918,11 @@ func _on_quest_over(turnstaken, cluessolved):
 	enableui()
 	game_over()
 
-func _off_track(d):
+func _off_track(dx):
 	$HUD/Score.text="Oops! Wrong direction!!!\nPress CLUE for more hints"
 	$HUD/Score["custom_styles/normal"].border_color=Color.red
 	$HUD/Score["custom_colors/font_color"]=Color.red
-	get_node(d).get_child(0).color=selected_color_wrong
+	get_node(dx).get_child(0).color=selected_color_wrong
 
 func _on_Grid_show_neighbours(show):
 	if show:

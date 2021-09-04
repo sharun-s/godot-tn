@@ -176,7 +176,7 @@ var dummyimg=[
 	preload("res://flame.png"),
 	sea(),
 	preload("res://kolam.png"),
-	#preload("res://dugong.png"),
+	preload("res://dugong.png"),
 	#preload("res://paddy.png"),
 	#preload("res://temple.png"),
 	#preload("res://templecar.png"),
@@ -268,6 +268,12 @@ func format_neighbours():
 	return textstr
 
 func _on_Neighbours_pressed():
+	if n == null:
+		$VBoxContainer2/MarginContainer/Neighbours.pressed=false
+		return
+	if len(n) == 0:
+		$VBoxContainer2/MarginContainer/Neighbours.pressed=false
+		return
 	$VBoxContainer2/FactBox.text=format_neighbours()
 
 func _on_clue_pressed(prefix=''):
@@ -278,8 +284,16 @@ func _on_clue_pressed(prefix=''):
 		$VBoxContainer2/FactBox.text=prefix+'Head to the district known for - \n'+facts[targets[0]][idx]
 	
 func _on_history_pressed():
+	if historytext==null or historytext=="":
+		return
 	$VBoxContainer2/FactBox.text=historytext
 
 func _on_Neighbours_toggled(button_pressed):
+	if n == null:
+		$VBoxContainer2/MarginContainer/Neighbours.pressed=false
+		return
+	if len(n) == 0:
+		$VBoxContainer2/MarginContainer/Neighbours.pressed=false
+		return
 	emit_signal('show_neighbours', button_pressed)
 	
