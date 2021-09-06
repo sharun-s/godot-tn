@@ -18,9 +18,10 @@ var facts:={
 		"Fort St David in Cuddalore was one of the main British trading posts controling their activities in South India in the early 1700. So Cuddalore became the site of multiple wars with the French based 25kms North in Pondicherry",
 		"Silver Beach is one of the longest beaches found on the Coromandel Coast. 2700 people lost their life here during the 2004 Tsunami", 'Chidambaram temple','Pichawaram Mangrove forests'],
 		Dindigul=['Kodaikanal, in tamil translates to The Gift of the Forest, is very popular hillstation located here',
-		'Palani Hills'],
+		'Palani Hills where the famous Liril commercial was shot'],
 		Dharmapuri=["Hogenakkal falls, which means smokey rocks, is where the river Cauvery enters Tamil Nadu",
-			"Taking a ride in the local bowl shaped boats made of woven grase called a Parisal/Coracle is very popular tourist activity here"],
+			"Taking a ride in the local bowl shaped boats made of woven grase called a Parisal/Coracle is very popular tourist activity here",
+			"Veeraappan, the notorious elephant poacher, sandalwood smuggler, wanted for the murder of 184 people was caught here"],
 		Erode=[
 			"Turmeric",
 			"Agri powerhouse due to rivers and dams",
@@ -91,6 +92,7 @@ var facts:={
 			'Found here is the 2500 year old Keezhadi excavation site, including plates with the Tamil-Brahmi script'
 		],
 		Theni=['Cardamom estates','Indian Neutrino Observatory',
+		'The Meghamalai range also called the High Wavy Mountains',
 		'Meghamalai Wildlife Sanctuary'],
 		Tiruvarur=[
 			'Somaskanda iconography',
@@ -101,6 +103,7 @@ var facts:={
 			"The Rice Bowl of Tamil Nadu",
 			"Popularized Ghee Pongal and Puliyodarai (tamarind rice)",
 			"Kumbakonam, every 12 years Mahamaham festival draws millions of devotees for a dip in the huge temple tank complex spanning 20 sq acres",
+			"Srinivasa Ramanujam, untrained in maths, turned out to be one of the greatest Mathematicians of all time, grew up here in Kumbakonam",
 			"The 1000 year old Brihadeshwara temple",
 			"Seat of the Chola Empire",
 			"Thanjavur dolls popularly known as Thalaiyatti Bommai are made of clay which is found along the river Cauvery"
@@ -122,7 +125,8 @@ var facts:={
 		"V.O.Chidambaram Pillai Swadeshi Steamship Company",
 		"dugong sea grass medows"],
 		Tiruppur=["Textile export hub"],
-		Tirupathur=['Surrounded by the Javadhu and Yelagiri Hills known for rivers, waterfalls and sandal wood trees'],
+		Tirupathur=['The Vainu Bappu Observatory one of the main centers of Indian Astronomy',
+		'Surrounded by the Javadhu and Yelagiri Hills known for rivers, waterfalls and sandal wood trees'],
 		Tiruchirapalli=['The Srirangam temple complex covers 156 acres making it the largest templex complex in the country. Famous for festivals conducted throughout the year', 
 		'Kallanai also known as the Grand Anicut across the Cauvery river is the oldest dam in the country that is still in use. Built nearly 2000 years ago.',
 		'Rockfort Temple'],
@@ -206,15 +210,23 @@ func reload(district, neighbours, hist='',mode=state.NON_QUEST):
 	historytext=hist
 	n=neighbours
 	$VBoxContainer2/MarginContainer/Neighbours.pressed=false
+	randomize()
 	$VBoxContainer/PanelContainer/imgbox.texture=dummyimg[int(rand_range(0, dummyimg.size()))]
 	if mode==state.NEW_QUEST:
 		$VBoxContainer/NameBox.text="New Quest!"
 		rng.randomize()
-		while targets.size() != NumberOfTargets:
-			var idx=rng.randi_range(0, facts.size()-1)
-			if (facts.keys()[idx] in targets) == false:
-				targets.append(facts.keys()[idx])
-		#print('targets set', targets)
+		if district is Array:
+			if district.size() > NumberOfTargets:
+				targets=district.slice(0, NumberOfTargets-1)
+			else:
+				NumberOfTargets=district.size()
+				targets=district 
+		else:
+			while targets.size() != NumberOfTargets:
+				var idx=rng.randi_range(0, facts.size()-1)
+				if (facts.keys()[idx] in targets) == false:
+					targets.append(facts.keys()[idx])
+		print('targets set', targets)
 		$VBoxContainer2/MarginContainer/clue.show()
 		_on_clue_pressed()
 	elif mode==state.IN_QUEST:

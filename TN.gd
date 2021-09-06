@@ -461,6 +461,7 @@ func deselect():
 	for district in d.keys():
 		get_node('lbl'+district).visible=false
 		get_node(district).get_child(0).color=deselect_color
+	
 var cache={}
 func _draw():
 	#debug state borders
@@ -717,6 +718,7 @@ func _on_TN_ready():
 func disableui():
 	$HUD/Learn.disabled=true
 	$HUD/Quest.disabled=true
+	$HUD/Quest2.disabled=true
 	$HUD/Quiz.disabled=true
 	$HUD/Labels.disabled=true
 	$HUD/Timed.disabled=true
@@ -724,6 +726,7 @@ func disableui():
 func enableui():
 	$HUD/Learn.disabled=false
 	$HUD/Quest.disabled=false
+	$HUD/Quest2.disabled=false
 	$HUD/Quiz.disabled=false
 	$HUD/Labels.disabled=false
 	$HUD/Timed.disabled=false
@@ -869,21 +872,33 @@ var timedquiz:=false
 func _on_QuizTimer_timeout():
 	seconds=seconds+1
 	$HUD/Clock.text=str(seconds)
-
+	
 #var quest_in_progress:=false
 func _on_Quest_pressed():
+	if selected_district!='':
+		deselect()
+		$Label.text=''
+		get_tree().set_group("dlabels","visible",false)
+	quest_selected('')
+	
+func quest_selected(districts):
+	if districts is Array:
+		$Timer.start()
+		yield($Timer,"timeout")
+		$HUD/QMenu/PopupPanel.hide()
+		$HUD/QMenu.hide()
 	disableui()
 	$HUD/Grid/VBoxContainer2/MarginContainer/Neighbours.visible=false
 	$HUD/Grid/VBoxContainer2/MarginContainer/history.visible=false
 	$HUD/Score.visible=true
 	$HUD/Score.text='Check the InfoBox for Instructions\nHit Clue for hints.\nGOOD LUCK!'
-	#quest_in_progress=true
 	game_in_progress=3
-	if selected_district=='':
-		$HUD/Grid.show()
-		$HUD/Grid.reload('', '', '', 0)
-	else:
-		$HUD/Grid.reload(selected_district, '', '', 0)
+	$HUD/Grid.reload(districts, '', '', 0)
+#	if selected_district=='':
+#		$HUD/Grid.show()
+#		$HUD/Grid.reload('', '', '', 0)
+#	else:
+#		$HUD/Grid.reload(selected_district, '', '', 0)
 		
 		
 func _on_Timed_pressed():
@@ -946,3 +961,10 @@ func _on_Grid_on_track(d):
 	$HUD/Score["custom_styles/normal"].border_color=selected_color_right
 	$HUD/Score["custom_colors/font_color"]=selected_color_right
 	get_node(d).get_child(0).color=selected_color_right
+
+func subjectQuest():
+	if selected_district!='':
+		deselect()
+		$Label.text=''
+		get_tree().set_group("dlabels","visible",false)
+	$HUD/QMenu.show()
