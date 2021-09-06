@@ -187,12 +187,11 @@ func addstateborder(b, nm='x'):
 	var borderpath:=Line2D.new()
 	for i in range(0, b.size(),2):
 		borderpath.add_point(t.xform(Vector2(b[i],b[i+1])))
-	
 	borderpath.default_color=Color.white
 	if nm!='x':
-		borderpath.width=50		
-		borderpath.texture_mode=Line2D.LINE_TEXTURE_STRETCH
-		borderpath.material=shore
+		borderpath.width=2		
+		#borderpath.texture_mode=Line2D.LINE_TEXTURE_STRETCH
+		#borderpath.material=shore
 	else:
 		borderpath.width=1
 	add_child(borderpath)
@@ -406,15 +405,18 @@ func on_district_select(_viewport, event, _idx, district):
 		#walkpath.add_point(get_node(district).position)
 #		highlight_district(district, false, true)
 
+func setDistrict_Color_Text(dist, c):
+	get_node(dist).get_child(0).color=c
+	$Label.text=dist
+	$Label.rect_global_position=center(dist)
+
 func select(district):
 	if game_in_progress==1 and attempts < turns:
 		if district == challenge:
 			score+=1
 			attempts+=1
 			$HUD/Score.text=str(score)+' / '+str(attempts)
-			get_node(district).get_child(0).color=selected_color_right
-			$Label.text=district
-			$Label.rect_global_position=center(district)
+			setDistrict_Color_Text(district, selected_color_right)
 			timed_msg("[color=#"+selected_color_right.to_html(false)+"]Correct![/color]", 1)#, 2)
 			yield($Timer, "timeout")
 			if attempts < turns:
@@ -441,7 +443,7 @@ func select(district):
 		pass
 	elif game_in_progress==3:
 		#main game treasure hunt
-		pass
+		gotoDistrict()
 	else:
 		#get_tree().set_group("dlabels", "visible", false)
 		#check if path has anything and move
@@ -450,43 +452,28 @@ func select(district):
 #deselect district if one is already selected before selecting new one
 #selecting = change color + add border
 func highlight_district(district, show_neighbours:=true):
-	if district!=selected_district and selected_district!='':
-		deselect()
-	else:
-		if district==selected_district:
-			# already selected so deselect
+	if game_in_progress!=3:
+		if district!=selected_district and selected_district!='':
 			deselect()
-			$Label.text=''
-			selected_district=''
-			update() # redraw borders
-			return
+		else:
+			if district==selected_district:
+				# already selected so deselect
+				deselect()
+				$Label.text=''
+				selected_district=''
+				update() # redraw borders
+				return
 	selected_district=district
-	$Label.text=district
-	$Label.rect_global_position=center(selected_district)
-	var sd:Area2D=get_node(selected_district)
-	var poly=sd.get_child(0)
-	poly.color=selected_color
-	#selected_district_border_pts=PoolVector2Array(poly.polygon)
+	setDistrict_Color_Text(district, selected_color)
 	if show_neighbours:
-		var oa=sd.get_overlapping_areas()
-		var tmp=$Timer.wait_time
-		$Timer.start(.3)
-		yield($Timer, 'timeout')
-		$Timer.wait_time=tmp
-		for i in oa:
-			if i.name=='Gopal':
-				continue
-			get_node('lbl'+i.name).visible=true
-			i.get_child(0).color=deselect_color.blend("aa66aa22")
-			#tw.interpolate_property(i.get_child(0), 'color', deselect_color, deselect_color.blend("aa66aa22"),1)
-			#tw.start()
-			#yield(tw,"tween_completed")
+		_on_Grid_show_neighbours(true)
 	update() # redraw borders
 			
 func deselect():
 	for district in d.keys():
 		get_node('lbl'+district).visible=false
 		get_node(district).get_child(0).color=deselect_color
+	
 var cache={}
 func _draw():
 	#debug state borders
@@ -570,7 +557,10 @@ func game_over():
 	$Camera2D.position=get_node('Karur').position
 	#show_compass()
 	$Gopal.show()
-	game_in_progress=0
+	#if quest_in_progress:
+	#	game_in_progress=3
+	#else:
+	#	game_in_progress=0
 	update() # redraw borders
 	#var tree=get_tree()
 #	for i in years:
@@ -647,9 +637,11 @@ func gotoDistrict():
 	$Gopal.velocity=Vector2(0,0)
 	$Gopal.initiated_by_code=false
 	$Gopal/CollisionShape2D.disabled = false
-	game_in_progress=0
-	if not quest_in_progress:
+	if game_in_progress !=3:
 		enableui()
+	#game_in_progress=0
+	#if not quest_in_progress:
+	#	enableui()
 		
 func fullwalktest():
 	reset()
@@ -667,10 +659,7 @@ func fullwalktest():
 		$Camera2D/Tween.interpolate_property($Camera2D,"position",$Camera2D.position,gpos,1.4)
 		$Camera2D/Tween.start()
 		# not required gopal will highlight
-		$Label.text=current
-		$Label.rect_global_position=center(current)
-		var poly=i.get_child(0)
-		poly.color=selected_color
+		setDistrict_Color_Text(current, selected_color)
 		var neighbours=i.get_overlapping_areas()
 		for n in neighbours:
 			if n.name == 'Gopal':
@@ -742,6 +731,7 @@ func _on_TN_ready():
 func disableui():
 	$HUD/Learn.disabled=true
 	$HUD/Quest.disabled=true
+	$HUD/Quest2.disabled=true
 	$HUD/Quiz.disabled=true
 	$HUD/Labels.disabled=true
 	$HUD/Timed.disabled=true
@@ -749,6 +739,7 @@ func disableui():
 func enableui():
 	$HUD/Learn.disabled=false
 	$HUD/Quest.disabled=false
+	$HUD/Quest2.disabled=false
 	$HUD/Quiz.disabled=false
 	$HUD/Labels.disabled=false
 	$HUD/Timed.disabled=false
@@ -836,10 +827,10 @@ func _on_Learn_toggled():
 				#get_tree().call_group(years[i],"queue_free")
 				for tmpx in get_tree().get_nodes_in_group(years[i]):
 					if tmpx is Polygon2D:
-						print('freeing', tmpx.name)
+						#print('freeing', tmpx.name)
 						tmpx.queue_free()
-					else:
-						print('not freeing', tmpx.name)	
+					#else:
+					#	print('not freeing', tmpx.name)	
 				current_year=0
 				get_tree().call_group('1956',"hide")
 				#$HUD/Learn.text='History'
@@ -903,21 +894,27 @@ func disappear():
 	tw.interpolate_property($HUD/Grid, "rect_position:y", 0, get_viewport_rect().size.y,.3)
 	tw.start()
 
-var quest_in_progress:=false
+
 func _on_Quest_pressed():
+	if selected_district!='':
+		deselect()
+		$Label.text=''
+		get_tree().set_group("dlabels","visible",false)
+	quest_selected('')
+	
+func quest_selected(districts):
+	if districts is Array:
+		$Timer.start()
+		yield($Timer,"timeout")
+		$HUD/QMenu/PopupPanel.hide()
+		$HUD/QMenu.hide()
 	disableui()
 	$HUD/Grid/VBoxContainer2/MarginContainer/Neighbours.visible=false
 	$HUD/Grid/VBoxContainer2/MarginContainer/history.visible=false
 	$HUD/Score.visible=true
 	$HUD/Score.text='Check the InfoBox for Instructions\nHit Clue for hints.\nGOOD LUCK!'
-	quest_in_progress=true
-	if selected_district=='':
-		$HUD/Grid.show()
-		$HUD/Grid.reload('', '', '', 0)
-		#appear()
-	else:
-		$HUD/Grid.reload(selected_district, '', '', 0)
-		#appear()
+	game_in_progress=3
+	$HUD/Grid.reload(districts, '', '', 0)
 		
 func _on_Timed_pressed():
 	reset()
@@ -932,8 +929,7 @@ func _on_Timed_pressed():
 
 #when player node moves into area 
 func showinfo(district):
-	#appear()
-	if quest_in_progress:
+	if game_in_progress==3:
 		$HUD/Score.visible=true
 		$HUD/Grid.reload(district, neighbours(district), get_history(district), 1)
 	else:
@@ -950,7 +946,8 @@ func _on_quest_over(turnstaken, cluessolved):
 	yield($Timer,"timeout")
 	$HUD/Quest.show()
 	$HUD/Message.bbcode_text=''
-	quest_in_progress=false
+	#quest_in_progress=false
+	game_in_progress=0 # revert back to explore mode
 	$HUD/Score["custom_styles/normal"].border_color="feed5f"#selected_color_right
 	$HUD/Score["custom_colors/font_color"]="feed5f"#selected_color_right
 	enableui()
@@ -979,3 +976,10 @@ func _on_Grid_on_track(d):
 	$HUD/Score["custom_styles/normal"].border_color=selected_color_right
 	$HUD/Score["custom_colors/font_color"]=selected_color_right
 	get_node(d).get_child(0).color=selected_color_right
+
+func subjectQuest():
+	if selected_district!='':
+		deselect()
+		$Label.text=''
+		get_tree().set_group("dlabels","visible",false)
+	$HUD/QMenu.show()
