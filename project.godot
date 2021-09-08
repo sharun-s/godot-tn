@@ -33,6 +33,8 @@ settings/stdout/verbose_stdout=true
 
 [display]
 
+window/size/width=1400
+window/size/height=1900
 window/size/fullscreen=true
 
 [input]

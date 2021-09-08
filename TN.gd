@@ -238,12 +238,11 @@ func _ready():
 	addstateborder(kawest, 'kawest')
 	addstateborder(apeast, 'apes')
 	addstateborder(ka_ap)
-	$Camera2D.position=get_node('Dindigul').position
-	if OS.get_name()=="Android":
-		$Camera2D.zoom=Vector2(2.85, 2.85)
-	else:
-		$Camera2D.zoom=Vector2(2.0, 2.0)
-	$Label.rect_scale=$Camera2D.zoom
+	var t=get_viewport_transform()
+	t.origin=Vector2((get_viewport_rect().size.x-100)/2,0)
+	transform=t
+	scale=Vector2(get_viewport_rect().size.y/2000, get_viewport_rect().size.y/2000)
+	$Label.rect_scale=Vector2(1/scale.x, 1/scale.y)
 
 var dhistory=[{
 	Salem=[['Salem', 'Dharmapuri', 'Namakkal', 'Krishnagiri'],Color.mediumspringgreen],
@@ -554,7 +553,7 @@ func game_over():
 	$HUD/Timed.show()
 	$HUD/Learn.show()
 	$HUD/Quest.show()
-	$Camera2D.position=get_node('Karur').position
+	#$Camera2D.position=get_node('Karur').position
 	#show_compass()
 	$Gopal.show()
 	#if quest_in_progress:
@@ -691,7 +690,7 @@ func init_label_font():
 	var f=load("res://Xolonium-Regular.ttf")
 	df=DynamicFont.new()
 	df.font_data=f
-	df.size=44
+	df.size=36
 
 func add_label(district, x, y, w, h, groupname):
 	var l:Label=Label.new()
