@@ -180,20 +180,19 @@ var shore:ShaderMaterial
 #	dp.material=shore
 
 func addstateborder(b, nm='x'):
-	
 	var t:=Transform2D()
 	t=t.scaled(Vector2(8,8))
 	t.origin=Vector2(-620,-430)# magic bs use standard geojson
 	var borderpath:=Line2D.new()
 	for i in range(0, b.size(),2):
 		borderpath.add_point(t.xform(Vector2(b[i],b[i+1])))
-	borderpath.default_color=Color.white
+	borderpath.default_color=deselect_color#Color.white
 	if nm!='x':
 		borderpath.width=2		
 		#borderpath.texture_mode=Line2D.LINE_TEXTURE_STRETCH
 		#borderpath.material=shore
 	else:
-		borderpath.width=1
+		borderpath.width=2
 	add_child(borderpath)
 
 func addstatepoly(b, nm='x'):
@@ -239,7 +238,7 @@ func _ready():
 	addstateborder(apeast, 'apes')
 	addstateborder(ka_ap)
 	var t=get_viewport_transform()
-	t.origin=Vector2((get_viewport_rect().size.x-100)/2,0)
+	t.origin=Vector2((get_viewport_rect().size.x-200)/2,0)
 	transform=t
 	scale=Vector2(get_viewport_rect().size.y/2000, get_viewport_rect().size.y/2000)
 	$Label.rect_scale=Vector2(1/scale.x, 1/scale.y)
@@ -393,8 +392,10 @@ func on_district_select(_viewport, event, _idx, district):
 			select(district)
 		#walkpath.clear_points()
 		#walkpath.add_point(get_node(district).position)
-	
-#	#if event is InputEventMouseMotion:
+	#on hover show label
+	#if event is InputEventMouseMotion:
+	#	$Label.text=district
+	#	$Label.rect_position=center(district)
 #			#walkpath.add_point(get_node(district).position)
 	if event is InputEventScreenDrag:
 		if district in path:
@@ -404,10 +405,11 @@ func on_district_select(_viewport, event, _idx, district):
 		#walkpath.add_point(get_node(district).position)
 #		highlight_district(district, false, true)
 
-func setDistrict_Color_Text(dist, c):
+func setDistrict_Color_Text(dist, c, showlabel:=true):
 	get_node(dist).get_child(0).color=c
-	$Label.text=dist
-	$Label.rect_global_position=center(dist)
+	if showlabel:
+		$Label.text=dist
+		$Label.rect_position=center(dist)
 
 func select(district):
 	if game_in_progress==1 and attempts < turns:
@@ -903,15 +905,16 @@ func _on_Quest_pressed():
 	
 func quest_selected(districts):
 	if districts is Array:
-		$Timer.start()
-		yield($Timer,"timeout")
+		for i in districts:
+			setDistrict_Color_Text(i, Color.skyblue, false)
+		yield(get_tree().create_timer(4.0), "timeout")
 		$HUD/QMenu/PopupPanel.hide()
 		$HUD/QMenu.hide()
 	disableui()
 	$HUD/Grid/VBoxContainer2/MarginContainer/Neighbours.visible=false
 	$HUD/Grid/VBoxContainer2/MarginContainer/history.visible=false
 	$HUD/Score.visible=true
-	$HUD/Score.text='Check the InfoBox for Instructions\nHit Clue for hints.\nGOOD LUCK!'
+	$HUD/Score.text='Check the InfoBox for Instructions\n'
 	game_in_progress=3
 	$HUD/Grid.reload(districts, '', '', 0)
 		
@@ -953,7 +956,7 @@ func _on_quest_over(turnstaken, cluessolved):
 	game_over()
 
 func _off_track(dx):
-	$HUD/Score.text="Oops! Wrong direction!!!\nPress CLUE for more hints"
+	$HUD/Score.text="Wrong direction!!! Press CLUE for more hints"
 	$HUD/Score["custom_styles/normal"].border_color=Color.red
 	$HUD/Score["custom_colors/font_color"]=Color.red
 	get_node(dx).get_child(0).color=selected_color_wrong
@@ -971,9 +974,9 @@ func _on_Grid_show_neighbours(show):
 	#update()
 
 func _on_Grid_on_track(d):
-	$HUD/Score.text="Well done!\nYou are on track"
-	$HUD/Score["custom_styles/normal"].border_color=selected_color_right
-	$HUD/Score["custom_colors/font_color"]=selected_color_right
+	#$HUD/Score.text="Well done!\nYou are on track"
+	#$HUD/Score["custom_styles/normal"].border_color=selected_color_right
+	#$HUD/Score["custom_colors/font_color"]=selected_color_right
 	get_node(d).get_child(0).color=selected_color_right
 
 func subjectQuest():

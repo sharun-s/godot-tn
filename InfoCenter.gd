@@ -99,7 +99,7 @@ var facts:={
 		'The Meghamalai range also called the High Wavy Mountains',
 		'Meghamalai Wildlife Sanctuary'],
 		Tiruvarur=[
-			'Somaskanda iconography',
+			'Somaskanda iconography - Idols depict Murugan with Shiva and Parvathi',
 			'Thyagaraja Temple Chariot found here stands 96 feet tall',
 			'Birthplace of Saint Thyagaraja, the composer of Carnatic music'	
 		],

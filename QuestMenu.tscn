@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Montreal-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://DroidSans.ttf" type="DynamicFontData" id=2]
@@ -22,6 +22,12 @@ expand_margin_bottom = 5.0
 size = 30
 font_data = ExtResource( 1 )
 
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0.631373, 0.52549, 0.203922, 1 )
+
 [sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0.486275, 0.760784, 0.894118, 1 )
 border_width_left = 4
@@ -37,16 +43,16 @@ expand_margin_left = 10.0
 expand_margin_right = 10.0
 
 [sub_resource type="StyleBoxFlat" id=6]
-bg_color = Color( 0.513726, 0.945098, 0.721569, 1 )
+bg_color = Color( 0.415686, 0.945098, 0.65098, 0.956863 )
 border_width_left = 8
 border_width_top = 8
 border_width_right = 8
 border_width_bottom = 8
 border_color = Color( 0.913725, 0.74902, 0.588235, 1 )
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [sub_resource type="DynamicFont" id=7]
 size = 34
@@ -62,23 +68,23 @@ __meta__ = {
 }
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-margin_right = 1024.0
-margin_bottom = 600.0
+margin_right = 1400.0
+margin_bottom = 1900.0
 custom_constants/margin_right = 100
 custom_constants/margin_left = 100
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 margin_left = 100.0
-margin_right = 924.0
-margin_bottom = 600.0
+margin_right = 1300.0
+margin_bottom = 1900.0
 custom_constants/separation = 8
 alignment = 1
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
-margin_left = 262.0
-margin_top = 68.0
-margin_right = 562.0
-margin_bottom = 171.0
+margin_left = 450.0
+margin_top = 721.0
+margin_right = 750.0
+margin_bottom = 824.0
 size_flags_horizontal = 4
 size_flags_vertical = 0
 custom_fonts/font = SubResource( 2 )
@@ -90,10 +96,10 @@ text = "Select A Quest
 "
 
 [node name="River" type="Button" parent="MarginContainer/VBoxContainer"]
-margin_left = 341.0
-margin_top = 179.0
-margin_right = 483.0
-margin_bottom = 217.0
+margin_left = 529.0
+margin_top = 832.0
+margin_right = 671.0
+margin_bottom = 870.0
 size_flags_horizontal = 4
 custom_styles/normal = SubResource( 3 )
 custom_fonts/font = SubResource( 4 )
@@ -101,19 +107,23 @@ custom_colors/font_color = Color( 0.0705882, 0.215686, 0.878431, 1 )
 text = "The River"
 
 [node name="Mountain" type="Button" parent="MarginContainer/VBoxContainer"]
-margin_left = 301.0
-margin_top = 225.0
-margin_right = 522.0
-margin_bottom = 269.0
+margin_left = 488.0
+margin_top = 878.0
+margin_right = 712.0
+margin_bottom = 916.0
 size_flags_horizontal = 4
+custom_styles/pressed = SubResource( 8 )
+custom_styles/normal = SubResource( 9 )
 custom_fonts/font = SubResource( 4 )
-text = "The Mountain"
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0.631373, 0.52549, 0.203922, 1 )
+text = "The Mountains"
 
 [node name="Sea" type="Button" parent="MarginContainer/VBoxContainer"]
-margin_left = 348.0
-margin_top = 277.0
-margin_right = 476.0
-margin_bottom = 323.0
+margin_left = 536.0
+margin_top = 924.0
+margin_right = 664.0
+margin_bottom = 970.0
 size_flags_horizontal = 4
 custom_styles/normal = SubResource( 5 )
 custom_fonts/font = SubResource( 4 )
@@ -122,59 +132,57 @@ custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 text = "The Sea"
 
 [node name="Food" type="Button" parent="MarginContainer/VBoxContainer"]
-margin_left = 335.0
-margin_top = 331.0
-margin_right = 489.0
-margin_bottom = 375.0
+margin_left = 523.0
+margin_top = 978.0
+margin_right = 677.0
+margin_bottom = 1022.0
 size_flags_horizontal = 4
 custom_fonts/font = SubResource( 4 )
 disabled = true
 text = "The Food"
 
 [node name="Culture" type="Button" parent="MarginContainer/VBoxContainer"]
-margin_left = 318.0
-margin_top = 383.0
-margin_right = 506.0
-margin_bottom = 427.0
+margin_left = 506.0
+margin_top = 1030.0
+margin_right = 694.0
+margin_bottom = 1074.0
 size_flags_horizontal = 4
 custom_fonts/font = SubResource( 4 )
 disabled = true
 text = "The Culture"
 
 [node name="Movies" type="Button" parent="MarginContainer/VBoxContainer"]
-margin_left = 320.0
-margin_top = 435.0
-margin_right = 504.0
-margin_bottom = 479.0
+margin_left = 508.0
+margin_top = 1082.0
+margin_right = 692.0
+margin_bottom = 1126.0
 size_flags_horizontal = 4
 custom_fonts/font = SubResource( 4 )
 disabled = true
 text = "The Movies"
 
 [node name="People" type="Button" parent="MarginContainer/VBoxContainer"]
-margin_left = 320.0
-margin_top = 487.0
-margin_right = 503.0
-margin_bottom = 531.0
+margin_left = 508.0
+margin_top = 1134.0
+margin_right = 691.0
+margin_bottom = 1178.0
 size_flags_horizontal = 4
 custom_fonts/font = SubResource( 4 )
 disabled = true
 text = "The People"
 
 [node name="PopupPanel" type="PopupPanel" parent="."]
-anchor_left = 0.2
-anchor_top = 0.2
-anchor_right = 0.2
-anchor_bottom = 0.2
-margin_right = 1024.0
-margin_bottom = 600.0
+margin_right = 512.0
+margin_bottom = 512.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 6 )
 
 [node name="Label" type="Label" parent="PopupPanel"]
-margin_right = 1024.0
-margin_bottom = 600.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 504.0
+margin_bottom = 504.0
 custom_fonts/font = SubResource( 7 )
 custom_colors/font_color = Color( 0.0470588, 0.0470588, 0.0431373, 1 )
 autowrap = true
