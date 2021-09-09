@@ -555,6 +555,7 @@ func game_over():
 	$HUD/Timed.show()
 	$HUD/Learn.show()
 	$HUD/Quest.show()
+	$HUD/Quest2.show()
 	#$Camera2D.position=get_node('Karur').position
 	#show_compass()
 	$Gopal.show()
@@ -596,6 +597,7 @@ func reset():
 	attempts=0
 	$Gopal.hide()
 	$HUD/Quiz.hide()
+	$HUD/Quest2.hide()
 	$HUD/Timed.hide()
 	$HUD/Quest.hide()
 	$HUD/Learn.hide()
@@ -913,6 +915,7 @@ func quest_selected(districts):
 	disableui()
 	$HUD/Grid/VBoxContainer2/MarginContainer/Neighbours.visible=false
 	$HUD/Grid/VBoxContainer2/MarginContainer/history.visible=false
+	$HUD/Grid/VBoxContainer2/MarginContainer/Back.visible=false
 	$HUD/Score.visible=true
 	$HUD/Score.text='Check the InfoBox for Instructions\n'
 	game_in_progress=3
@@ -932,30 +935,36 @@ func _on_Timed_pressed():
 #when player node moves into area 
 func showinfo(district):
 	if game_in_progress==3:
-		$HUD/Score.visible=true
-		$HUD/Grid.reload(district, neighbours(district), get_history(district), 1)
-	else:
 		$HUD/Score.visible=false
-		$HUD/Grid.reload(district, neighbours(district), get_history(district), 2) # non quest just show info without clue
+		$HUD/Grid.reload(district, '', '', 1)
+	else:
+		# non quest just show info without clue
+		$HUD/Score.visible=false
+		$HUD/Grid.reload(district, neighbours(district), get_history(district), 2) 
 
-func _on_quest_over(turnstaken, cluessolved):
+func _on_quest_over(turnstaken, cluessolved, success):
+	print('quest success',success)
 	$HUD/Grid/VBoxContainer2/MarginContainer/Neighbours.visible=true
 	$HUD/Grid/VBoxContainer2/MarginContainer/history.visible=true
+	$HUD/Grid/VBoxContainer2/MarginContainer/Back.visible=true
 	$HUD/Grid.hide()
 	#disappear()
 	$HUD/Score.visible=false
-	timed_msg("[pulse color=#22dd44 height=-15 freq=5]You took "+str(turnstaken)+" turns\nAnd solved "+str(cluessolved)+" clues ![/pulse]",3)
+	timed_msg("[pulse color=#22dd44 height=-15 freq=5]You took "+str(turnstaken)+" turns\nAnd solved "+str(cluessolved)+" clues![/pulse]",3)
 	yield($Timer,"timeout")
-	$HUD/Quest.show()
 	$HUD/Message.bbcode_text=''
+	if multiquest:
+		multiquest=false
 	#quest_in_progress=false
 	game_in_progress=0 # revert back to explore mode
+	#reset score border
 	$HUD/Score["custom_styles/normal"].border_color="feed5f"#selected_color_right
 	$HUD/Score["custom_colors/font_color"]="feed5f"#selected_color_right
 	enableui()
 	game_over()
 
 func _off_track(dx):
+	$HUD/Score.visible=true
 	$HUD/Score.text="Wrong direction!!! Press CLUE for more hints"
 	$HUD/Score["custom_styles/normal"].border_color=Color.red
 	$HUD/Score["custom_colors/font_color"]=Color.red
@@ -979,9 +988,11 @@ func _on_Grid_on_track(d):
 	#$HUD/Score["custom_colors/font_color"]=selected_color_right
 	get_node(d).get_child(0).color=selected_color_right
 
+var multiquest=false
 func subjectQuest():
 	if selected_district!='':
 		deselect()
 		$Label.text=''
 		get_tree().set_group("dlabels","visible",false)
+	multiquest=true
 	$HUD/QMenu.show()

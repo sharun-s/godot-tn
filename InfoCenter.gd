@@ -261,7 +261,8 @@ func reload(district, neighbours, hist='',mode=state.NON_QUEST):
 			emit_signal("off_track",district)
 		if attempts==0 or targets.size()==0:
 			$VBoxContainer2/MarginContainer/clue.hide()
-			emit_signal('quest_over',AttemptsAllowed-attempts, NumberOfTargets - targets.size()) # send clues solved
+			# this updates state in main TN node and in Qmenu Node. Qmenu will change quest buttons state on quest success
+			emit_signal('quest_over',AttemptsAllowed-attempts, NumberOfTargets - targets.size(), targets.size()==0) 
 			attempts=AttemptsAllowed
 			targets.clear()
 	else:
