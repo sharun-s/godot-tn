@@ -179,17 +179,30 @@ func panther():
 
 var dummyimg=[
 	#panther(),
-	preload("res://panther_2.png"),
+	preload("res://panther_3.png"),
 	preload("res://nat.png"),
 	preload("res://elephant.png"),
 	preload("res://flame.png"),
 	sea(),
+	preload("res://dance.png"),
 	preload("res://kolam.png"),
 	preload("res://dugong.png"),
 	#preload("res://paddy.png"),
 	#preload("res://temple.png"),
-	#preload("res://templecar.png"),
 	#preload("res://handloom.png"),
+	preload("res://kaveri.png"),
+	preload("res://templegopuram.png"),
+	preload("res://athangudi.png"),
+	preload("res://chariot.jpg"),
+	preload("res://saree.png"),
+	preload("res://saree-2.png"),
+	preload("res://zari.png"),
+	preload("res://croc.png"),
+	preload("res://beach.png"),
+	preload("res://fisherman.png"),
+	preload("res://marigold.png"),
+	preload("res://gingee.png"),
+	preload("res://lights.png")
 	]
 # Called when the node enters the scene tree for the first time.
 func _ready():
