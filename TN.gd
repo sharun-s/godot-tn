@@ -904,11 +904,19 @@ func _on_Quest_pressed():
 		$Label.text=''
 		get_tree().set_group("dlabels","visible",false)
 	quest_selected('')
-	
-func quest_selected(districts):
+
+var quest_colors={
+	sea=Color.skyblue,
+	river=Color.darkcyan,
+	mountains=Color.sienna,
+	food=Color.plum,
+	people=Color.seagreen,
+	culture=Color.gold,
+}	
+func quest_selected(districts, quest_name=''):
 	if districts is Array:
 		for i in districts:
-			setDistrict_Color_Text(i, Color.skyblue, false)
+			setDistrict_Color_Text(i, quest_colors[quest_name], false)
 		yield(get_tree().create_timer(4.0), "timeout")
 		$HUD/QMenu/PopupPanel.hide()
 		$HUD/QMenu.hide()
@@ -950,7 +958,10 @@ func _on_quest_over(turnstaken, cluessolved, success):
 	$HUD/Grid.hide()
 	#disappear()
 	$HUD/Score.visible=false
-	timed_msg("[pulse color=#22dd44 height=-15 freq=5]You took "+str(turnstaken)+" turns\nAnd solved "+str(cluessolved)+" clues![/pulse]",3)
+	if success:
+		timed_msg("[pulse color=#22dd44 height=-15 freq=7]Congrats! Quest Complete. You took "+str(turnstaken)+" turns\nAnd solved "+str(cluessolved)+" clues! Next Quest has been Unlocked.[/pulse]",3)
+	else:
+		timed_msg("[pulse color=#22dd44 height=-15 freq=5]You took "+str(turnstaken)+" turns\nAnd solved "+str(cluessolved)+" clues![/pulse]",3)
 	yield($Timer,"timeout")
 	$HUD/Message.bbcode_text=''
 	if multiquest:

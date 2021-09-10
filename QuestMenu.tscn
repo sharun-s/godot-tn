@@ -117,6 +117,7 @@ custom_styles/normal = SubResource( 6 )
 custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0.631373, 0.52549, 0.203922, 1 )
+disabled = true
 text = "The Mountains"
 
 [node name="Sea" type="Button" parent="MarginContainer/VBoxContainer"]
@@ -129,6 +130,7 @@ custom_styles/normal = SubResource( 7 )
 custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0.0666667, 0.215686, 0.913725, 1 )
 custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+disabled = true
 text = "The Sea"
 
 [node name="Food" type="Button" parent="MarginContainer/VBoxContainer"]

@@ -9,6 +9,7 @@ func _ready():
 	#$MarginContainer/VBoxContainer/Food.connect('pressed', self, 'on_quest_select',["food"])
 	#$MarginContainer/VBoxContainer/People.connect('pressed', self, 'on_quest_select',["people"])
 	#$MarginContainer/VBoxContainer/Culture.connect('pressed', self, 'on_quest_select',["culture"])
+	#$MarginContainer/VBoxContainer/Movies.connect('pressed', self, 'on_quest_select',["movies"])
 
 var q={
 	river={
@@ -37,17 +38,23 @@ var q={
 var current=''
 func on_quest_select(qname):
 	current=qname
-	$PopupPanel/Label.text=str(qname).to_upper()+"\n"+q[qname].text+"\n\n You will be tested on these districts. Good Luck!"
+	$PopupPanel/Label.text=str(qname).to_upper()+"\n"+q[qname].text+"\n\n You will be tested on these districts. Solve 5 clues to unlock next quest. Good Luck!"
 	$PopupPanel.popup_centered()
 	randomize()
 	q[qname].districts.shuffle()		
-	emit_signal('selected',q[qname].districts)
+	emit_signal('selected',q[qname].districts, qname)
 
 func _quest_over(turnstaken, cluessolved, success):
 	if success:
 		q[current].done=true
-	var btn:Button=$MarginContainer/VBoxContainer.get_node_or_null(current.capitalize())
-	btn.icon=chk
-	btn.disabled=true
-	
+		var btn:Button=$MarginContainer/VBoxContainer.get_node_or_null(current.capitalize())
+		btn.icon=chk
+		var idx:=0
+		for i in $MarginContainer/VBoxContainer.get_children():
+			if i == btn:
+				break
+			idx=idx+1
+		var nextbtn:Button=$MarginContainer/VBoxContainer.get_child(idx+1)
+		nextbtn.disabled=false
+	#btn.disabled=true
 	current=''

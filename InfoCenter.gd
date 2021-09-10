@@ -219,7 +219,7 @@ enum state{
 }
 var rng=RandomNumberGenerator.new()
 var targets=[]
-var NumberOfTargets:=3
+var NumberOfTargets:=5
 var AttemptsAllowed:=10
 var attempts:=AttemptsAllowed
 
@@ -234,12 +234,14 @@ func reload(district, neighbours, hist='',mode=state.NON_QUEST):
 		$VBoxContainer/NameBox.text="New Quest!"
 		rng.randomize()
 		if district is Array:
+			#method used for subject quests ie districts related to a subject are set as targets
 			if district.size() > NumberOfTargets:
 				targets=district.slice(0, NumberOfTargets-1)
 			else:
 				NumberOfTargets=district.size()
 				targets=district 
 		else:
+			# old method of randomly picking targets
 			while targets.size() != NumberOfTargets:
 				var idx=rng.randi_range(0, facts.size()-1)
 				if (facts.keys()[idx] in targets) == false:
