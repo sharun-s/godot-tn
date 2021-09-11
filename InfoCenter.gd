@@ -1,8 +1,13 @@
 extends GridContainer
 var facts:={
-		Ariyalur=['prehistoric fossils', 'Gangaikondacholapuram'],
-		Chennai=["State Capital with 10% of the states population", 
-		"Marina Beach", "Center of the Tamil Film Industry nicknamed Kollywood, as most studio were built in the Kodambakkam neighbourhood"],
+		Ariyalur=[
+			'prehistoric fossils', 
+			'Gangaikondacholapuram'
+			],
+		Chennai=[
+			"State Capital with 10% of the states population", 
+			"Marina Beach", 
+			"Center of the Tamil Film Industry nicknamed Kollywood, as most studio were built in the Kodambakkam neighbourhood"],
 		Chengalpattu=[
 			"Named after the Sengazhuneer poo (Red White Lily) that grows in abundance along the river banks",
 			"Mahaballipuram site of some of the earliest Rock Temples and Stone Sculpture that influenced the style of Temple Architecture throughout South India"],
@@ -13,13 +18,18 @@ var facts:={
 		Cuddalore=[
 			'Nataraja dance at thilai Natyanjali Dance Festival feb march on mahashivratri expand...',
 			'Pichawaram mangroves',
-		'Koodalur means confluence in Tamil. It is the place where the Pennaiyar, Kedilam, Paravanar and Uppanaar rivers join',
-		'Ports, Beaches, fishing villages','Was known as Naadu Nadu or the middle kingdom betweene Cholas in the South and the Pallavas in the North', 
-		"Fort St David in Cuddalore was one of the main British trading posts controling their activities in South India in the early 1700. So Cuddalore became the site of multiple wars with the French based 25kms North in Pondicherry",
-		"Silver Beach is one of the longest beaches found on the Coromandel Coast. 2700 people lost their life here during the 2004 Tsunami", 'Chidambaram temple','Pichawaram Mangrove forests'],
-		Dindigul=['Kodaikanal, in tamil translates to The Gift of the Forest, is very popular hillstation located here',
-		'Palani Hills where the famous Liril commercial was shot'],
-		Dharmapuri=["Hogenakkal falls, which means smokey rocks, is where the river Cauvery enters Tamil Nadu",
+			'Koodalur means confluence in Tamil. It is the place where the Pennaiyar, Kedilam, Paravanar and Uppanaar rivers join',
+			'Ports, Beaches, fishing villages',
+			'Was known as Naadu Nadu or the middle kingdom betweene Cholas in the South and the Pallavas in the North', 
+			"Fort St David in Cuddalore was one of the main British trading posts controling their activities in South India in the early 1700. So Cuddalore became the site of multiple wars with the French based 25kms North in Pondicherry",
+			"Silver Beach is one of the longest beaches found on the Coromandel Coast. 2700 people lost their life here during the 2004 Tsunami", 
+			'Chidambaram temple',
+			'Pichawaram Mangrove forests'],
+		Dindigul=[
+			'Kodaikanal, in tamil translates to The Gift of the Forest, is very popular hillstation located here',
+			'Palani Hills where the famous Liril commercial was shot'],
+		Dharmapuri=[
+			"Hogenakkal falls, which means smokey rocks, is where the river Cauvery enters Tamil Nadu",
 			"Taking a ride in the local bowl shaped boats made of woven grase called a Parisal/Coracle is very popular tourist activity here",
 			"Veeraappan, the notorious elephant poacher, sandalwood smuggler, wanted for the murder of 184 people was caught here"],
 		Erode=[
@@ -27,7 +37,8 @@ var facts:={
 			"Agri powerhouse due to rivers and dams",
 			"Sathyamangalam Tiger Reserve 83 tigers and 111 Leopards"
 		],
-		Kanyakumari=["Nanjilnadu cuisine Puttu, Appam, Idiappam, Seafood, Coconut oil based",
+		Kanyakumari=[
+			"Nanjilnadu cuisine Puttu, Appam, Idiappam, Seafood, Coconut oil based",
 			"Southern most district of TN and the Indian main land",
 			"Nagarcoil is the District HQ",
 			"The only district of TN facing the Arabian Sea",
@@ -38,7 +49,7 @@ var facts:={
 			"Headquarters of the Kanchi matha, founded by Adi Sankaracharya",
 			"Famous for the hand woven Kanchipuram Silk Saree. Wedding saree being a speciality",
 			"Ekambareswarar Temple covers 25 acres is one of the largest temple complexes in India. The Southern Gopuram is 11 stories tall making it one of the taller temple towers. Showcasing the architecture of the Vijayanagara dynasty",
-			"Kailasanathar Temple and the Vaikunta Perumal Temple found here are nearly 1350 years old"
+			"Kailasanathar Temple, panamalai talagireeshwarar and the Vaikunta Perumal Temple found here are nearly 1350 years old"
 		],
 		Krishnagiri=[
 			"Birthplace of C. Raja Gopalachari popularly known as Rajaji, the first Governor General of India and first Chief Minister of Tamil Nadu",
@@ -49,10 +60,20 @@ var facts:={
 		Kallakurichi=[
 			'Mainly a rural area 50 years ago increased road connectivity has turned into an emerging agricultural hub.',
 			'The Kalvarayan Hills are pristine unexplored area with the Vellimalai hilltop becoming a popular tourist spot for locals during the monsoon season.'],
-		Karur=["Capital of the Chera Kings", 
-		"TN Newsprint and Papers Ltd TNPL located here is the largest sugarcane based paper mill in the world"],
-		Perumbalur=['Leads the state in Small Onion production'],
-		Pudukotai=['Was a independent princely state ruled by the Thondaimans since the 17th century'],
+		Karur=[
+			"Capital of the Chera Kings", 
+			"A ancient trade post with the Romans who called it Karoura. They traded gold for rice. So the word rice comes from the Tamil araci", 
+			"TN Newsprint and Papers Ltd TNPL located here is the largest sugarcane based paper mill in the world"
+		],
+		Perumbalur=[
+			'Ranjankdui Fort built in the 17th century',
+			'Arambavur hand made wood carvings. The artisans of this village are famous and their carvings have recieved a GI Tag',
+			'Leads the state in Small Onion production'],
+		Pudukotai=[
+			'Moi Virundhu, a tradional practice where money is raised from the community by inviting everyone for a feast',
+			'Famous for its Percussinists, Manpoondia Pillai the lantern bearer, one handed kanjira, mirdangams...',
+			'Narthamalai, malaiyadapatti paintings show the differences between the chola and pallava art',
+			'Was a independent princely state ruled  by the Thondaimans since the 17th century'],
 		Mayiladithurai=[ 
 			'Ancient Port town of Poombuhar where the Kaveri meets the sea ',
 			'Kaveri Pushkaram festival happens here every 12 yeara place where peacock dance'],	
@@ -62,24 +83,29 @@ var facts:={
 			'Many areas well known for conducting the Jallikattu (bull taming) ceremony during the Pongal (harvest festival) season',
 			'Jasmine (Madurai Malli)'
 		],
-		Nagapattinam=['Sambandar of Sirkazhi and the Jains - Thirumarai ', 
-		'Velankanni festival', 
-		'Was hit by the 2004 Tsunami 6000 lives lost', 
-		'Danish Fort at Tarangabadi' ],
-		Nilgiris=['Doddabetta Peak the highest point in TN at 2600m is located here',
+		Nagapattinam=[
+			'Sambandar of Sirkazhi and the Jains - Thirumarai ', 
+			'Velankanni festival', 
+			'Was hit by the 2004 Tsunami 6000 lives lost', 
+			'Danish Fort at Tarangabadi' 
+		],
+		Nilgiris=[
+			'Doddabetta Peak the highest point in TN at 2600m is located here',
 			'Home of the native hill Toda and Badaga tribes',
-		"Udhagamandalam or Ooty known as the Queen of Western Ghats is a hillstation located here. It is the district HQ.",
+			"Udhagamandalam or Ooty known as the Queen of Western Ghats is a hillstation located here. It is the district HQ.",
 			'Coffee, tea, rubber, eucalyptus plantations',
 			'Mudumalai Tiger Reserve is the largest in TN with 160 using the corridor and 103 resident ' ],
-		Namakkal=['Cauvery flows thro, Tiruchengode...',
-		'Known for its Poutry Farms and  Lorry body building industry', 
-		'Its name derives from Namagiri, the name of the single 65m high rock formation at the center of the Namakkal town. A Fort covering one and half acres was built on top of the rock in the 17th century'],
+		Namakkal=[
+			'Cauvery flows thro, Tiruchengode...',
+			'Known for its Poutry Farms and  Lorry body building industry', 
+			'Its name derives from Namagiri, the name of the single 65m high rock formation at the center of the Namakkal town. A Fort covering one and half acres was built on top of the rock in the 17th century'],
 		Ranipet=[
-		"The famous Ambur biryani. The Mughals ruled this region and influenced the cuisine. Unique due to local type of rice used, and cooking meat and rice together unlike other biriyanis separately",
-		"Arcot Makkan Peda is a speciality - a flattened gulab jamun but filled with grated dry fruits soaked in sugar syrup",
-		"Leather goods manufacturing hub",
-		'End point of the first Passenger Railway Line built in South India in 1854 - Walajahpet-Veyasarapady (Chennai)',
-		'Built on the Palar River banks, by the Nawab of Arcot, in honour of the Rani of Gingee who committed Sati after her husband Desingh died in the Battle of Gingee'],
+			"The famous Ambur biryani. The Mughals ruled this region and influenced the cuisine. Unique due to local type of rice used, and cooking meat and rice together unlike other biriyanis separately",
+			"Arcot Makkan Peda is a speciality - a flattened gulab jamun but filled with grated dry fruits soaked in sugar syrup",
+			"Leather goods manufacturing hub",
+			'End point of the first Passenger Railway Line built in South India in 1854 - Walajahpet-Veyasarapady (Chennai)',
+			'Built on the Palar River banks, by the Nawab of Arcot, in honour of the Rani of Gingee who committed Sati after her husband Desingh died in the Battle of Gingee'
+			],
 		Ramanathapuram=[
 			"Birth place of A.P.J Abdul Kalam, rocket man, pokhran 2, peoples president...",
 			"Hi! I am Abdul. Welcome to Pamban Island",
@@ -87,23 +113,29 @@ var facts:={
 			"Mandapam - Pamban Bridge - Pamban-Rameshwaram/Dhanushkodi",
 			"In 1964 a cyclone hit Pamban Island with 25 ft waves washing away the town of Danushkodi. Today the remain of the ghost town are a tourist attraction."
 		],
-		Salem=['Steal industry','Mettur Dam, on the Cauvery river is the largest dam in the state', 
-		'Shevaroy Hills - yercaud - orchidarium - old coffee plantations highest peak of the southern eastern ghats in TN - lots of species of snake, lizard, frogs and birds not found anywhere else'],
-		Sivagangai=['Kaniyan - Yaadhum Oore Yaavarum Kelir',
+		Salem=[
+			'Steal industry',
+			'Mettur Dam, on the Cauvery river is the largest dam in the state', 
+			'Shevaroy Hills - yercaud - orchidarium - old coffee plantations highest peak of the southern eastern ghats in TN - lots of species of snake, lizard, frogs and birds not found anywhere else'],
+		Sivagangai=[
+			'Kaniyan - Yaadhum Oore Yaavarum Kelir',
 			'Chettinad formed by a prosperous banking and business community built from trading with Burma, Ceylon and Malaysia',
 			'Athangudi tiles', 
 			'Known for the famous Chettinad cuisine',
 			'Found here is the 2500 year old Keezhadi excavation site, including plates with the Tamil-Brahmi script'
 		],
-		Theni=['Cardamom estates','Indian Neutrino Observatory',
-		'The Meghamalai range also called the High Wavy Mountains',
-		'Meghamalai Wildlife Sanctuary'],
+		Theni=[
+			'Cardamom estates',
+			'Indian Neutrino Observatory',
+			'The Meghamalai range also called the High Wavy Mountains',
+			'Meghamalai Wildlife Sanctuary'],
 		Tiruvarur=[
 			'Somaskanda iconography - Idols depict Murugan with Shiva and Parvathi',
 			'Thyagaraja Temple Chariot found here stands 96 feet tall',
 			'Birthplace of Saint Thyagaraja, the composer of Carnatic music'	
 		],
 		Thanjavur=[
+			'Netti Workds',
 			"The Rice Bowl of Tamil Nadu",
 			"Popularized Ghee Pongal and Puliyodarai (tamarind rice)",
 			"Kumbakonam, every 12 years Mahamaham festival draws millions of devotees for a dip in the huge temple tank complex spanning 20 sq acres",
@@ -112,33 +144,49 @@ var facts:={
 			"Seat of the Chola Empire",
 			"Thanjavur dolls popularly known as Thalaiyatti Bommai are made of clay which is found along the river Cauvery"
 		],
-		Tirunelveli=["Halwa", "Kudrevatti", "ISROs Rocket Engines are assembled and tested at Mahendragiri located here",
-		"Agastyamalai mountain is a popular pilgrimage site to Sage Agastya considered father of the Tamil Language",
-		"Kalakkad Mundanthurai Tiger Reserve (KMTR) wildlife include Lion tailed Macaques, Elephants, Tigers, Peacock, Nilgiri Langur, Gaur amd Leopards"],
+		Tirunelveli=[
+			"Halwa", 
+			"Kudrevatti", 
+			"ISROs Rocket Engines are assembled and tested at Mahendragiri located here",
+			"Agastyamalai mountain is a popular pilgrimage site to Sage Agastya considered father of the Tamil Language",
+			"Kalakkad Mundanthurai Tiger Reserve (KMTR) wildlife include Lion tailed Macaques, Elephants, Tigers, Peacock, Nilgiri Langur, Gaur amd Leopards"],
 		Tiruvannamalai=[
 			"Arunachala hill, deepam festival",
 			"Arni silk production",
 			"Largest Rice producers"
 		],
-		Tiruvallur=['Sarvepalli Radhakrishnan was born in Tiruttani',
-		'Pulicat town found at the tip of Pulicat Lake',
-		'casuarinas','Tiruttani Murgan temple - Aadi Krittikai - kavadis',
-		'Very industrialized district manufacturing everything from cycles, tanks to trains'],
-		Thoothukudi=["ISRO is building its new space port here at Kulasekharapatnam ","Known in the past as the Pearl Fishery Coast", 
-		"Veerapandiya Kattabomman","great poet Subramanya Bharathi",
-		"V.O.Chidambaram Pillai Swadeshi Steamship Company",
-		"dugong sea grass medows"],
-		Tiruppur=["Textile export hub"],
-		Tirupathur=['The Vainu Bappu Observatory one of the main centers of Indian Astronomy',
-		'Surrounded by the Javadhu and Yelagiri Hills known for rivers, waterfalls and sandal wood trees'],
-		Tiruchirapalli=['The Srirangam temple complex covers 156 acres making it the largest templex complex in the country. Famous for festivals conducted throughout the year', 
-		'Kallanai also known as the Grand Anicut across the Cauvery river is the oldest dam in the country that is still in use. Built nearly 2000 years ago.',
-		'Rockfort Temple'],
+		Tiruvallur=[
+			'Sarvepalli Radhakrishnan was born in Tiruttani',
+			'Pulicat town found at the tip of Pulicat Lake',
+			'casuarinas',
+			'Tiruttani Murgan temple - Aadi Krittikai - kavadis',
+			'Very industrialized district manufacturing everything from cycles, tanks to trains'],
+		Thoothukudi=[
+			"ISRO is building its new space port here at Kulasekharapatnam ",
+			"Known in the past as the Pearl Fishery Coast", 
+			"Veerapandiya Kattabomman",
+			"great poet Subramanya Bharathi",
+			"V.O.Chidambaram Pillai Swadeshi Steamship Company",
+			"dugong sea grass medows"],
+		Tiruppur=[
+			"Hosiery products. Famously called the Baniyan City or Dollar City for its textile exports", 
+			"Half of Indias knitwear, innerwear exports to global brand names comes from here employing more than a 11 lak people",
+			"Coins from 2000 years ago found here in Kodumanal, indicate cotton trade route with Rome"],
+		Tirupathur=[
+			'The Vainu Bappu Observatory one of the main centers of Indian Astronomy',
+			'Surrounded by the Javadhu and Yelagiri Hills known for rivers, waterfalls and sandal wood trees'
+			],
+		Tiruchirapalli=[
+			'The Srirangam temple complex covers 156 acres making it the largest templex complex in the country. Famous for festivals conducted throughout the year', 
+			'Kallanai also known as the Grand Anicut across the Cauvery river is the oldest dam in the country that is still in use. Built nearly 2000 years ago.',
+			'Rockfort Temple'],
 		Tenkasi=[
+			'Sunflower fields of Sundarapandipuram village shot to fame after films like Roja and Aniyan were shot here', 
 			'Courtallam Falls - locals believe bathing under these waterfalls cures many ailments as the water passes through herbal forests',
 			"Known as the Kashi (Varanasi) of the South, its surrounded by the western ghats on three sides and is famous for its monsoon showers, known as Saaral season",
 		],	
-		Vilippuram=["Pondicherry, Auroville ",
+		Vilippuram=[
+			"Pondicherry, Auroville ",
 			"Gingee Fort is found here. Sivaji called it the most impregnable fortress in India"
 		],
 		Virudhunagar=[
