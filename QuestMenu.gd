@@ -10,7 +10,7 @@ func _ready():
 	$MarginContainer/VBoxContainer/People.connect('pressed', self, 'on_quest_select',["people"])
 	$MarginContainer/VBoxContainer/Culture.connect('pressed', self, 'on_quest_select',["culture"])
 	$MarginContainer/VBoxContainer/Movies.connect('pressed', self, 'on_quest_select',["movies"])
-	$MarginContainer/VBoxContainer/istory.connect('pressed', self, 'on_quest_select',["history"])
+	$MarginContainer/VBoxContainer/History.connect('pressed', self, 'on_quest_select',["history"])
 
 var q={
 	river={

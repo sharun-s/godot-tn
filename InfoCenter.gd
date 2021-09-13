@@ -15,6 +15,7 @@ var facts:={
 			"Named after the Sengazhuneer poo (Red White Lily) that grows in abundance along the river banks",
 			"h:Mahaballipuram site of some of the earliest Rock Temples and Stone Sculpture that influenced the style of Temple Architecture throughout South India"],
 		Coimbatore=[
+			'Wet Grinder used for idli/dosa was invented here. More than 800 factories manufacture it and the area has received the GI Tag from Govt of India',
 			'Eastern end of the Palakkad Gap, the lowest pass through the Western Ghats linking Kerala and Tamil Nadu. Also called Kovai',
 			'Manchester of South India due to extensive textile industry, fed by the surrounding cotton fields'
 		],
@@ -29,6 +30,8 @@ var facts:={
 			'c:Chidambaram temple',
 			'Pichawaram Mangrove forests'],
 		Dindigul=[
+			"f:the famous Palani Panchamirtham banana, jaggery, cow ghee, honey and cardamom",
+			"Kodaikanal Malai Poondu (Hill Garlic) known for its medicinal properties and long shelf life has been given a GI Tag",
 			'Kodaikanal, in tamil translates to The Gift of the Forest, is very popular hillstation located here',
 			'Palani Hills where the famous Liril commercial was shot'],
 		Dharmapuri=[
@@ -36,11 +39,13 @@ var facts:={
 			"Taking a ride in the local bowl shaped boats made of woven grase called a Parisal/Coracle is very popular tourist activity here",
 			"p:Veeraappan, the notorious elephant poacher, sandalwood smuggler, wanted for the murder of 184 people was caught here"],
 		Erode=[
-			"Turmeric",
+			"Turmeric or Manjal from here is known for its unique color. The area is the 2nd largest Tumeric market in India) and major exporter",
+			"Jamakkalam Carpets and Blankets made by the weavers of Bhavani are world famous for their patterns",
 			"Agri powerhouse due to rivers and dams",
 			"Sathyamangalam Tiger Reserve 83 tigers and 111 Leopards"
 		],
 		Kanyakumari=[
+			'the tiny village of Vadaserry famous for crafting Temple Jewellery with red and green stones or kuchu kal',
 			"f:Nanjilnadu cuisine Puttu, Appam, Idiappam, Seafood, Coconut oil based",
 			"Southern most district of TN and the Indian main land",
 			"Nagarcoil is the District HQ",
@@ -50,7 +55,8 @@ var facts:={
 			"District HQ is Kanchipuram also known as the City of a Thousand Temples",
 			"h:Capital of the Panllava Kingdom from the 4th to the 9th Century",
 			"p:Headquarters of the Kanchi matha, founded by Adi Sankaracharya",
-			"Famous for the hand woven Kanchipuram Silk Saree. Wedding saree being a speciality",
+			"Famous for the hand woven silk sarees, the Kanchi Pattu Pudavai. Wedding saree being a speciality",
+			"Silk from here has received the GI Tag",
 			"c:Ekambareswarar Temple covers 25 acres is one of the largest temple complexes in India. The Southern Gopuram is 11 stories tall making it one of the taller temple towers. Showcasing the architecture of the Vijayanagara dynasty",
 			"c:Kailasanathar Temple, panamalai talagireeshwarar and the Vaikunta Perumal Temple found here are nearly 1350 years old",
 			"h:Gunduperumbedu fossil bed where plant fossils from 400 million years ago, called poo-kal by locals are found in abundance"
@@ -84,7 +90,10 @@ var facts:={
 		Mayiladithurai=[ 
 			'Ancient Port town of Poombuhar where the Kaveri meets the sea ',
 			'Kaveri Pushkaram festival happens here every 12 yeara place where peacock dance'],	
-		Madurai=['Chithirai Festival',
+		Madurai=[
+			'Chithirai Festival',
+			"Thoonga Nagaram, meaning the city which never sleeps",
+			'the beautiful Sungudi sarees. Gujarati weavers, moved here 500 years ago, seeing the local women tying their hair in buns created the now famous tye and die pattern of these sarees',
 			'f:jigarthanda, muttaiparotta (minced parotta and scrambled egg), paruthipal (made of cottonseeds), Karidosai (dosai with mutton) & ennaidosai',
 			'c:The Meenakshi Amman Temple is one of the largest temple complexes in the state with 14 Gopurams (Gateway Towers), 33000 scupltures, a thousand pillared hall, tank legend, parrots...',
 			'Many areas well known for conducting the Jallikattu (bull taming) ceremony during the Pongal (harvest festival) season',
@@ -122,10 +131,12 @@ var facts:={
 			"In 1964 a cyclone hit Pamban Island with 25 ft waves washing away the town of Danushkodi. Today the remain of the ghost town are a tourist attraction."
 		],
 		Salem=[
+			'Fabric from here has received the GI tag',
 			'Steal industry',
 			'Mettur Dam, on the Cauvery river is the largest dam in the state', 
 			'Shevaroy Hills - yercaud - orchidarium - old coffee plantations highest peak of the southern eastern ghats in TN - lots of species of snake, lizard, frogs and birds not found anywhere else'],
 		Sivagangai=[
+			'Kottan basket weaving from palm leafs with its vibrant colors',
 			'p:Kaniyan - Yaadhum Oore Yaavarum Kelir',
 			'Chettinad formed by a prosperous banking and business community built from trading with Burma, Ceylon and Malaysia',
 			'Athangudi tiles', 
@@ -143,7 +154,10 @@ var facts:={
 			'p:Birthplace of Saint Thyagaraja, the composer of Carnatic music'	
 		],
 		Thanjavur=[
+			'the famous painting style which uses gold foil, glass beads and gems over the painting done on wood. Locals call it palagai padam or wood picture', 
+			'and art plates of the region have received the GI Tag',
 			'Netti Workds',
+			'Bronze idols and statues made by the artisans of Swamimalai is a thousand year old craft',
 			"The Rice Bowl of Tamil Nadu",
 			"Popularized Ghee Pongal and Puliyodarai (tamarind rice)",
 			"c:Kumbakonam, every 12 years Mahamaham festival draws millions of devotees for a dip in the huge temple tank complex spanning 20 sq acres",
@@ -153,8 +167,9 @@ var facts:={
 			"Thanjavur dolls popularly known as Thalaiyatti Bommai are made of clay which is found along the river Cauvery"
 		],
 		Tirunelveli=[
-			"f:Halwa", 
-			"Kudrevatti", 
+			"f:Halwa made famous by the Iruttukadai Halwa shop. Halwa was made through the day and sellout within minutes of shop opening at night", 
+			"Kudrevatti hill station",
+			"Korai grass (reed) mats of Pattamadai called Pattamadai Pai",
 			"ISROs Rocket Engines are assembled and tested at Mahendragiri located here",
 			"p:Agastyamalai mountain is a popular pilgrimage site to Sage Agastya considered father of the Tamil Language",
 			"Kalakkad Mundanthurai Tiger Reserve (KMTR) wildlife include Lion tailed Macaques, Elephants, Tigers, Peacock, Nilgiri Langur, Gaur amd Leopards"],
@@ -170,6 +185,7 @@ var facts:={
 			'c:Tiruttani Murgan temple - Aadi Krittikai - kavadis',
 			'Very industrialized district manufacturing everything from cycles, tanks to trains'],
 		Thoothukudi=[
+			"f:the famous Kovilpatti Kadalai Mittai a groundnut and jaggery candy",
 			"ISRO is building its new space port here at Kulasekharapatnam ",
 			"Known in the past as the Pearl Fishery Coast", 
 			"p:Veerapandiya Kattabomman",
@@ -200,6 +216,7 @@ var facts:={
 			"h:Gingee Fort is found here. Sivaji called it the most impregnable fortress in India"
 		],
 		Virudhunagar=[
+			'f:Srivilliputtur Palkova, a sweet made from cow milk and sugar',
 			"p:Birth place of K. Kamaraj TN CM from 54-63, and Indian National Congress President after Jawaharlal Nehru's death. He made education free for the poor having had to drop out of school at age 11 to support his family",
 			'Sivakasi Fireworks',
 			'c:The 192 ft Gopuram of the Srivilliputhur Temple built here, dedicated to Andal the only female among the poet saints of south india, is the symbol of the Tamil Nadu Govt'
