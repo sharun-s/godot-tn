@@ -211,6 +211,8 @@ func addstatepoly(b, nm='x'):
 	
 func _ready():
 	init_label_font()
+	var master_sound = AudioServer.get_bus_index("Master")
+	AudioServer.set_bus_mute(master_sound, true)
 	shore=ShaderMaterial.new()
 	shore.shader=load("res://shore1.shader")
 	rng.randomize()
@@ -912,8 +914,12 @@ var quest_colors={
 	food=Color.plum,
 	people=Color.seagreen,
 	culture=Color.gold,
+	movies=Color.indigo
 }	
+var general_quests=['', 'mountains', 'river', 'sea']
+
 func quest_selected(districts, quest_name=''):
+	# general quest
 	if districts is Array:
 		for i in districts:
 			setDistrict_Color_Text(i, quest_colors[quest_name], false)
@@ -927,7 +933,10 @@ func quest_selected(districts, quest_name=''):
 	$HUD/Score.visible=true
 	$HUD/Score.text='Check the InfoBox for Instructions\n'
 	game_in_progress=3
-	$HUD/Grid.reload(districts, '', '', 0)
+	if general_quests.has(quest_name):
+		$HUD/Grid.reload(districts, '', '', 0)
+	else:	
+		$HUD/Grid.reload(districts, '', '', 0,quest_name[0])
 		
 func _on_Timed_pressed():
 	reset()
@@ -964,8 +973,8 @@ func _on_quest_over(turnstaken, cluessolved, success):
 		timed_msg("[pulse color=#22dd44 height=-15 freq=5]You took "+str(turnstaken)+" turns\nAnd solved "+str(cluessolved)+" clues![/pulse]",3)
 	yield($Timer,"timeout")
 	$HUD/Message.bbcode_text=''
-	if multiquest:
-		multiquest=false
+	#if multiquest:
+	#	multiquest=false
 	#quest_in_progress=false
 	game_in_progress=0 # revert back to explore mode
 	#reset score border
@@ -999,11 +1008,11 @@ func _on_Grid_on_track(d):
 	#$HUD/Score["custom_colors/font_color"]=selected_color_right
 	get_node(d).get_child(0).color=selected_color_right
 
-var multiquest=false
+#var multiquest=false
 func subjectQuest():
 	if selected_district!='':
 		deselect()
 		$Label.text=''
 		get_tree().set_group("dlabels","visible",false)
-	multiquest=true
+	#multiquest=true
 	$HUD/QMenu.show()

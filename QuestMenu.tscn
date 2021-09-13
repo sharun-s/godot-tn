@@ -82,9 +82,9 @@ alignment = 1
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
 margin_left = 450.0
-margin_top = 721.0
+margin_top = 695.0
 margin_right = 750.0
-margin_bottom = 824.0
+margin_bottom = 798.0
 size_flags_horizontal = 4
 size_flags_vertical = 0
 custom_fonts/font = SubResource( 2 )
@@ -97,9 +97,9 @@ text = "Select A Quest
 
 [node name="River" type="Button" parent="MarginContainer/VBoxContainer"]
 margin_left = 529.0
-margin_top = 832.0
+margin_top = 806.0
 margin_right = 671.0
-margin_bottom = 870.0
+margin_bottom = 844.0
 size_flags_horizontal = 4
 custom_styles/normal = SubResource( 3 )
 custom_fonts/font = SubResource( 4 )
@@ -108,9 +108,9 @@ text = "The River"
 
 [node name="Mountains" type="Button" parent="MarginContainer/VBoxContainer"]
 margin_left = 488.0
-margin_top = 878.0
+margin_top = 852.0
 margin_right = 712.0
-margin_bottom = 916.0
+margin_bottom = 890.0
 size_flags_horizontal = 4
 custom_styles/pressed = SubResource( 5 )
 custom_styles/normal = SubResource( 6 )
@@ -122,9 +122,9 @@ text = "The Mountains"
 
 [node name="Sea" type="Button" parent="MarginContainer/VBoxContainer"]
 margin_left = 536.0
-margin_top = 924.0
+margin_top = 898.0
 margin_right = 664.0
-margin_bottom = 970.0
+margin_bottom = 944.0
 size_flags_horizontal = 4
 custom_styles/normal = SubResource( 7 )
 custom_fonts/font = SubResource( 4 )
@@ -135,19 +135,32 @@ text = "The Sea"
 
 [node name="Food" type="Button" parent="MarginContainer/VBoxContainer"]
 margin_left = 523.0
-margin_top = 978.0
+margin_top = 952.0
 margin_right = 677.0
-margin_bottom = 1022.0
+margin_bottom = 996.0
 size_flags_horizontal = 4
 custom_fonts/font = SubResource( 4 )
 disabled = true
 text = "The Food"
 
+[node name="People" type="Button" parent="MarginContainer/VBoxContainer"]
+margin_left = 508.0
+margin_top = 1004.0
+margin_right = 691.0
+margin_bottom = 1048.0
+size_flags_horizontal = 4
+custom_fonts/font = SubResource( 4 )
+disabled = true
+text = "The People"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Culture" type="Button" parent="MarginContainer/VBoxContainer"]
 margin_left = 506.0
-margin_top = 1030.0
+margin_top = 1056.0
 margin_right = 694.0
-margin_bottom = 1074.0
+margin_bottom = 1100.0
 size_flags_horizontal = 4
 custom_fonts/font = SubResource( 4 )
 disabled = true
@@ -155,23 +168,23 @@ text = "The Culture"
 
 [node name="Movies" type="Button" parent="MarginContainer/VBoxContainer"]
 margin_left = 508.0
-margin_top = 1082.0
+margin_top = 1108.0
 margin_right = 692.0
-margin_bottom = 1126.0
+margin_bottom = 1152.0
 size_flags_horizontal = 4
 custom_fonts/font = SubResource( 4 )
 disabled = true
 text = "The Movies"
 
-[node name="People" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="History" type="Button" parent="MarginContainer/VBoxContainer"]
 margin_left = 508.0
-margin_top = 1134.0
-margin_right = 691.0
-margin_bottom = 1178.0
+margin_top = 1160.0
+margin_right = 692.0
+margin_bottom = 1204.0
 size_flags_horizontal = 4
 custom_fonts/font = SubResource( 4 )
 disabled = true
-text = "The People"
+text = "The History"
 
 [node name="PopupPanel" type="PopupPanel" parent="."]
 margin_right = 512.0

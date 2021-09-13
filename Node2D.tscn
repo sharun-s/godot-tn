@@ -225,5 +225,6 @@ scale = Vector2( 1.4, 1.4 )
 [connection signal="quest_over" from="HUD/Grid" to="." method="_on_quest_over"]
 [connection signal="quest_over" from="HUD/Grid" to="HUD/QMenu" method="_quest_over"]
 [connection signal="show_neighbours" from="HUD/Grid" to="." method="_on_Grid_show_neighbours"]
+[connection signal="subject_quests_ready" from="HUD/Grid" to="HUD/QMenu" method="_on_subject_quests_ready"]
 [connection signal="selected" from="HUD/QMenu" to="." method="quest_selected"]
 [connection signal="timeout" from="QuizTimer" to="." method="_on_QuizTimer_timeout"]

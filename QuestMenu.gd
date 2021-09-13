@@ -6,10 +6,11 @@ func _ready():
 	$MarginContainer/VBoxContainer/River.connect('pressed', self, 'on_quest_select',["river"])
 	$MarginContainer/VBoxContainer/Sea.connect('pressed', self, 'on_quest_select',["sea"])
 	$MarginContainer/VBoxContainer/Mountains.connect('pressed', self, 'on_quest_select',["mountains"])
-	#$MarginContainer/VBoxContainer/Food.connect('pressed', self, 'on_quest_select',["food"])
-	#$MarginContainer/VBoxContainer/People.connect('pressed', self, 'on_quest_select',["people"])
-	#$MarginContainer/VBoxContainer/Culture.connect('pressed', self, 'on_quest_select',["culture"])
-	#$MarginContainer/VBoxContainer/Movies.connect('pressed', self, 'on_quest_select',["movies"])
+	$MarginContainer/VBoxContainer/Food.connect('pressed', self, 'on_quest_select',["food"])
+	$MarginContainer/VBoxContainer/People.connect('pressed', self, 'on_quest_select',["people"])
+	$MarginContainer/VBoxContainer/Culture.connect('pressed', self, 'on_quest_select',["culture"])
+	$MarginContainer/VBoxContainer/Movies.connect('pressed', self, 'on_quest_select',["movies"])
+	$MarginContainer/VBoxContainer/istory.connect('pressed', self, 'on_quest_select',["history"])
 
 var q={
 	river={
@@ -31,9 +32,11 @@ var q={
 		"Kanyakumari", "Vellore","Tiruvannamalai","Tirupathur"],
 		done=false
 		},
-	food={},
-	people={},
-	culture={}
+	food={text='',districts=[],done=false},
+	people={text='',districts=[],done=false},
+	culture={text='',districts=[],done=false},
+	movies={text='',districts=[],done=false},
+	history={text='',districts=[],done=false}
 	}
 var current=''
 func on_quest_select(qname):
@@ -45,6 +48,9 @@ func on_quest_select(qname):
 	emit_signal('selected',q[qname].districts, qname)
 
 func _quest_over(turnstaken, cluessolved, success):
+	if current == '':
+		#its not a multiquest no need to handle
+		return
 	if success:
 		q[current].done=true
 		var btn:Button=$MarginContainer/VBoxContainer.get_node_or_null(current.capitalize())
@@ -58,3 +64,18 @@ func _quest_over(turnstaken, cluessolved, success):
 		nextbtn.disabled=false
 	#btn.disabled=true
 	current=''
+
+func _on_subject_quests_ready(data):
+	for i in data:
+		if i=='f':
+			q['food'].districts=data[i].keys()
+		elif i=='p':
+			q['people'].districts=data[i].keys()
+		elif i=='h':
+			q['history'].districts=data[i].keys()
+		elif i=='t':
+			q['culture'].districts=data[i].keys()
+		elif i=='m':
+			q['movies'].districts=data[i].keys()
+		else:
+			continue
