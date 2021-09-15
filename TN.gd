@@ -546,6 +546,8 @@ func game_over():
 	deselect()
 	path.clear()
 	seconds=0
+	#borders(true)
+	#game_in_progress=0
 	$HUD/Timeline.bbcode_text=''
 	#walkpath.clear_points()
 	$HUD/Score.text=''
@@ -839,6 +841,8 @@ func _on_Learn_toggled():
 				current_year=0
 				get_tree().call_group('1956',"hide")
 				#$HUD/Learn.text='History'
+			borders(true)
+			game_in_progress=0
 			game_over()
 			#print('after queue free ***********', get_tree().get_node_count())
 			return
