@@ -555,18 +555,8 @@ func game_over():
 	$HUD/Clock.text=''
 	$HUD/Message.bbcode_text=''
 	$Label.text=''
-	$HUD/Quiz.show()
-	$HUD/Timed.show()
-	$HUD/Learn.show()
-	$HUD/Quest.show()
-	$HUD/Quest2.show()
-	#$Camera2D.position=get_node('Karur').position
-	#show_compass()
-	$Gopal.show()
-	#if quest_in_progress:
-	#	game_in_progress=3
-	#else:
-	#	game_in_progress=0
+	#$Gopal.show()
+	$HUD/StartScreen.show()
 	update() # redraw borders
 	#var tree=get_tree()
 #	for i in years:
@@ -599,12 +589,9 @@ func borders(show):
 func reset():
 	score=0
 	attempts=0
-	$Gopal.hide()
-	$HUD/Quiz.hide()
-	$HUD/Quest2.hide()
-	$HUD/Timed.hide()
-	$HUD/Quest.hide()
-	$HUD/Learn.hide()
+	# gopal state depends on game - explore/quest/multiquest show - history/quiz/timedquiz hide
+	$Gopal.hide() 	
+	disableui()
 	$HUD/Grid.hide()
 	#disappear()
 	#since the learn button is used to show years
@@ -644,10 +631,7 @@ func gotoDistrict():
 	$Gopal.velocity=Vector2(0,0)
 	$Gopal.initiated_by_code=false
 	$Gopal/CollisionShape2D.disabled = false
-	if game_in_progress !=3:
-		enableui()
-	#game_in_progress=0
-	#if not quest_in_progress:
+	#if game_in_progress !=3:
 	#	enableui()
 		
 func fullwalktest():
@@ -730,26 +714,15 @@ var district_animator
 func _on_TN_ready():
 	district_animator=cell.instance()
 	add_child(district_animator)
-	var randstartidx=rng.randi_range(0,d.size()-1)
-	var startat = d.keys()[randstartidx]
-	path.append(startat)
-	gotoDistrict()
 
 func disableui():
-	$HUD/Learn.disabled=true
-	$HUD/Quest.disabled=true
-	$HUD/Quest2.disabled=true
-	$HUD/Quiz.disabled=true
-	$HUD/Labels.disabled=true
-	$HUD/Timed.disabled=true
+	$HUD/StartScreen.hide()
+	#$HUD/Labels.hide()
 
 func enableui():
-	$HUD/Learn.disabled=false
-	$HUD/Quest.disabled=false
-	$HUD/Quest2.disabled=false
-	$HUD/Quiz.disabled=false
-	$HUD/Labels.disabled=false
-	$HUD/Timed.disabled=false
+	$HUD/StartScreen.show()
+	#$HUD/Labels.hide()
+	
 
 func neighbours(districtname):
 	var l=get_node(districtname).get_overlapping_areas()
@@ -802,7 +775,6 @@ func center(district):
 	return get_node(district).position+Vector2(d[district][2]/2, d[district][3]/2)
 				
 func _on_Learn_toggled():
-	$HUD/Learn.hide()
 	var old
 	var newlist
 	while true:
@@ -905,6 +877,8 @@ func disappear():
 
 
 func _on_Quest_pressed():
+	disableui()
+	$Gopal.show()
 	if selected_district!='':
 		deselect()
 		$Label.text=''
@@ -923,14 +897,13 @@ var quest_colors={
 var general_quests=['', 'mountains', 'river', 'sea']
 
 func quest_selected(districts, quest_name=''):
-	# general quest
+	# district is empty string - quest button pressed if array quest selected via multiquest
 	if districts is Array:
 		for i in districts:
 			setDistrict_Color_Text(i, quest_colors[quest_name], false)
 		yield(get_tree().create_timer(4.0), "timeout")
 		$HUD/QMenu/PopupPanel.hide()
 		$HUD/QMenu.hide()
-	disableui()
 	$HUD/Grid/VBoxContainer2/MarginContainer/Neighbours.visible=false
 	$HUD/Grid/VBoxContainer2/MarginContainer/history.visible=false
 	$HUD/Grid/VBoxContainer2/MarginContainer/Back.visible=false
@@ -984,7 +957,7 @@ func _on_quest_over(turnstaken, cluessolved, success):
 	#reset score border
 	$HUD/Score["custom_styles/normal"].border_color="feed5f"#selected_color_right
 	$HUD/Score["custom_colors/font_color"]="feed5f"#selected_color_right
-	enableui()
+	#enableui()
 	game_over()
 
 func _off_track(dx):
@@ -1014,9 +987,20 @@ func _on_Grid_on_track(d):
 
 #var multiquest=false
 func subjectQuest():
+	disableui()
+	$Gopal.show()
 	if selected_district!='':
 		deselect()
 		$Label.text=''
 		get_tree().set_group("dlabels","visible",false)
-	#multiquest=true
 	$HUD/QMenu.show()
+
+func _on_Explore_pressed():
+	$Gopal.show()
+	var randstartidx=rng.randi_range(0,d.size()-1)
+	var startat = d.keys()[randstartidx]
+	path.append(startat)
+	gotoDistrict()
+
+func _on_infobox_exit():
+	game_over()

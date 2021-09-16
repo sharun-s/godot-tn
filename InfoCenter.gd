@@ -2,7 +2,7 @@ extends GridContainer
 #code facttype - p:people, f:food, m:movies, c:culture/temples/religion related, h:history 
 var facts:={
 		Ariyalur=[
-			'h:fields of Cretaceous age marine fossils (100 millions year old) are found here shocased in the Museum at Varanavasi', 
+			'h:fields of Cretaceous age marine fossils (100 millions year old) are found here showcased in the Museum at Varanavasi', 
 			'h:Gangaikonda Cholapuram located here was the capital of the Chola Empire before it moved to Tanjore',
 			"h:The ruins of the Chola capital and the famous Temple here are now a World Heritage site"
 			],
@@ -35,6 +35,7 @@ var facts:={
 			'Kodaikanal, in tamil translates to The Gift of the Forest, is very popular hillstation located here',
 			'Palani Hills where the famous Liril commercial was shot'],
 		Dharmapuri=[
+			"m:Hogenakkal falls shot to fame after Chinna Chinna Asai (Roja), Mazhaiye Mazhaiye(Rhythm) and Raath Ka Nasha Abhi (Asoka) were shot here",
 			"Hogenakkal falls, which means smokey rocks, is where the river Cauvery enters Tamil Nadu",
 			"Taking a ride in the local bowl shaped boats made of woven grase called a Parisal/Coracle is very popular tourist activity here",
 			"p:Veeraappan, the notorious elephant poacher, sandalwood smuggler, wanted for the murder of 184 people was caught here"],
@@ -91,6 +92,7 @@ var facts:={
 			'Ancient Port town of Poombuhar where the Kaveri meets the sea ',
 			'Kaveri Pushkaram festival happens here every 12 yeara place where peacock dance'],	
 		Madurai=[
+			'm:Thirumalai Nayakkar Palace built in 1636, blends North and South Indian architecture, site of famous movie songs Kannalanea(Bombay), Tere Bina(Guru), Ragasiya Kanavugal(Bheemaa)',
 			'Chithirai Festival',
 			"Thoonga Nagaram, meaning the city which never sleeps",
 			'the beautiful Sungudi sarees. Gujarati weavers, moved here 500 years ago, seeing the local women tying their hair in buns created the now famous tye and die pattern of these sarees',
@@ -136,6 +138,7 @@ var facts:={
 			'Mettur Dam, on the Cauvery river is the largest dam in the state', 
 			'Shevaroy Hills - yercaud - orchidarium - old coffee plantations highest peak of the southern eastern ghats in TN - lots of species of snake, lizard, frogs and birds not found anywhere else'],
 		Sivagangai=[
+			'm:Karaikudi, with its Chettiar palaces is a very popular film location. Aathangudi palace, Rao Bahadur palace and nearly 50 other palatial houses are occupied on most days by film crew',
 			'Kottan basket weaving from palm leafs with its vibrant colors',
 			'p:Kaniyan - Yaadhum Oore Yaavarum Kelir',
 			'Chettinad formed by a prosperous banking and business community built from trading with Burma, Ceylon and Malaysia',
@@ -169,6 +172,7 @@ var facts:={
 		Tirunelveli=[
 			"f:Halwa made famous by the Iruttukadai Halwa shop. Halwa was made through the day and sellout within minutes of shop opening at night", 
 			"Kudrevatti hill station",
+			"m:Kalyani Theertham and Agasthya falls were Azhagaana Raakshasiye from Mudhalvan was shot",
 			"Korai grass (reed) mats of Pattamadai called Pattamadai Pai",
 			"ISROs Rocket Engines are assembled and tested at Mahendragiri located here",
 			"p:Agastyamalai mountain is a popular pilgrimage site to Sage Agastya considered father of the Tamil Language",
@@ -179,9 +183,9 @@ var facts:={
 			"Largest Rice producers"
 		],
 		Tiruvallur=[
-			'p:Sarvepalli Radhakrishnan was born in Tiruttani',
+			'p:Sarvepalli Radhakrishnan, the Second President of India, was born here in Tiruttani.',
 			'Pulicat town found at the tip of Pulicat Lake',
-			'casuarinas',
+			'Casuarinas',
 			'c:Tiruttani Murgan temple - Aadi Krittikai - kavadis',
 			'Very industrialized district manufacturing everything from cycles, tanks to trains'],
 		Thoothukudi=[
@@ -395,8 +399,9 @@ func _unhandled_input(event):
 		if event.pressed and event.scancode == KEY_BACKSPACE:
 			hide()
 
+signal infobox_exit;
 func _on_Back_pressed():
-	hide()
+	emit_signal('infobox_exit')
 
 func format_neighbours():
 	var textstr=''

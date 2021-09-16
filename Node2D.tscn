@@ -1,6 +1,7 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://TN.gd" type="Script" id=1]
+[ext_resource path="res://Montreal-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://DroidSans.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://InfoCenter.tscn" type="PackedScene" id=4]
 [ext_resource path="res://pulse.gd" type="Script" id=5]
@@ -49,6 +50,13 @@ expand_margin_bottom = 4.0
 size = 24
 font_data = ExtResource( 3 )
 
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0.0352941, 0.341176, 0.921569, 1 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 80
+font_data = ExtResource( 2 )
+
 [node name="TN" type="Node2D"]
 script = ExtResource( 1 )
 
@@ -91,58 +99,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Quiz" type="Button" parent="HUD"]
-anchor_left = 1.0
-anchor_top = 0.1
-anchor_right = 1.0
-anchor_bottom = 0.1
-margin_left = -192.0
-margin_bottom = 55.0
-custom_fonts/font = SubResource( 5 )
-text = "Quiz"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Quest" type="Button" parent="HUD"]
-anchor_left = 1.0
-anchor_top = 0.9
-anchor_right = 1.0
-anchor_bottom = 0.9
-margin_left = -192.0
-margin_top = -55.0
-custom_fonts/font = SubResource( 5 )
-text = "Quest"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Quest2" type="Button" parent="HUD"]
-anchor_left = 1.0
-anchor_top = 0.8
-anchor_right = 1.0
-anchor_bottom = 0.8
-margin_left = -192.0
-margin_top = -55.0
-custom_fonts/font = SubResource( 5 )
-text = "Level Up"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Timed" type="Button" parent="HUD"]
-anchor_left = 1.0
-anchor_top = 0.2
-anchor_right = 1.0
-anchor_bottom = 0.2
-margin_left = -192.0
-margin_bottom = 55.0
-custom_fonts/font = SubResource( 5 )
-text = "Timed Quiz"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Labels" type="Button" parent="HUD"]
 anchor_left = 1.0
 anchor_right = 1.0
@@ -151,19 +107,6 @@ margin_bottom = 55.0
 custom_fonts/font = SubResource( 5 )
 toggle_mode = true
 text = "Labels"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Learn" type="Button" parent="HUD"]
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -192.0
-margin_top = -55.0
-custom_fonts/font = SubResource( 5 )
-text = "History"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -204,6 +147,102 @@ anchor_right = 0.3
 [node name="QMenu" parent="HUD" instance=ExtResource( 7 )]
 visible = false
 
+[node name="StartScreen" type="GridContainer" parent="HUD"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/vseparation = 0
+custom_constants/hseparation = 0
+columns = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="HUD/StartScreen"]
+margin_right = 700.0
+margin_bottom = 1900.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+custom_styles/normal = SubResource( 9 )
+custom_fonts/font = SubResource( 8 )
+text = "Districts 
+Of
+Tamil Nadu"
+align = 1
+valign = 1
+
+[node name="B" type="VBoxContainer" parent="HUD/StartScreen"]
+margin_left = 700.0
+margin_right = 1400.0
+margin_bottom = 1900.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 0
+
+[node name="Explore" type="Button" parent="HUD/StartScreen/B"]
+margin_right = 700.0
+margin_bottom = 316.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 5 )
+text = "Explore"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Quiz" type="Button" parent="HUD/StartScreen/B"]
+margin_top = 316.0
+margin_right = 700.0
+margin_bottom = 633.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 5 )
+text = "Quiz"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timed" type="Button" parent="HUD/StartScreen/B"]
+margin_top = 633.0
+margin_right = 700.0
+margin_bottom = 949.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 5 )
+text = "Timed Quiz"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Quest" type="Button" parent="HUD/StartScreen/B"]
+margin_top = 949.0
+margin_right = 700.0
+margin_bottom = 1266.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 5 )
+text = "Quest"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Quest2" type="Button" parent="HUD/StartScreen/B"]
+margin_top = 1266.0
+margin_right = 700.0
+margin_bottom = 1583.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 5 )
+text = "MultiQuest"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Learn" type="Button" parent="HUD/StartScreen/B"]
+margin_top = 1583.0
+margin_right = 700.0
+margin_bottom = 1900.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 5 )
+text = "History"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
 
@@ -214,12 +253,8 @@ visible = false
 scale = Vector2( 1.4, 1.4 )
 
 [connection signal="ready" from="." to="." method="_on_TN_ready"]
-[connection signal="pressed" from="HUD/Quiz" to="." method="_on_Button_pressed"]
-[connection signal="pressed" from="HUD/Quest" to="." method="_on_Quest_pressed"]
-[connection signal="pressed" from="HUD/Quest2" to="." method="subjectQuest"]
-[connection signal="pressed" from="HUD/Timed" to="." method="_on_Timed_pressed"]
 [connection signal="toggled" from="HUD/Labels" to="." method="_on_Labels_toggled"]
-[connection signal="pressed" from="HUD/Learn" to="." method="_on_Learn_toggled"]
+[connection signal="infobox_exit" from="HUD/Grid" to="." method="_on_infobox_exit"]
 [connection signal="off_track" from="HUD/Grid" to="." method="_off_track"]
 [connection signal="on_track" from="HUD/Grid" to="." method="_on_Grid_on_track"]
 [connection signal="quest_over" from="HUD/Grid" to="." method="_on_quest_over"]
@@ -227,4 +262,10 @@ scale = Vector2( 1.4, 1.4 )
 [connection signal="show_neighbours" from="HUD/Grid" to="." method="_on_Grid_show_neighbours"]
 [connection signal="subject_quests_ready" from="HUD/Grid" to="HUD/QMenu" method="_on_subject_quests_ready"]
 [connection signal="selected" from="HUD/QMenu" to="." method="quest_selected"]
+[connection signal="pressed" from="HUD/StartScreen/B/Explore" to="." method="_on_Explore_pressed"]
+[connection signal="pressed" from="HUD/StartScreen/B/Quiz" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="HUD/StartScreen/B/Timed" to="." method="_on_Timed_pressed"]
+[connection signal="pressed" from="HUD/StartScreen/B/Quest" to="." method="_on_Quest_pressed"]
+[connection signal="pressed" from="HUD/StartScreen/B/Quest2" to="." method="subjectQuest"]
+[connection signal="pressed" from="HUD/StartScreen/B/Learn" to="." method="_on_Learn_toggled"]
 [connection signal="timeout" from="QuizTimer" to="." method="_on_QuizTimer_timeout"]
