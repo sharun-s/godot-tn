@@ -50,10 +50,10 @@ expand_margin_bottom = 4.0
 size = 24
 font_data = ExtResource( 3 )
 
-[sub_resource type="StyleBoxFlat" id=9]
+[sub_resource type="StyleBoxFlat" id=8]
 bg_color = Color( 0.0352941, 0.341176, 0.921569, 1 )
 
-[sub_resource type="DynamicFont" id=8]
+[sub_resource type="DynamicFont" id=9]
 size = 80
 font_data = ExtResource( 2 )
 
@@ -162,8 +162,8 @@ margin_right = 700.0
 margin_bottom = 1900.0
 size_flags_horizontal = 3
 size_flags_vertical = 7
-custom_styles/normal = SubResource( 9 )
-custom_fonts/font = SubResource( 8 )
+custom_styles/normal = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 text = "Districts 
 Of
 Tamil Nadu"

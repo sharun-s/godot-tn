@@ -594,13 +594,8 @@ func reset():
 	disableui()
 	$HUD/Grid.hide()
 	#disappear()
-	#since the learn button is used to show years
-	#if game_num!=2:
-	#	$HUD/Learn.hide()
-	#else:
 	if game_in_progress==2:
 		borders(false)
-	#hide_compass()
 	if selected_district!='':
 		deselect()
 		$Label.text=''
@@ -785,6 +780,8 @@ func _on_Learn_toggled():
 			# using karur as proxy center
 			old=[{node=get_node('Karur'),loc=center('Karur')}] #d['Karur']}]
 			newlist=[]
+			$HUD/Score.visible=true
+			$HUD/Score.text=years[current_year]
 			$HUD/Timeline.bbcode_text='[color=yellow]'+years[current_year]+'[/color]'
 			var names=[]
 			for n in get_tree().get_nodes_in_group(years[current_year]):
@@ -811,6 +808,7 @@ func _on_Learn_toggled():
 					#else:
 					#	print('not freeing', tmpx.name)	
 				current_year=0
+				$HUD/Score.visible=false
 				get_tree().call_group('1956',"hide")
 				#$HUD/Learn.text='History'
 			borders(true)
@@ -825,6 +823,7 @@ func _on_Learn_toggled():
 		old=[{node=get_node(key+'history'), loc=center(name(get_node(key+'history')))}]#get_node(name(get_node(key+'history'))).position}]#get_node(name(key)).position}] #get_node(key).position}]
 		add_historic_districts(years[current_year], dhistory[current_year])
 #		$HUD/Message.text=$HUD/Message.text+'\n'+years[current_year]
+		$HUD/Score.text=years[current_year]
 		$HUD/Timeline.append_bbcode('\n[color=yellow]'+years[current_year]+'[/color]')
 		var names=[]
 		for n in get_tree().get_nodes_in_group(years[current_year]):
@@ -962,7 +961,7 @@ func _on_quest_over(turnstaken, cluessolved, success):
 
 func _off_track(dx):
 	$HUD/Score.visible=true
-	$HUD/Score.text="Wrong direction!!! Press CLUE for more hints"
+	$HUD/Score.text="Press CLUE if you need more hints"
 	$HUD/Score["custom_styles/normal"].border_color=Color.red
 	$HUD/Score["custom_colors/font_color"]=Color.red
 	get_node(dx).get_child(0).color=selected_color_wrong

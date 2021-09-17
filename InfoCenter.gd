@@ -20,6 +20,7 @@ var facts:={
 			'Manchester of South India due to extensive textile industry, fed by the surrounding cotton fields'
 		],
 		Cuddalore=[
+			'f:A large portion of Cashew Nut production of the state happens here in Panruti',
 			'c:Nataraja dance at thilai Natyanjali Dance Festival feb march on mahashivratri expand...',
 			'Pichawaram mangrove forests',
 			'Koodalur means confluence in Tamil. It is the place where the Pennaiyar, Kedilam, Paravanar and Uppanaar rivers join',
@@ -30,6 +31,7 @@ var facts:={
 			'c:Chidambaram temple',
 			'Pichawaram Mangrove forests'],
 		Dindigul=[
+			'f:Periyakottai Brinjal', 
 			"f:the famous Palani Panchamirtham banana, jaggery, cow ghee, honey and cardamom",
 			"Kodaikanal Malai Poondu (Hill Garlic) known for its medicinal properties and long shelf life has been given a GI Tag",
 			'Kodaikanal, in tamil translates to The Gift of the Forest, is very popular hillstation located here',
@@ -46,6 +48,7 @@ var facts:={
 			"Sathyamangalam Tiger Reserve 83 tigers and 111 Leopards"
 		],
 		Kanyakumari=[
+			'Indias largest wind power farm is located her at Muppandal. Its the 3rd largest in the world',
 			'the tiny village of Vadaserry famous for crafting Temple Jewellery with red and green stones or kuchu kal',
 			"f:Nanjilnadu cuisine Puttu, Appam, Idiappam, Seafood, Coconut oil based",
 			"Southern most district of TN and the Indian main land",
@@ -92,6 +95,7 @@ var facts:={
 			'Ancient Port town of Poombuhar where the Kaveri meets the sea ',
 			'Kaveri Pushkaram festival happens here every 12 yeara place where peacock dance'],	
 		Madurai=[
+			'p:M S Subbulakshmi, the first musician to receive the Bharat Ratna was born here',
 			'm:Thirumalai Nayakkar Palace built in 1636, blends North and South Indian architecture, site of famous movie songs Kannalanea(Bombay), Tere Bina(Guru), Ragasiya Kanavugal(Bheemaa)',
 			'Chithirai Festival',
 			"Thoonga Nagaram, meaning the city which never sleeps",
@@ -147,6 +151,7 @@ var facts:={
 			'h:Found here is the 2500 year old Keezhadi excavation site, including plates with the Tamil-Brahmi script'
 		],
 		Theni=[
+			'p:Ilaiyaraaja, the famous film composer, for more than a 1000 movies, was born here in Pannaipuram.',
 			'Cardamom estates',
 			'Indian Neutrino Observatory',
 			'The Meghamalai range also called the High Wavy Mountains',
@@ -157,8 +162,9 @@ var facts:={
 			'p:Birthplace of Saint Thyagaraja, the composer of Carnatic music'	
 		],
 		Thanjavur=[
-			'the famous painting style which uses gold foil, glass beads and gems over the painting done on wood. Locals call it palagai padam or wood picture', 
-			'and art plates of the region have received the GI Tag',
+			'p:M. S. Swaminathan, was born here in Kumbakonam, called the Father of the Green Revolution for increasing food production in the country',
+			'The famous painting style which uses gold foil, glass beads and gems over the painting done on wood. Locals call it palagai padam or wood picture', 
+			'Art plates of the region have received the GI Tag',
 			'Netti Workds',
 			'Bronze idols and statues made by the artisans of Swamimalai is a thousand year old craft',
 			"The Rice Bowl of Tamil Nadu",
@@ -205,6 +211,7 @@ var facts:={
 			'Surrounded by the Javadhu and Yelagiri Hills known for rivers, waterfalls and sandal wood trees'
 			],
 		Tiruchirapalli=[
+			'p:C V Raman was born here, the first Asian to win the Nobel Prize in Physics, to answer the question if a glass of water is transparent why is the sea blue?',
 			'p:Ramanuja and the Bhakti movement. His mummified body preserved in Ranganthaswamy temple srirangam',
 			'c:The Srirangam temple complex covers 156 acres making it the largest templex complex in the country. Famous for festivals conducted throughout the year', 
 			'Kallanai also known as the Grand Anicut across the Cauvery river is the oldest dam in the country that is still in use. Built nearly 2000 years ago.',
@@ -366,11 +373,11 @@ func reload(district, neighbours, hist='',mode=state.NON_QUEST,ftype=''):
 			targets.pop_front()
 			$VBoxContainer/NameBox.text="Solved:"+str(NumberOfTargets-targets.size())+'/'+str(NumberOfTargets)+" Turns:"+str(AttemptsAllowed-attempts)+'/'+str(AttemptsAllowed)
 			#print('targets left', targets)
-			_on_clue_pressed("Well done. You are on track!!!\n")
+			_on_clue_pressed("Well done. You are on track!!!\n\n")
 			emit_signal("on_track", district)
 		else:
-			$VBoxContainer/NameBox.text=district
-			show_fact(district)
+			$VBoxContainer/NameBox.text="Solved:"+str(NumberOfTargets-targets.size())+'/'+str(NumberOfTargets)+" Turns:"+str(AttemptsAllowed-attempts)+'/'+str(AttemptsAllowed)#district
+			show_fact(district, 'Oops! Wrong direction. You are in '+district+' known for ')
 			emit_signal("off_track",district)
 		if attempts==0 or targets.size()==0:
 			$VBoxContainer2/MarginContainer/clue.hide()
@@ -386,10 +393,10 @@ func reload(district, neighbours, hist='',mode=state.NON_QUEST,ftype=''):
 		$VBoxContainer/NameBox.text=district
 		show_fact(district)
 
-func show_fact(district):
+func show_fact(district, prefix=''):
 	if district in facts and facts[district].size() > 0:
 		var idx=rng.randi_range(0, facts[district].size()-1)
-		$VBoxContainer2/FactBox.text=strip_metadata(facts[district][idx])
+		$VBoxContainer2/FactBox.text=prefix+strip_metadata(facts[district][idx])
 	else:
 		#district or fact is missing from the db
 		$VBoxContainer2/FactBox.text=''
