@@ -441,13 +441,14 @@ func select(district):
 				#timed_msg('[pulse freq=5][color=#ffcc55]Not bad! \nYou scored '+str(score)+' / '+str(turns)+'[/color][/pulse]',2, 8, Color.orangered)
 				timed_msg('Not bad! \nYou scored '+str(score)+' / '+str(turns),2.5)
 			yield($Timer, "timeout")
+			$HUD/Labels.hide()
 			challenges_completed.clear()
 			game_over()
 	elif game_in_progress==2:
 		#history
 		pass
 	elif game_in_progress==3:
-		#main game treasure hunt
+		#quest
 		gotoDistrict()
 	else:
 		#get_tree().set_group("dlabels", "visible", false)
@@ -527,6 +528,7 @@ func _on_Button_pressed():
 	game_in_progress=1
 	$HUD/Score.text=str(score)
 	$HUD/Score.visible=true
+	$HUD/Labels.hide()
 	timed_msg("[pulse color=#22ff44 height=-10 freq=10]You have 10 turns\n Find the Districts![/pulse]",2)
 	yield($Timer,"timeout")
 	timedquiz=false
@@ -783,7 +785,7 @@ func _on_Learn_toggled():
 			old=[{node=get_node('Karur'),loc=center('Karur')}] #d['Karur']}]
 			newlist=[]
 			$HUD/Score.visible=true
-			$HUD/Score.text=years[current_year]
+			$HUD/Score.text=years[current_year].substr(0,4)
 			$HUD/Timeline.bbcode_text='[color=yellow]'+years[current_year]+'[/color]'
 			var names=[]
 			for n in get_tree().get_nodes_in_group(years[current_year]):
@@ -825,7 +827,7 @@ func _on_Learn_toggled():
 		old=[{node=get_node(key+'history'), loc=center(name(get_node(key+'history')))}]#get_node(name(get_node(key+'history'))).position}]#get_node(name(key)).position}] #get_node(key).position}]
 		add_historic_districts(years[current_year], dhistory[current_year])
 #		$HUD/Message.text=$HUD/Message.text+'\n'+years[current_year]
-		$HUD/Score.text=years[current_year]
+		$HUD/Score.text=years[current_year].substr(0,4)
 		$HUD/Timeline.append_bbcode('\n[color=yellow]'+years[current_year]+'[/color]')
 		var names=[]
 		for n in get_tree().get_nodes_in_group(years[current_year]):
@@ -909,7 +911,7 @@ func quest_selected(districts, quest_name=''):
 	$HUD/Grid/VBoxContainer2/MarginContainer/history.visible=false
 	$HUD/Grid/VBoxContainer2/MarginContainer/Back.visible=false
 	$HUD/Score.visible=true
-	$HUD/Score.text='Check the InfoBox for Instructions\n'
+	$HUD/Score.text='Check the InfoBox for Instructions'
 	game_in_progress=3
 	if general_quests.has(quest_name):
 		$HUD/Grid.reload(districts, '', '', 0)
@@ -919,6 +921,7 @@ func quest_selected(districts, quest_name=''):
 func _on_Timed_pressed():
 	reset()
 	game_in_progress=1
+	$HUD/Labels.hide()
 	$HUD/Score.text=str(score)
 	$HUD/Score.visible=true
 	timed_msg("[pulse color=#44dd22 height=-15 freq=5]You have 10 turns\n Find the Districts![/pulse]",2)

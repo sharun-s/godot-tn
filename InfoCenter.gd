@@ -15,6 +15,7 @@ var facts:={
 			"Named after the Sengazhuneer poo (Red White Lily) that grows in abundance along the river banks",
 			"h:Mahaballipuram site of some of the earliest Rock Temples and Stone Sculpture that influenced the style of Temple Architecture throughout South India"],
 		Coimbatore=[
+			'f:Kalakki meaning to mix is popular street food here (super soft omelet with masala)',
 			'Wet Grinder used for idli/dosa was invented here. More than 800 factories manufacture it and the area has received the GI Tag from Govt of India',
 			'Eastern end of the Palakkad Gap, the lowest pass through the Western Ghats linking Kerala and Tamil Nadu. Also called Kovai',
 			'Manchester of South India due to extensive textile industry, fed by the surrounding cotton fields'
@@ -100,7 +101,10 @@ var facts:={
 			'Chithirai Festival',
 			"Thoonga Nagaram, meaning the city which never sleeps",
 			'the beautiful Sungudi sarees. Gujarati weavers, moved here 500 years ago, seeing the local women tying their hair in buns created the now famous tye and die pattern of these sarees',
-			'f:jigarthanda, muttaiparotta (minced parotta and scrambled egg), paruthipal (made of cottonseeds), Karidosai (dosai with mutton) & ennaidosai',
+			'f:bun parotta and kulambu, muttaiparotta (minced parotta and scrambled egg)',
+			'f:jigarthanda a drink made with almond gum and the syrup of the sarsaparilla plant',
+			'f:paruthipal (made of cottonseeds and jaggery), thengai pal (a warm sweetened coconut milk drink)', 
+			'f:keerai vada (a unique, thin fritter made with a medicinal plant called mullu murungai)',
 			'c:The Meenakshi Amman Temple is one of the largest temple complexes in the state with 14 Gopurams (Gateway Towers), 33000 scupltures, a thousand pillared hall, tank legend, parrots...',
 			'Many areas well known for conducting the Jallikattu (bull taming) ceremony during the Pongal (harvest festival) season',
 			'Jasmine (Madurai Malli)'
@@ -145,7 +149,11 @@ var facts:={
 			"In 1964 a cyclone hit Pamban Island with 25 ft waves washing away the town of Danushkodi. Today the remain of the ghost town are a tourist attraction."
 		],
 		Salem=[
-			'Fabric from here has received the GI tag',
+			'Silver anklets or kolasu make up 60% of silver ornaments sold in India',
+			'Silk Saree weavers of Panjukalipatti',
+			'f:Essence Dosa',
+			'f:Thattu vadai settu is very common snack found here - thattai smeared with chutney topped with shredded beetroot, carrot and onion',
+			'Silk, or Venpattu, from here has received the GI tag',
 			'Steal industry',
 			'Mettur Dam, on the Cauvery river is the largest dam in the state', 
 			'Shevaroy Hills - yercaud - orchidarium - old coffee plantations highest peak of the southern eastern ghats in TN - lots of species of snake, lizard, frogs and birds not found anywhere else'],
@@ -222,6 +230,7 @@ var facts:={
 			'Surrounded by the Javadhu and Yelagiri Hills known for rivers, waterfalls and sandal wood trees'
 			],
 		Tiruchirapalli=[
+			'f:The famous Imam Pasand Mangos of Thathachariar Gardens in Srirangam',
 			'p:C V Raman was born here, the first Asian to win the Nobel Prize in Physics, to answer the question if a glass of water is transparent why is the sea blue?',
 			'p:Ramanuja and the Bhakti movement. His mummified body preserved in Ranganthaswamy temple srirangam',
 			'c:The Srirangam temple complex covers 156 acres making it the largest templex complex in the country. Famous for festivals conducted throughout the year', 
@@ -241,7 +250,7 @@ var facts:={
 			'f:Srivilliputtur Palkova, a sweet made from cow milk and sugar',
 			"p:Birth place of K. Kamaraj TN CM from 54-63, and Indian National Congress President after Jawaharlal Nehru's death. He made education free for the poor having had to drop out of school at age 11 to support his family",
 			'Sivakasi Fireworks',
-			'c:The 192 ft Gopuram of the Srivilliputhur Temple built here, dedicated to Andal the only female among the poet saints of south india, is the symbol of the Tamil Nadu Govt'
+			'c:The 192 ft Gopuram of the Srivilliputhur Temple built here, dedicated to Andal the only woman among the poet saints of south india, is the symbol of the Tamil Nadu Govt'
 		],
 		Vellore=[
 			"Top exporter of finished Leather goods in the country accounting for 37% of Indian leather exports",
