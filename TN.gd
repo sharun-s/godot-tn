@@ -243,6 +243,8 @@ func _ready():
 	t.origin=Vector2((get_viewport_rect().size.x-200)/2,0)
 	transform=t
 	scale=Vector2(get_viewport_rect().size.y/2000, get_viewport_rect().size.y/2000)
+	print(scale)
+	print(t.origin)
 	$Label.rect_scale=Vector2(1/scale.x, 1/scale.y)
 
 var dhistory=[{

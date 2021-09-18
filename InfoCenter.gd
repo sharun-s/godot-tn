@@ -35,7 +35,7 @@ var facts:={
 			"f:the famous Palani Panchamirtham banana, jaggery, cow ghee, honey and cardamom",
 			"Kodaikanal Malai Poondu (Hill Garlic) known for its medicinal properties and long shelf life has been given a GI Tag",
 			'Kodaikanal, in tamil translates to The Gift of the Forest, is very popular hillstation located here',
-			'Palani Hills where the famous Liril commercial was shot'],
+			'Palani Hills part of Western Ghats lies within this district. Its where the famous Liril commercial was shot'],
 		Dharmapuri=[
 			"m:Hogenakkal falls shot to fame after Chinna Chinna Asai (Roja), Mazhaiye Mazhaiye(Rhythm) and Raath Ka Nasha Abhi (Asoka) were shot here",
 			"Hogenakkal falls, which means smokey rocks, is where the river Cauvery enters Tamil Nadu",
@@ -76,7 +76,7 @@ var facts:={
 			'The Kalvarayan Hills are pristine unexplored area with the Vellimalai hilltop becoming a popular tourist spot for locals during the monsoon season.',
 			'The famous Koovagam festival held by the transgender community reenacts Krishna transforming into Mohini to marry a Prince Aravan'],
 		Karur=[
-			"h:Capital of the Chera Kings", 
+			"h:Capital of the Chera Kings who ruled Western Tamil Nadu/Central Kerala at various times from the 1st to 12th Century", 
 			"h:A ancient trade post with the Romans who called it Karoura. They traded gold for rice. So the word rice comes from the Tamil araci", 
 			"TN Newsprint and Papers Ltd TNPL located here is the largest sugarcane based paper mill in the world"
 		],
@@ -112,6 +112,11 @@ var facts:={
 			'Danish Fort at Tarangabadi' 
 		],
 		Nilgiris=[
+			'the famous 170 year old Botanical Garden on the lower slopes of the Doddabetta peak',
+			'Vegetable, Fruit and Spice Festival at Coonoor, Kotagiri and Gudalor are very popular',
+			'Summer Festival at Ooty every May is a huge tourist attraction includes the famous Flower Show (3000 rose varieties), Boat Races and a Dog Show',
+			'Half the HydroElectric power of the state is generated here at Pykara, Kundah, Moyar',
+			'Pykara Dam is one of the oldest Hydraulic Power Plants in South India',
 			'Mountain railway here is a World Heritage site for its ingenious engineering through a rugged, mountainous terrain',
 			'Doddabetta Peak the highest point in TN at 2600m is located here',
 			'Home of the native hill Toda and Badaga tribes',
@@ -119,6 +124,9 @@ var facts:={
 			'Coffee, tea, rubber, eucalyptus plantations',
 			'Mudumalai Tiger Reserve is the largest in TN with 160 using the corridor and 103 resident ' ],
 		Namakkal=[
+			'p:The R in R K Narayan and R K Laxman refers to the town of Rasipuram located here',
+			'f:The famous nutty flavoured Ghee made in Rasipuram, from cattle raised in the Kolli Hills used in nei dosa and mysore pak',
+			'With the fall of the Cholas in the 12th Century, for a breif period Sendamangalam located here became the capital of the Kadava kings',
 			'Cauvery flows thro, Tiruchengode...',
 			'Known for its Poutry Farms and  Lorry body building industry', 
 			'Its name derives from Namagiri, the name of the single 65m high rock formation at the center of the Namakkal town. A Fort covering one and half acres was built on top of the rock in the 17th century'],
@@ -151,6 +159,8 @@ var facts:={
 			'h:Found here is the 2500 year old Keezhadi excavation site, including plates with the Tamil-Brahmi script'
 		],
 		Theni=[
+			'Cumbum is famous for the bullock cart (rekhla) racing. Races are held here every year during the Muthalamman temple festival',
+			'The fertile Cumbum valley between the Thekkadi Hills and Kodaikanal Hills is the only region in the country where Grapes can be produced year round',
 			'p:Ilaiyaraaja, the famous film composer, for more than a 1000 movies, was born here in Pannaipuram.',
 			'Cardamom estates',
 			'Indian Neutrino Observatory',
@@ -195,6 +205,7 @@ var facts:={
 			'c:Tiruttani Murgan temple - Aadi Krittikai - kavadis',
 			'Very industrialized district manufacturing everything from cycles, tanks to trains'],
 		Thoothukudi=[
+			"h:Korkai located here, was ancient pearl port and capital of the Pandya Kings before they moved to Madurai",
 			"f:the famous Kovilpatti Kadalai Mittai a groundnut and jaggery candy",
 			"ISRO is building its new space port here at Kulasekharapatnam ",
 			"Known in the past as the Pearl Fishery Coast", 
@@ -233,7 +244,7 @@ var facts:={
 			'c:The 192 ft Gopuram of the Srivilliputhur Temple built here, dedicated to Andal the only female among the poet saints of south india, is the symbol of the Tamil Nadu Govt'
 		],
 		Vellore=[
-			"Top exporter of finished Leather goods in the country",
+			"Top exporter of finished Leather goods in the country accounting for 37% of Indian leather exports",
 			"h:500 year old Vellore Fort is a popular tourist attraction. Was location of the 1806 Sepoy Mutiny against the British"
 		]
 	}
@@ -295,10 +306,11 @@ var dummyimg=[
 var filterfacts={}
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	if OS.get_name()=='Android':
-		$VBoxContainer2/FactBox.set("custom_fonts/font/size",24)
+	#if OS.get_name()=='Android':
+	#	$VBoxContainer2/FactBox.set("custom_fonts/font/size",24)
 	var fact_stats={tot=0}
 	for i in facts:
+		print(i, ' ', len(facts[i]) )
 		for f in facts[i]:
 			fact_stats['tot']+=1
 			if f[1]==':':
