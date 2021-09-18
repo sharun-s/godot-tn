@@ -370,7 +370,7 @@ func reload(district, neighbours, hist='',mode=state.NON_QUEST,ftype=''):
 				facts=filterfacts[ftype]
 				generic_quest=false
 		else:
-			# non milti quest ie intiated from Quest button rather than levelup
+			# non multi quest ie intiated from Quest button rather than levelup
 			while targets.size() != NumberOfTargets:
 				var idx=rng.randi_range(0, facts.size()-1)
 				if (facts.keys()[idx] in targets) == false:
@@ -407,7 +407,8 @@ func reload(district, neighbours, hist='',mode=state.NON_QUEST,ftype=''):
 
 func show_fact(district, prefix=''):
 	if district in facts and facts[district].size() > 0:
-		var idx=rng.randi_range(0, facts[district].size()-1)
+		#var idx=rng.randi_range(0, facts[district].size()-1)
+		var idx=cycleclues(district)
 		$VBoxContainer2/FactBox.text=prefix+strip_metadata(facts[district][idx])
 	else:
 		#district or fact is missing from the db
@@ -447,8 +448,10 @@ var cluecache={}
 func cycleclues(f):
 	if f in cluecache:
 		cluecache[f]+=1 
-		return cluecache[f] % facts[targets[0]].size()
+		return cluecache[f] % facts[f].size()
 	else:
+		randomize()
+		facts[f].shuffle()		
 		cluecache[f]=0
 		return 0
 

@@ -26,6 +26,7 @@ boot_splash/image="res://tn-icon-centered.png"
 boot_splash/fullsize=false
 boot_splash/bg_color=Color( 0, 0.121569, 0.247059, 1 )
 config/icon="res://tn-icon-centered.png"
+config/windows_native_icon="res://icon.ico"
 
 [debug]
 
