@@ -49,6 +49,7 @@ var facts:={
 			"Sathyamangalam Tiger Reserve 83 tigers and 111 Leopards"
 		],
 		Kanyakumari=[
+			'On the UN Human Development Index this district comes first within the state',
 			'Indias largest wind power farm is located her at Muppandal. Its the 3rd largest in the world',
 			'the tiny village of Vadaserry famous for crafting Temple Jewellery with red and green stones or kuchu kal',
 			"f:Nanjilnadu cuisine Puttu, Appam, Idiappam, Seafood, Coconut oil based",
@@ -128,6 +129,7 @@ var facts:={
 			'Coffee, tea, rubber, eucalyptus plantations',
 			'Mudumalai Tiger Reserve is the largest in TN with 160 using the corridor and 103 resident ' ],
 		Namakkal=[
+			'p:Chairman of the Tata Group, N Chandrasekaran was born here',
 			'p:The R in R K Narayan and R K Laxman refers to the town of Rasipuram located here',
 			'f:The famous nutty flavoured Ghee made in Rasipuram, from cattle raised in the Kolli Hills used in nei dosa and mysore pak',
 			'With the fall of the Cholas in the 12th Century, for a breif period Sendamangalam located here became the capital of the Kadava kings',
@@ -213,6 +215,7 @@ var facts:={
 			'c:Tiruttani Murgan temple - Aadi Krittikai - kavadis',
 			'Very industrialized district manufacturing everything from cycles, tanks to trains'],
 		Thoothukudi=[
+			'p:Shiv Nadar, Founder of the IT Giant HCL Technologies was born here',
 			"h:Korkai located here, was ancient pearl port and capital of the Pandya Kings before they moved to Madurai",
 			"f:the famous Kovilpatti Kadalai Mittai a groundnut and jaggery candy",
 			"ISRO is building its new space port here at Kulasekharapatnam ",
@@ -250,6 +253,7 @@ var facts:={
 			'f:Srivilliputtur Palkova, a sweet made from cow milk and sugar',
 			"p:Birth place of K. Kamaraj TN CM from 54-63, and Indian National Congress President after Jawaharlal Nehru's death. He made education free for the poor having had to drop out of school at age 11 to support his family",
 			'Sivakasi Fireworks',
+			'p:R G Chandramogan, founder of Arun IceCream and Hatsun Group, one of the largest private diary groups in the country',
 			'c:The 192 ft Gopuram of the Srivilliputhur Temple built here, dedicated to Andal the only woman among the poet saints of south india, is the symbol of the Tamil Nadu Govt'
 		],
 		Vellore=[
@@ -286,6 +290,8 @@ func panther():
 
 var dummyimg=[
 	#panther(),
+	preload("res://madurai.png"),
+	preload("res://thristi.png"),	
 	preload("res://panther_3.png"),
 	preload("res://nat.png"),
 	preload("res://elephant.png"),
