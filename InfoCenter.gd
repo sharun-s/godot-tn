@@ -300,7 +300,7 @@ var dummyimg=[
 	preload("res://dance.png"),
 	preload("res://kolam.png"),
 	preload("res://dugong.png"),
-	#preload("res://paddy.png"),
+	preload("res://paddy.jpg"),
 	#preload("res://temple.png"),
 	#preload("res://handloom.png"),
 	preload("res://kaveri.png"),
@@ -318,12 +318,30 @@ var dummyimg=[
 	preload("res://lights.png")
 	]
 
+func preload_from_pics_dir():
+	var path = "res://pics"
+	var dir = Directory.new()
+	dir.open(path)
+	dir.list_dir_begin()
+	while true:
+		var file_name = dir.get_next()
+		if file_name == "":
+			#break the while loop when get_next() returns ""
+			break
+		elif !file_name.begins_with(".") and !file_name.ends_with(".import"):
+			#if !file_name.ends_with(".import"):
+			print('myloader ',path + "/" + file_name)
+			var img=load(path + "/" + file_name)
+			dummyimg.append(img)
+	dir.list_dir_end()
+
 var filterfacts={}
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#if OS.get_name()=='Android':
 	#	$VBoxContainer2/FactBox.set("custom_fonts/font/size",24)
 	var fact_stats={tot=0}
+	preload_from_pics_dir()
 	for i in facts:
 		print(i, ' ', len(facts[i]) )
 		for f in facts[i]:
@@ -396,6 +414,8 @@ func reload(district, neighbours, hist='',mode=state.NON_QUEST,ftype=''):
 		_on_clue_pressed()
 	elif mode==state.IN_QUEST:
 		attempts=attempts-1
+		if targets.size() == 0: #handles case where user might cause a reload after quest is complete
+			return
 		if targets[0] == district:
 			targets.pop_front()
 			$VBoxContainer/NameBox.text="Solved:"+str(NumberOfTargets-targets.size())+'/'+str(NumberOfTargets)+" Turns:"+str(AttemptsAllowed-attempts)+'/'+str(AttemptsAllowed)
