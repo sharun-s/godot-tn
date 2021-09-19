@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://DroidSans.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://InfoCenter.gd" type="Script" id=3]
@@ -72,6 +72,10 @@ font_data = ExtResource( 2 )
 [sub_resource type="StyleBoxFlat" id=8]
 bg_color = Color( 0, 0, 0, 1 )
 
+[sub_resource type="DynamicFont" id=9]
+size = 30
+font_data = ExtResource( 2 )
+
 [node name="Grid" type="GridContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -134,7 +138,7 @@ custom_constants/separation = 0
 
 [node name="FactBox" type="Label" parent="VBoxContainer2"]
 margin_right = 1400.0
-margin_bottom = 824.0
+margin_bottom = 782.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/normal = SubResource( 4 )
@@ -143,7 +147,7 @@ text = "Welcome! This district is known for"
 autowrap = true
 
 [node name="MarginContainer" type="VBoxContainer" parent="VBoxContainer2"]
-margin_top = 824.0
+margin_top = 782.0
 margin_right = 1400.0
 margin_bottom = 950.0
 custom_constants/separation = 0
@@ -189,8 +193,58 @@ size_flags_vertical = 3
 custom_fonts/font = SubResource( 7 )
 text = "Main Menu"
 
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer2/MarginContainer"]
+margin_top = 126.0
+margin_right = 1400.0
+margin_bottom = 168.0
+custom_constants/separation = 0
+
+[node name="Muni" type="Button" parent="VBoxContainer2/MarginContainer/HBoxContainer"]
+margin_right = 280.0
+margin_bottom = 42.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 9 )
+text = "Cities"
+
+[node name="Selection" type="Button" parent="VBoxContainer2/MarginContainer/HBoxContainer"]
+margin_left = 280.0
+margin_right = 560.0
+margin_bottom = 42.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 9 )
+text = "L1"
+
+[node name="Special" type="Button" parent="VBoxContainer2/MarginContainer/HBoxContainer"]
+margin_left = 560.0
+margin_right = 840.0
+margin_bottom = 42.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 9 )
+text = "L2"
+
+[node name="First" type="Button" parent="VBoxContainer2/MarginContainer/HBoxContainer"]
+margin_left = 840.0
+margin_right = 1120.0
+margin_bottom = 42.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 9 )
+text = "L3"
+
+[node name="Second" type="Button" parent="VBoxContainer2/MarginContainer/HBoxContainer"]
+margin_left = 1120.0
+margin_right = 1400.0
+margin_bottom = 42.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 9 )
+text = "L4"
+
 [connection signal="pressed" from="VBoxContainer2/MarginContainer/Neighbours" to="." method="_on_Neighbours_pressed"]
 [connection signal="toggled" from="VBoxContainer2/MarginContainer/Neighbours" to="." method="_on_Neighbours_toggled"]
 [connection signal="pressed" from="VBoxContainer2/MarginContainer/history" to="." method="_on_history_pressed"]
 [connection signal="pressed" from="VBoxContainer2/MarginContainer/clue" to="." method="_on_clue_pressed"]
 [connection signal="pressed" from="VBoxContainer2/MarginContainer/Back" to="." method="_on_Back_pressed"]
+[connection signal="pressed" from="VBoxContainer2/MarginContainer/HBoxContainer/Muni" to="." method="_on_muni1_pressed"]
+[connection signal="pressed" from="VBoxContainer2/MarginContainer/HBoxContainer/Selection" to="." method="_on_muni2_pressed"]
+[connection signal="pressed" from="VBoxContainer2/MarginContainer/HBoxContainer/Special" to="." method="_on_muni3_pressed"]
+[connection signal="pressed" from="VBoxContainer2/MarginContainer/HBoxContainer/First" to="." method="_on_muni4_pressed"]
+[connection signal="pressed" from="VBoxContainer2/MarginContainer/HBoxContainer/Second" to="." method="_on_muni5_pressed"]

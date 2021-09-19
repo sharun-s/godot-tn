@@ -174,7 +174,7 @@ func latlngToScreenXY(lat, lng):
 
 var df
 func init_label_font():
-	var f=load("res://Montreal-Regular.ttf")
+	var f=load("res://DroidSans.ttf")
 	df=DynamicFont.new()
 	df.font_data=f
 	df.size=36
@@ -182,10 +182,25 @@ func init_label_font():
 func _ready():
 	init_label_font()
 
+var mtype=''
+var district=''
+
 func _draw():			
 	for i in munis:
 		#print(i.name, ' ', i.x,' ', i.y)
-		if i.kind=='Muni Corporation':
+		if i.kind==mtype and i.d == district:
 			var p=latlngToScreenXY(i.x, i.y)
 			draw_string(df, p+Vector2(15, 0), i.name, Color.red)		
 			draw_circle(p, 10, Color.green)
+
+
+func _on_InfoBox_muni_pressed(d, munitype):
+	if d !='' and munitype!='':
+		show()
+		mtype=munitype
+		district=d
+		update()
+	else:
+		mtype=''
+		district=''
+		hide()	

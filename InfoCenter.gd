@@ -516,4 +516,24 @@ func _on_Neighbours_toggled(button_pressed):
 		$VBoxContainer2/MarginContainer/Neighbours.pressed=false
 		return
 	emit_signal('show_neighbours', button_pressed)
-	
+
+signal show_munis
+func _on_muni1_pressed():
+	if $VBoxContainer/NameBox.text in facts.keys():
+		emit_signal('show_munis',$VBoxContainer/NameBox.text, 'Muni Corporation')
+
+func _on_muni2_pressed():
+	if $VBoxContainer/NameBox.text in facts.keys():
+		emit_signal('show_munis',$VBoxContainer/NameBox.text, 'Municipality Selection grade')
+
+func _on_muni3_pressed():
+	if $VBoxContainer/NameBox.text in facts.keys():
+		emit_signal('show_munis',$VBoxContainer/NameBox.text, 'Municipality Special grade')
+
+func _on_muni4_pressed():
+	if $VBoxContainer/NameBox.text in facts.keys():
+		emit_signal('show_munis',$VBoxContainer/NameBox.text, 'Municipality First grade')
+
+func _on_muni5_pressed():
+	if $VBoxContainer/NameBox.text in facts.keys():
+		emit_signal('show_munis',$VBoxContainer/NameBox.text, 'Municipality Second grade')

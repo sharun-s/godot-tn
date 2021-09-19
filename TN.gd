@@ -678,7 +678,7 @@ func fullwalktest():
 
 var df
 func init_label_font():
-	var f=load("res://Xolonium-Regular.ttf")
+	var f=load("res://DroidSans.ttf")
 	df=DynamicFont.new()
 	df.font_data=f
 	df.size=36
