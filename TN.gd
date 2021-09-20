@@ -208,7 +208,8 @@ func addstatepoly(b, nm='x'):
 	borderpoly.z_index=-1
 	#borderpoly.name=nm
 	add_child(borderpoly)
-	
+
+var citygrades=['','Muni Corporation','Municipality Selection grade','Municipality Special grade','Municipality First grade','Municipality Second grade']
 func _ready():
 	init_label_font()
 	var master_sound = AudioServer.get_bus_index("Master")
@@ -217,6 +218,8 @@ func _ready():
 	shore.shader=load("res://shore1.shader")
 	rng.randomize()
 	add_child(tw)
+	for i in citygrades:
+		$HUD/LabelCities.add_item(i)
 	VisualServer.set_default_clear_color('001f3f')#Color("ff222222"))
 	for district in d.keys():
 		var a2d=Area2D.new()
@@ -941,6 +944,17 @@ func showinfo(district):
 	else:
 		# non quest just show info without clue
 		$HUD/Score.visible=false
+		var cnt=0
+		#ignore first element of citygrades which is empty for optionbutton default state
+		for g in range(1,len(citygrades)):
+			var btn=$HUD/Grid/VBoxContainer2/MarginContainer/Cities.get_child(g-1)
+			if citygrades[g] in $Munis.stats[district].keys():		
+				btn.show()
+				#btn.text= citygrades[g] + ' (' +str($Munis.stats[district][citygrades[g]]) +')'
+				btn.text= 'g'+str(g) +' (' +str($Munis.stats[district][citygrades[g]]) +')'
+			else:
+				btn.hide()
+			cnt=cnt+1			
 		$HUD/Grid.reload(district, neighbours(district), get_history(district), 2) 
 
 func _on_quest_over(turnstaken, cluessolved, success):
@@ -1012,3 +1026,7 @@ func _on_Explore_pressed():
 
 func _on_infobox_exit():
 	game_over()
+
+
+func _on_LabelCities_item_selected(index):
+	$Munis._on_InfoBox_muni_pressed('all', citygrades[index])

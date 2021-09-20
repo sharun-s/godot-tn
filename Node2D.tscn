@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://TN.gd" type="Script" id=1]
 [ext_resource path="res://Montreal-Regular.ttf" type="DynamicFontData" id=2]
@@ -25,6 +25,10 @@ font_data = ExtResource( 3 )
 
 [sub_resource type="DynamicFont" id=5]
 size = 30
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=10]
+size = 26
 font_data = ExtResource( 3 )
 
 [sub_resource type="StyleBoxFlat" id=6]
@@ -108,6 +112,18 @@ margin_bottom = 55.0
 custom_fonts/font = SubResource( 5 )
 toggle_mode = true
 text = "Labels"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelCities" type="OptionButton" parent="HUD"]
+anchor_left = 1.0
+anchor_top = 0.1
+anchor_right = 1.0
+anchor_bottom = 0.1
+margin_left = -194.65
+size_flags_vertical = 0
+custom_fonts/font = SubResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -262,11 +278,12 @@ script = ExtResource( 8 )
 
 [connection signal="ready" from="." to="." method="_on_TN_ready"]
 [connection signal="toggled" from="HUD/Labels" to="." method="_on_Labels_toggled"]
+[connection signal="item_selected" from="HUD/LabelCities" to="." method="_on_LabelCities_item_selected"]
 [connection signal="infobox_exit" from="HUD/Grid" to="." method="_on_infobox_exit"]
 [connection signal="off_track" from="HUD/Grid" to="." method="_off_track"]
 [connection signal="on_track" from="HUD/Grid" to="." method="_on_Grid_on_track"]
-[connection signal="quest_over" from="HUD/Grid" to="HUD/QMenu" method="_quest_over"]
 [connection signal="quest_over" from="HUD/Grid" to="." method="_on_quest_over"]
+[connection signal="quest_over" from="HUD/Grid" to="HUD/QMenu" method="_quest_over"]
 [connection signal="show_munis" from="HUD/Grid" to="Munis" method="_on_InfoBox_muni_pressed"]
 [connection signal="show_neighbours" from="HUD/Grid" to="." method="_on_Grid_show_neighbours"]
 [connection signal="subject_quests_ready" from="HUD/Grid" to="HUD/QMenu" method="_on_subject_quests_ready"]

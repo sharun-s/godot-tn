@@ -328,7 +328,7 @@ func preload_from_pics_dir():
 			break
 		elif !file_name.begins_with(".") and !file_name.ends_with(".import"):
 			#if !file_name.ends_with(".import"):
-			print('myloader ',path + "/" + file_name)
+			#print('myloader ',path + "/" + file_name)
 			var img=load(path + "/" + file_name)
 			dummyimg.append(img)
 	dir.list_dir_end()

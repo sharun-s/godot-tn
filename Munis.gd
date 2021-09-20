@@ -5,21 +5,21 @@ var munis=[{name="Alandur",x=13.003,y=80.204,kind="Municipality Selection grade"
 {name="Ambur",x=12.78,y=78.7,kind="Municipality Selection grade",d="Vellore"},
 {name="Anakaputhur",x=12.9828,y=80.1264,kind="Municipality Second grade",d="Chennai"},
 {name="Arakkonam",x=13.07777778,y=79.66666667,kind="Municipality First grade",d="Vellore"},
-{name="Arani",x=12.67,y=79.28,kind="Municipality First grade",d="Tiruvallur"},
-{name="Aranthangi",x=10.1631,y=78.9962,kind="Municipality First grade",d="Pudukkottai"},
+{name="Arani",x=12.67,y=79.28,kind="Municipality First grade",d="Tiruvannamalai"},
+{name="Aranthangi",x=10.1631,y=78.9962,kind="Municipality First grade",d="Pudukotai"},
 {name="Arcot",x=12.99,y=79.314,kind="Municipality First grade",d="Vellore"},
 {name="Ariyalur",x=11.13722222,y=79.07777778,kind="Municipality Second grade",d="Ariyalur"},
 {name="Aruppukkottai",x=9.51,y=78.1,kind="Municipality First grade",d="Virudhunagar"},
 {name="Attur",x=11.599341,y=78.597752,kind="Municipality Selection grade",d="Salem"},
-{name="Avadi",x=13.12,y=80.1,kind="Municipality Special grade",d="Thiruvallur"},
+{name="Avadi",x=13.12,y=80.1,kind="Municipality Special grade",d="Tiruvallur"},
 {name="Bhavani",x=11.45,y=77.68,kind="Municipality Second grade",d="Erode"},
 {name="Bodinayakanur",x=10.02,y=77.35,kind="Municipality First grade",d="Theni"},
-{name="Chengalpattu",x=12.68333333,y=79.98333333,kind="Municipality First grade",d="Kancheepuram"},
+{name="Chengalpattu",x=12.68333333,y=79.98333333,kind="Municipality First grade",d="Chengalpattu"},
 {name="Chennai",x=13.08333333,y=80.26666667,kind="Muni Corporation",d="Chennai"},
 {name="Chidambaram",x=11.4,y=79.7,kind="Municipality Selection grade",d="Cuddalore"},
 {name="Chinnamanur",x=9.83,y=77.38,kind="Municipality Second grade",d="Theni"},
 {name="Coimbatore",x=11.01833333,y=76.9725,kind="Muni Corporation",d="Coimbatore"},
-{name="Colachel",x=8.17,y=77.24,kind="Municipality First grade",d="Kanniyakumari"},
+{name="Colachel",x=8.17,y=77.24,kind="Municipality First grade",d="Kanyakumari"},
 {name="Coonoor",x=11.35,y=76.82,kind="Municipality Selection grade",d="Nilgiris"},
 {name="Cuddalore",x=11.75,y=79.75,kind="Municipality Special grade",d="Cuddalore"},
 {name="Cumbum",x=9.73,y=77.3,kind="Municipality First grade",d="Theni"},
@@ -37,8 +37,8 @@ var munis=[{name="Alandur",x=13.003,y=80.204,kind="Municipality Selection grade"
 {name="Jayankondam",x=11.212,y=79.365,kind="Municipality Second grade",d="Ariyalur"},
 {name="Jolarpettai",x=12.56,y=78.58,kind="Municipality Second grade",d="Vellore"},
 {name="Kadayanallur",x=9.08,y=77.35,kind="Municipality First grade",d="Tirunelveli"},
-{name="Kallakurichi",x=11.738,y=78.962,kind="Municipality First grade",d="Viluppuram"},
-{name="Kancheepuram",x=12.82,y=79.71,kind="Municipality Special grade",d="Kancheepuram"},
+{name="Kallakurichi",x=11.738,y=78.962,kind="Municipality First grade",d="Kallakurichi"},
+{name="Kanchipuram",x=12.82,y=79.71,kind="Municipality Special grade",d="Kanchipuram"},
 {name="Kangeyam",x=11.0054,y=77.562,kind="Municipality Second grade",d="Tiruppur"},
 {name="Karaikudi",x=10.07,y=78.78,kind="Municipality Special grade",d="Sivagangai"},
 {name="Karur",x=10.95,y=78.08,kind="Municipality Special grade",d="Karur"},
@@ -51,44 +51,44 @@ var munis=[{name="Alandur",x=13.003,y=80.204,kind="Municipality Selection grade"
 {name="Krishnagiri",x=12.53,y=78.23,kind="Municipality First grade",d="Krishnagiri"},
 {name="Kulithalai",x=10.56,y=78.25,kind="Municipality Second grade",d="Karur"},
 {name="Kumbakonam",x=10.97,y=79.42,kind="Municipality Special grade",d="Thanjavur"},
-{name="Kuzhithurai",x=8.31666667,y=77.18333333,kind="Municipality Second grade",d="Kanniyakumari"},
+{name="Kuzhithurai",x=8.31666667,y=77.18333333,kind="Municipality Second grade",d="Kanyakumari"},
 {name="Madurai",x=9.9,y=78.1,kind="Muni Corporation",d="Madurai"},
-{name="Maduranthakam",x=12.5101,y=79.8849,kind="Municipality Second grade",d="Kancheepuram"},
+{name="Maduranthakam",x=12.5101,y=79.8849,kind="Municipality Second grade",d="Kanchipuram"},
 {name="Manapparai",x=10.60759,y=78.414874,kind="Municipality First grade",d="Tiruchirappalli"},
 {name="Mannargudi",x=10.663,y=79.445,kind="Municipality Selection grade",d="Tiruvarur"},
-{name="Maraimalainagar",x=12.785185,y=80.025601,kind="Municipality Special grade",d="Kancheepuram"},
-{name="Mayiladuthurai",x=11.1,y=79.65,kind="Municipality Selection grade",d="Nagapattinam"},
+{name="Maraimalainagar",x=12.785185,y=80.025601,kind="Municipality Special grade",d="Kanchipuram"},
+{name="Mayiladithurai",x=11.1,y=79.65,kind="Municipality Selection grade",d="Mayiladithurai"},
 {name="Melur",x=10.05,y=78.33,kind="Municipality Second grade",d="Madurai"},
 {name="Melvisharam",x=12.9333,y=79.2833,kind="Municipality Second grade",d="Vellore"},
 {name="Mettupalayam",x=11.3,y=76.95,kind="Municipality Selection grade",d="Coimbatore"},
 {name="Mettur",x=11.8,y=77.8,kind="Municipality Selection grade",d="Salem"},
 {name="Nagapattinam",x=10.77,y=79.83,kind="Municipality Selection grade",d="Nagapattinam"},
-{name="Nagercoil",x=8.17,y=77.43,kind="Municipality Special grade",d="Kanniyakumari"},
+{name="Nagercoil",x=8.17,y=77.43,kind="Municipality Special grade",d="Kanyakumari"},
 {name="Namakkal",x=11.23333333,y=78.16666667,kind="Municipality Selection grade",d="Namakkal"},
 {name="Nellikuppam",x=11.7667,y=79.6833,kind="Municipality Second grade",d="Cuddalore"},
 {name="Nelliyalam",x=11.49722222,y=76.37583333,kind="Municipality Second grade",d="Nilgiris"},
 {name="Oddanchatram",x=10.48,y=77.75,kind="Municipality Second grade",d="Dindigul"},
-{name="Padmanabhapuram",x=8.23,y=77.33,kind="Municipality Second grade",d="Kanniyakumari"},
+{name="Padmanabhapuram",x=8.23,y=77.33,kind="Municipality Second grade",d="Kanyakumari"},
 {name="Palani",x=10.45,y=77.52,kind="Municipality Selection grade",d="Dindigul"},
 {name="Palladam",x=10.98,y=77.3,kind="Municipality First grade",d="Tiruppur"},
 {name="Pallavapuram",x=12.98,y=80.18,kind="Municipality Special grade",d="Chennai"},
 {name="Pallipalayam",x=11.364616,y=77.747921,kind="Municipality Second grade",d="Namakkal"},
-{name="Pammal",x=12.975,y=80.134722,kind="Municipality Selection grade",d="Kancheepuram"},
+{name="Pammal",x=12.975,y=80.134722,kind="Municipality Selection grade",d="Kanchipuram"},
 {name="Panruti",x=11.77,y=79.55,kind="Municipality First grade",d="Cuddalore"},
 {name="Paramakudi",x=9.544,y=78.591,kind="Municipality First grade",d="Ramanathapuram"},
 {name="Pattukkottai",x=10.43,y=79.32,kind="Municipality Selection grade",d="Thanjavur"},
-{name="Perambalur",x=11.23,y=78.88,kind="Municipality Second grade",d="Perambalur"},
+{name="Perumbalur",x=11.23,y=78.88,kind="Municipality Second grade",d="Perumbalur"},
 {name="Periyakulam",x=10.12,y=77.55,kind="Municipality Second grade",d="Theni"},
 {name="Pernampattu",x=12.939,y=78.73,kind="Municipality Second grade",d="Vellore"},
 {name="Pollachi",x=10.659,y=77.008,kind="Municipality Special grade",d="Coimbatore"},
-{name="Poonamallee",x=13.05,y=80.11,kind="Municipality First grade",d="Thiruvallur"},
-{name="Pudukkottai",x=10.38,y=78.82,kind="Municipality Selection grade",d="Pudukkottai"},
+{name="Poonamallee",x=13.05,y=80.11,kind="Municipality First grade",d="Tiruvallur"},
+{name="Pudukotai",x=10.38,y=78.82,kind="Municipality Selection grade",d="Pudukotai"},
 {name="Puliyankudi",x=9.1,y=77.23,kind="Municipality Second grade",d="Tirunelveli"},
 {name="Punjai Puliampatti",x=11.35,y=77.168,kind="Municipality Second grade",d="Erode"},
 {name="Rajapalayam",x=9.45,y=77.55,kind="Municipality Special grade",d="Virudhunagar"},
 {name="Ramanathapuram",x=9.367,y=78.835,kind="Municipality First grade",d="Ramanathapuram"},
 {name="Rameswaram",x=9.288,y=79.313,kind="Municipality Second grade",d="Ramanathapuram"},
-{name="Ranipet",x=12.9275,y=79.3302,kind="Municipality Selection grade",d="Vellore"},
+{name="Ranipet",x=12.9275,y=79.3302,kind="Municipality Selection grade",d="Ranipet"},
 {name="Rasipuram",x=11.47,y=78.17,kind="Municipality First grade",d="Namakkal"},
 {name="Salem",x=11.65,y=78.16,kind="Muni Corporation",d="Salem"},
 {name="Sankarankoil",x=9.16,y=77.55,kind="Municipality First grade",d="Tirunelveli"},
@@ -101,24 +101,24 @@ var munis=[{name="Alandur",x=13.003,y=80.204,kind="Municipality Selection grade"
 {name="Sivakasi",x=9.45,y=77.82,kind="Municipality Special grade",d="Virudhunagar"},
 {name="Srivilliputhur",x=9.512,y=77.633,kind="Municipality First grade",d="Virudhunagar"},
 {name="Tambaram",x=12.93,y=80.11,kind="Municipality Special grade",d="Chennai"},
-{name="Tenkasi",x=8.97,y=77.3,kind="Municipality First grade",d="Tirunelveli"},
+{name="Tenkasi",x=8.97,y=77.3,kind="Municipality First grade",d="Tenkasi"},
 {name="Thanjavur",x=10.78333333,y=79.13611111,kind="Muni Corporation",d="Thanjavur"},
 {name="Theni Allinagaram",x=10.009,y=77.2843,kind="Municipality Selection grade",d="Theni"},
 {name="Thiruthangal",x=9.47583333,y=77.7925,kind="Municipality First grade",d="Virudhunagar"},
-{name="Thiruthani",x=13.18,y=79.63,kind="Municipality Second grade",d="Thiruvallur"},
+{name="Thiruthani",x=13.18,y=79.63,kind="Municipality Second grade",d="Tiruvallur"},
 {name="Thiruthuraipoondi",x=10.53,y=79.65,kind="Municipality Second grade",d="Thiruvarur"},
 {name="Thiruvannamalai",x=12.22,y=79.07,kind="Municipality Special grade",d="Tiruvannamalai"},
 {name="Thiruvathipuram",x=12.6580,y=79.5424,kind="Municipality Second grade",d="Tiruvannamalai"},
-{name="Thiruverkadu",x=13.069529,y=80.12423,kind="Municipality Selection grade",d="Thiruvallur"},
+{name="Thiruverkadu",x=13.069529,y=80.12423,kind="Municipality Selection grade",d="Tiruvallur"},
 {name="Thoothukudi",x=8.81,y=78.14,kind="Muni Corporation",d="Thoothukudi"},
 {name="Thuraiyur",x=11.16861111,y=78.62111111,kind="Municipality Selection grade",d="Tiruchirappalli"},
 {name="Thuvakudi",x=10.75638889,y=78.80111111,kind="Municipality Second grade",d="Tiruchirappalli"},
-{name="Tindivanam",x=12.237,y=79.65,kind="Municipality Selection grade",d="Viluppuram"},
+{name="Tindivanam",x=12.237,y=79.65,kind="Municipality Selection grade",d="Vilippuram"},
 {name="Tiruchengode",x=11.3805,y=77.895125,kind="Municipality Selection grade",d="Namakkal"},
 {name="Tiruchirappalli",x=10.805,y=78.68555556,kind="Muni Corporation",d="Tiruchirapalli"},
 {name="Tirumangalam",x=9.81,y=77.98,kind="Municipality Second grade",d="Madurai"},
 {name="Tirunelveli",x=8.73,y=77.7,kind="Muni Corporation",d="Tirunelveli"},
-{name="Tiruppattur",x=12.50,y=78.60,kind="Municipality Selection grade",d="Tiruppattur"},
+{name="Tirupathur",x=12.50,y=78.60,kind="Municipality Selection grade",d="Tirupathur"},
 {name="Tiruppur",x=11.11,y=77.34,kind="Muni Corporation",d="Tiruppur"},
 {name="Tiruvallur",x=13.15,y=79.91,kind="Municipality First grade",d="Tiruvallur"},
 {name="Tiruvarur",x=10.773,y=79.637,kind="Municipality First grade",d="Thiruvarur"},
@@ -132,7 +132,7 @@ var munis=[{name="Alandur",x=13.003,y=80.204,kind="Municipality Selection grade"
 {name="Vellakoil",x=10.93,y=77.72,kind="Municipality Second grade",d="Tiruppur"},
 {name="Vellore",x=12.920219,y=79.133306,kind="Muni Corporation",d="Vellore"},
 {name="Vikramasingapuram",x=8.67,y=77.33,kind="Municipality Second grade",d="Tirunelveli"},
-{name="Viluppuram",x=11.941,y=79.493,kind="Municipality Selection grade",d="Viluppuram"},
+{name="Vilippuram",x=11.941,y=79.493,kind="Municipality Selection grade",d="Vilippuram"},
 {name="Virudhachalam",x=11.5,y=79.33,kind="Municipality First grade",d="Cuddalore"},
 {name="Virudhunagar",x=9.58333333,y=77.95,kind="Municipality Selection grade",d="Virudhunagar"},
 {name="Walajapet",x=13,y=79.314,kind="Municipality Second grade",d="Vellore"}]
@@ -179,19 +179,39 @@ func init_label_font():
 	df.font_data=f
 	df.size=36
 
+var locationcache={}
+var stats={}
 func _ready():
 	init_label_font()
+	for i in munis:
+		if i.d in stats:
+			if i.kind in stats[i.d]:
+				stats[i.d][i.kind]+=1
+			else:
+				stats[i.d][i.kind]=1
+		else:
+			stats[i.d]={}
+			stats[i.d][i.kind]=1
+		locationcache[i.name]=latlngToScreenXY(i.x, i.y)
+
 
 var mtype=''
 var district=''
 
-func _draw():			
-	for i in munis:
-		#print(i.name, ' ', i.x,' ', i.y)
-		if i.kind==mtype and i.d == district:
-			var p=latlngToScreenXY(i.x, i.y)
-			draw_string(df, p+Vector2(15, 0), i.name, Color.red)		
-			draw_circle(p, 10, Color.green)
+func _draw():
+	if district == 'all':
+		for i in munis:
+			if i.kind==mtype:
+				var p=locationcache[i.name] #latlngToScreenXY(i.x, i.y)
+				draw_string(df, p+Vector2(15, 0), i.name, Color.red)		
+				draw_circle(p, 10, Color.green)		
+	else:
+		for i in munis:
+			#print(i.name, ' ', i.x,' ', i.y)
+			if i.kind==mtype and i.d == district:
+				var p=locationcache[i.name] #latlngToScreenXY(i.x, i.y)
+				draw_string(df, p+Vector2(15, 0), i.name, Color.red)		
+				draw_circle(p, 10, Color.green)
 
 
 func _on_InfoBox_muni_pressed(d, munitype):
