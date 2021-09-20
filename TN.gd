@@ -784,6 +784,7 @@ func _on_Learn_toggled():
 			# using karur as proxy center
 			old=[{node=get_node('Karur'),loc=center('Karur')}] #d['Karur']}]
 			newlist=[]
+			$HUD/Labels.hide()
 			$HUD/Score.visible=true
 			$HUD/Score.text=years[current_year].substr(0,4)
 			$HUD/Timeline.bbcode_text='[color=yellow]'+years[current_year]+'[/color]'
@@ -813,6 +814,7 @@ func _on_Learn_toggled():
 					#	print('not freeing', tmpx.name)	
 				current_year=0
 				$HUD/Score.visible=false
+				$HUD/Labels.show()
 				get_tree().call_group('1956',"hide")
 				#$HUD/Learn.text='History'
 			borders(true)
@@ -910,6 +912,7 @@ func quest_selected(districts, quest_name=''):
 	$HUD/Grid/VBoxContainer2/MarginContainer/Neighbours.visible=false
 	$HUD/Grid/VBoxContainer2/MarginContainer/history.visible=false
 	$HUD/Grid/VBoxContainer2/MarginContainer/Back.visible=false
+	$HUD/Grid/VBoxContainer2/MarginContainer/Cities.hide()
 	$HUD/Score.visible=true
 	$HUD/Score.text='Check the InfoBox for Instructions'
 	game_in_progress=3
@@ -945,6 +948,7 @@ func _on_quest_over(turnstaken, cluessolved, success):
 	$HUD/Grid/VBoxContainer2/MarginContainer/Neighbours.visible=true
 	$HUD/Grid/VBoxContainer2/MarginContainer/history.visible=true
 	$HUD/Grid/VBoxContainer2/MarginContainer/Back.visible=true
+	$HUD/Grid/VBoxContainer2/MarginContainer/Cities.show()	
 	$HUD/Grid.hide()
 	#disappear()
 	$HUD/Score.visible=false

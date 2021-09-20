@@ -301,8 +301,6 @@ var dummyimg=[
 	preload("res://kolam.png"),
 	preload("res://dugong.png"),
 	preload("res://paddy.jpg"),
-	#preload("res://temple.png"),
-	#preload("res://handloom.png"),
 	preload("res://kaveri.png"),
 	preload("res://templegopuram.png"),
 	preload("res://athangudi.png"),
