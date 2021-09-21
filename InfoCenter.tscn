@@ -184,19 +184,10 @@ custom_fonts/font = SubResource( 7 )
 custom_colors/font_color = Color( 1, 0.8, 0.0666667, 1 )
 text = "Need Another Clue?"
 
-[node name="Back" type="Button" parent="VBoxContainer2/MarginContainer"]
+[node name="Cities" type="HBoxContainer" parent="VBoxContainer2/MarginContainer"]
 margin_top = 84.0
 margin_right = 1400.0
 margin_bottom = 126.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/font = SubResource( 7 )
-text = "Main Menu"
-
-[node name="Cities" type="HBoxContainer" parent="VBoxContainer2/MarginContainer"]
-margin_top = 126.0
-margin_right = 1400.0
-margin_bottom = 168.0
 custom_constants/separation = 0
 
 [node name="Muni" type="Button" parent="VBoxContainer2/MarginContainer/Cities"]
@@ -238,13 +229,22 @@ size_flags_horizontal = 3
 custom_fonts/font = SubResource( 9 )
 text = "L4"
 
+[node name="Back" type="Button" parent="VBoxContainer2/MarginContainer"]
+margin_top = 126.0
+margin_right = 1400.0
+margin_bottom = 168.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 7 )
+text = "Main Menu"
+
 [connection signal="pressed" from="VBoxContainer2/MarginContainer/Neighbours" to="." method="_on_Neighbours_pressed"]
 [connection signal="toggled" from="VBoxContainer2/MarginContainer/Neighbours" to="." method="_on_Neighbours_toggled"]
 [connection signal="pressed" from="VBoxContainer2/MarginContainer/history" to="." method="_on_history_pressed"]
 [connection signal="pressed" from="VBoxContainer2/MarginContainer/clue" to="." method="_on_clue_pressed"]
-[connection signal="pressed" from="VBoxContainer2/MarginContainer/Back" to="." method="_on_Back_pressed"]
 [connection signal="pressed" from="VBoxContainer2/MarginContainer/Cities/Muni" to="." method="_on_muni1_pressed"]
 [connection signal="pressed" from="VBoxContainer2/MarginContainer/Cities/Selection" to="." method="_on_muni2_pressed"]
 [connection signal="pressed" from="VBoxContainer2/MarginContainer/Cities/Special" to="." method="_on_muni3_pressed"]
 [connection signal="pressed" from="VBoxContainer2/MarginContainer/Cities/First" to="." method="_on_muni4_pressed"]
 [connection signal="pressed" from="VBoxContainer2/MarginContainer/Cities/Second" to="." method="_on_muni5_pressed"]
+[connection signal="pressed" from="VBoxContainer2/MarginContainer/Back" to="." method="_on_Back_pressed"]

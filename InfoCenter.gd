@@ -328,10 +328,16 @@ func preload_from_pics_dir():
 			break
 		elif !file_name.begins_with(".") and !file_name.ends_with(".import"):
 			#if !file_name.ends_with(".import"):
-			#print('myloader ',path + "/" + file_name)
+			#print('myloader ',path + "/" + file_name)			
 			var img=load(path + "/" + file_name)
 			dummyimg.append(img)
 	dir.list_dir_end()
+
+func image_selector(district='', fact=''):
+	# if fact has image return that image
+	# elif district has image
+	# else return random image
+	return dummyimg[int(rand_range(0, dummyimg.size()))]
 
 var filterfacts={}
 # Called when the node enters the scene tree for the first time.
@@ -340,6 +346,8 @@ func _ready():
 	#	$VBoxContainer2/FactBox.set("custom_fonts/font/size",24)
 	var fact_stats={tot=0}
 	preload_from_pics_dir()
+	# facts have to be filtered by type to setup subject quests/multiquests
+	# stored in filterfacts. On new subject quest facts points at relevant filterfacts
 	for i in facts:
 		print(i, ' ', len(facts[i]) )
 		for f in facts[i]:
@@ -385,7 +393,7 @@ func reload(district, neighbours, hist='',mode=state.NON_QUEST,ftype=''):
 	n=neighbours
 	$VBoxContainer2/MarginContainer/Neighbours.pressed=false
 	randomize()
-	$VBoxContainer/PanelContainer/imgbox.texture=dummyimg[int(rand_range(0, dummyimg.size()))]
+	#$VBoxContainer/PanelContainer/imgbox.texture=image_selector(district)
 	if mode==state.NEW_QUEST:
 		$VBoxContainer/NameBox.text="New Quest!"
 		#rng.randomize()
@@ -409,7 +417,7 @@ func reload(district, neighbours, hist='',mode=state.NON_QUEST,ftype=''):
 			
 		print('targets set', targets)
 		$VBoxContainer2/MarginContainer/clue.show()
-		_on_clue_pressed()
+		_on_clue_pressed() # to reset info box
 	elif mode==state.IN_QUEST:
 		attempts=attempts-1
 		if targets.size() == 0: #handles case where user might cause a reload after quest is complete
@@ -443,6 +451,7 @@ func show_fact(district, prefix=''):
 		#var idx=rng.randi_range(0, facts[district].size()-1)
 		var idx=cycleclues(district)
 		$VBoxContainer2/FactBox.text=prefix+strip_metadata(facts[district][idx])
+		$VBoxContainer/PanelContainer/imgbox.texture=image_selector(district)
 	else:
 		#district or fact is missing from the db
 		$VBoxContainer2/FactBox.text=''
@@ -497,7 +506,8 @@ func strip_metadata(cluestr:String):
 func _on_clue_pressed(prefix=''):
 	if targets.size() >0:
 		#var idx= rng.randi_range(0, facts[targets[0]].size()-1)
-		var idx=cycleclues(targets[0]) 
+		var idx=cycleclues(targets[0])
+		$VBoxContainer/PanelContainer/imgbox.texture=image_selector(targets[0]) 
 		#print(idx, cluecache)
 		$VBoxContainer2/FactBox.text=prefix+'Head to the district known for - \n'+strip_metadata(facts[targets[0]][idx])
 	

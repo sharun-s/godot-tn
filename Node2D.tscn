@@ -27,11 +27,11 @@ font_data = ExtResource( 3 )
 size = 30
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="DynamicFont" id=6]
 size = 26
 font_data = ExtResource( 3 )
 
-[sub_resource type="StyleBoxFlat" id=6]
+[sub_resource type="StyleBoxFlat" id=7]
 content_margin_left = 0.0
 content_margin_right = 0.0
 content_margin_top = 0.0
@@ -51,14 +51,14 @@ expand_margin_right = 8.0
 expand_margin_top = 2.0
 expand_margin_bottom = 4.0
 
-[sub_resource type="DynamicFont" id=7]
+[sub_resource type="DynamicFont" id=8]
 size = 24
 font_data = ExtResource( 3 )
 
-[sub_resource type="StyleBoxFlat" id=8]
+[sub_resource type="StyleBoxFlat" id=9]
 bg_color = Color( 0.0352941, 0.341176, 0.921569, 1 )
 
-[sub_resource type="DynamicFont" id=9]
+[sub_resource type="DynamicFont" id=10]
 size = 64
 font_data = ExtResource( 2 )
 
@@ -123,7 +123,7 @@ anchor_right = 1.0
 anchor_bottom = 0.1
 margin_left = -194.65
 size_flags_vertical = 0
-custom_fonts/font = SubResource( 10 )
+custom_fonts/font = SubResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -134,8 +134,8 @@ anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -20.0
 margin_right = 20.0
-custom_styles/normal = SubResource( 6 )
-custom_fonts/font = SubResource( 7 )
+custom_styles/normal = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 custom_colors/font_color = Color( 0.996078, 0.929412, 0.372549, 1 )
 text = "test"
 align = 1
@@ -151,7 +151,7 @@ margin_left = 3.0
 margin_top = 37.0
 margin_right = 43.0
 margin_bottom = 86.0
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 align = 1
 valign = 1
 __meta__ = {
@@ -180,8 +180,8 @@ margin_right = 700.0
 margin_bottom = 1900.0
 size_flags_horizontal = 3
 size_flags_vertical = 7
-custom_styles/normal = SubResource( 8 )
-custom_fonts/font = SubResource( 9 )
+custom_styles/normal = SubResource( 9 )
+custom_fonts/font = SubResource( 10 )
 text = "Districts 
 of
 Tamil Nadu"
