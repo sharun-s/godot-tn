@@ -177,7 +177,7 @@ func init_label_font():
 	var f=load("res://DroidSans.ttf")
 	df=DynamicFont.new()
 	df.font_data=f
-	df.size=36
+	df.size=40
 
 var locationcache={}
 var stats={}
@@ -199,19 +199,21 @@ var mtype=''
 var district=''
 
 func _draw():
+	if district=='':
+		return
 	if district == 'all':
 		for i in munis:
 			if i.kind==mtype:
 				var p=locationcache[i.name] #latlngToScreenXY(i.x, i.y)
-				draw_string(df, p+Vector2(15, 0), i.name, Color.red)		
-				draw_circle(p, 10, Color.green)		
+				draw_string(df, p+Vector2(15, 0), i.name, 'f92672')		
+				draw_circle(p, 6, 'ff2207')		
 	else:
 		for i in munis:
 			#print(i.name, ' ', i.x,' ', i.y)
 			if i.kind==mtype and i.d == district:
 				var p=locationcache[i.name] #latlngToScreenXY(i.x, i.y)
-				draw_string(df, p+Vector2(15, 0), i.name, Color.red)		
-				draw_circle(p, 10, Color.green)
+				draw_string(df, p+Vector2(15, 0), i.name, 'f92672')		
+				draw_circle(p, 6, 'ff2207')
 
 
 func _on_InfoBox_muni_pressed(d, munitype):

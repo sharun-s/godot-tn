@@ -195,7 +195,7 @@ func addstateborder(b, nm='x'):
 		borderpath.width=2
 	add_child(borderpath)
 
-func addstatepoly(b, nm='x'):
+func addstatepoly(b, _nm='x'):
 	var t:=Transform2D()
 	t=t.scaled(Vector2(8,8))
 	t.origin=Vector2(-620,-430)# magic bs use standard geojson
@@ -444,7 +444,6 @@ func select(district):
 				#timed_msg('[pulse freq=5][color=#ffcc55]Not bad! \nYou scored '+str(score)+' / '+str(turns)+'[/color][/pulse]',2, 8, Color.orangered)
 				timed_msg('Not bad! \nYou scored '+str(score)+' / '+str(turns),2.5)
 			yield($Timer, "timeout")
-			$HUD/Labels.hide()
 			challenges_completed.clear()
 			game_over()
 	elif game_in_progress==2:
@@ -452,10 +451,12 @@ func select(district):
 		pass
 	elif game_in_progress==3:
 		#quest
+		#if !moving:
 		gotoDistrict()
 	else:
 		#get_tree().set_group("dlabels", "visible", false)
 		#check if path has anything and move
+		#if !moving:
 		gotoDistrict()
 		
 #deselect district if one is already selected before selecting new one
@@ -526,12 +527,11 @@ func _draw():
 					draw_line(poly[i-1]+center_at, poly[i]+center_at, border_color, border_width_highlight )
 				draw_line(poly[cnt-1]+center_at, poly[0]+center_at, border_color, border_width_highlight )
 	
-func _on_Button_pressed():
+func _on_Quiz_pressed():
 	reset()
 	game_in_progress=1
 	$HUD/Score.text=str(score)
 	$HUD/Score.visible=true
-	$HUD/Labels.hide()
 	timed_msg("[pulse color=#22ff44 height=-10 freq=10]You have 10 turns\n Find the Districts![/pulse]",2)
 	yield($Timer,"timeout")
 	timedquiz=false
@@ -553,6 +553,8 @@ func game_over():
 	deselect()
 	path.clear()
 	seconds=0
+	$HUD/Labels.hide()
+	$HUD/LabelCities.hide()
 	#borders(true)
 	#game_in_progress=0
 	$HUD/Timeline.bbcode_text=''
@@ -607,9 +609,10 @@ func reset():
 		deselect()
 		$Label.text=''
 		get_tree().set_group("dlabels","visible",false)
-
+#var moving:=false
 func gotoDistrict():
 	disableui()
+	#moving=true
 	var current
 	var distance
 	var time
@@ -623,12 +626,10 @@ func gotoDistrict():
 		var direction=$Gopal.position.direction_to(gpos)
 		$Gopal.velocity=direction
 		time=distance/$Gopal.speed
-		#if OS.get_name()=='Android':
-		#	tw.interpolate_property($Gopal,"position",$Gopal.position,gpos,0.2)
-		#else:
 		tw.interpolate_property($Gopal,"position",$Gopal.position,gpos,time)
 		tw.start()
 		var x=yield(tw, 'tween_completed')
+		#moving=false
 		showinfo(current)
 	$Gopal.velocity=Vector2(0,0)
 	$Gopal.initiated_by_code=false
@@ -787,7 +788,6 @@ func _on_Learn_toggled():
 			# using karur as proxy center
 			old=[{node=get_node('Karur'),loc=center('Karur')}] #d['Karur']}]
 			newlist=[]
-			$HUD/Labels.hide()
 			$HUD/Score.visible=true
 			$HUD/Score.text=years[current_year].substr(0,4)
 			$HUD/Timeline.bbcode_text='[color=yellow]'+years[current_year]+'[/color]'
@@ -817,7 +817,6 @@ func _on_Learn_toggled():
 					#	print('not freeing', tmpx.name)	
 				current_year=0
 				$HUD/Score.visible=false
-				$HUD/Labels.show()
 				get_tree().call_group('1956',"hide")
 				#$HUD/Learn.text='History'
 			borders(true)
@@ -887,6 +886,8 @@ func disappear():
 func _on_Quest_pressed():
 	disableui()
 	$Gopal.show()
+	$HUD/Labels.show()
+	#$HUD/LabelCities.show()
 	if selected_district!='':
 		deselect()
 		$Label.text=''
@@ -927,7 +928,6 @@ func quest_selected(districts, quest_name=''):
 func _on_Timed_pressed():
 	reset()
 	game_in_progress=1
-	$HUD/Labels.hide()
 	$HUD/Score.text=str(score)
 	$HUD/Score.visible=true
 	timed_msg("[pulse color=#44dd22 height=-15 freq=5]You have 10 turns\n Find the Districts![/pulse]",2)
@@ -1011,6 +1011,7 @@ func _on_Grid_on_track(d):
 func subjectQuest():
 	disableui()
 	$Gopal.show()
+	$HUD/Labels.show()
 	if selected_district!='':
 		deselect()
 		$Label.text=''
@@ -1019,6 +1020,8 @@ func subjectQuest():
 
 func _on_Explore_pressed():
 	$Gopal.show()
+	$HUD/Labels.show()
+	$HUD/LabelCities.show()
 	var randstartidx=rng.randi_range(0,d.size()-1)
 	var startat = d.keys()[randstartidx]
 	path.append(startat)

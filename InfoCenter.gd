@@ -7,14 +7,17 @@ var facts:={
 			"h:The ruins of the Chola capital and the famous Temple here are now a World Heritage site"
 			],
 		Chennai=[
+			"Kasimedu fishing harbour is the largest Fish Auction site in the country moving more than 200 tons of fish a day",
 			"State Capital with 10% of the states population", 
-			"Marina Beach", 
-			"Center of the Tamil Film Industry nicknamed Kollywood, as most studio were built in the Kodambakkam neighbourhood"],
+			"Marina Beach, India's longest and the Worlds second longest beach is located here", 
+			"Center of the Tamil Film Industry nicknamed Kollywood, as most studio were built in the Kodambakkam neighbourhood",
+			"Valluvar Kottam, built in honor of Tamil poet Thiruvalluvar"],
 		Chengalpattu=[
 			'h:World heritage site of 7th century monuments, temples and caves at Mahabalipuram',
 			"Named after the Sengazhuneer poo (Red White Lily) that grows in abundance along the river banks",
 			"h:Mahaballipuram site of some of the earliest Rock Temples and Stone Sculpture that influenced the style of Temple Architecture throughout South India"],
 		Coimbatore=[
+			'G. D. Naidu, known as the Edison of India, was from here. His inventions and entrepreneurship turned the region into a industrial hub',
 			'f:Kalakki meaning to mix is popular street food here (super soft omelet with masala)',
 			'Wet Grinder used for idli/dosa was invented here. More than 800 factories manufacture it and the area has received the GI Tag from Govt of India',
 			'Eastern end of the Palakkad Gap, the lowest pass through the Western Ghats linking Kerala and Tamil Nadu. Also called Kovai',
@@ -25,7 +28,7 @@ var facts:={
 			'c:Nataraja dance at thilai Natyanjali Dance Festival feb march on mahashivratri expand...',
 			'Pichawaram mangrove forests',
 			'Koodalur means confluence in Tamil. It is the place where the Pennaiyar, Kedilam, Paravanar and Uppanaar rivers join',
-			#'Ports, Beaches, fishing villages',
+			'Neyveli Lignite Corporation is located here. The mining and power generation giant was given the Navratna status in 2011',
 			'h:Was known as Naadu Nadu or the middle kingdom betweene Cholas in the South and the Pallavas in the North', 
 			"h:Fort St David in Cuddalore was one of the main British trading posts controling their activities in South India in the early 1700. So Cuddalore became the site of multiple wars with the French based 25kms North in Pondicherry",
 			"Silver Beach is one of the longest beaches found on the Coromandel Coast. 2700 people lost their life here during the 2004 Tsunami", 
@@ -33,7 +36,8 @@ var facts:={
 			'Pichawaram Mangrove forests'],
 		Dindigul=[
 			'f:Periyakottai Brinjal', 
-			"f:the famous Palani Panchamirtham banana, jaggery, cow ghee, honey and cardamom",
+			'Palani Murugan temple located here on the Sivagiri hill, sees 7 million pilgrims a year',
+			"f:the famous Palani temples Panchamirtham, sweet made of 5 ingredients- banana, jaggery, cow ghee, honey and cardamom",
 			"Kodaikanal Malai Poondu (Hill Garlic) known for its medicinal properties and long shelf life has been given a GI Tag",
 			'Kodaikanal, in tamil translates to The Gift of the Forest, is very popular hillstation located here',
 			'Palani Hills part of Western Ghats lies within this district. Its where the famous Liril commercial was shot'],
@@ -46,7 +50,7 @@ var facts:={
 			"Turmeric or Manjal from here is known for its unique color. The area is the 2nd largest Tumeric market in India) and major exporter",
 			"Jamakkalam Carpets and Blankets made by the weavers of Bhavani are world famous for their patterns",
 			"Agri powerhouse due to rivers and dams",
-			"Sathyamangalam Tiger Reserve 83 tigers and 111 Leopards"
+			"Sathyamangalam Tiger Reserve home to 83 tigers and 111 Leopards"
 		],
 		Kanyakumari=[
 			'On the UN Human Development Index this district comes first within the state',
@@ -151,6 +155,7 @@ var facts:={
 			"In 1964 a cyclone hit Pamban Island with 25 ft waves washing away the town of Danushkodi. Today the remain of the ghost town are a tourist attraction."
 		],
 		Salem=[
+			'The World best Magnesite deposits are found here in the Chalk Hills',
 			'Silver anklets or kolasu make up 60% of silver ornaments sold in India',
 			'Silk Saree weavers of Panjukalipatti',
 			'f:Essence Dosa',
@@ -177,7 +182,7 @@ var facts:={
 			'The Meghamalai range also called the High Wavy Mountains',
 			'Meghamalai Wildlife Sanctuary'],
 		Tiruvarur=[
-			'c:Somaskanda iconography - Idols depict Murugan with Shiva and Parvathi',
+			'c:Somaskanda art - In a style unique to the area Murugan is depicted surrounded by Shiva and Parvathi',
 			'c:Thyagaraja Temple Chariot found here stands 96 feet tall',
 			'p:Birthplace of Saint Thyagaraja, the composer of Carnatic music'	
 		],
@@ -204,9 +209,12 @@ var facts:={
 			"p:Agastyamalai mountain is a popular pilgrimage site to Sage Agastya considered father of the Tamil Language",
 			"Kalakkad Mundanthurai Tiger Reserve (KMTR) wildlife include Lion tailed Macaques, Elephants, Tigers, Peacock, Nilgiri Langur, Gaur amd Leopards"],
 		Tiruvannamalai=[
-			"Arunachala hill, deepam festival",
+			"the famous Karthigai Deepam festival is held here, a 10 foot tall lamp is lit at the top of the Arunachala hill",
 			"Arni silk production",
-			"Largest Rice producers"
+			"Largest Rice producers",
+			"Pilgrims come here to do a 14 km walk around the Arunachala hill, a practice called Girivalam",
+			"Arunachaleswara temple, its huge eastern Gopuram is 217 feet tall,  built by Emporer Krishna Deva Raya in 1516",
+			"Sathanur Dam is located here, with its popular crocodile park and fish farms",
 		],
 		Tiruvallur=[
 			'p:Sarvepalli Radhakrishnan, the Second President of India, was born here in Tiruttani.',
@@ -229,6 +237,7 @@ var facts:={
 			"Half of Indias knitwear, innerwear exports to global brand names comes from here employing more than a 11 lak people",
 			"Coins from 2000 years ago found here in Kodumanal, indicate cotton trade route with Rome"],
 		Tirupathur=[
+			'Vermiculite deposits and mining. The mineral is used in insulators, ceramics and agriculure',
 			'The Vainu Bappu Observatory one of the main centers of Indian Astronomy',
 			'Surrounded by the Javadhu and Yelagiri Hills known for rivers, waterfalls and sandal wood trees'
 			],

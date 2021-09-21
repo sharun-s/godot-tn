@@ -56,7 +56,7 @@ size = 24
 font_data = ExtResource( 3 )
 
 [sub_resource type="StyleBoxFlat" id=9]
-bg_color = Color( 0.0352941, 0.341176, 0.921569, 1 )
+bg_color = Color( 0, 0.121569, 0.247059, 1 )
 
 [sub_resource type="DynamicFont" id=10]
 size = 64
@@ -105,6 +105,7 @@ __meta__ = {
 }
 
 [node name="Labels" type="Button" parent="HUD"]
+visible = false
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -192.0
@@ -117,6 +118,7 @@ __meta__ = {
 }
 
 [node name="LabelCities" type="OptionButton" parent="HUD"]
+visible = false
 anchor_left = 1.0
 anchor_top = 0.1
 anchor_right = 1.0
@@ -212,6 +214,7 @@ margin_right = 700.0
 margin_bottom = 633.0
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 5 )
+custom_colors/font_color = Color( 0, 0.992157, 0.533333, 1 )
 text = "Quiz"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -223,6 +226,7 @@ margin_right = 700.0
 margin_bottom = 949.0
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 5 )
+custom_colors/font_color = Color( 1, 0.756863, 0.027451, 1 )
 text = "Timed Quiz"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -234,6 +238,7 @@ margin_right = 700.0
 margin_bottom = 1266.0
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 5 )
+custom_colors/font_color = Color( 1, 0.133333, 0.027451, 1 )
 text = "Quest"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -245,6 +250,7 @@ margin_right = 700.0
 margin_bottom = 1583.0
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 5 )
+custom_colors/font_color = Color( 0.976471, 0.14902, 0.447059, 1 )
 text = "MultiQuest"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -268,11 +274,12 @@ one_shot = true
 
 [node name="Gopal" parent="." instance=ExtResource( 6 )]
 visible = false
-scale = Vector2( 1.4, 1.4 )
+scale = Vector2( 1.2, 1.2 )
 
 [node name="Munis" type="Node2D" parent="."]
 visible = false
-position = Vector2( 25, 120 )
+position = Vector2( 35, 115 )
+scale = Vector2( 0.99, 0.94 )
 z_index = 2
 script = ExtResource( 8 )
 
@@ -289,7 +296,7 @@ script = ExtResource( 8 )
 [connection signal="subject_quests_ready" from="HUD/Grid" to="HUD/QMenu" method="_on_subject_quests_ready"]
 [connection signal="selected" from="HUD/QMenu" to="." method="quest_selected"]
 [connection signal="pressed" from="HUD/StartScreen/B/Explore" to="." method="_on_Explore_pressed"]
-[connection signal="pressed" from="HUD/StartScreen/B/Quiz" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="HUD/StartScreen/B/Quiz" to="." method="_on_Quiz_pressed"]
 [connection signal="pressed" from="HUD/StartScreen/B/Timed" to="." method="_on_Timed_pressed"]
 [connection signal="pressed" from="HUD/StartScreen/B/Quest" to="." method="_on_Quest_pressed"]
 [connection signal="pressed" from="HUD/StartScreen/B/Quest2" to="." method="subjectQuest"]
