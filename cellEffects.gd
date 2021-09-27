@@ -31,7 +31,7 @@ func _draw():
 			drawpoly=false			
 	if drawcenters:
 		for i in newcenters:
-			draw_circle(i, 10, Color.red)
+			draw_circle(i, 3, Color.red)
 		if len(newcenters) > len(newpolys):
 			newcenters.clear()
 

@@ -375,7 +375,8 @@ func add_historic_districts(year, data):
 				get_node('lbl'+i).show()
 				get_node('lbl'+i).add_to_group(year)
 			else:
-				add_label(i, d[data[i][0][0]][0], d[data[i][0][0]][1], 0.0, 0.0, year)
+				add_label(i, get_node("Districts/"+data[i][0][0]).position.x, get_node("Districts/"+data[i][0][0]).position.y, 50, 50, year)
+				#add_label(i, data[i][0][0]][0], d[data[i][0][0]][1], 0.0, 0.0, year)
 
 func _unhandled_input(event):
 	if event is InputEventKey:
