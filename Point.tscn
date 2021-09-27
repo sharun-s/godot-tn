@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+export(Color) var color=Color.lime
+export(String) var group
+export(String) var district
+export(int) var radius
+# Called when the node enters the scene tree for the first time.
+
+func _ready():
+	update()
+	
+func _draw():
+	draw_circle(Vector2(0,0), radius, color)
+"
+
+[node name="Point" type="Node2D"]
+script = SubResource( 1 )

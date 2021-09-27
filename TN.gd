@@ -102,8 +102,8 @@ var selected_color_right:=Color.lightgreen
 var selected_color_wrong:=Color.lightcoral
 var district_label_text_color:=Color('f6b000')
 var border_color=Color.darkgray#.black#Color.firebrick
-var border_width:=1
-var border_width_highlight:=5
+var border_width:=2
+var border_width_highlight:=2
 var tw:=Tween.new()
 #var walkpath:=Line2D.new()
 var path=[]
@@ -120,8 +120,8 @@ func merge_poly(history_item):
 	var clr=history_item[1]
 	var main:Polygon2D=Polygon2D.new()
 	var t=Transform2D()
-	var ddims=d[g[0]]
-	var p1=get_node(g[0]).get_child(0)
+	var ddims=get_node("Districts/"+g[0]).position #d[g[0]]
+	var p1=get_node("Districts/"+g[0]+"/Poly")#.get_child(0)
 	t.origin=Vector2(ddims[0],ddims[1])
 	var m
 	if g.size()==1:
@@ -129,8 +129,8 @@ func merge_poly(history_item):
 		main.polygon=m
 	else:
 		var t2=Transform2D()	
-		ddims=d[g[1]]
-		var p2=get_node(g[1]).get_child(0)
+		ddims=get_node("Districts/"+g[1]).position #d[g[1]]
+		var p2=get_node("Districts/"+g[1]+"/Poly")#.get_child(0)
 		t2.origin=Vector2(ddims[0],ddims[1])
 		m=Geometry.merge_polygons_2d(t.xform(p1.polygon), 
 										t2.xform(p2.polygon) )
@@ -140,9 +140,9 @@ func merge_poly(history_item):
 		#test.color=Color.blueviolet
 		#add_child(test)
 		for i in range(2,len(g)):
-			ddims=d[g[i]]
+			ddims=get_node("Districts/"+g[i]).position #d[g[i]]
 			t.origin=Vector2(ddims[0],ddims[1])
-			var tp=t.xform(get_node(g[i]).get_child(0).polygon)
+			var tp=t.xform(get_node("Districts/"+g[i]+'/Poly').polygon)
 			m=Geometry.merge_polygons_2d(main.polygon, tp)
 			main.polygon=m[0]
 			#debug
@@ -221,31 +221,24 @@ func _ready():
 	for i in citygrades:
 		$HUD/LabelCities.add_item(i)
 	VisualServer.set_default_clear_color('001f3f')#Color("ff222222"))
-	for district in d.keys():
-		var a2d=Area2D.new()
-		var x=d[district][0]
-		var y=d[district][1]
-		var w=d[district][2]
-		var h=d[district][3]
-		var polys=create_polygons(district)
-		a2d.add_child(polys[1])
-		a2d.add_child(polys[0])
-		a2d.name=district
-		a2d.show_behind_parent=true
-		#a2d.position=Vector2(x+(w/2),y+(h/2))
-		a2d.position=Vector2(x,y)		
-		add_child(a2d)
-		add_label(district, x, y, w, h, "dlabels")
-		a2d.connect('input_event', self, 'on_district_select',[district])
-	addstateborder(ka_ke)
-	addstateborder(kewest, 'kewest')
-	addstateborder(kawest, 'kawest')
-	addstateborder(apeast, 'apes')
-	addstateborder(ka_ap)
+	for node in $Districts.get_children():
+		if node is Area2D:
+			#node.get_child(0).color=deselect_color
+			node.connect('input_event', self, 'on_district_select',[node.name])
+		#if node is Label:
+		#	node.set("custom_colors/font_color","70fa80")
+	#addstateborder(ka_ke)
+	#addstateborder(kewest, 'kewest')
+	#addstateborder(kawest, 'kawest')
+	#addstateborder(apeast, 'apes')
+	#addstateborder(ka_ap)
 	var t=get_viewport_transform()
-	t.origin=Vector2((get_viewport_rect().size.x-200)/2,0)
+	#divide screen width by 2 and push left by half of generatedwidth ie 600/2
+	t.origin=Vector2(get_viewport_rect().size.x/2-300,0)
+	#t.origin=Vector2((get_viewport_rect().size.x-200)/2,0)
 	transform=t
-	scale=Vector2(get_viewport_rect().size.y/2000, get_viewport_rect().size.y/2000)
+	scale=Vector2(get_viewport_rect().size.y/800, get_viewport_rect().size.y/800)
+	#scale=Vector2(get_viewport_rect().size.y/2000, get_viewport_rect().size.y/2000)
 	print(scale)
 	print(t.origin)
 	$Label.rect_scale=Vector2(1/scale.x, 1/scale.y)
@@ -393,10 +386,10 @@ func on_district_select(_viewport, event, _idx, district):
 	if event is InputEventMouseButton:
 		if event.pressed:
 			path.clear()
-			path.append(district)
+			path.append("Districts/"+district)
 		else:
 			#on release touch check whats in path and move if required
-			select(district)
+			select("Districts/"+district)
 		#walkpath.clear_points()
 		#walkpath.add_point(get_node(district).position)
 	#on hover show label
@@ -408,19 +401,19 @@ func on_district_select(_viewport, event, _idx, district):
 		if district in path:
 			pass
 		else:
-			path.append(district)
+			path.append("Districts/"+district)
 		#walkpath.add_point(get_node(district).position)
 #		highlight_district(district, false, true)
 
 func setDistrict_Color_Text(dist, c, showlabel:=true):
 	get_node(dist).get_child(0).color=c
 	if showlabel:
-		$Label.text=dist
+		$Label.text=dist.split('/')[1]
 		$Label.rect_position=center(dist)
 
 func select(district):
 	if game_in_progress==1 and attempts < turns:
-		if district == challenge:
+		if district.split('/')[1] == challenge:
 			score+=1
 			attempts+=1
 			$HUD/Score.text=str(score)+' / '+str(attempts)
@@ -433,7 +426,7 @@ func select(district):
 			attempts+=1
 			$HUD/Score.text=str(score)+' / '+str(attempts)
 			get_node(district).get_child(0).color=selected_color_wrong
-			$HUD/Message.bbcode_text=challenge+"???\n  [color=#ee2211]Try Again![/color]\nThat was "+district
+			$HUD/Message.bbcode_text=challenge+"???\n  [color=#ee2211]Try Again![/color]\nThat was "+district.split('/')[1]
 		if attempts==turns:
 			if timedquiz:
 				$QuizTimer.stop()
@@ -480,9 +473,11 @@ func highlight_district(district, show_neighbours:=true):
 	update() # redraw borders
 			
 func deselect():
-	for district in d.keys():
-		get_node('lbl'+district).visible=false
-		get_node(district).get_child(0).color=deselect_color
+	for node in $Districts.get_children():
+		if node is Label:
+			node.visible=false
+		if node is Area2D:
+			node.get_child(0).color=deselect_color
 	
 var cache={}
 func _draw():
@@ -501,8 +496,8 @@ func _draw():
 			var poly=cache[idx]
 			var cnt=poly.size()
 			for i in range(1, cnt):
-				draw_line(poly[i-1], poly[i], Color.darkgray, 1)
-			draw_line(poly[cnt-1], poly[0], Color.darkgray, 1)
+				draw_line(poly[i-1], poly[i], border_color.lightened(.2), 2)
+			draw_line(poly[cnt-1], poly[0], border_color.lightened(.2), 2)
 		#draw newly merged
 		for dx in dhistory[current_year-1]:
 			if dhistory[current_year-1][dx][0].size() > 0: 
@@ -514,10 +509,11 @@ func _draw():
 				draw_line(poly[cnt-1], poly[0], border_color, border_width_highlight)
 	else:
 		cache.clear()
+		#TODO switch to $districts
 		for dx in d.keys():
-			var poly=PoolVector2Array(get_node(dx).get_child(0).polygon)
+			var poly=PoolVector2Array(get_node('Districts/'+dx+'/Poly').polygon)
 			var cnt=poly.size()
-			var center_at=Vector2(d[dx][0], d[dx][1])
+			var center_at=get_node("Districts/"+dx).position #Vector2(d[dx][0], d[dx][1])
 			if dx != selected_district:
 				for i in range(1, cnt):
 					draw_line(poly[i-1]+center_at, poly[i]+center_at, border_color, border_width )
@@ -532,6 +528,7 @@ func _on_Quiz_pressed():
 	game_in_progress=1
 	$HUD/Score.text=str(score)
 	$HUD/Score.visible=true
+	$HUD/Labels.hide()
 	timed_msg("[pulse color=#22ff44 height=-10 freq=10]You have 10 turns\n Find the Districts![/pulse]",2)
 	yield($Timer,"timeout")
 	timedquiz=false
@@ -621,7 +618,7 @@ func gotoDistrict():
 	while path.size() > 0 :
 		current=path.pop_front()
 		highlight_district(current,false)
-		var gpos=get_node(current).position+Vector2(d[current][2]/2, d[current][3]/2 )
+		var gpos=get_node(current).position#+Vector2(d[current][2]/2, d[current][3]/2 )
 		distance=$Gopal.position.distance_to(gpos)
 		var direction=$Gopal.position.direction_to(gpos)
 		$Gopal.velocity=direction
@@ -717,6 +714,7 @@ var district_animator
 func _on_TN_ready():
 	district_animator=cell.instance()
 	add_child(district_animator)
+	get_tree().call_group("allcities","hide")
 
 func disableui():
 	$HUD/StartScreen.hide()
@@ -775,8 +773,9 @@ func add_to_dist_timeline(names):
 			$HUD/Timeline.append_bbcode('         '+names[s])
 
 func center(district):
-	return get_node(district).position+Vector2(d[district][2]/2, d[district][3]/2)
-				
+	#return get_node(district).position+Vector2(d[district][2]/2, d[district][3]/2)
+	return get_node(district).position + Vector2(50, 50)
+					
 func _on_Learn_toggled():
 	var old
 	var newlist
@@ -786,8 +785,9 @@ func _on_Learn_toggled():
 			reset()
 			add_historic_districts(years[current_year], dhistory[0])
 			# using karur as proxy center
-			old=[{node=get_node('Karur'),loc=center('Karur')}] #d['Karur']}]
+			old=[{node=get_node('Districts/Karur'),loc=center('Districts/Karur')}] #d['Karur']}]
 			newlist=[]
+			#$HUD/Labels.hide()
 			$HUD/Score.visible=true
 			$HUD/Score.text=years[current_year].substr(0,4)
 			$HUD/Timeline.bbcode_text='[color=yellow]'+years[current_year]+'[/color]'
@@ -796,7 +796,7 @@ func _on_Learn_toggled():
 				if n is Polygon2D:
 					#newlist.append({node=n, loc=d[name(n)]})
 					names.append(n.name.replace('history',''))		
-					newlist.append({node=n, loc=center(name(n))}) #get_node(name(n)).position#d[name(n)]})
+					newlist.append({node=n, loc=center('Districts/'+name(n))}) #get_node(name(n)).position#d[name(n)]})
 			district_animator.start(old, newlist)
 			yield(district_animator, "move_complete")
 			add_to_dist_timeline(names)
@@ -828,7 +828,7 @@ func _on_Learn_toggled():
 		get_tree().call_group(years[current_year-1],"hide")
 		newlist=[]
 		var key=dhistory[current_year].keys()[0]	
-		old=[{node=get_node(key+'history'), loc=center(name(get_node(key+'history')))}]#get_node(name(get_node(key+'history'))).position}]#get_node(name(key)).position}] #get_node(key).position}]
+		old=[{node=get_node(key+'history'), loc=center('Districts/'+name(get_node(key+'history')))}]#get_node(name(get_node(key+'history'))).position}]#get_node(name(key)).position}] #get_node(key).position}]
 		add_historic_districts(years[current_year], dhistory[current_year])
 #		$HUD/Message.text=$HUD/Message.text+'\n'+years[current_year]
 		$HUD/Score.text=years[current_year].substr(0,4)
@@ -838,7 +838,7 @@ func _on_Learn_toggled():
 			if n is Polygon2D:
 				names.append(n.name.replace('history',''))
 				#newlist.append({node=n, loc=d[name(n)]})
-				newlist.append({node=n, loc=center(name(n))})#get_node(name(n)).position}) #d[name(n)]})
+				newlist.append({node=n, loc=center('Districts/'+name(n))})#get_node(name(n)).position}) #d[name(n)]})
 		district_animator.start(old, newlist)
 		yield(district_animator, "move_complete")
 		add_to_dist_timeline(names)
@@ -909,7 +909,7 @@ func quest_selected(districts, quest_name=''):
 	# district is empty string - quest button pressed if array quest selected via multiquest
 	if districts is Array:
 		for i in districts:
-			setDistrict_Color_Text(i, quest_colors[quest_name], false)
+			setDistrict_Color_Text("Districts/"+i, quest_colors[quest_name], false)
 		yield(get_tree().create_timer(4.0), "timeout")
 		$HUD/QMenu/PopupPanel.hide()
 		$HUD/QMenu.hide()
@@ -946,15 +946,15 @@ func showinfo(district):
 		$HUD/Score.visible=false
 		var cnt=0
 		#ignore first element of citygrades which is empty for optionbutton default state
-		for g in range(1,len(citygrades)):
-			var btn=$HUD/Grid/VBoxContainer2/MarginContainer/Cities.get_child(g-1)
-			if citygrades[g] in $Munis.stats[district].keys():		
-				btn.show()
-				#btn.text= citygrades[g] + ' (' +str($Munis.stats[district][citygrades[g]]) +')'
-				btn.text= 'g'+str(g) +' (' +str($Munis.stats[district][citygrades[g]]) +')'
-			else:
-				btn.hide()
-			cnt=cnt+1			
+#		for g in range(1,len(citygrades)):
+#			var btn=$HUD/Grid/VBoxContainer2/MarginContainer/Cities.get_child(g-1)
+#			if citygrades[g] in $Munis.stats[district].keys():		
+#				btn.show()
+#				#btn.text= citygrades[g] + ' (' +str($Munis.stats[district][citygrades[g]]) +')'
+#				btn.text= 'g'+str(g) +' (' +str($Munis.stats[district][citygrades[g]]) +')'
+#			else:
+#				btn.hide()
+#			cnt=cnt+1			
 		$HUD/Grid.reload(district, neighbours(district), get_history(district), 2) 
 
 func _on_quest_over(turnstaken, cluessolved, success):
@@ -987,25 +987,30 @@ func _off_track(dx):
 	$HUD/Score.text="Press CLUE if you need more hints"
 	$HUD/Score["custom_styles/normal"].border_color=Color.red
 	$HUD/Score["custom_colors/font_color"]=Color.red
-	get_node(dx).get_child(0).color=selected_color_wrong
+	get_node("Districts/"+dx+'/Poly').color=selected_color_wrong
 
 func _on_Grid_show_neighbours(show):
 	if show:
+		if selected_district == "" or selected_district==null:
+			return
 		for i in neighbours(selected_district):
-			get_node('lbl'+i).visible=true
-			get_node(i).get_child(0).color=deselect_color.blend("79e9a5")
+			get_node('Districts/lbl'+i).visible=true
+			get_node('Districts/'+i).get_child(0).color=deselect_color.blend("79e9a5")
 	else:
 		for district in d.keys():
-			get_node('lbl'+district).visible=false
-			if district != selected_district:
-				get_node(district).get_child(0).color=deselect_color
+			get_node('Districts/lbl'+district).visible=false
+			if selected_district == "" or selected_district==null:
+				get_node('Districts/'+district).get_child(0).color=deselect_color
+			else:
+				if district != selected_district.split('/')[1]:
+					get_node('Districts/'+district).get_child(0).color=deselect_color	
 	#update()
 
 func _on_Grid_on_track(d):
 	#$HUD/Score.text="Well done!\nYou are on track"
 	#$HUD/Score["custom_styles/normal"].border_color=selected_color_right
 	#$HUD/Score["custom_colors/font_color"]=selected_color_right
-	get_node(d).get_child(0).color=selected_color_right
+	get_node("Districts/"+d).get_child(0).color=selected_color_right
 
 #var multiquest=false
 func subjectQuest():
@@ -1024,7 +1029,7 @@ func _on_Explore_pressed():
 	$HUD/LabelCities.show()
 	var randstartidx=rng.randi_range(0,d.size()-1)
 	var startat = d.keys()[randstartidx]
-	path.append(startat)
+	path.append("Districts/"+startat)
 	gotoDistrict()
 
 func _on_infobox_exit():
@@ -1032,4 +1037,9 @@ func _on_infobox_exit():
 
 
 func _on_LabelCities_item_selected(index):
-	$Munis._on_InfoBox_muni_pressed('all', citygrades[index])
+	if index!=0:
+		get_tree().call_group("allcities","hide")
+		get_tree().call_group(citygrades[index],"show")
+	else:
+		get_tree().call_group("allcities","hide")
+	#$Munis._on_InfoBox_muni_pressed('all', citygrades[index])

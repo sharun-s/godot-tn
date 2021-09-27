@@ -72,12 +72,12 @@ func draw_poly_with_lines():
 	for i in todraw:
 		for idx in range(1, i.p.size()):
 			draw_line(i.origin.linear_interpolate(i.p[idx-1], inc) , 
-			i.origin.linear_interpolate(i.p[idx], inc), Color.black , 13)
+			i.origin.linear_interpolate(i.p[idx], inc), Color.black , 4)
 			
 func draw_move_along_lines():
 	for i in todraw:
 		for idx in range(1, i.p.size()*inc):
-			draw_line(i.p[idx-1] , i.p[idx], Color.firebrick , 6)
+			draw_line(i.p[idx-1] , i.p[idx], Color.firebrick , 4)
 
 class MyCustomSorter:
 	static func sort_x(a, b):
@@ -106,4 +106,4 @@ func draw_poly_intersect():
 #			lastx=p[idx][0]
 	for j in p.size():
 		for idx in range(1, p[j].size()*inc):
-			draw_line(p[j][idx-1] , p[j][idx], Color.firebrick , 6)
+			draw_line(p[j][idx-1] , p[j][idx], Color.firebrick , 4)

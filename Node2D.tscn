@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://TN.gd" type="Script" id=1]
 [ext_resource path="res://Montreal-Regular.ttf" type="DynamicFontData" id=2]
@@ -7,31 +7,28 @@
 [ext_resource path="res://pulse.gd" type="Script" id=5]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=6]
 [ext_resource path="res://QuestMenu.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Munis.gd" type="Script" id=8]
+[ext_resource path="res://tndistricts.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Cities.tscn" type="PackedScene" id=9]
 
 [sub_resource type="DynamicFont" id=1]
-size = 30
-font_data = ExtResource( 3 )
-
-[sub_resource type="DynamicFont" id=2]
 size = 32
 font_data = ExtResource( 3 )
 
-[sub_resource type="RichTextEffect" id=3]
+[sub_resource type="RichTextEffect" id=2]
 script = ExtResource( 5 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=3]
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=5]
+[sub_resource type="DynamicFont" id=4]
 size = 30
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=5]
 size = 26
 font_data = ExtResource( 3 )
 
-[sub_resource type="StyleBoxFlat" id=7]
+[sub_resource type="StyleBoxFlat" id=6]
 content_margin_left = 0.0
 content_margin_right = 0.0
 content_margin_top = 0.0
@@ -51,32 +48,23 @@ expand_margin_right = 8.0
 expand_margin_top = 2.0
 expand_margin_bottom = 4.0
 
-[sub_resource type="DynamicFont" id=8]
+[sub_resource type="DynamicFont" id=7]
 size = 24
 font_data = ExtResource( 3 )
 
-[sub_resource type="StyleBoxFlat" id=9]
+[sub_resource type="StyleBoxFlat" id=8]
 bg_color = Color( 0, 0.121569, 0.247059, 1 )
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="DynamicFont" id=9]
 size = 64
 font_data = ExtResource( 2 )
 
+[sub_resource type="DynamicFont" id=10]
+size = 30
+font_data = ExtResource( 3 )
+
 [node name="TN" type="Node2D"]
 script = ExtResource( 1 )
-
-[node name="Label" type="Label" parent="."]
-margin_bottom = 37.0
-custom_fonts/font = SubResource( 1 )
-custom_colors/font_color = Color( 0.439216, 0.980392, 0.501961, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_constants/shadow_offset_x = 2
-custom_constants/shadow_offset_y = 2
-custom_constants/shadow_as_outline = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
@@ -84,10 +72,10 @@ __meta__ = {
 anchor_bottom = 1.0
 rect_min_size = Vector2( 400, 0 )
 size_flags_horizontal = 3
-custom_fonts/normal_font = SubResource( 2 )
+custom_fonts/normal_font = SubResource( 1 )
 bbcode_enabled = true
 scroll_active = false
-custom_effects = [ SubResource( 3 ) ]
+custom_effects = [ SubResource( 2 ) ]
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -96,10 +84,10 @@ __meta__ = {
 anchor_bottom = 1.0
 rect_min_size = Vector2( 400, 0 )
 size_flags_horizontal = 3
-custom_fonts/normal_font = SubResource( 4 )
+custom_fonts/normal_font = SubResource( 3 )
 bbcode_enabled = true
 scroll_active = false
-custom_effects = [ SubResource( 3 ) ]
+custom_effects = [ SubResource( 2 ) ]
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -110,7 +98,7 @@ anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -192.0
 margin_bottom = 55.0
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 4 )
 toggle_mode = true
 text = "Labels"
 __meta__ = {
@@ -125,7 +113,7 @@ anchor_right = 1.0
 anchor_bottom = 0.1
 margin_left = -194.65
 size_flags_vertical = 0
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -136,8 +124,8 @@ anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -20.0
 margin_right = 20.0
-custom_styles/normal = SubResource( 7 )
-custom_fonts/font = SubResource( 8 )
+custom_styles/normal = SubResource( 6 )
+custom_fonts/font = SubResource( 7 )
 custom_colors/font_color = Color( 0.996078, 0.929412, 0.372549, 1 )
 text = "test"
 align = 1
@@ -153,7 +141,7 @@ margin_left = 3.0
 margin_top = 37.0
 margin_right = 43.0
 margin_bottom = 86.0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 7 )
 align = 1
 valign = 1
 __meta__ = {
@@ -182,8 +170,8 @@ margin_right = 700.0
 margin_bottom = 1900.0
 size_flags_horizontal = 3
 size_flags_vertical = 7
-custom_styles/normal = SubResource( 9 )
-custom_fonts/font = SubResource( 10 )
+custom_styles/normal = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 text = "Districts 
 of
 Tamil Nadu"
@@ -202,7 +190,7 @@ custom_constants/separation = 0
 margin_right = 700.0
 margin_bottom = 316.0
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 4 )
 text = "Explore"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -213,7 +201,7 @@ margin_top = 316.0
 margin_right = 700.0
 margin_bottom = 633.0
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0, 0.992157, 0.533333, 1 )
 text = "Quiz"
 __meta__ = {
@@ -225,7 +213,7 @@ margin_top = 633.0
 margin_right = 700.0
 margin_bottom = 949.0
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 1, 0.756863, 0.027451, 1 )
 text = "Timed Quiz"
 __meta__ = {
@@ -237,7 +225,7 @@ margin_top = 949.0
 margin_right = 700.0
 margin_bottom = 1266.0
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 1, 0.133333, 0.027451, 1 )
 text = "Quest"
 __meta__ = {
@@ -249,7 +237,7 @@ margin_top = 1266.0
 margin_right = 700.0
 margin_bottom = 1583.0
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0.976471, 0.14902, 0.447059, 1 )
 text = "MultiQuest"
 __meta__ = {
@@ -261,7 +249,7 @@ margin_top = 1583.0
 margin_right = 700.0
 margin_bottom = 1900.0
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 4 )
 text = "History"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -272,16 +260,28 @@ one_shot = true
 
 [node name="QuizTimer" type="Timer" parent="."]
 
+[node name="Districts" parent="." instance=ExtResource( 8 )]
+
+[node name="Cities" parent="." instance=ExtResource( 9 )]
+
+[node name="Label" type="Label" parent="."]
+visible = false
+margin_bottom = 37.0
+custom_fonts/font = SubResource( 10 )
+custom_colors/font_color = Color( 0.439216, 0.980392, 0.501961, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+custom_constants/shadow_as_outline = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Gopal" parent="." instance=ExtResource( 6 )]
 visible = false
-scale = Vector2( 1.2, 1.2 )
-
-[node name="Munis" type="Node2D" parent="."]
-visible = false
-position = Vector2( 35, 115 )
-scale = Vector2( 0.99, 0.94 )
-z_index = 2
-script = ExtResource( 8 )
+scale = Vector2( 0.6, 0.6 )
+speed = 200
 
 [connection signal="ready" from="." to="." method="_on_TN_ready"]
 [connection signal="toggled" from="HUD/Labels" to="." method="_on_Labels_toggled"]
@@ -291,7 +291,6 @@ script = ExtResource( 8 )
 [connection signal="on_track" from="HUD/Grid" to="." method="_on_Grid_on_track"]
 [connection signal="quest_over" from="HUD/Grid" to="." method="_on_quest_over"]
 [connection signal="quest_over" from="HUD/Grid" to="HUD/QMenu" method="_quest_over"]
-[connection signal="show_munis" from="HUD/Grid" to="Munis" method="_on_InfoBox_muni_pressed"]
 [connection signal="show_neighbours" from="HUD/Grid" to="." method="_on_Grid_show_neighbours"]
 [connection signal="subject_quests_ready" from="HUD/Grid" to="HUD/QMenu" method="_on_subject_quests_ready"]
 [connection signal="selected" from="HUD/QMenu" to="." method="quest_selected"]

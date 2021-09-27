@@ -398,6 +398,11 @@ var generic_quest=true
 
 func reload(district, neighbours, hist='',mode=state.NON_QUEST,ftype=''):
 	show()
+	if !(district is Array):
+		if district == '':
+			pass
+		else:
+			district=district.split('/')[1]
 	historytext=hist
 	n=neighbours
 	$VBoxContainer2/MarginContainer/Neighbours.pressed=false

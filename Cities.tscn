@@ -1,0 +1,819 @@
+[gd_scene load_steps=2 format=2]
+[ext_resource path="res://Point.tscn" type="PackedScene" id=1]
+[node name="Cities" type="Node2D"]
+[node name="Alandur" parent="." instance=ExtResource( 1 ) groups=["allcities","Chennai","Municipality Selection grade"]]
+group="Municipality Selection grade"
+district="Chennai"
+radius=5
+position = Vector2( 577.4197254897463, 81.60373909684927)
+
+[node name="Ambasamudram" parent="." instance=ExtResource( 1 ) groups=["allcities","Tirunelveli","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Tirunelveli"
+radius=4
+position = Vector2( 179.8824982591832, 709.1747013394408)
+
+[node name="Ambur" parent="." instance=ExtResource( 1 ) groups=["allcities","Vellore","Municipality Selection grade"]]
+group="Municipality Selection grade"
+district="Vellore"
+radius=5
+position = Vector2( 358.73062901763114, 114.1271703262471)
+
+[node name="Anakaputhur" parent="." instance=ExtResource( 1 ) groups=["allcities","Chennai","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Chennai"
+radius=4
+position = Vector2( 566.1362987036864, 84.54980775529702)
+
+[node name="Arakkonam" parent="." instance=ExtResource( 1 ) groups=["allcities","Vellore","Municipality First grade"]]
+group="Municipality First grade"
+district="Vellore"
+radius=5
+position = Vector2( 499.28878104689284, 70.6977750371318)
+
+[node name="Arani" parent="." instance=ExtResource( 1 ) groups=["allcities","Tiruvallur","Municipality First grade"]]
+group="Municipality First grade"
+district="Tiruvallur"
+radius=5
+position = Vector2( 443.06551994437905, 130.17011846630862)
+
+[node name="Aranthangi" parent="." instance=ExtResource( 1 ) groups=["allcities","Pudukkottai","Municipality First grade"]]
+group="Municipality First grade"
+district="Pudukkottai"
+radius=5
+position = Vector2( 401.7995853840148, 495.78890657831244)
+
+[node name="Arcot" parent="." instance=ExtResource( 1 ) groups=["allcities","Vellore","Municipality First grade"]]
+group="Municipality First grade"
+district="Vellore"
+radius=5
+position = Vector2( 448.0092894124973, 83.49972387703838)
+
+[node name="Ariyalur" parent="." instance=ExtResource( 1 ) groups=["allcities","Ariyalur","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Ariyalur"
+radius=4
+position = Vector2( 413.66140120875025, 353.718067873388)
+
+[node name="Aruppukkottai" parent="." instance=ExtResource( 1 ) groups=["allcities","Virudhunagar","Municipality First grade"]]
+group="Municipality First grade"
+district="Virudhunagar"
+radius=5
+position = Vector2( 271.4876384037525, 591.0402650353508)
+
+[node name="Attur" parent="." instance=ExtResource( 1 ) groups=["allcities","Salem","Municipality Selection grade"]]
+group="Municipality Selection grade"
+district="Salem"
+radius=5
+position = Vector2( 343.86326017715146, 286.32036221803764)
+
+[node name="Avadi" parent="." instance=ExtResource( 1 ) groups=["allcities","Thiruvallur","Municipality Special grade"]]
+group="Municipality Special grade"
+district="Thiruvallur"
+radius=5
+position = Vector2( 562.2976071166759, 64.5398760751475)
+
+[node name="Bhavani" parent="." instance=ExtResource( 1 ) groups=["allcities","Erode","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Erode"
+radius=4
+position = Vector2( 210.41754497404145, 308.1009978379009)
+
+[node name="Bodinayakanur" parent="." instance=ExtResource( 1 ) groups=["allcities","Theni","Municipality First grade"]]
+group="Municipality First grade"
+district="Theni"
+radius=5
+position = Vector2( 162.43390013640783, 516.6593236587016)
+
+[node name="Chengalpattu" parent="." instance=ExtResource( 1 ) groups=["allcities","Kancheepuram","Municipality First grade"]]
+group="Municipality First grade"
+district="Kancheepuram"
+radius=5
+position = Vector2( 545.3336917904053, 128.22551917790543)
+
+[node name="Chennai" parent="." instance=ExtResource( 1 ) groups=["allcities","Chennai, Kanchipuram and Tiruvallur","Muni Corporation"]]
+group="Muni Corporation"
+district="Chennai, Kanchipuram and Tiruvallur"
+radius=7
+position = Vector2( 586.5317716607697, 69.88752594131779)
+
+[node name="Chidambaram" parent="." instance=ExtResource( 1 ) groups=["allcities","Cuddalore","Municipality Selection grade"]]
+group="Municipality Selection grade"
+district="Cuddalore"
+radius=5
+position = Vector2( 504.1356133740919, 315.39324699247413)
+
+[node name="Chinnamanur" parent="." instance=ExtResource( 1 ) groups=["allcities","Theni","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Theni"
+radius=4
+position = Vector2( 166.79604966710212, 544.3698704460808)
+
+[node name="Coimbatore" parent="." instance=ExtResource( 1 ) groups=["allcities","Coimbatore","Muni Corporation"]]
+group="Muni Corporation"
+district="Coimbatore"
+radius=7
+position = Vector2( 107.5435185418446, 371.0574160252015)
+
+[node name="Colachel" parent="." instance=ExtResource( 1 ) groups=["allcities","Kanniyakumari","Municipality First grade"]]
+group="Municipality First grade"
+district="Kanniyakumari"
+radius=5
+position = Vector2( 146.43935185719783, 786.4725423779194)
+
+[node name="Coonoor" parent="." instance=ExtResource( 1 ) groups=["allcities","Nilgiris","Municipality Selection grade"]]
+group="Municipality Selection grade"
+district="Nilgiris"
+radius=5
+position = Vector2( 85.36925842748315, 322.68549614704784)
+
+[node name="Cuddalore" parent="." instance=ExtResource( 1 ) groups=["allcities","Cuddalore","Municipality Special grade"]]
+group="Municipality Special grade"
+district="Cuddalore"
+radius=5
+position = Vector2( 511.40586259191514, 264.34750291046)
+
+[node name="Cumbum" parent="." instance=ExtResource( 1 ) groups=["allcities","Theni","Municipality First grade"]]
+group="Municipality First grade"
+district="Theni"
+radius=5
+position = Vector2( 155.1636509185846, 558.9543687552275)
+
+[node name="Devakottai" parent="." instance=ExtResource( 1 ) groups=["allcities","Sivagangai","Municipality First grade"]]
+group="Municipality First grade"
+district="Sivagangai"
+radius=5
+position = Vector2( 377.1485941874653, 528.0433354870968)
+
+[node name="Dharapuram" parent="." instance=ExtResource( 1 ) groups=["allcities","Tiruppur","Municipality First grade"]]
+group="Municipality First grade"
+district="Tiruppur"
+radius=5
+position = Vector2( 187.15274747700641, 413.10938566375853)
+
+[node name="Dharmapuri" parent="." instance=ExtResource( 1 ) groups=["allcities","Dharmapuri","Municipality Selection grade"]]
+group="Municipality Selection grade"
+district="Dharmapuri"
+radius=5
+position = Vector2( 279.3395075590033, 209.50978926806783)
+
+[node name="Dindigul" parent="." instance=ExtResource( 1 ) groups=["allcities","Dindigul","Muni Corporation"]]
+group="Muni Corporation"
+district="Dindigul"
+radius=7
+position = Vector2( 249.67689075028466, 468.5304792385168)
+
+[node name="Edappadi" parent="." instance=ExtResource( 1 ) groups=["allcities","Salem","Municipality First grade"]]
+group="Municipality First grade"
+district="Salem"
+radius=5
+position = Vector2( 235.13639231463821, 289.1411500360098)
+
+[node name="Erode" parent="." instance=ExtResource( 1 ) groups=["allcities","Erode","Muni Corporation"]]
+group="Muni Corporation"
+district="Erode"
+radius=7
+position = Vector2( 218.17247698836763, 322.68549614704784)
+
+[node name="Gobichettipalayam" parent="." instance=ExtResource( 1 ) groups=["allcities","Erode","Municipality Selection grade"]]
+group="Municipality Selection grade"
+district="Erode"
+radius=5
+position = Vector2( 175.27800660321373, 307.5743355610093)
+
+[node name="Gudalur (Nilgiris district)" parent="." instance=ExtResource( 1 ) groups=["allcities","Nilgiris","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Nilgiris"
+radius=4
+position = Vector2( 38.83966343341672, 300.8087486833274)
+
+[node name="Gudalur (Theni district)" parent="." instance=ExtResource( 1 ) groups=["allcities","Theni","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Theni"
+radius=4
+position = Vector2( 150.8015013878903, 566.2466179098012)
+
+[node name="Gudiyatham" parent="." instance=ExtResource( 1 ) groups=["allcities","Vellore","Municipality First grade"]]
+group="Municipality First grade"
+district="Vellore"
+radius=5
+position = Vector2( 382.635208445834, 90.83280962687763)
+
+[node name="Hosur" parent="." instance=ExtResource( 1 ) groups=["allcities","Krishnagiri","Municipality Special grade"]]
+group="Municipality Special grade"
+district="Krishnagiri"
+radius=5
+position = Vector2( 232.08288764315148, 120.69019456536307)
+
+[node name="Jayankondam" parent="." instance=ExtResource( 1 ) groups=["allcities","Ariyalur","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Ariyalur"
+radius=4
+position = Vector2( 455.4249436146765, 342.81210381367055)
+
+[node name="Jolarpettai" parent="." instance=ExtResource( 1 ) groups=["allcities","Vellore","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Vellore"
+radius=4
+position = Vector2( 341.2820308948558, 146.21306660636992)
+
+[node name="Kadayanallur" parent="." instance=ExtResource( 1 ) groups=["allcities","Tirunelveli","Municipality First grade"]]
+group="Municipality First grade"
+district="Tirunelveli"
+radius=5
+position = Vector2( 162.43390013640783, 653.7536077646826)
+
+[node name="Kallakurichi" parent="." instance=ExtResource( 1 ) groups=["allcities","Viluppuram","Municipality First grade"]]
+group="Municipality First grade"
+district="Viluppuram"
+radius=5
+position = Vector2( 396.8267349190246, 266.0976427075577)
+
+[node name="Kancheepuram" parent="." instance=ExtResource( 1 ) groups=["allcities","Kancheepuram","Municipality Special grade"]]
+group="Municipality Special grade"
+district="Kancheepuram"
+radius=5
+position = Vector2( 505.58966321765547, 108.29337100258817)
+
+[node name="Kangeyam" parent="." instance=ExtResource( 1 ) groups=["allcities","Tiruppur","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Tiruppur"
+radius=4
+position = Vector2( 193.25975681997807, 372.9436773203679)
+
+[node name="Karaikudi" parent="." instance=ExtResource( 1 ) groups=["allcities","Sivagangai","Municipality Special grade"]]
+group="Municipality Special grade"
+district="Sivagangai"
+radius=5
+position = Vector2( 370.36302776614684, 509.36707450412814)
+
+[node name="Karur" parent="." instance=ExtResource( 1 ) groups=["allcities","Karur","Municipality Special grade"]]
+group="Municipality Special grade"
+district="Karur"
+radius=5
+position = Vector2( 268.5795387166254, 381.0234893836355)
+
+[node name="Kayalpattinam" parent="." instance=ExtResource( 1 ) groups=["allcities","Thoothukudi","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Thoothukudi"
+radius=4
+position = Vector2( 274.39573809088324, 728.1345491413317)
+
+[node name="Keelakarai" parent="." instance=ExtResource( 1 ) groups=["allcities","Ramanathapuram","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Ramanathapuram"
+radius=4
+position = Vector2( 371.0028096973165, 631.6799695737886)
+
+[node name="Kodaikanal" parent="." instance=ExtResource( 1 ) groups=["allcities","Dindigul","Municipality Special grade"]]
+group="Municipality Special grade"
+district="Dindigul"
+radius=5
+position = Vector2( 181.33654810274857, 486.03187720949313)
+
+[node name="Komarapalayam" parent="." instance=ExtResource( 1 ) groups=["allcities","Namakkal","Municipality First grade"]]
+group="Municipality First grade"
+district="Namakkal"
+radius=5
+position = Vector2( 214.98164748750787, 309.0733025866766)
+
+[node name="Koothanallur" parent="." instance=ExtResource( 1 ) groups=["allcities","Thiruvarur","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Thiruvarur"
+radius=4
+position = Vector2( 477.478033393425, 415.0539849521615)
+
+[node name="Kovilpatti" parent="." instance=ExtResource( 1 ) groups=["allcities","Thoothukudi","Municipality Special grade"]]
+group="Municipality Special grade"
+district="Thoothukudi"
+radius=5
+position = Vector2( 238.04449200176896, 640.6275592864504)
+
+[node name="Krishnagiri" parent="." instance=ExtResource( 1 ) groups=["allcities","Krishnagiri","Municipality First grade"]]
+group="Municipality First grade"
+district="Krishnagiri"
+radius=5
+position = Vector2( 290.39028637009505, 150.58841609911428)
+
+[node name="Kulithalai" parent="." instance=ExtResource( 1 ) groups=["allcities","Karur","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Karur"
+radius=4
+position = Vector2( 293.298386057224, 437.9030327893081)
+
+[node name="Kumbakonam" parent="." instance=ExtResource( 1 ) groups=["allcities","Thanjavur","Municipality Special grade"]]
+group="Municipality Special grade"
+district="Thanjavur"
+radius=5
+position = Vector2( 463.42221775428334, 378.1065897218059)
+
+[node name="Kuzhithurai" parent="." instance=ExtResource( 1 ) groups=["allcities","Kanniyakumari","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Kanniyakumari"
+radius=4
+position = Vector2( 138.19973559231403, 765.0819443716873)
+
+[node name="Madurai" parent="." instance=ExtResource( 1 ) groups=["allcities","Madurai","Muni Corporation"]]
+group="Muni Corporation"
+district="Madurai"
+radius=7
+position = Vector2( 271.4876384037525, 534.1607216296779)
+
+[node name="Maduranthakam" parent="." instance=ExtResource( 1 ) groups=["allcities","Kancheepuram","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Kancheepuram"
+radius=4
+position = Vector2( 531.0209949816017, 153.49073126263443)
+
+[node name="Manapparai" parent="." instance=ExtResource( 1 ) groups=["allcities","Tiruchirappalli","Municipality First grade"]]
+group="Municipality First grade"
+district="Tiruchirappalli"
+radius=5
+position = Vector2( 317.2718874480106, 430.9622700439852)
+
+[node name="Mannargudi" parent="." instance=ExtResource( 1 ) groups=["allcities","Tiruvarur","Municipality Selection grade"]]
+group="Municipality Selection grade"
+district="Tiruvarur"
+radius=5
+position = Vector2( 467.0573423631922, 422.88099953088704)
+
+[node name="Maraimalainagar" parent="." instance=ExtResource( 1 ) groups=["allcities","Kancheepuram","Municipality Special grade"]]
+group="Municipality Special grade"
+district="Kancheepuram"
+radius=5
+position = Vector2( 551.4796216855393, 113.37096408891762)
+
+[node name="Mayiladuthurai" parent="." instance=ExtResource( 1 ) groups=["allcities","Nagapattinam","Municipality Selection grade"]]
+group="Municipality Selection grade"
+district="Nagapattinam"
+radius=5
+position = Vector2( 496.8653641562687, 359.14674191991503)
+
+[node name="Melur" parent="." instance=ExtResource( 1 ) groups=["allcities","Madurai","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Madurai"
+radius=4
+position = Vector2( 304.9307848057397, 512.2839741659575)
+
+[node name="Melvisharam" parent="." instance=ExtResource( 1 ) groups=["allcities","Vellore","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Vellore"
+radius=4
+position = Vector2( 443.5453563927531, 91.76913441832471)
+
+[node name="Mettupalayam" parent="." instance=ExtResource( 1 ) groups=["allcities","Coimbatore","Municipality Selection grade"]]
+group="Municipality Selection grade"
+district="Coimbatore"
+radius=5
+position = Vector2( 104.27190639382388, 329.9777453016211)
+
+[node name="Mettur" parent="." instance=ExtResource( 1 ) groups=["allcities","Salem","Municipality Selection grade"]]
+group="Municipality Selection grade"
+district="Salem"
+radius=5
+position = Vector2( 227.866143096815, 257.0552537558865)
+
+[node name="Nagapattinam" parent="." instance=ExtResource( 1 ) groups=["allcities","Nagapattinam","Municipality Selection grade"]]
+group="Municipality Selection grade"
+district="Nagapattinam"
+radius=5
+position = Vector2( 523.0382613404308, 407.27558634009984)
+
+[node name="Nagercoil" parent="." instance=ExtResource( 1 ) groups=["allcities","Kanniyakumari","Municipality Special grade"]]
+group="Municipality Special grade"
+district="Kanniyakumari"
+radius=5
+position = Vector2( 174.06629888492716, 786.4725423779194)
+
+[node name="Namakkal" parent="." instance=ExtResource( 1 ) groups=["allcities","Namakkal","Municipality Selection grade"]]
+group="Municipality Selection grade"
+district="Namakkal"
+radius=5
+position = Vector2( 281.1813045122017, 339.7007446605355)
+
+[node name="Nellikuppam" parent="." instance=ExtResource( 1 ) groups=["allcities","Cuddalore","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Cuddalore"
+radius=4
+position = Vector2( 501.70735013533886, 261.91189169283257)
+
+[node name="Nelliyalam" parent="." instance=ExtResource( 1 ) groups=["allcities","Nilgiris","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Nilgiris"
+radius=4
+position = Vector2( 20.785210724474382, 301.2138739604593)
+
+[node name="Oddanchatram" parent="." instance=ExtResource( 1 ) groups=["allcities","Dindigul","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Dindigul"
+radius=4
+position = Vector2( 220.5958938789936, 449.5706314366257)
+
+[node name="Padmanabhapuram" parent="." instance=ExtResource( 1 ) groups=["allcities","Kanniyakumari","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Kanniyakumari"
+radius=4
+position = Vector2( 159.5258004492789, 777.7218433924313)
+
+[node name="Palani" parent="." instance=ExtResource( 1 ) groups=["allcities","Dindigul","Municipality Selection grade"]]
+group="Municipality Selection grade"
+district="Dindigul"
+radius=5
+position = Vector2( 187.15274747700641, 453.9459809293701)
+
+[node name="Palladam" parent="." instance=ExtResource( 1 ) groups=["allcities","Tiruppur","Municipality First grade"]]
+group="Municipality First grade"
+district="Tiruppur"
+radius=5
+position = Vector2( 155.1636509185846, 376.6481398908911)
+
+[node name="Pallavapuram" parent="." instance=ExtResource( 1 ) groups=["allcities","Chennai","Municipality Special grade"]]
+group="Municipality Special grade"
+district="Chennai"
+radius=5
+position = Vector2( 573.9300058651934, 84.95817370795294)
+
+[node name="Pallipalayam" parent="." instance=ExtResource( 1 ) groups=["allcities","Namakkal","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Namakkal"
+radius=4
+position = Vector2( 220.29359691651734, 320.55382587418285)
+
+[node name="Pammal" parent="." instance=ExtResource( 1 ) groups=["allcities","Kancheepuram","Municipality Selection grade"]]
+group="Municipality Selection grade"
+district="Kancheepuram"
+radius=5
+position = Vector2( 567.346358983501, 85.68739862341044)
+
+[node name="Panruti" parent="." instance=ExtResource( 1 ) groups=["allcities","Cuddalore","Municipality First grade"]]
+group="Municipality First grade"
+district="Cuddalore"
+radius=5
+position = Vector2( 482.32486572062226, 261.43060324863063)
+
+[node name="Paramakudi" parent="." instance=ExtResource( 1 ) groups=["allcities","Ramanathapuram","Municipality First grade"]]
+group="Municipality First grade"
+district="Ramanathapuram"
+radius=5
+position = Vector2( 342.8814857227753, 586.0815356102407)
+
+[node name="Pattukkottai" parent="." instance=ExtResource( 1 ) groups=["allcities","Thanjavur","Municipality Selection grade"]]
+group="Municipality Selection grade"
+district="Thanjavur"
+radius=5
+position = Vector2( 448.8817193186351, 456.8628805911992)
+
+[node name="Perambalur" parent="." instance=ExtResource( 1 ) groups=["allcities","Perambalur","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Perambalur"
+radius=4
+position = Vector2( 384.9035262017933, 340.18689411802393)
+
+[node name="Periyakulam" parent="." instance=ExtResource( 1 ) groups=["allcities","Theni","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Theni"
+radius=4
+position = Vector2( 191.5148970077007, 502.0748253495549)
+
+[node name="Pernampattu" parent="." instance=ExtResource( 1 ) groups=["allcities","Vellore","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Vellore"
+radius=4
+position = Vector2( 363.09277854832544, 90.93781801470323)
+
+[node name="Pollachi" parent="." instance=ExtResource( 1 ) groups=["allcities","Coimbatore","Municipality Special grade"]]
+group="Municipality Special grade"
+district="Coimbatore"
+radius=5
+position = Vector2( 112.70539548649867, 423.4643794632527)
+
+[node name="Poonamallee" parent="." instance=ExtResource( 1 ) groups=["allcities","Thiruvallur","Municipality First grade"]]
+group="Municipality First grade"
+district="Thiruvallur"
+radius=5
+position = Vector2( 563.7516569602412, 74.7490248915501)
+
+[node name="Pudukkottai" parent="." instance=ExtResource( 1 ) groups=["allcities","Pudukkottai","Municipality Selection grade"]]
+group="Municipality Selection grade"
+district="Pudukkottai"
+radius=5
+position = Vector2( 376.1792271404047, 464.1551297457727)
+
+[node name="Puliyankudi" parent="." instance=ExtResource( 1 ) groups=["allcities","Tirunelveli","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Tirunelveli"
+radius=4
+position = Vector2( 144.98530201363428, 650.8367081028532)
+
+[node name="Punjai Puliampatti" parent="." instance=ExtResource( 1 ) groups=["allcities","Erode","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Erode"
+radius=4
+position = Vector2( 135.9701929835337, 322.68549614704784)
+
+[node name="Rajapalayam" parent="." instance=ExtResource( 1 ) groups=["allcities","Virudhunagar","Municipality Special grade"]]
+group="Municipality Special grade"
+district="Virudhunagar"
+radius=5
+position = Vector2( 191.5148970077007, 599.790964020839)
+
+[node name="Ramanathapuram" parent="." instance=ExtResource( 1 ) groups=["allcities","Ramanathapuram","Municipality First grade"]]
+group="Municipality First grade"
+district="Ramanathapuram"
+radius=5
+position = Vector2( 378.36030190575184, 611.8960976174308)
+
+[node name="Rameswaram" parent="." instance=ExtResource( 1 ) groups=["allcities","Ramanathapuram","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Ramanathapuram"
+radius=4
+position = Vector2( 447.8638844281413, 623.417851281657)
+
+[node name="Ranipet" parent="." instance=ExtResource( 1 ) groups=["allcities","Vellore","Municipality Selection grade"]]
+group="Municipality Selection grade"
+district="Vellore"
+radius=5
+position = Vector2( 450.3648501590724, 92.61503532025517)
+
+[node name="Rasipuram" parent="." instance=ExtResource( 1 ) groups=["allcities","Namakkal","Municipality First grade"]]
+group="Municipality First grade"
+district="Namakkal"
+radius=5
+position = Vector2( 281.66598730870646, 305.1840981760713)
+
+[node name="Salem" parent="." instance=ExtResource( 1 ) groups=["allcities","Salem","Muni Corporation"]]
+group="Muni Corporation"
+district="Salem"
+radius=7
+position = Vector2( 280.2119374651411, 278.93200121960695)
+
+[node name="Sankarankoil" parent="." instance=ExtResource( 1 ) groups=["allcities","Tirunelveli","Municipality First grade"]]
+group="Municipality First grade"
+district="Tirunelveli"
+radius=5
+position = Vector2( 191.5148970077007, 642.0860091173649)
+
+[node name="Sathyamangalam" parent="." instance=ExtResource( 1 ) groups=["allcities","Erode","Municipality First grade"]]
+group="Municipality First grade"
+district="Erode"
+radius=5
+position = Vector2( 147.8934017007632, 298.37313746569976)
+
+[node name="Sattur" parent="." instance=ExtResource( 1 ) groups=["allcities","Virudhunagar","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Virudhunagar"
+radius=4
+position = Vector2( 246.76879106315755, 611.4585626681567)
+
+[node name="Sembakkam" parent="." instance=ExtResource( 1 ) groups=["allcities","Chennai","Municipality First grade"]]
+group="Municipality First grade"
+district="Chennai"
+radius=5
+position = Vector2( 571.7489310998462, 92.77708513941798)
+
+[node name="Sengottai" parent="." instance=ExtResource( 1 ) groups=["allcities","Tirunelveli","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Tirunelveli"
+radius=4
+position = Vector2( 147.368344302251, 669.3104545761003)
+
+[node name="Sirkazhi" parent="." instance=ExtResource( 1 ) groups=["allcities","Mayiladuthurai","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Mayiladuthurai"
+radius=4
+position = Vector2( 509.370192810924, 338.87428927020073)
+
+[node name="Sivagangai" parent="." instance=ExtResource( 1 ) groups=["allcities","Sivagangai","Municipality First grade"]]
+group="Municipality First grade"
+district="Sivagangai"
+radius=5
+position = Vector2( 326.74153245920934, 538.5360711224221)
+
+[node name="Sivakasi" parent="." instance=ExtResource( 1 ) groups=["allcities","Virudhunagar","Municipality Special grade"]]
+group="Municipality Special grade"
+district="Virudhunagar"
+radius=5
+position = Vector2( 230.77424278394392, 599.790964020839)
+
+[node name="Srivilliputhur" parent="." instance=ExtResource( 1 ) groups=["allcities","Virudhunagar","Municipality First grade"]]
+group="Municipality First grade"
+district="Virudhunagar"
+radius=5
+position = Vector2( 203.5835107092862, 590.7485750691678)
+
+[node name="Tambaram" parent="." instance=ExtResource( 1 ) groups=["allcities","Chennai","Municipality Special grade"]]
+group="Municipality Special grade"
+district="Chennai"
+radius=5
+position = Vector2( 563.7516569602412, 92.25042286252665)
+
+[node name="Tenkasi" parent="." instance=ExtResource( 1 ) groups=["allcities","Tirunelveli","Municipality First grade"]]
+group="Municipality First grade"
+district="Tirunelveli"
+radius=5
+position = Vector2( 155.1636509185846, 669.7965559047441)
+
+[node name="Thanjavur" parent="." instance=ExtResource( 1 ) groups=["allcities","Thanjavur","Muni Corporation"]]
+group="Muni Corporation"
+district="Thanjavur"
+radius=7
+position = Vector2( 422.14335814486003, 405.33098705169687)
+
+[node name="Theni Allinagaram" parent="." instance=ExtResource( 1 ) groups=["allcities","Theni","Municipality Selection grade"]]
+group="Municipality Selection grade"
+district="Theni"
+radius=5
+position = Vector2( 152.88079266418936, 518.2636184727078)
+
+[node name="Thiruthangal" parent="." instance=ExtResource( 1 ) groups=["allcities","Virudhunagar","Municipality First grade"]]
+group="Municipality First grade"
+district="Virudhunagar"
+radius=5
+position = Vector2( 226.77560571414324, 596.0233024437925)
+
+[node name="Thiruthani" parent="." instance=ExtResource( 1 ) groups=["allcities","Thiruvallur","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Thiruvallur"
+radius=4
+position = Vector2( 493.95726446913795, 55.78917708965923)
+
+[node name="Thiruthuraipoondi" parent="." instance=ExtResource( 1 ) groups=["allcities","Thiruvarur","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Thiruvarur"
+radius=4
+position = Vector2( 496.8653641562687, 442.27838228205246)
+
+[node name="Thiruvannamalai" parent="." instance=ExtResource( 1 ) groups=["allcities","Tiruvannamalai","Municipality Special grade"]]
+group="Municipality Special grade"
+district="Tiruvannamalai"
+radius=5
+position = Vector2( 412.5304732295208, 195.8003608574695)
+
+[node name="Thiruvathipuram" parent="." instance=ExtResource( 1 ) groups=["allcities","Tiruvannamalai","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Tiruvannamalai"
+radius=4
+position = Vector2( 481.2197878395127, 131.92025826340614)
+
+[node name="Thiruverkadu" parent="." instance=ExtResource( 1 ) groups=["allcities","Thiruvallur","Municipality Selection grade"]]
+group="Municipality Selection grade"
+district="Thiruvallur"
+radius=5
+position = Vector2( 565.8207698876322, 71.90081821675699)
+
+[node name="Thoothukudi" parent="." instance=ExtResource( 1 ) groups=["allcities","Thoothukudi","Muni Corporation"]]
+group="Muni Corporation"
+district="Thoothukudi"
+radius=7
+position = Vector2( 277.30383777801217, 693.1317531993791)
+
+[node name="Thuraiyur" parent="." instance=ExtResource( 1 ) groups=["allcities","Tiruchirappalli","Municipality Selection grade"]]
+group="Municipality Selection grade"
+district="Tiruchirappalli"
+radius=5
+position = Vector2( 347.2597912012825, 349.1401557420779)
+
+[node name="Thuvakudi" parent="." instance=ExtResource( 1 ) groups=["allcities","Tiruchirappalli","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Tiruchirappalli"
+radius=4
+position = Vector2( 373.43268838544464, 409.26069844790595)
+
+[node name="Tindivanam" parent="." instance=ExtResource( 1 ) groups=["allcities","Viluppuram","Municipality Selection grade"]]
+group="Municipality Selection grade"
+district="Viluppuram"
+radius=5
+position = Vector2( 496.8653641562687, 193.32099614491472)
+
+[node name="Tiruchengode" parent="." instance=ExtResource( 1 ) groups=["allcities","Namakkal","Municipality Selection grade"]]
+group="Municipality Selection grade"
+district="Namakkal"
+radius=5
+position = Vector2( 241.6977922337228, 318.2372241627579)
+
+[node name="Tiruchirappalli" parent="." instance=ExtResource( 1 ) groups=["allcities","Tiruchirapalli","Muni Corporation"]]
+group="Muni Corporation"
+district="Tiruchirapalli"
+radius=7
+position = Vector2( 356.6303354453921, 402.1710119318984)
+
+[node name="Tirumangalam" parent="." instance=ExtResource( 1 ) groups=["allcities","Madurai","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Madurai"
+radius=4
+position = Vector2( 254.03904028097895, 547.2867701079101)
+
+[node name="Tirunelveli" parent="." instance=ExtResource( 1 ) groups=["allcities","Tirunelveli","Muni Corporation"]]
+group="Muni Corporation"
+district="Tirunelveli"
+radius=7
+position = Vector2( 213.32564466117037, 704.7993518466967)
+
+[node name="Tiruppattur" parent="." instance=ExtResource( 1 ) groups=["allcities","Tiruppattur","Municipality Selection grade"]]
+group="Municipality Selection grade"
+district="Tiruppattur"
+radius=5
+position = Vector2( 344.1901305819829, 154.9637655918582)
+
+[node name="Tiruppur" parent="." instance=ExtResource( 1 ) groups=["allcities","Tiruppur","Muni Corporation"]]
+group="Muni Corporation"
+district="Tiruppur"
+radius=7
+position = Vector2( 160.97985029284428, 357.68829208900047)
+
+[node name="Tiruvallur" parent="." instance=ExtResource( 1 ) groups=["allcities","Tiruvallur","Municipality First grade"]]
+group="Municipality First grade"
+district="Tiruvallur"
+radius=5
+position = Vector2( 534.6706600889484, 60.16452658240337)
+
+[node name="Tiruvarur" parent="." instance=ExtResource( 1 ) groups=["allcities","Thiruvarur","Municipality First grade"]]
+group="Municipality First grade"
+district="Thiruvarur"
+radius=5
+position = Vector2( 494.97509935963535, 406.8380513908255)
+
+[node name="Udhagamandalam" parent="." instance=ExtResource( 1 ) groups=["allcities","Nilgiris","Municipality Special grade"]]
+group="Municipality Special grade"
+district="Nilgiris"
+radius=5
+position = Vector2( 67.9206603047096, 313.9347971615596)
+
+[node name="Udumalaipettai" parent="." instance=ExtResource( 1 ) groups=["allcities","Tiruppur","Municipality Selection grade"]]
+group="Municipality Selection grade"
+district="Tiruppur"
+radius=5
+position = Vector2( 146.43935185719783, 434.986133127479)
+
+[node name="Usilampatti" parent="." instance=ExtResource( 1 ) groups=["allcities","Madurai","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Madurai"
+radius=4
+position = Vector2( 227.866143096815, 523.9515728132749)
+
+[node name="Valparai" parent="." instance=ExtResource( 1 ) groups=["allcities","Coimbatore","Municipality Selection grade"]]
+group="Municipality Selection grade"
+district="Coimbatore"
+radius=5
+position = Vector2( 107.18000608095281, 465.61357957668747)
+
+[node name="Vandavasi" parent="." instance=ExtResource( 1 ) groups=["allcities","Tiruvannamalai","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Tiruvannamalai"
+radius=4
+position = Vector2( 492.5032146255762, 154.9637655918582)
+
+[node name="Vaniyambadi" parent="." instance=ExtResource( 1 ) groups=["allcities","Vellore","Municipality Selection grade"]]
+group="Municipality Selection grade"
+district="Vellore"
+radius=5
+position = Vector2( 347.0982302691136, 128.71166863539383)
+
+[node name="Vedaranyam" parent="." instance=ExtResource( 1 ) groups=["allcities","Nagapattinam","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Nagapattinam"
+radius=4
+position = Vector2( 525.9867516241156, 464.84384184182704)
+
+[node name="Vellakoil" parent="." instance=ExtResource( 1 ) groups=["allcities","Tiruppur","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Tiruppur"
+radius=4
+position = Vector2( 216.2337443482993, 383.9403890454648)
+
+[node name="Vellore" parent="." instance=ExtResource( 1 ) groups=["allcities","Vellore","Muni Corporation"]]
+group="Muni Corporation"
+district="Vellore"
+radius=7
+position = Vector2( 421.7354811691912, 93.67693264214427)
+
+[node name="Vikramasingapuram" parent="." instance=ExtResource( 1 ) groups=["allcities","Tirunelveli","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Tirunelveli"
+radius=4
+position = Vector2( 159.5258004492789, 713.550050832185)
+
+[node name="Viluppuram" parent="." instance=ExtResource( 1 ) groups=["allcities","Viluppuram","Municipality Selection grade"]]
+group="Municipality Selection grade"
+district="Viluppuram"
+radius=5
+position = Vector2( 474.03678161230346, 236.49111113998947)
+
+[node name="Virudhachalam" parent="." instance=ExtResource( 1 ) groups=["allcities","Cuddalore","Municipality First grade"]]
+group="Municipality First grade"
+district="Cuddalore"
+radius=5
+position = Vector2( 450.33576916220045, 300.8087486833274)
+
+[node name="Virudhunagar" parent="." instance=ExtResource( 1 ) groups=["allcities","Virudhunagar","Municipality Selection grade"]]
+group="Municipality Selection grade"
+district="Virudhunagar"
+radius=5
+position = Vector2( 249.67689075028466, 580.3449667614595)
+
+[node name="Walajapet" parent="." instance=ExtResource( 1 ) groups=["allcities","Vellore","Municipality Second grade"]]
+group="Municipality Second grade"
+district="Vellore"
+radius=4
+position = Vector2( 448.0092894124973, 82.04127404612359)
+
