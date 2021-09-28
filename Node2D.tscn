@@ -56,7 +56,7 @@ font_data = ExtResource( 3 )
 bg_color = Color( 0, 0.121569, 0.247059, 1 )
 
 [sub_resource type="DynamicFont" id=9]
-size = 64
+size = 40
 font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=10]
@@ -166,8 +166,8 @@ __meta__ = {
 }
 
 [node name="Title" type="Label" parent="HUD/StartScreen"]
-margin_right = 700.0
-margin_bottom = 1900.0
+margin_right = 400.0
+margin_bottom = 800.0
 size_flags_horizontal = 3
 size_flags_vertical = 7
 custom_styles/normal = SubResource( 8 )
@@ -179,16 +179,16 @@ align = 1
 valign = 1
 
 [node name="B" type="VBoxContainer" parent="HUD/StartScreen"]
-margin_left = 700.0
-margin_right = 1400.0
-margin_bottom = 1900.0
+margin_left = 400.0
+margin_right = 800.0
+margin_bottom = 800.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 0
 
 [node name="Explore" type="Button" parent="HUD/StartScreen/B"]
-margin_right = 700.0
-margin_bottom = 316.0
+margin_right = 400.0
+margin_bottom = 133.0
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 4 )
 text = "Explore"
@@ -197,9 +197,9 @@ __meta__ = {
 }
 
 [node name="Quiz" type="Button" parent="HUD/StartScreen/B"]
-margin_top = 316.0
-margin_right = 700.0
-margin_bottom = 633.0
+margin_top = 133.0
+margin_right = 400.0
+margin_bottom = 266.0
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0, 0.992157, 0.533333, 1 )
@@ -209,9 +209,9 @@ __meta__ = {
 }
 
 [node name="Timed" type="Button" parent="HUD/StartScreen/B"]
-margin_top = 633.0
-margin_right = 700.0
-margin_bottom = 949.0
+margin_top = 266.0
+margin_right = 400.0
+margin_bottom = 399.0
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 1, 0.756863, 0.027451, 1 )
@@ -221,9 +221,9 @@ __meta__ = {
 }
 
 [node name="Quest" type="Button" parent="HUD/StartScreen/B"]
-margin_top = 949.0
-margin_right = 700.0
-margin_bottom = 1266.0
+margin_top = 399.0
+margin_right = 400.0
+margin_bottom = 533.0
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 1, 0.133333, 0.027451, 1 )
@@ -233,9 +233,9 @@ __meta__ = {
 }
 
 [node name="Quest2" type="Button" parent="HUD/StartScreen/B"]
-margin_top = 1266.0
-margin_right = 700.0
-margin_bottom = 1583.0
+margin_top = 533.0
+margin_right = 400.0
+margin_bottom = 666.0
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0.976471, 0.14902, 0.447059, 1 )
@@ -245,9 +245,9 @@ __meta__ = {
 }
 
 [node name="Learn" type="Button" parent="HUD/StartScreen/B"]
-margin_top = 1583.0
-margin_right = 700.0
-margin_bottom = 1900.0
+margin_top = 666.0
+margin_right = 400.0
+margin_bottom = 800.0
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 4 )
 text = "History"

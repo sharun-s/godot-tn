@@ -390,7 +390,7 @@ func on_district_select(_viewport, event, _idx, district):
 			path.append("Districts/"+district)
 		else:
 			#on release touch check whats in path and move if required
-			select("Districts/"+district)
+			decide_action("Districts/"+district)
 		#walkpath.clear_points()
 		#walkpath.add_point(get_node(district).position)
 	#on hover show label
@@ -412,7 +412,7 @@ func setDistrict_Color_Text(dist, c, showlabel:=true):
 		$Label.text=dist.split('/')[1]
 		$Label.rect_position=center(dist)
 
-func select(district):
+func decide_action(district):
 	if game_in_progress==1 and attempts < turns:
 		if district.split('/')[1] == challenge:
 			score+=1
@@ -452,26 +452,45 @@ func select(district):
 		#check if path has anything and move
 		#if !moving:
 		gotoDistrict()
-		
+
+enum selectionType {
+	new, #moving from no selected district to first selected district 
+	change, #moving from one selected district to another
+	deselection, #selected district is clicked again
+	}
+
+#TODO should probable be a property of districts
+func selection_state(district):
+	if district!=selected_district and selected_district!='':
+		return selectionType.change
+	else:
+		if district==selected_district:
+			return selectionType.deselection
+	return selectionType.new		
+			
 #deselect district if one is already selected before selecting new one
 #selecting = change color + add border
+# returns selection transition type - maybe change, deselection, new
 func highlight_district(district, show_neighbours:=true):
+	var state=selection_state(district)
 	if game_in_progress!=3:
-		if district!=selected_district and selected_district!='':
-			deselect()
+		if state == selectionType.change:
+			deselect() #new district has been selected - remove higlight of old one
 		else:
-			if district==selected_district:
-				# already selected so deselect
+			# already selected so deselect
+			if state == selectionType.deselection:
+				disappear()
 				deselect()
 				$Label.text=''
 				selected_district=''
 				update() # redraw borders
-				return
+				return state
 	selected_district=district
 	setDistrict_Color_Text(district, selected_color)
 	if show_neighbours:
 		_on_Grid_show_neighbours(true)
 	update() # redraw borders
+	return state
 			
 func deselect():
 	for node in $Districts.get_children():
@@ -599,8 +618,8 @@ func reset():
 	# gopal state depends on game - explore/quest/multiquest show - history/quiz/timedquiz hide
 	$Gopal.hide() 	
 	disableui()
-	$HUD/Grid.hide()
-	#disappear()
+	#$HUD/Grid.hide()
+	disappear()
 	if game_in_progress==2:
 		borders(false)
 	if selected_district!='':
@@ -618,7 +637,7 @@ func gotoDistrict():
 	$Gopal.initiated_by_code=true
 	while path.size() > 0 :
 		current=path.pop_front()
-		highlight_district(current,false)
+		var st=highlight_district(current,false)
 		var gpos=get_node(current).position#+Vector2(d[current][2]/2, d[current][3]/2 )
 		distance=$Gopal.position.distance_to(gpos)
 		var direction=$Gopal.position.direction_to(gpos)
@@ -627,8 +646,10 @@ func gotoDistrict():
 		tw.interpolate_property($Gopal,"position",$Gopal.position,gpos,time)
 		tw.start()
 		var x=yield(tw, 'tween_completed')
-		#moving=false
-		showinfo(current)
+		#moving=false 
+		#TODO test what happens when clicking around while Gopal is moving to target
+		if st != selectionType.deselection:
+			showinfo(current)
 	$Gopal.velocity=Vector2(0,0)
 	$Gopal.initiated_by_code=false
 	$Gopal/CollisionShape2D.disabled = false
@@ -875,13 +896,25 @@ func _on_QuizTimer_timeout():
 	seconds=seconds+1
 	$HUD/Clock.text=str(seconds)
 
-func appear():
-	tw.interpolate_property($HUD/Grid, "rect_position:y", get_viewport_rect().size.y, 0,.3)
+func showstack():
+	for i in get_stack():
+		print(i.function, i.line)
+
+func appear():	
+	#print("==>>")
+	#showstack()
+	tw.interpolate_property($HUD/Grid, "rect_position:x", -$HUD/Grid.rect_size.x, 0,.3)
 	tw.start()
 
 func disappear():
-	tw.interpolate_property($HUD/Grid, "rect_position:y", 0, get_viewport_rect().size.y,.3)
+	#var tmpx=$HUD/Grid.rect_size.x
+	#print("<<==")
+	#showstack()
+	tw.interpolate_property($HUD/Grid, "rect_position:x", 0,-$HUD/Grid.rect_size.x,.3)
 	tw.start()
+	yield(tw,"tween_completed")
+	#$HUD/Grid.hide()
+	#$HUD/Grid.rect_position.x=0
 
 
 func _on_Quest_pressed():
@@ -922,8 +955,10 @@ func quest_selected(districts, quest_name=''):
 	$HUD/Score.text='Check the InfoBox for Instructions'
 	game_in_progress=3
 	if general_quests.has(quest_name):
+		appear()
 		$HUD/Grid.reload(districts, '', '', 0)
-	else:	
+	else:
+		appear()
 		$HUD/Grid.reload(districts, '', '', 0,quest_name[0])
 		
 func _on_Timed_pressed():
@@ -941,6 +976,7 @@ func _on_Timed_pressed():
 func showinfo(district):
 	if game_in_progress==3:
 		$HUD/Score.visible=false
+		appear()
 		$HUD/Grid.reload(district, '', '', 1)
 	else:
 		# non quest just show info without clue
@@ -955,7 +991,8 @@ func showinfo(district):
 #				btn.text= 'g'+str(g) +' (' +str($Munis.stats[district][citygrades[g]]) +')'
 #			else:
 #				btn.hide()
-#			cnt=cnt+1			
+#			cnt=cnt+1
+		appear()
 		$HUD/Grid.reload(district, neighbours(district), get_history(district), 2) 
 
 func _on_quest_over(turnstaken, cluessolved, success):
@@ -965,7 +1002,7 @@ func _on_quest_over(turnstaken, cluessolved, success):
 	$HUD/Grid/VBoxContainer2/MarginContainer/Back.visible=true
 	$HUD/Grid/VBoxContainer2/MarginContainer/Cities.show()	
 	$HUD/Grid.hide()
-	#disappear()
+	disappear()
 	$HUD/Score.visible=false
 	if success:
 		timed_msg("[pulse color=#22dd44 height=-15 freq=7]Congrats! Quest Complete. You took "+str(turnstaken)+" turns\nAnd solved "+str(cluessolved)+" clues! Next Quest has been Unlocked.[/pulse]",3)
@@ -1044,3 +1081,5 @@ func _on_LabelCities_item_selected(index):
 	else:
 		get_tree().call_group("allcities","hide")
 	#$Munis._on_InfoBox_muni_pressed('all', citygrades[index])
+
+

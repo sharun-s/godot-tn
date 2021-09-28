@@ -353,12 +353,13 @@ var filterfacts={}
 func _ready():
 	#if OS.get_name()=='Android':
 	#	$VBoxContainer2/FactBox.set("custom_fonts/font/size",24)
+	rect_position.x=-rect_size.x
 	var fact_stats={tot=0}
 	preload_from_pics_dir()
 	# facts have to be filtered by type to setup subject quests/multiquests
 	# stored in filterfacts. On new subject quest facts points at relevant filterfacts
 	for i in facts:
-		print(i, ' ', len(facts[i]) )
+		#print(i, ' ', len(facts[i]) )
 		for f in facts[i]:
 			fact_stats['tot']+=1
 			if f[1]==':':
