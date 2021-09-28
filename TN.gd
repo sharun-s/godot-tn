@@ -371,9 +371,9 @@ func add_historic_districts(year, data):
 			get_node(i+'history').free()
 		if tmp!=null:
 			add_child(tmp)
-			if has_node('lbl'+i):
-				get_node('lbl'+i).show()
-				get_node('lbl'+i).add_to_group(year)
+			if has_node('Districts/lbl'+i):
+				get_node('Districts/lbl'+i).show()
+				get_node('Districts/lbl'+i).add_to_group(year)
 			else:
 				add_label(i, get_node("Districts/"+data[i][0][0]).position.x, get_node("Districts/"+data[i][0][0]).position.y, 50, 50, year)
 				#add_label(i, data[i][0][0]][0], d[data[i][0][0]][1], 0.0, 0.0, year)
@@ -649,7 +649,7 @@ func gotoDistrict():
 		#moving=false 
 		#TODO test what happens when clicking around while Gopal is moving to target
 		if st != selectionType.deselection:
-			showinfo(current)
+			showinfo(current, st)
 	$Gopal.velocity=Vector2(0,0)
 	$Gopal.initiated_by_code=false
 	$Gopal/CollisionShape2D.disabled = false
@@ -940,7 +940,8 @@ var quest_colors={
 var general_quests=['', 'mountains', 'river', 'sea']
 
 func quest_selected(districts, quest_name=''):
-	# district is empty string - quest button pressed if array quest selected via multiquest
+	# district is empty string - quest button pressed 
+	#if array quest selected via multiquest
 	if districts is Array:
 		for i in districts:
 			setDistrict_Color_Text("Districts/"+i, quest_colors[quest_name], false)
@@ -973,10 +974,12 @@ func _on_Timed_pressed():
 	$QuizTimer.start()
 
 #when player node moves into area 
-func showinfo(district):
+func showinfo(district, transition):
+	if transition == selectionType.new:
+		appear()
 	if game_in_progress==3:
 		$HUD/Score.visible=false
-		appear()
+		#appear()
 		$HUD/Grid.reload(district, '', '', 1)
 	else:
 		# non quest just show info without clue
@@ -992,7 +995,7 @@ func showinfo(district):
 #			else:
 #				btn.hide()
 #			cnt=cnt+1
-		appear()
+		#appear()
 		$HUD/Grid.reload(district, neighbours(district), get_history(district), 2) 
 
 func _on_quest_over(turnstaken, cluessolved, success):
