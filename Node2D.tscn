@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://TN.gd" type="Script" id=1]
 [ext_resource path="res://Montreal-Regular.ttf" type="DynamicFontData" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://QuestMenu.tscn" type="PackedScene" id=7]
 [ext_resource path="res://tndistricts.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Cities.tscn" type="PackedScene" id=9]
+[ext_resource path="res://cell.tscn" type="PackedScene" id=10]
 
 [sub_resource type="DynamicFont" id=1]
 size = 32
@@ -264,6 +265,8 @@ one_shot = true
 
 [node name="Cities" parent="." instance=ExtResource( 9 )]
 
+[node name="HistoryAnimator" parent="." instance=ExtResource( 10 )]
+
 [node name="Label" type="Label" parent="."]
 visible = false
 margin_bottom = 37.0
@@ -289,8 +292,8 @@ speed = 200
 [connection signal="infobox_exit" from="HUD/Grid" to="." method="_on_infobox_exit"]
 [connection signal="off_track" from="HUD/Grid" to="." method="_off_track"]
 [connection signal="on_track" from="HUD/Grid" to="." method="_on_Grid_on_track"]
-[connection signal="quest_over" from="HUD/Grid" to="." method="_on_quest_over"]
 [connection signal="quest_over" from="HUD/Grid" to="HUD/QMenu" method="_quest_over"]
+[connection signal="quest_over" from="HUD/Grid" to="." method="_on_quest_over"]
 [connection signal="show_neighbours" from="HUD/Grid" to="." method="_on_Grid_show_neighbours"]
 [connection signal="subject_quests_ready" from="HUD/Grid" to="HUD/QMenu" method="_on_subject_quests_ready"]
 [connection signal="selected" from="HUD/QMenu" to="." method="quest_selected"]

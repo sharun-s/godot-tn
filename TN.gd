@@ -730,12 +730,12 @@ func _on_Labels_toggled(button_pressed):
 		get_tree().set_group("dlabels","visible",false)
 		$HUD/Labels["modulate"]=Color(1.0, 1.0, 1.0)
 
-var cell=preload("res://cell.tscn")
-var district_animator
+#var cell=preload("res://cell.tscn")
+#var district_animator
 
 func _on_TN_ready():
-	district_animator=cell.instance()
-	add_child(district_animator)
+	#district_animator=cell.instance()
+	#add_child(district_animator)
 	get_tree().call_group("allcities","hide")
 
 func disableui():
@@ -819,8 +819,8 @@ func _on_Learn_toggled():
 					#newlist.append({node=n, loc=d[name(n)]})
 					names.append(n.name.replace('history',''))		
 					newlist.append({node=n, loc=center('Districts/'+name(n))}) #get_node(name(n)).position#d[name(n)]})
-			district_animator.start(old, newlist)
-			yield(district_animator, "move_complete")
+			$HistoryAnimator.start(old, newlist)
+			yield($HistoryAnimator, "move_complete")
 			add_to_dist_timeline(names)
 			borders(true)
 			get_tree().call_group(years[current_year],"show")
@@ -861,8 +861,8 @@ func _on_Learn_toggled():
 				names.append(n.name.replace('history',''))
 				#newlist.append({node=n, loc=d[name(n)]})
 				newlist.append({node=n, loc=center('Districts/'+name(n))})#get_node(name(n)).position}) #d[name(n)]})
-		district_animator.start(old, newlist)
-		yield(district_animator, "move_complete")
+		$HistoryAnimator.start(old, newlist)
+		yield($HistoryAnimator, "move_complete")
 		add_to_dist_timeline(names)
 		borders(true)
 		#$HUD/Learn.text=years[current_year]
