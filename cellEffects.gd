@@ -9,7 +9,7 @@ var drawpoly=false
 var inc=0.0
 var drawcenters=false
 export var speed=0.02
-var transitions = ["draw_poly_with_lines", "draw_move_along_lines"]#, "draw_poly_intersect"]
+var transitions = ["draw_poly_with_lines"]#, "draw_move_along_lines"]#, "draw_poly_intersect"]
 
 onready var current_transition=transitions[randi() % len(transitions)]
 
@@ -122,3 +122,15 @@ func draw_poly_intersect():
 #		if abs(p[idx][0]-lastx) > 6:
 #			draw_line(p[idx-1] , p[idx], Color.darkblue , 6)
 #			lastx=p[idx][0]
+
+
+func stop():
+	inc=1.0
+	drawcenters=false
+	drawpoly=false
+	newpolys.clear()
+	oldpolys.clear()
+	oldcenters.clear()
+	newcenters.clear()
+	todraw.clear()
+

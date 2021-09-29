@@ -19,6 +19,7 @@ font_data = ExtResource( 3 )
 script = ExtResource( 5 )
 
 [sub_resource type="DynamicFont" id=3]
+size = 18
 font_data = ExtResource( 3 )
 
 [sub_resource type="DynamicFont" id=4]
@@ -156,6 +157,24 @@ anchor_right = 0.3
 [node name="QMenu" parent="HUD" instance=ExtResource( 7 )]
 visible = false
 
+[node name="HistoryControl" type="HBoxContainer" parent="HUD"]
+visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Next" type="Button" parent="HUD/HistoryControl"]
+custom_fonts/font = SubResource( 4 )
+text = "<<"
+
+[node name="Stop" type="Button" parent="HUD/HistoryControl"]
+custom_fonts/font = SubResource( 4 )
+text = "Stop"
+
+[node name="Previous" type="Button" parent="HUD/HistoryControl"]
+custom_fonts/font = SubResource( 4 )
+text = ">>"
+
 [node name="StartScreen" type="GridContainer" parent="HUD"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -245,7 +264,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Learn" type="Button" parent="HUD/StartScreen/B"]
+[node name="History" type="Button" parent="HUD/StartScreen/B"]
 margin_top = 666.0
 margin_right = 400.0
 margin_bottom = 800.0
@@ -292,15 +311,16 @@ speed = 200
 [connection signal="infobox_exit" from="HUD/Grid" to="." method="_on_infobox_exit"]
 [connection signal="off_track" from="HUD/Grid" to="." method="_off_track"]
 [connection signal="on_track" from="HUD/Grid" to="." method="_on_Grid_on_track"]
-[connection signal="quest_over" from="HUD/Grid" to="HUD/QMenu" method="_quest_over"]
 [connection signal="quest_over" from="HUD/Grid" to="." method="_on_quest_over"]
+[connection signal="quest_over" from="HUD/Grid" to="HUD/QMenu" method="_quest_over"]
 [connection signal="show_neighbours" from="HUD/Grid" to="." method="_on_Grid_show_neighbours"]
 [connection signal="subject_quests_ready" from="HUD/Grid" to="HUD/QMenu" method="_on_subject_quests_ready"]
 [connection signal="selected" from="HUD/QMenu" to="." method="quest_selected"]
+[connection signal="pressed" from="HUD/HistoryControl/Stop" to="." method="_on_HistoryStop_pressed"]
 [connection signal="pressed" from="HUD/StartScreen/B/Explore" to="." method="_on_Explore_pressed"]
 [connection signal="pressed" from="HUD/StartScreen/B/Quiz" to="." method="_on_Quiz_pressed"]
 [connection signal="pressed" from="HUD/StartScreen/B/Timed" to="." method="_on_Timed_pressed"]
 [connection signal="pressed" from="HUD/StartScreen/B/Quest" to="." method="_on_Quest_pressed"]
 [connection signal="pressed" from="HUD/StartScreen/B/Quest2" to="." method="subjectQuest"]
-[connection signal="pressed" from="HUD/StartScreen/B/Learn" to="." method="_on_Learn_toggled"]
+[connection signal="pressed" from="HUD/StartScreen/B/History" to="." method="_on_History_pressed"]
 [connection signal="timeout" from="QuizTimer" to="." method="_on_QuizTimer_timeout"]

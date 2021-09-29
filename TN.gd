@@ -356,7 +356,7 @@ var dhistory=[{
 static func merge_dict(target, patch):
 	for key in patch:
 		target[key] = patch[key]
-
+var historylabels=[]
 func add_historic_districts(year, data):
 	var tmp:Polygon2D
 	for i in data.keys():
@@ -365,18 +365,23 @@ func add_historic_districts(year, data):
 			tmp.hide()
 			tmp.show_behind_parent=true
 			tmp.name=i+'history'#year
+			print(i)
 			tmp.add_to_group(year)
 		if has_node(i+'history'):
 			#remove_child(get_node(i+'history'))
 			get_node(i+'history').free()
 		if tmp!=null:
 			add_child(tmp)
+			print(i, 'added')
 			if has_node('Districts/lbl'+i):
 				get_node('Districts/lbl'+i).show()
 				get_node('Districts/lbl'+i).add_to_group(year)
 			else:
-				add_label(i, get_node("Districts/"+data[i][0][0]).position.x, get_node("Districts/"+data[i][0][0]).position.y, 50, 50, year)
+				var tmppos=get_node("Districts/"+data[i][0][0]).position
+				historylabels.append([i, tmppos, 50, 50, year])
 				#add_label(i, data[i][0][0]][0], d[data[i][0][0]][1], 0.0, 0.0, year)
+		else:
+			print("ERRRROOR",i)
 
 func _unhandled_input(event):
 	if event is InputEventKey:
@@ -507,6 +512,7 @@ func _draw():
 #		#draw_circle(p[idx], 10, Color.firebrick )
 #		draw_string(df, p[idx], str(idx))
 	#history
+	print(game_in_progress, clear_borders)
 	if game_in_progress==2 and clear_borders==false:
 #		var drawuptil=0
 #		for i in current_year-1:
@@ -516,8 +522,8 @@ func _draw():
 			var poly=cache[idx]
 			var cnt=poly.size()
 			for i in range(1, cnt):
-				draw_line(poly[i-1], poly[i], border_color.lightened(.2), 2)
-			draw_line(poly[cnt-1], poly[0], border_color.lightened(.2), 2)
+				draw_line(poly[i-1], poly[i], border_color.lightened(.8), border_width)
+			draw_line(poly[cnt-1], poly[0], border_color.lightened(.8), border_width)
 		#draw newly merged
 		for dx in dhistory[current_year-1]:
 			if dhistory[current_year-1][dx][0].size() > 0: 
@@ -527,6 +533,9 @@ func _draw():
 				for i in range(1, cnt):
 					draw_line(poly[i-1], poly[i], border_color, border_width_highlight)
 				draw_line(poly[cnt-1], poly[0], border_color, border_width_highlight)
+		#for lbl in historylabels:
+		#	draw_string(df, lbl[1],lbl[0], Color.mistyrose)
+		#historylabels.clear()
 	else:
 		cache.clear()
 		#TODO switch to $districts
@@ -603,13 +612,14 @@ func timed_msg(msg, period):#, blink:=0, blinkcolor:=Color.green):
 func borders(show):
 	if show:
 		clear_borders=false
-		border_width=1
+		border_width=2
 		border_color=Color.darkgray
 		update()
 	else:
+		print('removing borders')
 		clear_borders=true
-		border_width=0
-		border_color=Color.transparent
+		border_width=4
+		border_color=deselect_color# Color.transparent
 		update()
 
 func reset():
@@ -620,8 +630,8 @@ func reset():
 	disableui()
 	#$HUD/Grid.hide()
 	disappear()
-	if game_in_progress==2:
-		borders(false)
+	#if game_in_progress==2:
+	#	borders(false)
 	if selected_district!='':
 		deselect()
 		$Label.text=''
@@ -706,20 +716,20 @@ func init_label_font():
 	df.font_data=f
 	df.size=36
 
-func add_label(district, x, y, w, h, groupname):
-	var l:Label=Label.new()
-	l.set("custom_fonts/font",df)
-	l.set("custom_colors/font_color", district_label_text_color)
-	l.set("custom_colors/font_color_shadow", Color.black)
-	l.set("custom_constants/shadow_offset_x",3)
-	l.set("custom_constants/shadow_offset_y",3)
-	l.set("custom_constants/shadow_as_outline",0)
-	l.visible=false
-	l.text=district
-	l.name='lbl'+district
-	l.rect_position=Vector2(x+w/2, y+h/2)
-	l.add_to_group(groupname)
-	add_child(l)
+#func add_label(district, x, y, w, h, groupname):
+	#var l:Label=Label.new()
+	#l.set("custom_fonts/font",df)
+	#l.set("custom_colors/font_color", district_label_text_color)
+	#l.set("custom_colors/font_color_shadow", Color.black)
+	#l.set("custom_constants/shadow_offset_x",3)
+	#l.set("custom_constants/shadow_offset_y",3)
+	#l.set("custom_constants/shadow_as_outline",0)
+	#l.visible=false
+	#l.text=district
+	#l.name='lbl'+district
+	#l.rect_position=Vector2(x+w/2, y+h/2)
+	#l.add_to_group(groupname)
+	#add_child(l)
 
 func _on_Labels_toggled(button_pressed):
 	if button_pressed:
@@ -730,12 +740,9 @@ func _on_Labels_toggled(button_pressed):
 		get_tree().set_group("dlabels","visible",false)
 		$HUD/Labels["modulate"]=Color(1.0, 1.0, 1.0)
 
-#var cell=preload("res://cell.tscn")
-#var district_animator
-
 func _on_TN_ready():
-	#district_animator=cell.instance()
-	#add_child(district_animator)
+	$HUD/HistoryControl.rect_position=Vector2($HUD/Score.rect_position.x - 12, $HUD/Score.rect_size.y + 12 )
+	#$HUD/HistoryControl.rect_scale=Vector2(1/scale.x, 1/scale.y)
 	get_tree().call_group("allcities","hide")
 
 func disableui():
@@ -797,78 +804,68 @@ func add_to_dist_timeline(names):
 func center(district):
 	#return get_node(district).position+Vector2(d[district][2]/2, d[district][3]/2)
 	return get_node(district).position + Vector2(50, 50)
-					
-func _on_Learn_toggled():
-	var old
-	var newlist
-	while true:
-		if game_in_progress!=2:		 
-			game_in_progress=2
-			reset()
-			add_historic_districts(years[current_year], dhistory[0])
-			# using karur as proxy center
-			old=[{node=get_node('Districts/Karur'),loc=center('Districts/Karur')}] #d['Karur']}]
-			newlist=[]
-			#$HUD/Labels.hide()
-			$HUD/Score.visible=true
-			$HUD/Score.text=years[current_year].substr(0,4)
-			$HUD/Timeline.bbcode_text='[color=yellow]'+years[current_year]+'[/color]'
-			var names=[]
-			for n in get_tree().get_nodes_in_group(years[current_year]):
-				if n is Polygon2D:
-					#newlist.append({node=n, loc=d[name(n)]})
-					names.append(n.name.replace('history',''))		
-					newlist.append({node=n, loc=center('Districts/'+name(n))}) #get_node(name(n)).position#d[name(n)]})
-			$HistoryAnimator.start(old, newlist)
-			yield($HistoryAnimator, "move_complete")
-			add_to_dist_timeline(names)
-			borders(true)
-			get_tree().call_group(years[current_year],"show")
-			current_year=current_year+1
-			update() # careful draw uses current_year - 1 
-			continue
+
+var history_stopped_pressed:=false				
+func _on_History_pressed():
+	var old=[{node=get_node('Districts/Karur'),loc=center('Districts/Karur')}] #d['Karur']}]
+	var newlist=[]
+	reset()
+	history_stopped_pressed=false
+	game_in_progress=2
+	add_historic_districts(years[current_year], dhistory[0])
+	borders(false) #borders should become transparent
+	# using karur as proxy center
+	$HUD/Score.visible=true
+	$HUD/Score.text=years[current_year].substr(0,4)
+	$HUD/Timeline.bbcode_text='[color=yellow]'+years[current_year]+'[/color]'
+	var names=[] #for timeline
+	for n in get_tree().get_nodes_in_group(years[current_year]):
+		if n is Polygon2D:
+			names.append(n.name.replace('history',''))
+			newlist.append({node=n, loc=center('Districts/'+name(n))}) #get_node(name(n)).position#d[name(n)]})
+	$HistoryAnimator.start(old, newlist)
+	print(newlist)
+	$HUD/HistoryControl.show()
+	yield($HistoryAnimator, "move_complete")
+	print('init move complete')
+	add_to_dist_timeline(names)
+	borders(true)
+	get_tree().call_group(years[current_year],"show")
+	current_year=current_year+1
+	while history_stopped_pressed==false:
+		print(current_year)
 		if current_year>=len(years):
-			for i in range(0,len(years)):
-				get_tree().call_group(years[i],"hide")
-				#get_tree().call_group(years[i],"queue_free")
-				for tmpx in get_tree().get_nodes_in_group(years[i]):
-					if tmpx is Polygon2D:
-						#print('freeing', tmpx.name)
-						tmpx.queue_free()
-					#else:
-					#	print('not freeing', tmpx.name)	
-				current_year=0
-				$HUD/Score.visible=false
-				get_tree().call_group('1956',"hide")
-				#$HUD/Learn.text='History'
-			borders(true)
-			game_in_progress=0
-			game_over()
-			#print('after queue free ***********', get_tree().get_node_count())
-			return
-		#get_tree().set_group(years[current_year-1],"modulate",Color(0.0,0.0,0.0))
-		get_tree().call_group(years[current_year-1],"hide")
-		newlist=[]
-		var key=dhistory[current_year].keys()[0]	
-		old=[{node=get_node(key+'history'), loc=center('Districts/'+name(get_node(key+'history')))}]#get_node(name(get_node(key+'history'))).position}]#get_node(name(key)).position}] #get_node(key).position}]
-		add_historic_districts(years[current_year], dhistory[current_year])
-#		$HUD/Message.text=$HUD/Message.text+'\n'+years[current_year]
-		$HUD/Score.text=years[current_year].substr(0,4)
-		$HUD/Timeline.append_bbcode('\n[color=yellow]'+years[current_year]+'[/color]')
-		var names=[]
-		for n in get_tree().get_nodes_in_group(years[current_year]):
-			if n is Polygon2D:
-				names.append(n.name.replace('history',''))
-				#newlist.append({node=n, loc=d[name(n)]})
-				newlist.append({node=n, loc=center('Districts/'+name(n))})#get_node(name(n)).position}) #d[name(n)]})
-		$HistoryAnimator.start(old, newlist)
+			quit_history_mode()
+			break
+		history_next()
 		yield($HistoryAnimator, "move_complete")
-		add_to_dist_timeline(names)
+		print('next complete')
 		borders(true)
-		#$HUD/Learn.text=years[current_year]
 		get_tree().call_group(years[current_year],"show")
 		current_year=current_year+1
 	print(current_year, ' done')
+
+func history_next():
+	#get_tree().set_group(years[current_year-1],"modulate",Color(0.0,0.0,0.0))
+	get_tree().call_group(years[current_year-1],"hide")
+	var newlist=[]
+	var key=dhistory[current_year].keys()[0]	
+	var old=[{node=get_node(key+'history'), loc=center('Districts/'+name(get_node(key+'history')))}]#get_node(name(get_node(key+'history'))).position}]#get_node(name(key)).position}] #get_node(key).position}]
+	print(years[current_year])
+	add_historic_districts(years[current_year], dhistory[current_year])
+	borders(false)
+#	$HUD/Message.text=$HUD/Message.text+'\n'+years[current_year]
+	$HUD/Score.text=years[current_year].substr(0,4)
+	$HUD/Timeline.append_bbcode('\n[color=yellow]'+years[current_year]+'[/color]')
+	var names=[]
+	for n in get_tree().get_nodes_in_group(years[current_year]):
+		if n is Polygon2D:
+			names.append(n.name.replace('history',''))
+			#newlist.append({node=n, loc=d[name(n)]})
+			newlist.append({node=n, loc=center('Districts/'+name(n))})#get_node(name(n)).position}) #d[name(n)]})
+	$HistoryAnimator.start(old, newlist)
+	add_to_dist_timeline(names)
+		
 
 var histcache:={}
 func get_history(dd):
@@ -1085,4 +1082,27 @@ func _on_LabelCities_item_selected(index):
 		get_tree().call_group("allcities","hide")
 	#$Munis._on_InfoBox_muni_pressed('all', citygrades[index])
 
-
+func _on_HistoryStop_pressed():
+	history_stopped_pressed=true
+	quit_history_mode()
+	
+func quit_history_mode():
+	game_in_progress=0 #stops the draw
+	#cache.clear()
+	$HistoryAnimator.stop()
+	for i in range(0,len(years)):
+		get_tree().call_group(years[i],"hide")
+		#get_tree().call_group(years[i],"queue_free")
+		for tmpx in get_tree().get_nodes_in_group(years[i]):
+			if tmpx is Polygon2D:
+				#print('freeing', tmpx.name)
+				tmpx.queue_free()
+			#else:
+				#	print('not freeing', tmpx.name)	
+	#print('after queue free ***********', get_tree().get_node_count())
+	current_year=0
+	$HUD/Score.visible=false
+	$HUD/HistoryControl.hide()
+	get_tree().call_group('1956',"hide")
+	borders(true)	
+	game_over()
