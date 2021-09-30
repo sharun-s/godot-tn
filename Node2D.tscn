@@ -163,17 +163,30 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Next" type="Button" parent="HUD/HistoryControl"]
+[node name="Previous" type="Button" parent="HUD/HistoryControl"]
+visible = false
+margin_right = 46.0
+margin_bottom = 42.0
 custom_fonts/font = SubResource( 4 )
 text = "<<"
 
-[node name="Stop" type="Button" parent="HUD/HistoryControl"]
+[node name="PlayPause" type="Button" parent="HUD/HistoryControl"]
 custom_fonts/font = SubResource( 4 )
-text = "Stop"
+toggle_mode = true
+text = "Pause"
 
-[node name="Previous" type="Button" parent="HUD/HistoryControl"]
+[node name="Next" type="Button" parent="HUD/HistoryControl"]
+visible = false
+margin_right = 46.0
+margin_bottom = 42.0
 custom_fonts/font = SubResource( 4 )
 text = ">>"
+
+[node name="Stop" type="Button" parent="HUD/HistoryControl"]
+margin_right = 70.0
+margin_bottom = 42.0
+custom_fonts/font = SubResource( 4 )
+text = "Quit"
 
 [node name="StartScreen" type="GridContainer" parent="HUD"]
 anchor_right = 1.0
@@ -311,11 +324,13 @@ speed = 200
 [connection signal="infobox_exit" from="HUD/Grid" to="." method="_on_infobox_exit"]
 [connection signal="off_track" from="HUD/Grid" to="." method="_off_track"]
 [connection signal="on_track" from="HUD/Grid" to="." method="_on_Grid_on_track"]
-[connection signal="quest_over" from="HUD/Grid" to="." method="_on_quest_over"]
 [connection signal="quest_over" from="HUD/Grid" to="HUD/QMenu" method="_quest_over"]
+[connection signal="quest_over" from="HUD/Grid" to="." method="_on_quest_over"]
 [connection signal="show_neighbours" from="HUD/Grid" to="." method="_on_Grid_show_neighbours"]
 [connection signal="subject_quests_ready" from="HUD/Grid" to="HUD/QMenu" method="_on_subject_quests_ready"]
 [connection signal="selected" from="HUD/QMenu" to="." method="quest_selected"]
+[connection signal="toggled" from="HUD/HistoryControl/PlayPause" to="." method="_on_PlayPause_toggled"]
+[connection signal="pressed" from="HUD/HistoryControl/Next" to="." method="_on_Next_pressed"]
 [connection signal="pressed" from="HUD/HistoryControl/Stop" to="." method="_on_HistoryStop_pressed"]
 [connection signal="pressed" from="HUD/StartScreen/B/Explore" to="." method="_on_Explore_pressed"]
 [connection signal="pressed" from="HUD/StartScreen/B/Quiz" to="." method="_on_Quiz_pressed"]
