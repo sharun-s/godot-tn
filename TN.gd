@@ -161,7 +161,7 @@ func merge_poly(history_item):
 			#add_child(test)
 			#cnt=cnt+1
 		#main.color=Color(rng.randf_range(0.6,1.0), rng.randf_range(0.0,1.0), rng.randf_range(0.0,0.26))
-	main.color=deselect_color#.darkened(.05)
+	main.color=Color(0.44, .87, .97, .5)
 	#Color(rng.randf_range(0.1,0.54), rng.randf_range(0.3,0.8), rng.randf_range(0.2,0.91))
 	return main
 	
@@ -189,36 +189,6 @@ var shore:ShaderMaterial
 #	var dp:Polygon2D=get_node(district).get_child(0)
 #	dp.material=shore
 
-func addstateborder(b, nm='x'):
-	var t:=Transform2D()
-	t=t.scaled(Vector2(8,8))
-	t.origin=Vector2(-620,-430)# magic bs use standard geojson
-	var borderpath:=Line2D.new()
-	for i in range(0, b.size(),2):
-		borderpath.add_point(t.xform(Vector2(b[i],b[i+1])))
-	borderpath.default_color=deselect_color#Color.white
-	if nm!='x':
-		borderpath.width=2		
-		#borderpath.texture_mode=Line2D.LINE_TEXTURE_STRETCH
-		#borderpath.material=shore
-	else:
-		borderpath.width=2
-	add_child(borderpath)
-
-func addstatepoly(b, _nm='x'):
-	var t:=Transform2D()
-	t=t.scaled(Vector2(8,8))
-	t.origin=Vector2(-620,-430)# magic bs use standard geojson
-	var borderpoly:=Polygon2D.new()
-	var shape:=PoolVector2Array()
-	for i in range(0, b.size(),2):
-		shape.append(t.xform(Vector2(b[i],b[i+1])))
-	borderpoly.polygon=shape
-	borderpoly.color=deselect_color.darkened(.83)
-	borderpoly.z_index=-1
-	#borderpoly.name=nm
-	add_child(borderpoly)
-
 var citygrades=['','Muni Corporation','Municipality Selection grade','Municipality Special grade','Municipality First grade','Municipality Second grade']
 func _ready():
 	init_label_font()
@@ -237,11 +207,7 @@ func _ready():
 			node.connect('input_event', self, 'on_district_select',[node.name])
 		#if node is Label:
 		#	node.set("custom_colors/font_color","70fa80")
-	#addstateborder(ka_ke)
-	#addstateborder(kewest, 'kewest')
-	#addstateborder(kawest, 'kawest')
-	#addstateborder(apeast, 'apes')
-	#addstateborder(ka_ap)
+
 	var t=get_viewport_transform()
 	var viewp=get_viewport_rect()
 	print(viewp)
@@ -266,7 +232,8 @@ func _ready():
 	print(t.origin)
 	$Label.rect_scale=Vector2(1/scale.x, 1/scale.y)
 	$HUD/Score.rect_scale=Vector2(2/scale.x, 2/scale.y)
-	$HUD/StartScreen/Title.text=str(get_viewport_rect())+"\nScale:"+str(scale)+' Origin'+str(t.origin)
+	#for debugging resolution
+	#$HUD/StartScreen/Title.text=str(get_viewport_rect())+"\nScale:"+str(scale)+' Origin'+str(t.origin)
 	
 
 var dhistory=[{
@@ -392,20 +359,21 @@ func add_historic_districts(year, data):
 			tmp.hide() #show the polys after animation is done
 			tmp.show_behind_parent=true
 			tmp.name=i+'history'#year
-			tmp.add_to_group(year)
 		if has_node(i+'history'):
 			#remove_child(get_node(i+'history'))
+			print('freeing '+i+'history')
 			get_node(i+'history').free()
 		if tmp!=null:
 			add_child(tmp)
+			tmp.add_to_group(year)
+			print(tmp.color)
 			nodesadded+=1
 			if has_node('Districts/lbl'+i):
-				get_node('Districts/lbl'+i).show()
 				get_node('Districts/lbl'+i).add_to_group(year)
 			else:
 				add_label(i, get_node('Districts/'+data[i][0][0]).position, year)
 		else:
-			print(year," not adding ",i)
+			print(year," disolved ",i)
 	print(year, 'added polys', nodesadded)
 
 func _unhandled_input(event):
@@ -632,23 +600,6 @@ func timed_msg(msg, period):#, blink:=0, blinkcolor:=Color.green):
 	$Timer.wait_time=period
 	$Timer.start()
 
-#func process(_delta):
-#	walkpath.show()
-
-func borders(show):
-	if show:
-		#dont clear borders
-		clear_borders=false
-		border_width=2
-		border_color=Color.darkgray
-		update()
-	else:
-		print('removing borders')
-		clear_borders=true
-		border_width=4
-		border_color=deselect_color# Color.transparent
-		update()
-
 func reset():
 	score=0
 	attempts=0
@@ -657,8 +608,6 @@ func reset():
 	disableui()
 	#$HUD/Grid.hide()
 	disappear()
-	#if game_in_progress==2:
-	#	borders(false)
 	if selected_district!='':
 		deselect()
 		$Label.text=''
@@ -804,18 +753,18 @@ var current_year=0
 
 func name(n):
 	#print(n.name)
-	if n.name == 'North Arcothistory':
+	if n == 'North Arcot' or n=='North Arcothistory':  
 		return 'Tiruvannamalai'
-	elif n.name == 'South Arcothistory':
+	elif n == 'South Arcot' or n=='South Arcothistory':
 		return 'Cuddalore'
-	elif n.name == 'Chinglepethistory':
+	elif n == 'Chinglepet' or n=='Chinglepethistory':
 		return 'Kanchipuram' 
-	elif n.name == 'Trichyhistory':
+	elif n == 'Trichy':
 		return 'Tiruchirapalli' 
-	elif n.name == 'Madrashistory':
+	elif n == 'Madrashistory':
 		return 'Chennai' 
 	else:
-		return n.name.replace('history','')
+		return n.replace('history','')
 
 var clear_borders:=false
 
@@ -845,7 +794,7 @@ func _on_History_pressed():
 	history_stopped_pressed=false
 	history_pause_pressed=false
 	game_in_progress=2
-	#borders(false)
+	#clear all existing borders
 	border_color=deselect_color
 	border_width=4
 	update()
@@ -867,7 +816,7 @@ func _on_History_pressed():
 	for n in get_tree().get_nodes_in_group(years[current_year]):
 		if n is Polygon2D:
 			names.append(n.name.replace('history',''))
-			newlist.append({node=n, loc=center('Districts/'+name(n))}) #get_node(name(n)).position#d[name(n)]})
+			newlist.append({node=n, loc=center( 'Districts/' + name(n.name) )}) 
 	$HistoryAnimator.start(old, newlist)
 	# HistoryControl ie stop button is shown only after animation starts
 	$HUD/HistoryControl.show()
@@ -875,10 +824,13 @@ func _on_History_pressed():
 	#print('init move complete')
 	add_to_dist_timeline(names)
 	get_tree().call_group(years[current_year],"show")
-	border_color=Color.darkblue.lightened(.6)
-	#border_width=4
+	border_color=Color(0, 0.4, 0.5, 1.0)
+	border_width=4
 	current_year=current_year+1
-	update() # draws borders
+	# borders have been updated redraw
+	update() 
+	# wait for a bit before next step
+	yield(get_tree().create_timer(2.0), "timeout")
 	
 	while history_stopped_pressed==false and history_pause_pressed==false:
 		if current_year>=len(years):
@@ -888,9 +840,10 @@ func _on_History_pressed():
 		yield($HistoryAnimator, "move_complete")
 		get_tree().call_group(years[current_year],"show")
 		current_year=current_year+1
+		#borders will be drawn for current year -1
 		update() # TODO very delicate since its tied to current_year-1		
-		#borders(true) # borders will be drawn for current year -1
-	print(current_year, ' done')
+		yield(get_tree().create_timer(2.0), "timeout") 
+
 
 func history_next_animate():
 	#get_tree().set_group(years[current_year-1],"modulate",Color(0.0,0.0,0.0))
@@ -903,11 +856,11 @@ func history_next_animate():
 	var names=[]
 	var newlist=[]
 	var key=dhistory[current_year].keys()[0]	
-	var old=[{node=get_node(key+'history'), loc=center('Districts/'+name(get_node(key+'history')))}]#get_node(name(get_node(key+'history'))).position}]#get_node(name(key)).position}] #get_node(key).position}]
+	var old=[{node=get_node(key+'history'), loc=center('Districts/'+name(key))}]
 	for n in get_tree().get_nodes_in_group(years[current_year]):
 		if n is Polygon2D:
 			names.append(n.name.replace('history',''))
-			newlist.append({node=n, loc=center('Districts/'+name(n))})#get_node(name(n)).position}) #d[name(n)]})
+			newlist.append({node=n, loc=center('Districts/'+ name(n.name))})
 	$HistoryAnimator.start(old, newlist)
 	add_to_dist_timeline(names)
 
