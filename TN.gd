@@ -746,8 +746,9 @@ func _on_Labels_toggled(button_pressed):
 func _on_TN_ready():
 	#$HUD/HistoryControl.rect_scale=Vector2(1/scale.x, 1/scale.y)
 	uiScore=get_node("HUD/Top/R1/Score")
-	print(uiScore)
 	get_tree().call_group("allcities","hide")
+	for dt in d.keys():
+		print( dt, len(get_tree().get_nodes_in_group(dt)))
 
 func disableui():
 	$HUD/StartScreen.hide()
@@ -848,7 +849,7 @@ func _on_History_pressed():
 	add_to_dist_timeline(names)
 	get_tree().call_group(years[current_year],"show")
 	get_tree().call_group('dlabels'+years[current_year],"show")
-	border_color=Color(0, 0.4, 0.5, 1.0)
+	border_color=$HistoryAnimator.bcolor #Color(0, 0.4, 0.5, 1.0)
 	border_width=4
 	current_year=current_year+1
 	# borders have been updated redraw
@@ -1021,17 +1022,8 @@ func showinfo(district, transition):
 	else:
 		# non quest just show info without clue
 		uiScore.visible=false
-		var cnt=0
-		#ignore first element of citygrades which is empty for optionbutton default state
-#		for g in range(1,len(citygrades)):
-#			var btn=$HUD/Grid/VBoxContainer2/MarginContainer/Cities.get_child(g-1)
-#			if citygrades[g] in $Munis.stats[district].keys():		
-#				btn.show()
-#				#btn.text= citygrades[g] + ' (' +str($Munis.stats[district][citygrades[g]]) +')'
-#				btn.text= 'g'+str(g) +' (' +str($Munis.stats[district][citygrades[g]]) +')'
-#			else:
-#				btn.hide()
-#			cnt=cnt+1
+		for i in get_tree().get_nodes_in_group(district.split('/')[1]):
+			print(i.group,' ',i.name)
 		#appear()
 		$HUD/Grid.reload(district, neighbours(district), get_history(district.split('/')[1]), 2) 
 
@@ -1172,3 +1164,46 @@ func _on_Next_pressed():
 	get_tree().call_group("dlabels"+years[current_year],"show")
 	current_year=current_year+1
 	update()
+
+const MAX_COORD = pow(2,31)-1
+const MIN_COORD = -MAX_COORD
+var polybounds
+
+func minv(curvec,newvec):
+	return Vector2(min(curvec.x,newvec.x),min(curvec.y,newvec.y))
+func maxv(curvec,newvec):
+	return Vector2(max(curvec.x,newvec.x),max(curvec.y,newvec.y))
+
+func get_bounds(polygon):
+	var min_vec = Vector2(MAX_COORD,MAX_COORD)
+	var max_vec = Vector2(MIN_COORD,MIN_COORD)
+	for v in polygon:
+		min_vec = minv(min_vec,v)
+		max_vec = maxv(max_vec,v)
+	return Rect2(min_vec, max_vec-min_vec)
+
+var pt=preload("res://Point.tscn")
+func _on_Grid_show_munis(district):
+	$HUD/Grid/VBoxContainer/PanelContainer/imgbox.texture=null
+	var p = get_node('Districts/'+district+'/Poly').polygon
+	var origin=get_node('Districts/'+district).position
+	#print('origin ', origin)
+	#print(p)
+	#$HUD/Grid/VBoxContainer/PanelContainer/Map	
+	var pb=get_bounds(p)
+	#print('bounds of p ',pb.size.x, pb.size.y)
+	var ib=$HUD/Grid/VBoxContainer/PanelContainer.rect_size
+	#print('infobox rect ',ib.x, ib.y)
+	$HUD/Grid/VBoxContainer/PanelContainer/Map.scale=Vector2(ib.x/pb.size.x, ib.y/pb.size.y)
+	
+	$HUD/Grid/VBoxContainer/PanelContainer/Map.polygon=p
+	$HUD/Grid/VBoxContainer/PanelContainer/Map.color=deselect_color
+	for c in get_tree().get_nodes_in_group(district):
+		#print(c, ' ', c.name,' ', c.position)
+		#print(c.position-origin)
+		var city=pt.instance()
+		city.radius=20/citygrades.find(c.group)
+		var citypos= c.position - origin
+		city.position = Vector2(citypos.x*ib.x/pb.size.x, citypos.y * ib.y/pb.size.y)
+		city.z_index=3
+		$HUD/Grid/VBoxContainer/PanelContainer.add_child(city)

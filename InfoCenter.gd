@@ -408,6 +408,11 @@ func reload(district, neighbours, hist='',mode=state.NON_QUEST,ftype=''):
 	historytext=hist
 	n=neighbours
 	$VBoxContainer2/MarginContainer/Neighbours.pressed=false
+	for k in $VBoxContainer/PanelContainer.get_children():
+		if k is Polygon2D or k is TextureRect:
+			continue
+		else:
+			k.free()
 	randomize()
 	#$VBoxContainer/PanelContainer/imgbox.texture=image_selector(district)
 	if mode==state.NEW_QUEST:
@@ -544,20 +549,4 @@ func _on_Neighbours_toggled(button_pressed):
 signal show_munis
 func _on_muni1_pressed():
 	if $VBoxContainer/NameBox.text in facts.keys():
-		emit_signal('show_munis',$VBoxContainer/NameBox.text, 'Muni Corporation')
-
-func _on_muni2_pressed():
-	if $VBoxContainer/NameBox.text in facts.keys():
-		emit_signal('show_munis',$VBoxContainer/NameBox.text, 'Municipality Selection grade')
-
-func _on_muni3_pressed():
-	if $VBoxContainer/NameBox.text in facts.keys():
-		emit_signal('show_munis',$VBoxContainer/NameBox.text, 'Municipality Special grade')
-
-func _on_muni4_pressed():
-	if $VBoxContainer/NameBox.text in facts.keys():
-		emit_signal('show_munis',$VBoxContainer/NameBox.text, 'Municipality First grade')
-
-func _on_muni5_pressed():
-	if $VBoxContainer/NameBox.text in facts.keys():
-		emit_signal('show_munis',$VBoxContainer/NameBox.text, 'Municipality Second grade')
+		emit_signal('show_munis',$VBoxContainer/NameBox.text)

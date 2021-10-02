@@ -107,6 +107,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 3 )
 
+[node name="Map" type="Polygon2D" parent="VBoxContainer/PanelContainer"]
+
 [node name="imgbox" type="TextureRect" parent="VBoxContainer/PanelContainer"]
 margin_right = 796.0
 margin_bottom = 279.0
@@ -170,50 +172,13 @@ custom_fonts/font = SubResource( 7 )
 custom_colors/font_color = Color( 1, 0.8, 0.0666667, 1 )
 text = "Need Another Clue?"
 
-[node name="Cities" type="HBoxContainer" parent="VBoxContainer2/MarginContainer"]
+[node name="Muni" type="Button" parent="VBoxContainer2/MarginContainer"]
 margin_top = 84.0
 margin_right = 800.0
 margin_bottom = 126.0
-custom_constants/separation = 0
-
-[node name="Muni" type="Button" parent="VBoxContainer2/MarginContainer/Cities"]
-margin_right = 160.0
-margin_bottom = 42.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 9 )
 text = "Cities"
-
-[node name="Selection" type="Button" parent="VBoxContainer2/MarginContainer/Cities"]
-margin_left = 160.0
-margin_right = 320.0
-margin_bottom = 42.0
-size_flags_horizontal = 3
-custom_fonts/font = SubResource( 9 )
-text = "L1"
-
-[node name="Special" type="Button" parent="VBoxContainer2/MarginContainer/Cities"]
-margin_left = 320.0
-margin_right = 480.0
-margin_bottom = 42.0
-size_flags_horizontal = 3
-custom_fonts/font = SubResource( 9 )
-text = "L2"
-
-[node name="First" type="Button" parent="VBoxContainer2/MarginContainer/Cities"]
-margin_left = 480.0
-margin_right = 640.0
-margin_bottom = 42.0
-size_flags_horizontal = 3
-custom_fonts/font = SubResource( 9 )
-text = "L3"
-
-[node name="Second" type="Button" parent="VBoxContainer2/MarginContainer/Cities"]
-margin_left = 640.0
-margin_right = 800.0
-margin_bottom = 42.0
-size_flags_horizontal = 3
-custom_fonts/font = SubResource( 9 )
-text = "L4"
 
 [node name="Back" type="Button" parent="VBoxContainer2/MarginContainer"]
 margin_top = 126.0
@@ -228,9 +193,5 @@ text = "Main Menu"
 [connection signal="toggled" from="VBoxContainer2/MarginContainer/Neighbours" to="." method="_on_Neighbours_toggled"]
 [connection signal="pressed" from="VBoxContainer2/MarginContainer/history" to="." method="_on_history_pressed"]
 [connection signal="pressed" from="VBoxContainer2/MarginContainer/clue" to="." method="_on_clue_pressed"]
-[connection signal="pressed" from="VBoxContainer2/MarginContainer/Cities/Muni" to="." method="_on_muni1_pressed"]
-[connection signal="pressed" from="VBoxContainer2/MarginContainer/Cities/Selection" to="." method="_on_muni2_pressed"]
-[connection signal="pressed" from="VBoxContainer2/MarginContainer/Cities/Special" to="." method="_on_muni3_pressed"]
-[connection signal="pressed" from="VBoxContainer2/MarginContainer/Cities/First" to="." method="_on_muni4_pressed"]
-[connection signal="pressed" from="VBoxContainer2/MarginContainer/Cities/Second" to="." method="_on_muni5_pressed"]
+[connection signal="pressed" from="VBoxContainer2/MarginContainer/Muni" to="." method="_on_muni1_pressed"]
 [connection signal="pressed" from="VBoxContainer2/MarginContainer/Back" to="." method="_on_Back_pressed"]
