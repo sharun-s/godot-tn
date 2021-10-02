@@ -161,7 +161,7 @@ func merge_poly(history_item):
 			#add_child(test)
 			#cnt=cnt+1
 		#main.color=Color(rng.randf_range(0.6,1.0), rng.randf_range(0.0,1.0), rng.randf_range(0.0,0.26))
-	main.color=Color(0.44, .87, .97, .5)
+	main.color=deselect_color#Color(0.34, .87, .97, 1.0)
 	#Color(rng.randf_range(0.1,0.54), rng.randf_range(0.3,0.8), rng.randf_range(0.2,0.91))
 	return main
 	
@@ -199,7 +199,7 @@ func _ready():
 	rng.randomize()
 	add_child(tw)
 	for i in citygrades:
-		$HUD/LabelCities.add_item(i)
+		$HUD/TopRight/LabelCities.add_item(i)
 	VisualServer.set_default_clear_color('001f3f')#Color("ff222222"))
 	for node in $Districts.get_children():
 		if node is Area2D:
@@ -227,13 +227,13 @@ func _ready():
 		transform=t
 		#so viewport rect changes thanks to above transform which is why viewp can be used while scaling
 		scale=Vector2(get_viewport_rect().size.y/800, get_viewport_rect().size.y/800)
-	
-	print(scale)
-	print(t.origin)
 	$Label.rect_scale=Vector2(1/scale.x, 1/scale.y)
-	$HUD/Score.rect_scale=Vector2(2/scale.x, 2/scale.y)
+	#$HUD/Top/Score.rect_scale=Vector2(2/scale.x, 2/scale.y)
 	#for debugging resolution
-	#$HUD/StartScreen/Title.text=str(get_viewport_rect())+"\nScale:"+str(scale)+' Origin'+str(t.origin)
+	if OS.has_feature("editor"):
+		print(scale)
+		print(t.origin)
+		$HUD/StartScreen/Title.text=str(get_viewport_rect())+"\nScale:"+str(scale)+' Origin'+str(t.origin)
 	
 
 var dhistory=[{
@@ -346,6 +346,8 @@ var dhistory=[{
 	}
 	]	
 
+var uiScore 
+
 static func merge_dict(target, patch):
 	for key in patch:
 		target[key] = patch[key]
@@ -361,20 +363,19 @@ func add_historic_districts(year, data):
 			tmp.name=i+'history'#year
 		if has_node(i+'history'):
 			#remove_child(get_node(i+'history'))
-			print('freeing '+i+'history')
+			#print('freeing '+i+'history to add next iteration of same district')
 			get_node(i+'history').free()
 		if tmp!=null:
 			add_child(tmp)
 			tmp.add_to_group(year)
-			print(tmp.color)
 			nodesadded+=1
-			if has_node('Districts/lbl'+i):
-				get_node('Districts/lbl'+i).add_to_group(year)
-			else:
-				add_label(i, get_node('Districts/'+data[i][0][0]).position, year)
-		else:
-			print(year," disolved ",i)
-	print(year, 'added polys', nodesadded)
+			#if has_node('Districts/lbl'+i):
+			#	get_node('Districts/lbl'+i).add_to_group('dlabels'+year)
+			#else:
+			add_label(i, get_node('Districts/'+data[i][0][0]).position, 'dlabels'+ year)
+		#else:
+		#	print(year," disolved ",i)
+	#print(year, 'added polys', nodesadded)
 
 func _unhandled_input(event):
 	if event is InputEventKey:
@@ -415,7 +416,7 @@ func decide_action(district):
 		if district.split('/')[1] == challenge:
 			score+=1
 			attempts+=1
-			$HUD/Score.text=str(score)+' / '+str(attempts)
+			uiScore.text=str(score)+' / '+str(attempts)
 			setDistrict_Color_Text(district, selected_color_right)
 			timed_msg("[color=#"+selected_color_right.to_html(false)+"]Correct![/color]", 1)#, 2)
 			yield($Timer, "timeout")
@@ -423,7 +424,7 @@ func decide_action(district):
 				new_challenge()
 		else:
 			attempts+=1
-			$HUD/Score.text=str(score)+' / '+str(attempts)
+			uiScore.text=str(score)+' / '+str(attempts)
 			get_node(district).get_child(0).color=selected_color_wrong
 			$HUD/Message.bbcode_text=challenge+"???\n  [color=#ee2211]Try Again![/color]\nThat was "+district.split('/')[1]
 		if attempts==turns:
@@ -549,9 +550,9 @@ func _draw():
 func _on_Quiz_pressed():
 	reset()
 	game_in_progress=1
-	$HUD/Score.text=str(score)
-	$HUD/Score.visible=true
-	$HUD/Labels.hide()
+	uiScore.text=str(score)
+	uiScore.visible=true
+	$HUD/TopRight/Labels.hide()
 	timed_msg("[pulse color=#22ff44 height=-10 freq=10]You have 10 turns\n Find the Districts![/pulse]",2)
 	yield($Timer,"timeout")
 	timedquiz=false
@@ -573,15 +574,15 @@ func game_over():
 	deselect()
 	path.clear()
 	seconds=0
-	$HUD/Labels.hide()
-	$HUD/LabelCities.hide()
+	$HUD/TopRight/Labels.hide()
+	$HUD/TopRight/LabelCities.hide()
 	#borders(true)
 	#game_in_progress=0
 	$HUD/Timeline.bbcode_text=''
 	#walkpath.clear_points()
-	$HUD/Score.text=''
-	$HUD/Score.visible=false
-	$HUD/Clock.text=''
+	uiScore.text=''
+	uiScore.visible=false
+	$HUD/TopRight/Clock.hide()
 	$HUD/Message.bbcode_text=''
 	$Label.text=''
 	#$Gopal.show()
@@ -686,53 +687,75 @@ func fullwalktest():
 	game_over()
 
 var df
+var labelstyle=preload("res://labelstyle.tres")
+var labelfont=load("res://DroidSans.ttf")
 func init_label_font():
-	var f=load("res://DroidSans.ttf")
 	df=DynamicFont.new()
-	df.font_data=f
+	df.font_data=labelfont
 	df.size=36
-
+	
 # used in history mode to label old districts each step
 # why not use draw string - cause group show hide is more convenient polys and labels stay linked
+#var lcnt=0
+#var cs2d=CircleShape2D.new()
 func add_label(district, pos, groupname):
+#	var r
+#	if lcnt %2 == 0:
+#		r=RigidBody2D.new()		
+#		r.constant_linear_velocity=Vector2(0.0, -3.0)
+#		r.collision_mask=2
+#		r.collision_layer=2
+#	else:
+#		r=RigidBody2D.new()
+#		r.collision_layer=2
+#		r.collision_mask=2
+#	lcnt=lcnt+1
 	var l:Label=Label.new()
-	df.size=24
+	df.size=22
 	l.set("custom_fonts/font",df)
-	l.set("custom_colors/font_color", district_label_text_color)
+	l.set("custom_colors/font_color", Color( 1, 0.93, 0.094, 1 ))#district_label_text_color)
+	l.set("custom_styles/normal", labelstyle)
 	#l.set("custom_colors/font_color_shadow", Color.black)
 	#l.set("custom_constants/shadow_offset_x",3)
 	#l.set("custom_constants/shadow_offset_y",3)
 	#l.set("custom_constants/shadow_as_outline",0)
 	l.visible=false
 	l.text=district
-	l.name='lbl'+district
+	#l.name='lbl'+district
 	l.rect_position=pos
 	#l.rect_scale=Vector2(1/scale.x, 1/scale.y)
 	l.add_to_group(groupname)
+	#r.position=pos
+	#r.add_child(l)
+	#var c = CollisionShape2D.new()
+	#cs2d.radius=59
+	#c.shape=cs2d
+	#r.add_child(c)
 	add_child(l)
-	print('label added ', 'lbl'+district, ' to group ', groupname )
+	#print('label added ', 'lbl'+district, ' to group ', groupname )
 
 func _on_Labels_toggled(button_pressed):
 	if button_pressed:
 		get_tree().set_group("dlabels","visible",true)
-		#$HUD/Labels["custom_styles/normal"].bg_color = Color("#bada55")
-		$HUD/Labels["modulate"]=district_label_text_color
+		#$HUD/TopRight/Labels["custom_styles/normal"].bg_color = Color("#bada55")
+		$HUD/TopRight/Labels["modulate"]=district_label_text_color
 	else:
 		get_tree().set_group("dlabels","visible",false)
-		$HUD/Labels["modulate"]=Color(1.0, 1.0, 1.0)
+		$HUD/TopRight/Labels["modulate"]=Color(1.0, 1.0, 1.0)
 
 func _on_TN_ready():
-	$HUD/HistoryControl.rect_position=Vector2($HUD/Score.rect_position.x - 12, $HUD/Score.rect_size.y + 12 )
 	#$HUD/HistoryControl.rect_scale=Vector2(1/scale.x, 1/scale.y)
+	uiScore=get_node("HUD/Top/R1/Score")
+	print(uiScore)
 	get_tree().call_group("allcities","hide")
 
 func disableui():
 	$HUD/StartScreen.hide()
-	#$HUD/Labels.hide()
+	#$HUD/TopRight/Labels.hide()
 
 func enableui():
 	$HUD/StartScreen.show()
-	#$HUD/Labels.hide()
+	#$HUD/TopRight/Labels.hide()
 	
 
 func neighbours(districtname):
@@ -803,8 +826,8 @@ func _on_History_pressed():
 	add_historic_districts(years[current_year], dhistory[0])
 	
 	#setup ui
-	$HUD/Score.visible=true
-	$HUD/Score.text=years[current_year].substr(0,4)
+	uiScore.visible=true
+	uiScore.text=years[current_year].substr(0,4)
 	$HUD/Timeline.bbcode_text='[color=yellow]'+years[current_year]+'[/color]'
 	
 	#setup data for transition animation
@@ -814,23 +837,24 @@ func _on_History_pressed():
 	#for timeline
 	var names=[] 
 	for n in get_tree().get_nodes_in_group(years[current_year]):
-		if n is Polygon2D:
-			names.append(n.name.replace('history',''))
-			newlist.append({node=n, loc=center( 'Districts/' + name(n.name) )}) 
+		#if n is Polygon2D:
+		names.append(n.name.replace('history',''))
+		newlist.append({node=n, loc=center( 'Districts/' + name(n.name) )}) 
 	$HistoryAnimator.start(old, newlist)
 	# HistoryControl ie stop button is shown only after animation starts
-	$HUD/HistoryControl.show()
+	$HUD/Top/HistoryControl.show()
 	yield($HistoryAnimator, "move_complete")
 	#print('init move complete')
 	add_to_dist_timeline(names)
 	get_tree().call_group(years[current_year],"show")
+	get_tree().call_group('dlabels'+years[current_year],"show")
 	border_color=Color(0, 0.4, 0.5, 1.0)
 	border_width=4
 	current_year=current_year+1
 	# borders have been updated redraw
 	update() 
 	# wait for a bit before next step
-	yield(get_tree().create_timer(2.0), "timeout")
+	yield(get_tree().create_timer(1.0), "timeout")
 	
 	while history_stopped_pressed==false and history_pause_pressed==false:
 		if current_year>=len(years):
@@ -839,38 +863,42 @@ func _on_History_pressed():
 		history_next_animate()
 		yield($HistoryAnimator, "move_complete")
 		get_tree().call_group(years[current_year],"show")
+		get_tree().call_group('dlabels'+years[current_year],"show")
 		current_year=current_year+1
 		#borders will be drawn for current year -1
 		update() # TODO very delicate since its tied to current_year-1		
-		yield(get_tree().create_timer(2.0), "timeout") 
+		yield(get_tree().create_timer(1.0), "timeout") 
 
 
 func history_next_animate():
 	#get_tree().set_group(years[current_year-1],"modulate",Color(0.0,0.0,0.0))
-	get_tree().call_group(years[current_year-1],"hide")
+	#get_tree().call_group(years[current_year-1],"hide")
+	get_tree().call_group("dlabels"+years[current_year-1],"hide")
 	add_historic_districts(years[current_year], dhistory[current_year])
 	#borders(false)
 #	$HUD/Message.text=$HUD/Message.text+'\n'+years[current_year]
-	$HUD/Score.text=years[current_year].substr(0,4)
+	uiScore.text=years[current_year].substr(0,4)
 	$HUD/Timeline.append_bbcode('\n[color=yellow]'+years[current_year]+'[/color]')
 	var names=[]
 	var newlist=[]
 	var key=dhistory[current_year].keys()[0]	
 	var old=[{node=get_node(key+'history'), loc=center('Districts/'+name(key))}]
 	for n in get_tree().get_nodes_in_group(years[current_year]):
-		if n is Polygon2D:
-			names.append(n.name.replace('history',''))
-			newlist.append({node=n, loc=center('Districts/'+ name(n.name))})
+		#if n is Polygon2D:
+		names.append(n.name.replace('history',''))
+		newlist.append({node=n, loc=center('Districts/'+ name(n.name))})
 	$HistoryAnimator.start(old, newlist)
 	add_to_dist_timeline(names)
 
 func history_next():
 	#get_tree().set_group(years[current_year-1],"modulate",Color(0.0,0.0,0.0))
-	get_tree().call_group(years[current_year-1],"hide")
+	#dont hide polys
+	#get_tree().call_group(years[current_year-1],"hide")
+	get_tree().call_group("dlabels"+years[current_year-1],"hide")
 	add_historic_districts(years[current_year], dhistory[current_year])
 	#borders(false)
 #	$HUD/Message.text=$HUD/Message.text+'\n'+years[current_year]
-	$HUD/Score.text=years[current_year].substr(0,4)
+	uiScore.text=years[current_year].substr(0,4)
 	$HUD/Timeline.append_bbcode('\n[color=yellow]'+years[current_year]+'[/color]')
 	var names=[]
 	for n in get_tree().get_nodes_in_group(years[current_year]):
@@ -902,7 +930,7 @@ var seconds:=0
 var timedquiz:=false
 func _on_QuizTimer_timeout():
 	seconds=seconds+1
-	$HUD/Clock.text=str(seconds)
+	$HUD/TopRight/Clock.text=str(seconds)
 
 func showstack():
 	for i in get_stack():
@@ -928,8 +956,8 @@ func disappear():
 func _on_Quest_pressed():
 	disableui()
 	$Gopal.show()
-	$HUD/Labels.show()
-	#$HUD/LabelCities.show()
+	$HUD/TopRight/Labels.show()
+	#$HUD/TopRight/LabelCities.show()
 	if selected_district!='':
 		deselect()
 		$Label.text=''
@@ -960,8 +988,8 @@ func quest_selected(districts, quest_name=''):
 	$HUD/Grid/VBoxContainer2/MarginContainer/history.visible=false
 	$HUD/Grid/VBoxContainer2/MarginContainer/Back.visible=false
 	$HUD/Grid/VBoxContainer2/MarginContainer/Cities.hide()
-	$HUD/Score.visible=true
-	$HUD/Score.text='Check the InfoBox for Instructions'
+	uiScore.visible=true
+	uiScore.text='Check the InfoBox for Instructions'
 	game_in_progress=3
 	if general_quests.has(quest_name):
 		appear()
@@ -973,8 +1001,9 @@ func quest_selected(districts, quest_name=''):
 func _on_Timed_pressed():
 	reset()
 	game_in_progress=1
-	$HUD/Score.text=str(score)
-	$HUD/Score.visible=true
+	uiScore.text=str(score)
+	uiScore.visible=true
+	$HUD/TopRight/Clock.show()
 	timed_msg("[pulse color=#44dd22 height=-15 freq=5]You have 10 turns\n Find the Districts![/pulse]",2)
 	yield($Timer,"timeout")
 	new_challenge()
@@ -986,12 +1015,12 @@ func showinfo(district, transition):
 	if transition == selectionType.new:
 		appear()
 	if game_in_progress==3:
-		$HUD/Score.visible=false
+		uiScore.visible=false
 		#appear()
 		$HUD/Grid.reload(district, '', '', 1)
 	else:
 		# non quest just show info without clue
-		$HUD/Score.visible=false
+		uiScore.visible=false
 		var cnt=0
 		#ignore first element of citygrades which is empty for optionbutton default state
 #		for g in range(1,len(citygrades)):
@@ -1014,7 +1043,7 @@ func _on_quest_over(turnstaken, cluessolved, success):
 	$HUD/Grid/VBoxContainer2/MarginContainer/Cities.show()	
 	$HUD/Grid.hide()
 	disappear()
-	$HUD/Score.visible=false
+	uiScore.visible=false
 	if success:
 		timed_msg("[pulse color=#22dd44 height=-15 freq=7]Congrats! Quest Complete. You took "+str(turnstaken)+" turns\nAnd solved "+str(cluessolved)+" clues! Next Quest has been Unlocked.[/pulse]",3)
 	else:
@@ -1026,16 +1055,16 @@ func _on_quest_over(turnstaken, cluessolved, success):
 	#quest_in_progress=false
 	game_in_progress=0 # revert back to explore mode
 	#reset score border
-	$HUD/Score["custom_styles/normal"].border_color="feed5f"#selected_color_right
-	$HUD/Score["custom_colors/font_color"]="feed5f"#selected_color_right
+	uiScore["custom_styles/normal"].border_color="feed5f"#selected_color_right
+	uiScore["custom_colors/font_color"]="feed5f"#selected_color_right
 	#enableui()
 	game_over()
 
 func _off_track(dx):
-	$HUD/Score.visible=true
-	$HUD/Score.text="Press CLUE if you need more hints"
-	$HUD/Score["custom_styles/normal"].border_color=Color.red
-	$HUD/Score["custom_colors/font_color"]=Color.red
+	uiScore.visible=true
+	uiScore.text="Press CLUE if you need more hints"
+	uiScore["custom_styles/normal"].border_color=Color.red
+	uiScore["custom_colors/font_color"]=Color.red
 	get_node("Districts/"+dx+'/Poly').color=selected_color_wrong
 
 func _on_Grid_show_neighbours(show):
@@ -1065,7 +1094,7 @@ func _on_Grid_on_track(d):
 func subjectQuest():
 	disableui()
 	$Gopal.show()
-	$HUD/Labels.show()
+	$HUD/TopRight/Labels.show()
 	if selected_district!='':
 		deselect()
 		$Label.text=''
@@ -1074,8 +1103,8 @@ func subjectQuest():
 
 func _on_Explore_pressed():
 	$Gopal.show()
-	$HUD/Labels.show()
-	$HUD/LabelCities.show()
+	$HUD/TopRight/Labels.show()
+	$HUD/TopRight/LabelCities.show()
 	var randstartidx=rng.randi_range(0,d.size()-1)
 	var startat = d.keys()[randstartidx]
 	path.append("Districts/"+startat)
@@ -1103,17 +1132,20 @@ func quit_history_mode():
 	$HistoryAnimator.stop()
 	for i in range(0,len(years)):
 		get_tree().call_group(years[i],"hide")
+		get_tree().call_group("dlabels"+years[i],"hide")
 		#get_tree().call_group(years[i],"queue_free")
 		for tmpx in get_tree().get_nodes_in_group(years[i]):
-			if tmpx is Polygon2D:
-				#print('freeing', tmpx.name)
-				tmpx.queue_free()
+			#if tmpx is Polygon2D:
+			tmpx.queue_free()
+		for tmpx in get_tree().get_nodes_in_group("dlabels"+years[i]):
+			#if tmpx is Polygon2D:
+			tmpx.queue_free()
 			#else:
-				#	print('not freeing', tmpx.name)	
+			#	print('not freeing', tmpx.name)	
 	#print('after queue free ***********', get_tree().get_node_count())
 	current_year=0
-	$HUD/Score.visible=false
-	$HUD/HistoryControl.hide()
+	uiScore.visible=false
+	$HUD/Top/HistoryControl.hide()
 	#get_tree().call_group('1956',"hide")
 	#borders(true)	
 	border_color=deselect_color.darkened(.1)
@@ -1123,13 +1155,13 @@ func quit_history_mode():
 func _on_PlayPause_toggled(button_pressed):
 	history_pause_pressed=button_pressed
 	if button_pressed:
-		$HUD/HistoryControl/PlayPause.text="Play"
-		$HUD/HistoryControl/Next.show()
-		$HUD/HistoryControl/Previous.show()
+		$HUD/Top/HistoryControl/PlayPause.text="Play"
+		$HUD/Top/R1/Next.show()
+		$HUD/Top/R1/Previous.show()
 	else:
-		$HUD/HistoryControl/PlayPause.text="Pause"
-		$HUD/HistoryControl/Next.hide()
-		$HUD/HistoryControl/Previous.hide()
+		$HUD/Top/HistoryControl/PlayPause.text="Pause"
+		$HUD/Top/R1/Next.hide()
+		$HUD/Top/R1/Previous.hide()
 
 func _on_Next_pressed():
 	if current_year>=len(years):
@@ -1137,5 +1169,6 @@ func _on_Next_pressed():
 		return
 	history_next()
 	get_tree().call_group(years[current_year],"show")
+	get_tree().call_group("dlabels"+years[current_year],"show")
 	current_year=current_year+1
 	update()

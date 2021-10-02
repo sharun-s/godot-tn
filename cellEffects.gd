@@ -9,6 +9,7 @@ var drawpoly=false
 var inc=0.0
 var drawcenters=false
 export var speed=0.02
+export var bcolor:=Color(0, 0.4, 0.5, 1.0)
 var transitions = ["draw_poly_with_lines"]#, "draw_move_along_lines"]#, "draw_poly_intersect"]
 
 onready var current_transition=transitions[randi() % len(transitions)]
@@ -77,12 +78,12 @@ func draw_poly_with_lines():
 	for i in todraw:
 		for idx in range(1, i.p.size()):
 			draw_line(i.origin.linear_interpolate(i.p[idx-1], inc) , 
-			i.origin.linear_interpolate(i.p[idx], inc), Color(0.0,0.0,0.7,1.0) , 4)
+			i.origin.linear_interpolate(i.p[idx], inc), bcolor , 4)
 
 func draw_move_along_lines():
 	for i in todraw:
 		for idx in range(1, i.p.size()*inc):
-			draw_line(i.p[idx-1] , i.p[idx], Color(0.0,0.25,0.55,1.0) , 4)
+			draw_line(i.p[idx-1] , i.p[idx], bcolor , 4)
 
 class MyCustomSorter:
 	static func sort_x(a, b):
@@ -105,7 +106,7 @@ func draw_poly_intersect():
 		var p=Geometry.intersect_polygons_2d(p1, p2)
 		for j in p.size():
 			for idx in range(1, p[j].size()*inc):
-				draw_line(p[j][idx-1] , p[j][idx], Color.darkblue , 4)
+				draw_line(p[j][idx-1] , p[j][idx], bcolor , 4)
 
 
 #	var merge=todraw[0].p
@@ -122,7 +123,6 @@ func draw_poly_intersect():
 #		if abs(p[idx][0]-lastx) > 6:
 #			draw_line(p[idx-1] , p[idx], Color.darkblue , 6)
 #			lastx=p[idx][0]
-
 
 func stop():
 	inc=1.0

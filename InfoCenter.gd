@@ -242,6 +242,7 @@ var facts:={
 			'Surrounded by the Javadhu and Yelagiri Hills known for rivers, waterfalls and sandal wood trees'
 			],
 		Tiruchirapalli=[
+			'Birth place of Suppandi, Hero of Tinkle Comics',
 			'f:The famous Imam Pasand Mangos of Thathachariar Gardens in Srirangam',
 			'p:C V Raman was born here, the first Asian to win the Nobel Prize in Physics, to answer the question if a glass of water is transparent why is the sea blue?',
 			'p:Ramanuja and the Bhakti movement. His mummified body preserved in Ranganthaswamy temple srirangam',

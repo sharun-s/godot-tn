@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://TN.gd" type="Script" id=1]
 [ext_resource path="res://Montreal-Regular.ttf" type="DynamicFontData" id=2]
@@ -26,11 +26,7 @@ font_data = ExtResource( 3 )
 size = 30
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=5]
-size = 26
-font_data = ExtResource( 3 )
-
-[sub_resource type="StyleBoxFlat" id=6]
+[sub_resource type="StyleBoxFlat" id=5]
 content_margin_left = 0.0
 content_margin_right = 0.0
 content_margin_top = 0.0
@@ -42,23 +38,40 @@ border_width_bottom = 4
 border_color = Color( 0.996078, 0.929412, 0.372549, 1 )
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
-expand_margin_left = 8.0
-expand_margin_right = 8.0
+expand_margin_left = 4.0
+expand_margin_right = 4.0
 expand_margin_top = 2.0
-expand_margin_bottom = 4.0
+expand_margin_bottom = 2.0
 
-[sub_resource type="DynamicFont" id=7]
-size = 24
+[sub_resource type="DynamicFont" id=6]
+size = 30
 font_data = ExtResource( 3 )
 
-[sub_resource type="StyleBoxFlat" id=8]
+[sub_resource type="StyleBoxFlat" id=7]
 bg_color = Color( 0, 0.121569, 0.247059, 1 )
 
-[sub_resource type="DynamicFont" id=9]
+[sub_resource type="DynamicFont" id=8]
 size = 40
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="DynamicFont" id=9]
+size = 26
+font_data = ExtResource( 3 )
+
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 0.00392157, 0.00784314, 0.0117647, 1 )
+border_width_left = 8
+border_width_bottom = 8
+border_color = Color( 0.996078, 0.929412, 0.372549, 1 )
+corner_radius_bottom_left = 8
+
+[sub_resource type="DynamicFont" id=11]
+size = 60
+outline_size = 2
+outline_color = Color( 0.976471, 0.870588, 0.376471, 1 )
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=12]
 size = 30
 font_data = ExtResource( 3 )
 
@@ -91,40 +104,40 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Labels" type="Button" parent="HUD"]
+[node name="Grid" parent="HUD" instance=ExtResource( 4 )]
 visible = false
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -192.0
-margin_bottom = 55.0
-custom_fonts/font = SubResource( 4 )
-toggle_mode = true
-text = "Labels"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+anchor_right = 0.3
 
-[node name="LabelCities" type="OptionButton" parent="HUD"]
+[node name="QMenu" parent="HUD" instance=ExtResource( 7 )]
 visible = false
-anchor_left = 1.0
-anchor_top = 0.1
-anchor_right = 1.0
-anchor_bottom = 0.1
-margin_left = -194.65
-size_flags_vertical = 0
-custom_fonts/font = SubResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="Score" type="Label" parent="HUD"]
-visible = false
+[node name="Top" type="VBoxContainer" parent="HUD"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -20.0
-margin_right = 20.0
-custom_styles/normal = SubResource( 6 )
-custom_fonts/font = SubResource( 7 )
+margin_left = -105.5
+margin_right = 105.5
+margin_bottom = 42.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="R1" type="HBoxContainer" parent="HUD/Top"]
+margin_right = 211.0
+
+[node name="Previous" type="Button" parent="HUD/Top/R1"]
+visible = false
+margin_right = 46.0
+margin_bottom = 42.0
+custom_fonts/font = SubResource( 4 )
+text = "<<"
+
+[node name="Score" type="Label" parent="HUD/Top/R1"]
+visible = false
+margin_right = 58.0
+margin_bottom = 36.0
+size_flags_horizontal = 3
+custom_styles/normal = SubResource( 5 )
+custom_fonts/font = SubResource( 6 )
 custom_colors/font_color = Color( 0.996078, 0.929412, 0.372549, 1 )
 text = "test"
 align = 1
@@ -133,55 +146,33 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Clock" type="Label" parent="HUD"]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = 3.0
-margin_top = 37.0
-margin_right = 43.0
-margin_bottom = 86.0
-custom_fonts/font = SubResource( 7 )
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Grid" parent="HUD" instance=ExtResource( 4 )]
+[node name="Next" type="Button" parent="HUD/Top/R1"]
 visible = false
-anchor_right = 0.3
-
-[node name="QMenu" parent="HUD" instance=ExtResource( 7 )]
-visible = false
-
-[node name="HistoryControl" type="HBoxContainer" parent="HUD"]
-visible = false
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Previous" type="Button" parent="HUD/HistoryControl"]
-visible = false
-margin_right = 46.0
-margin_bottom = 42.0
-custom_fonts/font = SubResource( 4 )
-text = "<<"
-
-[node name="PlayPause" type="Button" parent="HUD/HistoryControl"]
-custom_fonts/font = SubResource( 4 )
-toggle_mode = true
-text = "Pause"
-
-[node name="Next" type="Button" parent="HUD/HistoryControl"]
-visible = false
-margin_right = 46.0
+margin_left = 62.0
+margin_right = 108.0
 margin_bottom = 42.0
 custom_fonts/font = SubResource( 4 )
 text = ">>"
 
-[node name="Stop" type="Button" parent="HUD/HistoryControl"]
-margin_right = 70.0
+[node name="HistoryControl" type="HBoxContainer" parent="HUD/Top"]
+visible = false
+margin_top = 4.0
+margin_right = 211.0
+margin_bottom = 46.0
+
+[node name="PlayPause" type="Button" parent="HUD/Top/HistoryControl"]
+margin_right = 103.0
 margin_bottom = 42.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 4 )
+toggle_mode = true
+text = "Pause"
+
+[node name="Stop" type="Button" parent="HUD/Top/HistoryControl"]
+margin_left = 107.0
+margin_right = 211.0
+margin_bottom = 42.0
+size_flags_horizontal = 3
 custom_fonts/font = SubResource( 4 )
 text = "Quit"
 
@@ -200,8 +191,8 @@ margin_right = 400.0
 margin_bottom = 800.0
 size_flags_horizontal = 3
 size_flags_vertical = 7
-custom_styles/normal = SubResource( 8 )
-custom_fonts/font = SubResource( 9 )
+custom_styles/normal = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 text = "Districts 
 of
 Tamil Nadu"
@@ -285,6 +276,59 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="TopRight" type="VBoxContainer" parent="HUD"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -40.0
+margin_bottom = 40.0
+grow_horizontal = 0
+size_flags_horizontal = 3
+alignment = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelCities" type="OptionButton" parent="HUD/TopRight"]
+visible = false
+margin_right = 94.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+custom_fonts/font = SubResource( 9 )
+text = "Cities"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Labels" type="Button" parent="HUD/TopRight"]
+visible = false
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -192.0
+margin_bottom = 55.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 4 )
+toggle_mode = true
+text = "Labels"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Clock" type="Label" parent="HUD/TopRight"]
+visible = false
+margin_right = 40.0
+margin_bottom = 71.0
+size_flags_horizontal = 3
+custom_styles/normal = SubResource( 10 )
+custom_fonts/font = SubResource( 11 )
+custom_colors/font_color = Color( 0.917647, 0.176471, 0.176471, 1 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
 
@@ -300,7 +344,7 @@ speed = 0.025
 [node name="Label" type="Label" parent="."]
 visible = false
 margin_bottom = 37.0
-custom_fonts/font = SubResource( 10 )
+custom_fonts/font = SubResource( 12 )
 custom_colors/font_color = Color( 0.439216, 0.980392, 0.501961, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
@@ -317,8 +361,6 @@ scale = Vector2( 0.6, 0.6 )
 speed = 200
 
 [connection signal="ready" from="." to="." method="_on_TN_ready"]
-[connection signal="toggled" from="HUD/Labels" to="." method="_on_Labels_toggled"]
-[connection signal="item_selected" from="HUD/LabelCities" to="." method="_on_LabelCities_item_selected"]
 [connection signal="infobox_exit" from="HUD/Grid" to="." method="_on_infobox_exit"]
 [connection signal="off_track" from="HUD/Grid" to="." method="_off_track"]
 [connection signal="on_track" from="HUD/Grid" to="." method="_on_Grid_on_track"]
@@ -327,13 +369,15 @@ speed = 200
 [connection signal="show_neighbours" from="HUD/Grid" to="." method="_on_Grid_show_neighbours"]
 [connection signal="subject_quests_ready" from="HUD/Grid" to="HUD/QMenu" method="_on_subject_quests_ready"]
 [connection signal="selected" from="HUD/QMenu" to="." method="quest_selected"]
-[connection signal="toggled" from="HUD/HistoryControl/PlayPause" to="." method="_on_PlayPause_toggled"]
-[connection signal="pressed" from="HUD/HistoryControl/Next" to="." method="_on_Next_pressed"]
-[connection signal="pressed" from="HUD/HistoryControl/Stop" to="." method="_on_HistoryStop_pressed"]
+[connection signal="pressed" from="HUD/Top/R1/Next" to="." method="_on_Next_pressed"]
+[connection signal="toggled" from="HUD/Top/HistoryControl/PlayPause" to="." method="_on_PlayPause_toggled"]
+[connection signal="pressed" from="HUD/Top/HistoryControl/Stop" to="." method="_on_HistoryStop_pressed"]
 [connection signal="pressed" from="HUD/StartScreen/B/Explore" to="." method="_on_Explore_pressed"]
 [connection signal="pressed" from="HUD/StartScreen/B/Quiz" to="." method="_on_Quiz_pressed"]
 [connection signal="pressed" from="HUD/StartScreen/B/Timed" to="." method="_on_Timed_pressed"]
 [connection signal="pressed" from="HUD/StartScreen/B/Quest" to="." method="_on_Quest_pressed"]
 [connection signal="pressed" from="HUD/StartScreen/B/Quest2" to="." method="subjectQuest"]
 [connection signal="pressed" from="HUD/StartScreen/B/History" to="." method="_on_History_pressed"]
+[connection signal="item_selected" from="HUD/TopRight/LabelCities" to="." method="_on_LabelCities_item_selected"]
+[connection signal="toggled" from="HUD/TopRight/Labels" to="." method="_on_Labels_toggled"]
 [connection signal="timeout" from="QuizTimer" to="." method="_on_QuizTimer_timeout"]

@@ -494,8 +494,6 @@ polygon = PoolVector2Array( 45.9091, 6.32909, 50.9711, 39.213, 50.1963, 63.4561,
 show_behind_parent = true
 position = Vector2( 441.369, 371.267 )
 z_index = -3
-monitoring = false
-monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Tiruvarur"]
 color = Color( 1, 1, 0.882353, 1 )
