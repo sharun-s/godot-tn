@@ -6,13 +6,17 @@ export(Color) var color=Color.lime
 export(String) var group
 export(String) var district
 export(int) var radius
-# Called when the node enters the scene tree for the first time.
-
+export(int) var fontsize=18
+var df=DynamicFont.new()
+var labelfont=preload('res://DroidSans.ttf')
 func _ready():
+	df.font_data=labelfont
+	df.size=fontsize
 	update()
 	
 func _draw():
 	draw_circle(Vector2(0,0), radius, color)
+	draw_string(df,Vector2(1,1), name, Color.red)
 "
 
 [node name="Point" type="Node2D"]

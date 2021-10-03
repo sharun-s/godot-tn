@@ -155,13 +155,13 @@ district = "Chengalpattu"
 radius = 5
 
 [node name="Chennai" parent="." groups=[
-"Chennai, Kanchipuram and Tiruvallur",
+"Chennai",
 "Muni Corporation",
 "allcities",
 ] instance=ExtResource( 1 )]
 position = Vector2( 586.532, 69.8875 )
 group = "Muni Corporation"
-district = "Chennai, Kanchipuram and Tiruvallur"
+district = "Chennai"
 radius = 7
 
 [node name="Chidambaram" parent="." groups=[
@@ -535,13 +535,13 @@ district = "Madurai"
 radius = 7
 
 [node name="Maduranthakam" parent="." groups=[
-"Kanchipuram",
+"Chengalpattu",
 "Municipality Second grade",
 "allcities",
 ] instance=ExtResource( 1 )]
 position = Vector2( 531.021, 153.491 )
 group = "Municipality Second grade"
-district = "Kanchipuram"
+district = "Chengalpattu"
 radius = 4
 
 [node name="Manapparai" parent="." groups=[
@@ -565,13 +565,13 @@ district = "Tiruvarur"
 radius = 5
 
 [node name="Maraimalainagar" parent="." groups=[
-"Kanchipuram",
+"Chengalpattu",
 "Municipality Special grade",
 "allcities",
 ] instance=ExtResource( 1 )]
 position = Vector2( 551.48, 113.371 )
 group = "Municipality Special grade"
-district = "Kanchipuram"
+district = "Chengalpattu"
 radius = 5
 
 [node name="Mayiladithurai" parent="." groups=[
@@ -735,13 +735,13 @@ district = "Namakkal"
 radius = 4
 
 [node name="Pammal" parent="." groups=[
-"Kanchipuram",
+"Chengalpattu",
 "Municipality Selection grade",
 "allcities",
 ] instance=ExtResource( 1 )]
 position = Vector2( 567.346, 85.6874 )
 group = "Municipality Selection grade"
-district = "Kanchipuram"
+district = "Chengalpattu"
 radius = 5
 
 [node name="Panruti" parent="." groups=[
@@ -836,12 +836,12 @@ radius = 5
 
 [node name="Puliyankudi" parent="." groups=[
 "Municipality Second grade",
-"Tirunelveli",
+"Tenkasi",
 "allcities",
 ] instance=ExtResource( 1 )]
 position = Vector2( 144.985, 650.837 )
 group = "Municipality Second grade"
-district = "Tirunelveli"
+district = "Tenkasi"
 radius = 4
 
 [node name="Punjai Puliampatti" parent="." groups=[
@@ -956,12 +956,12 @@ radius = 5
 
 [node name="Sengottai" parent="." groups=[
 "Municipality Second grade",
-"Tirunelveli",
+"Tenkasi",
 "allcities",
 ] instance=ExtResource( 1 )]
 position = Vector2( 147.368, 669.31 )
 group = "Municipality Second grade"
-district = "Tirunelveli"
+district = "Tenkasi"
 radius = 4
 
 [node name="Sirkazhi" parent="." groups=[

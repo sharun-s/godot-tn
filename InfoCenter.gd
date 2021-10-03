@@ -409,8 +409,10 @@ func reload(district, neighbours, hist='',mode=state.NON_QUEST,ftype=''):
 	n=neighbours
 	$VBoxContainer2/MarginContainer/Neighbours.pressed=false
 	for k in $VBoxContainer/PanelContainer.get_children():
-		if k is Polygon2D or k is TextureRect:
-			continue
+		if k is Polygon2D:
+			k.visible=false#.empty() #TODO this doesnt really redraw empty poly
+		elif k is TextureRect:
+			k.texture=null	
 		else:
 			k.free()
 	randomize()

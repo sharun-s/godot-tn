@@ -5,6 +5,11 @@ import shapely
 import pandas as pd
 np.set_printoptions(threshold=sys.maxsize)
 
+print("WARNING: data is out of data since cities.tscn and tndistricts.tscn have new additions that arent updated in backing data here"
+print("Munis.csv needs to be spell corrected and some cities have moved to new districts")
+print("font and style stuff of tndistricts.tscn has changed through editor")
+print("sync and run - best way generate files in scripts dir. Compare with files in main director BEFORE over writing them")
+sys.exit(0) 
 l2=gp.read_file('tn_dist.json')
 #required for muni lat long to be in same ref frame
 l2.to_crs(epsg=4326,inplace=True)

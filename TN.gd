@@ -605,7 +605,7 @@ func reset():
 	score=0
 	attempts=0
 	# gopal state depends on game - explore/quest/multiquest show - history/quiz/timedquiz hide
-	$Gopal.hide() 	
+	$Gopal.hide()
 	disableui()
 	#$HUD/Grid.hide()
 	disappear()
@@ -988,7 +988,7 @@ func quest_selected(districts, quest_name=''):
 	$HUD/Grid/VBoxContainer2/MarginContainer/Neighbours.visible=false
 	$HUD/Grid/VBoxContainer2/MarginContainer/history.visible=false
 	$HUD/Grid/VBoxContainer2/MarginContainer/Back.visible=false
-	$HUD/Grid/VBoxContainer2/MarginContainer/Cities.hide()
+	$HUD/Grid/VBoxContainer2/MarginContainer/Muni.hide()
 	uiScore.visible=true
 	uiScore.text='Check the InfoBox for Instructions'
 	game_in_progress=3
@@ -1022,8 +1022,6 @@ func showinfo(district, transition):
 	else:
 		# non quest just show info without clue
 		uiScore.visible=false
-		for i in get_tree().get_nodes_in_group(district.split('/')[1]):
-			print(i.group,' ',i.name)
 		#appear()
 		$HUD/Grid.reload(district, neighbours(district), get_history(district.split('/')[1]), 2) 
 
@@ -1032,7 +1030,7 @@ func _on_quest_over(turnstaken, cluessolved, success):
 	$HUD/Grid/VBoxContainer2/MarginContainer/Neighbours.visible=true
 	$HUD/Grid/VBoxContainer2/MarginContainer/history.visible=true
 	$HUD/Grid/VBoxContainer2/MarginContainer/Back.visible=true
-	$HUD/Grid/VBoxContainer2/MarginContainer/Cities.show()	
+	$HUD/Grid/VBoxContainer2/MarginContainer/Muni.show()	
 	$HUD/Grid.hide()
 	disappear()
 	uiScore.visible=false
@@ -1103,6 +1101,13 @@ func _on_Explore_pressed():
 	gotoDistrict()
 
 func _on_infobox_exit():
+	for k in $HUD/Grid/VBoxContainer/PanelContainer.get_children():
+		if k is Polygon2D:
+			k.visible=false #TODO this doesnt really redraw empty poly
+		elif k is TextureRect:
+			k.texture=null	
+		else:
+			k.free()
 	game_over()
 
 
@@ -1184,6 +1189,7 @@ func get_bounds(polygon):
 
 var pt=preload("res://Point.tscn")
 func _on_Grid_show_munis(district):
+	#TODO dont redraw if pressed again and again
 	$HUD/Grid/VBoxContainer/PanelContainer/imgbox.texture=null
 	var p = get_node('Districts/'+district+'/Poly').polygon
 	var origin=get_node('Districts/'+district).position
@@ -1195,13 +1201,14 @@ func _on_Grid_show_munis(district):
 	var ib=$HUD/Grid/VBoxContainer/PanelContainer.rect_size
 	#print('infobox rect ',ib.x, ib.y)
 	$HUD/Grid/VBoxContainer/PanelContainer/Map.scale=Vector2(ib.x/pb.size.x, ib.y/pb.size.y)
-	
+	$HUD/Grid/VBoxContainer/PanelContainer/Map.visible=true
 	$HUD/Grid/VBoxContainer/PanelContainer/Map.polygon=p
 	$HUD/Grid/VBoxContainer/PanelContainer/Map.color=deselect_color
 	for c in get_tree().get_nodes_in_group(district):
 		#print(c, ' ', c.name,' ', c.position)
 		#print(c.position-origin)
 		var city=pt.instance()
+		city.name=c.name
 		city.radius=20/citygrades.find(c.group)
 		var citypos= c.position - origin
 		city.position = Vector2(citypos.x*ib.x/pb.size.x, citypos.y * ib.y/pb.size.y)
