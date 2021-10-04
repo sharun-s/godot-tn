@@ -1147,6 +1147,8 @@ func quit_history_mode():
 	#borders(true)	
 	border_color=deselect_color.darkened(.1)
 	update()
+	$HUD/Top/R1/Next.hide()
+	$HUD/Top/R1/Previous.hide()
 	game_over()
 
 func _on_PlayPause_toggled(button_pressed):

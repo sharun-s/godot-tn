@@ -17,6 +17,7 @@ var facts:={
 			"Named after the Sengazhuneer poo (Red White Lily) that grows in abundance along the river banks",
 			"h:Mahaballipuram site of some of the earliest Rock Temples and Stone Sculpture that influenced the style of Temple Architecture throughout South India"],
 		Coimbatore=[
+			"Location of India's first Insect Museum with a collection of 20000 Insects",
 			'G. D. Naidu, known as the Edison of India, was from here. His inventions and entrepreneurship turned the region into a industrial hub',
 			'f:Kalakki meaning to mix is popular street food here (super soft omelet with masala)',
 			'Wet Grinder used for idli/dosa was invented here. More than 800 factories manufacture it and the area has received the GI Tag from Govt of India',
@@ -53,6 +54,7 @@ var facts:={
 			"Sathyamangalam Tiger Reserve home to 83 tigers and 111 Leopards"
 		],
 		Kanyakumari=[
+			"Martandam town located here is famous for honey production",
 			'On the UN Human Development Index this district comes first within the state',
 			'Indias largest wind power farm is located her at Muppandal. Its the 3rd largest in the world',
 			'the tiny village of Vadaserry famous for crafting Temple Jewellery with red and green stones or kuchu kal',
