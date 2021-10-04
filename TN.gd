@@ -199,7 +199,7 @@ func _ready():
 	rng.randomize()
 	add_child(tw)
 	for i in citygrades:
-		$HUD/TopRight/LabelCities.add_item(i)
+		$HUD/Top/LabelCities.add_item(i)
 	VisualServer.set_default_clear_color('001f3f')#Color("ff222222"))
 	for node in $Districts.get_children():
 		if node is Area2D:
@@ -210,24 +210,40 @@ func _ready():
 
 	var t=get_viewport_transform()
 	var viewp=get_viewport_rect()
+	var hcenter=viewp.size.x/2
+	var widthmultiplier= viewp.size.x/800 
 	print(viewp)
-	print('startsscreensize',$HUD/StartScreen.rect_size)
+	var tnoffset=$Districts/Karur.position.x 
+	print($Districts.get_viewport_rect()) 
+	#print('startsscreensize',$HUD/StartScreen.rect_size)
 	if viewp.size.x < viewp.size.y: #portrait mode
 		$HUD/StartScreen.columns=1
+		$HUD/Grid.columns=3
+		$HUD/Grid.anchor_top=0.5
+		$HUD/Grid.anchor_right=1.0
+		$HUD/Grid/MarginContainer.alignment=BoxContainer.ALIGN_END
+		$HUD/Grid/MarginContainer.grow_horizontal=Control.GROW_DIRECTION_BEGIN
+		$HUD/Grid/MarginContainer.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 	else:
 		$HUD/StartScreen.columns=2
-	if viewp.size.x < 600: #portraitt mode
-		t.origin=Vector2(viewp.size.x/2,0)
-		transform=t
-		scale=Vector2(get_viewport_rect().size.x/600, get_viewport_rect().size.y/800)	
-	else:
-		#divide screen width by 2 and push left 
-		#by half of generatedwidth ie 600/2
-		t.origin=Vector2(viewp.size.x/2-300,0)
-		transform=t
-		#so viewport rect changes thanks to above transform which is why viewp can be used while scaling
-		scale=Vector2(get_viewport_rect().size.y/800, get_viewport_rect().size.y/800)
-	$Label.rect_scale=Vector2(1/scale.x, 1/scale.y)
+		$HUD/Grid.columns=1
+		$HUD/Grid.anchor_right=.3
+		$Districts.transform.origin=Vector2(viewp.size.x/2-300, 0)
+		$Cities.transform.origin=Vector2(viewp.size.x/2-300, 0)
+		$Gopal.transform.origin=Vector2(viewp.size.x/2-300, 0)
+		$HistoryAnimator.transform.origin=Vector2(viewp.size.x/2-300, 0)
+	#if viewp.size.x < 600: #portraitt mode
+#		t.origin=Vector2(viewp.size.x/2,0)
+#		transform=t
+#		scale=Vector2(get_viewport_rect().size.x/600, get_viewport_rect().size.y/800)	
+#	else:
+#		#divide screen width by 2 and push left 
+#		#by half of generatedwidth ie 600/2
+#		t.origin=Vector2(viewp.size.x/2-300,0)
+#		transform=t
+#		#so viewport rect changes thanks to above transform which is why viewp can be used while scaling
+#		scale=Vector2(get_viewport_rect().size.x/800, get_viewport_rect().size.y/800)
+#	$Label.rect_scale=Vector2(1/scale.x, 1/scale.y)
 	#$HUD/Top/Score.rect_scale=Vector2(2/scale.x, 2/scale.y)
 	#for debugging resolution
 	if OS.has_feature("editor"):
@@ -575,7 +591,7 @@ func game_over():
 	path.clear()
 	seconds=0
 	$HUD/TopRight/Labels.hide()
-	$HUD/TopRight/LabelCities.hide()
+	$HUD/Top/LabelCities.hide()
 	#borders(true)
 	#game_in_progress=0
 	$HUD/Timeline.bbcode_text=''
@@ -747,8 +763,9 @@ func _on_TN_ready():
 	#$HUD/HistoryControl.rect_scale=Vector2(1/scale.x, 1/scale.y)
 	uiScore=get_node("HUD/Top/R1/Score")
 	get_tree().call_group("allcities","hide")
-	for dt in d.keys():
-		print( dt, len(get_tree().get_nodes_in_group(dt)))
+	#debug prints cities per district
+	#for dt in d.keys():
+	#	print( dt, len(get_tree().get_nodes_in_group(dt)))
 
 func disableui():
 	$HUD/StartScreen.hide()
@@ -985,10 +1002,10 @@ func quest_selected(districts, quest_name=''):
 		yield(get_tree().create_timer(4.0), "timeout")
 		$HUD/QMenu/PopupPanel.hide()
 		$HUD/QMenu.hide()
-	$HUD/Grid/VBoxContainer2/MarginContainer/Neighbours.visible=false
-	$HUD/Grid/VBoxContainer2/MarginContainer/history.visible=false
-	$HUD/Grid/VBoxContainer2/MarginContainer/Back.visible=false
-	$HUD/Grid/VBoxContainer2/MarginContainer/Muni.hide()
+	$HUD/Grid/MarginContainer/Neighbours.visible=false
+	$HUD/Grid/MarginContainer/history.visible=false
+	$HUD/Grid/MarginContainer/Back.visible=false
+	$HUD/Grid/MarginContainer/Muni.hide()
 	uiScore.visible=true
 	uiScore.text='Check the InfoBox for Instructions'
 	game_in_progress=3
@@ -1027,10 +1044,10 @@ func showinfo(district, transition):
 
 func _on_quest_over(turnstaken, cluessolved, success):
 	print('quest success',success)
-	$HUD/Grid/VBoxContainer2/MarginContainer/Neighbours.visible=true
-	$HUD/Grid/VBoxContainer2/MarginContainer/history.visible=true
-	$HUD/Grid/VBoxContainer2/MarginContainer/Back.visible=true
-	$HUD/Grid/VBoxContainer2/MarginContainer/Muni.show()	
+	$HUD/Grid/MarginContainer/Neighbours.visible=true
+	$HUD/Grid/MarginContainer/history.visible=true
+	$HUD/Grid/MarginContainer/Back.visible=true
+	$HUD/Grid/MarginContainer/Muni.show()	
 	$HUD/Grid.hide()
 	disappear()
 	uiScore.visible=false
@@ -1094,7 +1111,7 @@ func subjectQuest():
 func _on_Explore_pressed():
 	$Gopal.show()
 	$HUD/TopRight/Labels.show()
-	$HUD/TopRight/LabelCities.show()
+	$HUD/Top/LabelCities.show()
 	var randstartidx=rng.randi_range(0,d.size()-1)
 	var startat = d.keys()[randstartidx]
 	path.append("Districts/"+startat)

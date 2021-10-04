@@ -409,7 +409,7 @@ func reload(district, neighbours, hist='',mode=state.NON_QUEST,ftype=''):
 			district=district.split('/')[1]
 	historytext=hist
 	n=neighbours
-	$VBoxContainer2/MarginContainer/Neighbours.pressed=false
+	$MarginContainer/Neighbours.pressed=false
 	for k in $VBoxContainer/PanelContainer.get_children():
 		if k is Polygon2D:
 			k.visible=false#.empty() #TODO this doesnt really redraw empty poly
@@ -441,7 +441,7 @@ func reload(district, neighbours, hist='',mode=state.NON_QUEST,ftype=''):
 					targets.append(facts.keys()[idx])
 			
 		print('targets set', targets)
-		$VBoxContainer2/MarginContainer/clue.show()
+		$MarginContainer/clue.show()
 		_on_clue_pressed() # to reset info box
 	elif mode==state.IN_QUEST:
 		attempts=attempts-1
@@ -458,7 +458,7 @@ func reload(district, neighbours, hist='',mode=state.NON_QUEST,ftype=''):
 			show_fact(district, 'Oops! Wrong direction. You are in '+district+' known for ')
 			emit_signal("off_track",district)
 		if attempts==0 or targets.size()==0:
-			$VBoxContainer2/MarginContainer/clue.hide()
+			$MarginContainer/clue.hide()
 			# this updates state in main TN node and in Qmenu Node. Qmenu will change quest buttons state on quest success
 			emit_signal('quest_over',AttemptsAllowed-attempts, NumberOfTargets - targets.size(), targets.size()==0) 
 			attempts=AttemptsAllowed
@@ -467,7 +467,7 @@ func reload(district, neighbours, hist='',mode=state.NON_QUEST,ftype=''):
 				facts=backupfacts
 				generic_quest=true
 	else:
-		#$VBoxContainer2/MarginContainer/clue.hide()
+		#$MarginContainer/clue.hide()
 		$VBoxContainer/NameBox.text=district
 		show_fact(district)
 
@@ -504,10 +504,10 @@ func format_neighbours():
 
 func _on_Neighbours_pressed():
 	if n == null:
-		$VBoxContainer2/MarginContainer/Neighbours.pressed=false
+		$MarginContainer/Neighbours.pressed=false
 		return
 	if len(n) == 0:
-		$VBoxContainer2/MarginContainer/Neighbours.pressed=false
+		$MarginContainer/Neighbours.pressed=false
 		return
 	$VBoxContainer2/FactBox.text=format_neighbours()
 
@@ -543,10 +543,10 @@ func _on_history_pressed():
 
 func _on_Neighbours_toggled(button_pressed):
 	if n == null:
-		$VBoxContainer2/MarginContainer/Neighbours.pressed=false
+		$MarginContainer/Neighbours.pressed=false
 		return
 	if len(n) == 0:
-		$VBoxContainer2/MarginContainer/Neighbours.pressed=false
+		$MarginContainer/Neighbours.pressed=false
 		return
 	emit_signal('show_neighbours', button_pressed)
 

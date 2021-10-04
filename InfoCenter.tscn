@@ -134,33 +134,33 @@ custom_fonts/font = SubResource( 5 )
 text = "Welcome! This district is known for"
 autowrap = true
 
-[node name="MarginContainer" type="VBoxContainer" parent="VBoxContainer2"]
-margin_top = 232.0
-margin_right = 800.0
-margin_bottom = 400.0
+[node name="MarginContainer" type="VBoxContainer" parent="."]
+margin_top = 235.0
+margin_right = 181.0
+margin_bottom = 403.0
 custom_constants/separation = 0
 
-[node name="Neighbours" type="Button" parent="VBoxContainer2/MarginContainer"]
-margin_right = 800.0
+[node name="Neighbours" type="Button" parent="MarginContainer"]
+margin_right = 181.0
 margin_bottom = 42.0
 size_flags_horizontal = 3
-size_flags_vertical = 3
+size_flags_vertical = 4
 custom_styles/pressed = SubResource( 6 )
 custom_fonts/font = SubResource( 7 )
 custom_colors/font_color_pressed = Color( 0.0235294, 0.423529, 0.0235294, 1 )
 toggle_mode = true
 text = "Neighbours"
 
-[node name="history" type="Button" parent="VBoxContainer2/MarginContainer"]
+[node name="history" type="Button" parent="MarginContainer"]
 margin_top = 42.0
-margin_right = 800.0
+margin_right = 181.0
 margin_bottom = 84.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 7 )
 text = "History"
 
-[node name="clue" type="Button" parent="VBoxContainer2/MarginContainer"]
+[node name="clue" type="Button" parent="MarginContainer"]
 visible = false
 margin_top = 106.0
 margin_right = 1024.0
@@ -172,26 +172,26 @@ custom_fonts/font = SubResource( 7 )
 custom_colors/font_color = Color( 1, 0.8, 0.0666667, 1 )
 text = "Need Another Clue?"
 
-[node name="Muni" type="Button" parent="VBoxContainer2/MarginContainer"]
+[node name="Muni" type="Button" parent="MarginContainer"]
 margin_top = 84.0
-margin_right = 800.0
+margin_right = 181.0
 margin_bottom = 126.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 9 )
 text = "Cities"
 
-[node name="Back" type="Button" parent="VBoxContainer2/MarginContainer"]
+[node name="Back" type="Button" parent="MarginContainer"]
 margin_top = 126.0
-margin_right = 800.0
+margin_right = 181.0
 margin_bottom = 168.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 7 )
 text = "Main Menu"
 
-[connection signal="pressed" from="VBoxContainer2/MarginContainer/Neighbours" to="." method="_on_Neighbours_pressed"]
-[connection signal="toggled" from="VBoxContainer2/MarginContainer/Neighbours" to="." method="_on_Neighbours_toggled"]
-[connection signal="pressed" from="VBoxContainer2/MarginContainer/history" to="." method="_on_history_pressed"]
-[connection signal="pressed" from="VBoxContainer2/MarginContainer/clue" to="." method="_on_clue_pressed"]
-[connection signal="pressed" from="VBoxContainer2/MarginContainer/Muni" to="." method="_on_muni1_pressed"]
-[connection signal="pressed" from="VBoxContainer2/MarginContainer/Back" to="." method="_on_Back_pressed"]
+[connection signal="pressed" from="MarginContainer/Neighbours" to="." method="_on_Neighbours_pressed"]
+[connection signal="toggled" from="MarginContainer/Neighbours" to="." method="_on_Neighbours_toggled"]
+[connection signal="pressed" from="MarginContainer/history" to="." method="_on_history_pressed"]
+[connection signal="pressed" from="MarginContainer/clue" to="." method="_on_clue_pressed"]
+[connection signal="pressed" from="MarginContainer/Muni" to="." method="_on_muni1_pressed"]
+[connection signal="pressed" from="MarginContainer/Back" to="." method="_on_Back_pressed"]

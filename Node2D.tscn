@@ -47,16 +47,16 @@ expand_margin_bottom = 2.0
 size = 30
 font_data = ExtResource( 3 )
 
-[sub_resource type="StyleBoxFlat" id=7]
-bg_color = Color( 0, 0.121569, 0.247059, 1 )
-
-[sub_resource type="DynamicFont" id=8]
-size = 40
-font_data = ExtResource( 2 )
-
-[sub_resource type="DynamicFont" id=9]
+[sub_resource type="DynamicFont" id=7]
 size = 26
 font_data = ExtResource( 3 )
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0, 0.121569, 0.247059, 1 )
+
+[sub_resource type="DynamicFont" id=9]
+size = 40
+font_data = ExtResource( 2 )
 
 [sub_resource type="StyleBoxFlat" id=10]
 bg_color = Color( 0.00392157, 0.00784314, 0.0117647, 1 )
@@ -106,7 +106,6 @@ __meta__ = {
 
 [node name="Grid" parent="HUD" instance=ExtResource( 4 )]
 visible = false
-anchor_right = 0.3
 
 [node name="QMenu" parent="HUD" instance=ExtResource( 7 )]
 visible = false
@@ -176,6 +175,20 @@ size_flags_horizontal = 3
 custom_fonts/font = SubResource( 4 )
 text = "Quit"
 
+[node name="LabelCities" type="OptionButton" parent="HUD/Top"]
+visible = false
+margin_left = 465.5
+margin_right = 559.5
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+custom_fonts/font = SubResource( 7 )
+text = "Cities"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="StartScreen" type="GridContainer" parent="HUD"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -191,8 +204,8 @@ margin_right = 400.0
 margin_bottom = 800.0
 size_flags_horizontal = 3
 size_flags_vertical = 7
-custom_styles/normal = SubResource( 7 )
-custom_fonts/font = SubResource( 8 )
+custom_styles/normal = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 text = "Districts 
 of
 Tamil Nadu"
@@ -288,19 +301,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LabelCities" type="OptionButton" parent="HUD/TopRight"]
-visible = false
-margin_right = 94.0
-margin_bottom = 38.0
-size_flags_horizontal = 3
-size_flags_vertical = 0
-custom_fonts/font = SubResource( 9 )
-text = "Cities"
-align = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Labels" type="Button" parent="HUD/TopRight"]
 visible = false
 anchor_left = 1.0
@@ -373,12 +373,12 @@ speed = 200
 [connection signal="pressed" from="HUD/Top/R1/Next" to="." method="_on_Next_pressed"]
 [connection signal="toggled" from="HUD/Top/HistoryControl/PlayPause" to="." method="_on_PlayPause_toggled"]
 [connection signal="pressed" from="HUD/Top/HistoryControl/Stop" to="." method="_on_HistoryStop_pressed"]
+[connection signal="item_selected" from="HUD/Top/LabelCities" to="." method="_on_LabelCities_item_selected"]
 [connection signal="pressed" from="HUD/StartScreen/B/Explore" to="." method="_on_Explore_pressed"]
 [connection signal="pressed" from="HUD/StartScreen/B/Quiz" to="." method="_on_Quiz_pressed"]
 [connection signal="pressed" from="HUD/StartScreen/B/Timed" to="." method="_on_Timed_pressed"]
 [connection signal="pressed" from="HUD/StartScreen/B/Quest" to="." method="_on_Quest_pressed"]
 [connection signal="pressed" from="HUD/StartScreen/B/Quest2" to="." method="subjectQuest"]
 [connection signal="pressed" from="HUD/StartScreen/B/History" to="." method="_on_History_pressed"]
-[connection signal="item_selected" from="HUD/TopRight/LabelCities" to="." method="_on_LabelCities_item_selected"]
 [connection signal="toggled" from="HUD/TopRight/Labels" to="." method="_on_Labels_toggled"]
 [connection signal="timeout" from="QuizTimer" to="." method="_on_QuizTimer_timeout"]
