@@ -81,6 +81,7 @@ script = ExtResource( 1 )
 [node name="HUD" type="CanvasLayer" parent="."]
 
 [node name="Message" type="RichTextLabel" parent="HUD"]
+visible = false
 anchor_bottom = 1.0
 rect_min_size = Vector2( 400, 0 )
 size_flags_horizontal = 3
@@ -93,6 +94,7 @@ __meta__ = {
 }
 
 [node name="Timeline" type="RichTextLabel" parent="HUD"]
+visible = false
 anchor_bottom = 1.0
 rect_min_size = Vector2( 400, 0 )
 size_flags_horizontal = 3
