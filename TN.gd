@@ -490,9 +490,14 @@ enum selectionType {
 	}
 
 #TODO should probable be a property of districts
+#TODO test with mode switch - history>explore, explore>history, quiz>history etc
 func selection_state(district):
-	if district!=selected_district and selected_district!='':
-		return selectionType.change
+	#print(district, selected_district)
+	if district!=selected_district: 
+		if selected_district!='':
+			return selectionType.change
+		else:
+			return selectionType.new
 	else:
 		if district==selected_district:
 			return selectionType.deselection
@@ -584,6 +589,7 @@ func _on_Quiz_pressed():
 	uiScore.text=str(score)
 	uiScore.visible=true
 	$HUD/TopRight/Labels.hide()
+	$HUD/Message.show()
 	timed_msg("[pulse color=#22ff44 height=-10 freq=10]You have 10 turns\n Find the Districts![/pulse]",2)
 	yield($Timer,"timeout")
 	timedquiz=false
@@ -604,6 +610,7 @@ func new_challenge():
 func game_over():
 	deselect()
 	path.clear()
+	selected_district=''
 	seconds=0
 	$HUD/TopRight/Labels.hide()
 	$HUD/Top/LabelCities.hide()
@@ -668,6 +675,7 @@ func gotoDistrict():
 		var x=yield(tw, 'tween_completed')
 		#moving=false 
 		#TODO test what happens when clicking around while Gopal is moving to target
+		#print('selection type ', selectionType.keys()[st])
 		if st != selectionType.deselection:
 			showinfo(current, st)
 	$Gopal.velocity=Vector2(0,0)
@@ -1041,6 +1049,7 @@ func _on_Timed_pressed():
 	uiScore.text=str(score)
 	uiScore.visible=true
 	$HUD/TopRight/Clock.show()
+	$HUD/Message.show()
 	timed_msg("[pulse color=#44dd22 height=-15 freq=5]You have 10 turns\n Find the Districts![/pulse]",2)
 	yield($Timer,"timeout")
 	new_challenge()
