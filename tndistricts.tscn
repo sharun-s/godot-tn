@@ -13,6 +13,8 @@ font_data = ExtResource( 1 )
 show_behind_parent = true
 position = Vector2( 393.757, 312.549 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Ariyalur"]
 color = Color( 1, 1, 0.88, 1 )
@@ -26,6 +28,8 @@ polygon = PoolVector2Array( 61.3028, 0, 62.9876, 3.09221, 63.88, 1.20249, 65.845
 show_behind_parent = true
 position = Vector2( 495.773, 76.1353 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Chengalpattu"]
 color = Color( 1, 1, 0.88, 1 )
@@ -39,6 +43,8 @@ polygon = PoolVector2Array( 53.0805, 114.676, 45.4061, 117.893, 40.882, 115.373,
 show_behind_parent = true
 position = Vector2( 564.956, 60.1234 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Chennai"]
 color = Color( 1, 1, 0.88, 1 )
@@ -52,6 +58,8 @@ polygon = PoolVector2Array( 20.5486, 0, 26.4423, 1.02287, 25.4785, 9.31468, 27.3
 show_behind_parent = true
 position = Vector2( 61.3777, 314.629 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Coimbatore"]
 color = Color( 1, 1, 0.88, 1 )
@@ -65,6 +73,8 @@ polygon = PoolVector2Array( 0, 67.8754, 8.67998, 53.2768, 15.9497, 54.6467, 19.9
 show_behind_parent = true
 position = Vector2( 384.556, 244.029 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Cuddalore"]
 color = Color( 1, 1, 0.88, 1 )
@@ -78,6 +88,8 @@ polygon = PoolVector2Array( 120.96, 0, 122.271, 5.2221, 128.854, 1.78812, 129.59
 show_behind_parent = true
 position = Vector2( 209.772, 152.92 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Dharmapuri"]
 color = Color( 1, 1, 0.88, 1 )
@@ -91,6 +103,8 @@ polygon = PoolVector2Array( 0, 81.9599, 7.054, 67.0251, 15.0067, 59.1561, 10.145
 show_behind_parent = true
 position = Vector2( 150.291, 398.037 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Dindigul"]
 color = Color( 1, 1, 0.88, 1 )
@@ -104,6 +118,8 @@ polygon = PoolVector2Array( 0, 104.12, 4.27623, 85.2883, 12.3665, 81.984, 8.8439
 show_behind_parent = true
 position = Vector2( 87.3521, 234.88 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Erode"]
 color = Color( 1, 1, 0.88, 1 )
@@ -117,6 +133,8 @@ polygon = PoolVector2Array( 0, 44.2467, 7.7939, 31.9394, 10.6831, 22.8278, 17.76
 show_behind_parent = true
 position = Vector2( 348.078, 215.877 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Kallakurichi"]
 color = Color( 1, 1, 0.88, 1 )
@@ -130,6 +148,8 @@ polygon = PoolVector2Array( 0, 31.2362, 1.2059, 28.232, 11.5582, 27.0193, 14.160
 show_behind_parent = true
 position = Vector2( 483.39, 74.3609 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Kanchipuram"]
 color = Color( 1, 1, 0.88, 1 )
@@ -143,6 +163,8 @@ polygon = PoolVector2Array( 62.9783, 0, 61.4962, 3.13414, 63.4525, 1.00607, 67.5
 show_behind_parent = true
 position = Vector2( 126.429, 726.844 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Kanyakumari"]
 color = Color( 1, 1, 0.88, 1 )
@@ -156,6 +178,8 @@ polygon = PoolVector2Array( 0, 42.327, 2.39164, 37.5844, 11.3025, 37.188, 7.1029
 show_behind_parent = true
 position = Vector2( 220.585, 359.675 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Karur"]
 color = Color( 1, 1, 0.88, 1 )
@@ -169,6 +193,8 @@ polygon = PoolVector2Array( 0, 17.2502, 4.74871, 13.837, 5.99361, 9.16481, 3.846
 show_behind_parent = true
 position = Vector2( 179.975, 97.9412 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Krishnagiri"]
 color = Color( 1, 1, 0.88, 1 )
@@ -182,6 +208,8 @@ polygon = PoolVector2Array( 0, 94.4524, 2.62197, 89.1736, 11.7935, 87.398, 20.83
 show_behind_parent = true
 position = Vector2( 178.95, 474.315 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Madurai"]
 color = Color( 1, 1, 0.88, 1 )
@@ -195,6 +223,8 @@ polygon = PoolVector2Array( 0, 106.571, 21.524, 74.5913, 22.5904, 65.3555, 27.62
 show_behind_parent = true
 position = Vector2( 210.872, 286.508 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Namakkal"]
 color = Color( 1, 1, 0.88, 1 )
@@ -208,6 +238,8 @@ polygon = PoolVector2Array( 0, 25.6947, 1.93444, 19.5018, 8.64645, 22.1972, 11.2
 show_behind_parent = true
 position = Vector2( 349.315, 297.448 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Perumbalur"]
 color = Color( 1, 1, 0.88, 1 )
@@ -221,6 +253,8 @@ polygon = PoolVector2Array( 0, 27.3431, 7.93741, 20.9367, 3.35094, 20.8784, 2.33
 show_behind_parent = true
 position = Vector2( 321.837, 412.725 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Pudukotai"]
 color = Color( 1, 1, 0.88, 1 )
@@ -234,6 +268,8 @@ polygon = PoolVector2Array( 36.1645, 0, 43.0411, 3.57915, 43.5154, 13.2111, 62.2
 show_behind_parent = true
 position = Vector2( 288.683, 527.272 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Ramanathapuram"]
 color = Color( 1, 1, 0.88, 1 )
@@ -247,6 +283,8 @@ polygon = PoolVector2Array( 24.4201, 124.49, 7.98721, 117.45, 9.09944, 96.6408, 
 show_behind_parent = true
 position = Vector2( 428.364, 51.5309 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Ranipet"]
 color = Color( 1, 1, 0.88, 1 )
@@ -260,6 +298,8 @@ polygon = PoolVector2Array( 0, 56.5911, 2.1778, 46.4373, 4.59896, 45.8882, 1.560
 show_behind_parent = true
 position = Vector2( 205.512, 231.044 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Salem"]
 color = Color( 1, 1, 0.88, 1 )
@@ -273,6 +313,8 @@ polygon = PoolVector2Array( 0, 22.9699, 2.29013, 14.6482, 5.65666, 14.7125, 4.26
 show_behind_parent = true
 position = Vector2( 274.92, 459.803 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Sivagangai"]
 color = Color( 1, 1, 0.88, 1 )
@@ -286,6 +328,8 @@ polygon = PoolVector2Array( 0, 81.7957, 3.98119, 81.2469, 4.23079, 78.1205, 11.9
 show_behind_parent = true
 position = Vector2( 133.333, 604.103 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Tenkasi"]
 color = Color( 1, 1, 0.88, 1 )
@@ -299,6 +343,8 @@ polygon = PoolVector2Array( 0, 59.8486, 2.86733, 54.4973, 6.86099, 54.4559, 9.03
 show_behind_parent = true
 position = Vector2( 369.801, 347.663 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Thanjavur"]
 color = Color( 1, 1, 0.88, 1 )
@@ -312,6 +358,8 @@ polygon = PoolVector2Array( 109.576, 0, 115.829, 4.59928, 110.45, 11.0907, 112.2
 show_behind_parent = true
 position = Vector2( 135.993, 487.726 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Theni"]
 color = Color( 1, 1, 0.88, 1 )
@@ -325,6 +373,8 @@ polygon = PoolVector2Array( 0, 88.0086, 11.4035, 61.1853, 7.94026, 57.6403, 9.93
 show_behind_parent = true
 position = Vector2( 0, 270.816 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Nilgiris"]
 color = Color( 1, 1, 0.88, 1 )
@@ -338,6 +388,8 @@ polygon = PoolVector2Array( 0, 20.0028, 6.61452, 15.3612, 10.0684, 19.6655, 14.8
 show_behind_parent = true
 position = Vector2( 443.544, 0 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Tiruvallur"]
 color = Color( 1, 1, 0.88, 1 )
@@ -351,6 +403,8 @@ polygon = PoolVector2Array( 148.72, 13.365, 151.346, 15.9932, 154.301, 35.5713, 
 show_behind_parent = true
 position = Vector2( 209.552, 611.496 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Thoothukudi"]
 color = Color( 1, 1, 0.88, 1 )
@@ -364,6 +418,8 @@ polygon = PoolVector2Array( 43.905, 150.804, 31.8807, 152.592, 23.6344, 144.436,
 show_behind_parent = true
 position = Vector2( 280.677, 314.12 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Tiruchirapalli"]
 color = Color( 1, 1, 0.88, 1 )
@@ -377,6 +433,8 @@ polygon = PoolVector2Array( 49.718, 4.00961, 58.9035, 13.6104, 76.5193, 4.08631,
 show_behind_parent = true
 position = Vector2( 137.013, 671.647 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Tirunelveli"]
 color = Color( 1, 1, 0.88, 1 )
@@ -390,6 +448,8 @@ polygon = PoolVector2Array( 60.2006, 118.888, 52.7581, 115.1, 53.4976, 105.374, 
 show_behind_parent = true
 position = Vector2( 316.101, 95.0366 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Tirupathur"]
 color = Color( 1, 1, 0.88, 1 )
@@ -403,6 +463,8 @@ polygon = PoolVector2Array( 0, 42.3282, 9.38396, 41.2429, 9.08983, 34.7081, 13.5
 show_behind_parent = true
 position = Vector2( 117.448, 322.397 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Tiruppur"]
 color = Color( 1, 1, 0.88, 1 )
@@ -416,6 +478,8 @@ polygon = PoolVector2Array( 0, 135.039, 4.70816, 130.268, 2.6926, 127.612, 5.407
 show_behind_parent = true
 position = Vector2( 348.747, 100.677 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Tiruvannamalai"]
 color = Color( 1, 1, 0.88, 1 )
@@ -429,6 +493,8 @@ polygon = PoolVector2Array( 123.049, 0, 127.791, 2.33702, 131.944, 1.48884, 145.
 show_behind_parent = true
 position = Vector2( 344.545, 57.2621 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Vellore"]
 color = Color( 1, 1, 0.88, 1 )
@@ -442,6 +508,8 @@ polygon = PoolVector2Array( 0, 46.9874, 4.66469, 34.9381, 8.11869, 35.0165, 2.87
 show_behind_parent = true
 position = Vector2( 431.441, 162.921 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Vilippuram"]
 color = Color( 1, 1, 0.88, 1 )
@@ -455,6 +523,8 @@ polygon = PoolVector2Array( 19.9465, 0, 28.9478, 1.56164, 30.5703, 5.46138, 34.5
 show_behind_parent = true
 position = Vector2( 160.879, 551.035 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Virudhunagar"]
 color = Color( 1, 1, 0.88, 1 )
@@ -468,6 +538,8 @@ polygon = PoolVector2Array( 0, 53.0681, 3.96918, 47.2433, 7.85239, 47.318, 10.56
 show_behind_parent = true
 position = Vector2( 470.805, 383.752 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Nagapattinam"]
 color = Color( 1, 1, 0.88, 1 )
@@ -481,6 +553,8 @@ polygon = PoolVector2Array( 37.0525, 0.325716, 42.4237, 2.52431, 41.5033, 5.7555
 show_behind_parent = true
 position = Vector2( 476.37, 312.705 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Mayiladithurai"]
 color = Color( 1, 1, 0.88, 1 )
@@ -494,6 +568,8 @@ polygon = PoolVector2Array( 45.9091, 6.32909, 50.9711, 39.213, 50.1963, 63.4561,
 show_behind_parent = true
 position = Vector2( 441.369, 371.267 )
 z_index = -3
+monitoring = false
+monitorable = false
 
 [node name="Poly" type="Polygon2D" parent="Tiruvarur"]
 color = Color( 1, 1, 0.882353, 1 )

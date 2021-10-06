@@ -392,8 +392,8 @@ enum state{
 }
 var rng=RandomNumberGenerator.new()
 var targets=[]
-var NumberOfTargets:=5
-var AttemptsAllowed:=10
+export var NumberOfTargets:=10
+export var AttemptsAllowed:=20
 var attempts:=AttemptsAllowed
 var backupfacts
 #generic_quest is true facts is not filtered by type eg people, food etc

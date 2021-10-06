@@ -78,7 +78,7 @@ __meta__ = {
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_right = 800.0
-margin_bottom = 400.0
+margin_bottom = 316.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 0
@@ -100,7 +100,7 @@ __meta__ = {
 [node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
 margin_top = 117.0
 margin_right = 800.0
-margin_bottom = 400.0
+margin_bottom = 316.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
@@ -111,22 +111,22 @@ custom_styles/panel = SubResource( 3 )
 
 [node name="imgbox" type="TextureRect" parent="VBoxContainer/PanelContainer"]
 margin_right = 796.0
-margin_bottom = 279.0
+margin_bottom = 195.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 expand = true
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="."]
-margin_top = 400.0
+margin_top = 316.0
 margin_right = 800.0
-margin_bottom = 800.0
+margin_bottom = 632.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 0
 
 [node name="FactBox" type="Label" parent="VBoxContainer2"]
 margin_right = 800.0
-margin_bottom = 232.0
+margin_bottom = 316.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/normal = SubResource( 4 )
@@ -135,13 +135,13 @@ text = "Welcome! This district is known for"
 autowrap = true
 
 [node name="MarginContainer" type="VBoxContainer" parent="."]
-margin_top = 235.0
-margin_right = 181.0
-margin_bottom = 403.0
+margin_top = 632.0
+margin_right = 800.0
+margin_bottom = 800.0
 custom_constants/separation = 0
 
 [node name="Neighbours" type="Button" parent="MarginContainer"]
-margin_right = 181.0
+margin_right = 800.0
 margin_bottom = 42.0
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -153,7 +153,7 @@ text = "Neighbours"
 
 [node name="history" type="Button" parent="MarginContainer"]
 margin_top = 42.0
-margin_right = 181.0
+margin_right = 800.0
 margin_bottom = 84.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -174,7 +174,7 @@ text = "Need Another Clue?"
 
 [node name="Muni" type="Button" parent="MarginContainer"]
 margin_top = 84.0
-margin_right = 181.0
+margin_right = 800.0
 margin_bottom = 126.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 9 )
@@ -182,7 +182,7 @@ text = "Cities"
 
 [node name="Back" type="Button" parent="MarginContainer"]
 margin_top = 126.0
-margin_right = 181.0
+margin_right = 800.0
 margin_bottom = 168.0
 size_flags_horizontal = 3
 size_flags_vertical = 3

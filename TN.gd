@@ -265,8 +265,57 @@ func _ready():
 		print(scale)
 		print(t.origin)
 		$HUD/StartScreen/Title.text=str(get_viewport_rect())+"\nScale:"+str(scale)+' Origin'+str(t.origin)
-	
 
+#print out neighbours when monitoring/monitorable is on
+#By hardcoding neighbours reliance on Area2d monitoring and monitorable removed
+#Since nothing is bumping into districts monitoring for collisions is unneccesary performance drainage
+func gen_dneighbours():
+	for i in d.keys():
+		printraw(i,'=[')
+		for j in neighbours('Districts/'+i):
+			printraw('"',j,'",')
+		print('],')
+	
+var dneighbours={
+Ariyalur=["Cuddalore","Perumbalur","Thanjavur","Tiruchirapalli",],
+Chengalpattu=["Chennai","Kanchipuram","Tiruvallur","Tiruvannamalai","Vilippuram",],
+Chennai=["Chengalpattu","Tiruvallur",],
+Coimbatore=["Erode","Nilgiris","Tiruppur",],
+Cuddalore=["Ariyalur","Kallakurichi","Perumbalur","Vilippuram","Mayiladithurai",],
+Dharmapuri=["Kallakurichi","Krishnagiri","Salem","Tiruvannamalai",],
+Dindigul=["Karur","Madurai","Theni","Tiruchirapalli","Tiruppur",],
+Erode=["Coimbatore","Karur","Namakkal","Salem","Nilgiris","Tiruppur",],
+Kallakurichi=["Cuddalore","Dharmapuri","Perumbalur","Salem","Tiruvannamalai","Vilippuram",],
+Kanchipuram=["Chengalpattu","Ranipet","Tiruvallur","Tiruvannamalai",],
+Kanyakumari=["Tirunelveli",],
+Karur=["Dindigul","Erode","Namakkal","Tiruchirapalli","Tiruppur",],
+Krishnagiri=["Dharmapuri","Tirupathur","Tiruvannamalai",],
+Madurai=["Dindigul","Sivagangai","Theni","Virudhunagar",],
+Mayiladithurai=["Cuddalore","Thanjavur","Tiruvarur",],
+Nagapattinam=["Thanjavur","Tiruvarur",],
+Namakkal=["Erode","Karur","Salem","Tiruchirapalli",],
+Nilgiris=["Coimbatore","Erode",],
+Perumbalur=["Ariyalur","Cuddalore","Kallakurichi","Salem","Tiruchirapalli",],
+Pudukotai=["Ramanathapuram","Sivagangai","Thanjavur","Tiruchirapalli",],
+Ramanathapuram=["Pudukotai","Sivagangai","Virudhunagar",],
+Ranipet=["Kanchipuram","Tiruvallur","Tiruvannamalai","Vellore",],
+Salem=["Dharmapuri","Erode","Kallakurichi","Namakkal","Perumbalur","Tiruchirapalli",],
+Sivagangai=["Madurai","Pudukotai","Ramanathapuram","Tiruchirapalli","Virudhunagar",],
+Tenkasi=["Thoothukudi","Tirunelveli","Virudhunagar",],
+Thanjavur=["Ariyalur","Pudukotai","Tiruchirapalli","Nagapattinam","Mayiladithurai","Tiruvarur",],
+Theni=["Dindigul","Madurai","Virudhunagar",],
+Thoothukudi=["Tenkasi","Tirunelveli","Virudhunagar",],
+Tiruchirapalli=["Ariyalur","Dindigul","Karur","Namakkal","Perumbalur","Pudukotai","Salem","Sivagangai","Thanjavur",],
+Tirunelveli=["Kanyakumari","Tenkasi","Thoothukudi",],
+Tirupathur=["Krishnagiri","Tiruvannamalai","Vellore",],
+Tiruppur=["Coimbatore","Dindigul","Erode","Karur",],
+Tiruvallur=["Chengalpattu","Chennai","Kanchipuram","Ranipet",],
+Tiruvannamalai=["Chengalpattu","Dharmapuri","Kallakurichi","Kanchipuram","Krishnagiri","Ranipet","Tirupathur","Vellore","Vilippuram",],
+Tiruvarur=["Thanjavur","Nagapattinam","Mayiladithurai",],
+Vellore=["Ranipet","Tirupathur","Tiruvannamalai",],
+Vilippuram=["Chengalpattu","Cuddalore","Kallakurichi","Tiruvannamalai",],
+Virudhunagar=["Madurai","Ramanathapuram","Sivagangai","Tenkasi","Theni","Thoothukudi",]
+}
 var dhistory=[{
 	Salem=[['Salem', 'Dharmapuri', 'Namakkal', 'Krishnagiri'],Color.mediumspringgreen],
 	Coimbatore=[['Tiruppur', 'Coimbatore', 'Erode'], Color.darkgreen],#006400
@@ -788,7 +837,6 @@ func _on_TN_ready():
 	#$HUD/HistoryControl.rect_scale=Vector2(1/scale.x, 1/scale.y)
 	uiScore=get_node("HUD/Top/R1/Score")
 	get_tree().call_group("allcities","hide")
-
 	#debug prints cities per district
 	#for dt in d.keys():
 	#	print( dt, len(get_tree().get_nodes_in_group(dt)))
@@ -803,12 +851,13 @@ func enableui():
 	
 
 func neighbours(districtname):
-	var l=get_node(districtname).get_overlapping_areas()
-	var n=[]
-	for i in l:
-		if i.name !='Gopal':
-			n.append(i.name)
-	return n
+	return dneighbours[districtname.split('/')[1]]
+#	var l=get_node(districtname).get_overlapping_areas()
+#	var n=[]
+#	for i in l:
+#		if i.name !='Gopal':
+#			n.append(i.name)
+#	return n
 
 var years=["1956","1965","1974","1979","1985",
 "1985x2","1986","1989","1991",
@@ -1143,6 +1192,7 @@ func _on_Explore_pressed():
 	var randstartidx=rng.randi_range(0,d.size()-1)
 	var startat = d.keys()[randstartidx]
 	path.append("Districts/"+startat)
+	#gen_dneighbours()
 	gotoDistrict()
 
 func _on_infobox_exit():
