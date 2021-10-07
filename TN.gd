@@ -1304,7 +1304,7 @@ func _on_Grid_show_munis(district):
 	$HUD/Grid/VBoxContainer/PanelContainer/Map.polygon=p
 	$HUD/Grid/VBoxContainer/PanelContainer/Map.color=deselect_color
 	for c in $Cities.of[district]:#get_tree().get_nodes_in_group(district):
-		print( c.name,' ', c.position)
+		#print( c.name,' ', c.position)
 		#print(c.position-origin)
 		var city=pt.instance()
 		city.name=c.name
