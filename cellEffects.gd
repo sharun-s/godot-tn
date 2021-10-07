@@ -45,6 +45,7 @@ func start(o, n):
 	drawpoly=false
 	oldpolys=o
 	newpolys=n	
+	# TODO right now keeping it simple assuming just using first old center - in future handle cases with more
 	for i in oldpolys:
 		oldcenters.append(i.loc)
 	for i in newpolys:

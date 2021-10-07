@@ -8,8 +8,8 @@
 [ext_resource path="res://Player.tscn" type="PackedScene" id=6]
 [ext_resource path="res://QuestMenu.tscn" type="PackedScene" id=7]
 [ext_resource path="res://tndistricts.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Cities.tscn" type="PackedScene" id=9]
 [ext_resource path="res://cell.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Cities.gd" type="Script" id=11]
 
 [sub_resource type="DynamicFont" id=1]
 size = 32
@@ -338,7 +338,8 @@ one_shot = true
 
 [node name="Districts" parent="." instance=ExtResource( 8 )]
 
-[node name="Cities" parent="." instance=ExtResource( 9 )]
+[node name="Cities" type="Node2D" parent="."]
+script = ExtResource( 11 )
 
 [node name="HistoryAnimator" parent="." instance=ExtResource( 10 )]
 speed = 0.025

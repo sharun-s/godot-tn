@@ -184,7 +184,7 @@ func create_polygons(district):
 	c.polygon=shape
 	return [c, p]
 
-var shore:ShaderMaterial
+#var shore:ShaderMaterial
 #func applyshore(district):
 #	var dp:Polygon2D=get_node(district).get_child(0)
 #	dp.material=shore
@@ -198,8 +198,8 @@ func _ready():
 	init_label_font()
 	var master_sound = AudioServer.get_bus_index("Master")
 	AudioServer.set_bus_mute(master_sound, true)
-	shore=ShaderMaterial.new()
-	shore.shader=load("res://shore1.shader")
+	#shore=ShaderMaterial.new()
+	#shore.shader=load("res://shore1.shader")
 	rng.randomize()
 	add_child(tw)
 	for i in citygrades:
@@ -976,7 +976,8 @@ func history_next_animate():
 	var names=[]
 	var newlist=[]
 	var key=dhistory[current_year].keys()[0]	
-	var old=[{node=get_node(key+'history'), loc=center('Districts/'+name(key))}]
+	#var old=[{node=get_node(key+'history'), loc=center('Districts/'+name(key))}]
+	var old=[{loc=center('Districts/'+name(key))}]
 	for n in get_tree().get_nodes_in_group(years[current_year]):
 		#if n is Polygon2D:
 		names.append(n.name.replace('history',''))
@@ -1207,12 +1208,12 @@ func _on_infobox_exit():
 
 
 func _on_LabelCities_item_selected(index):
-	if index!=0:
-		get_tree().call_group("allcities","hide")
-		get_tree().call_group(citygrades[index],"show")
-	else:
-		get_tree().call_group("allcities","hide")
-	#$Munis._on_InfoBox_muni_pressed('all', citygrades[index])
+#	if index!=0:
+#		get_tree().call_group("allcities","hide")
+#		get_tree().call_group(citygrades[index],"show")
+#	else:
+#		get_tree().call_group("allcities","hide")
+	$Cities._draw_cities('all', citygrades[index])
 
 func _on_HistoryStop_pressed():
 	history_stopped_pressed=true
@@ -1302,8 +1303,8 @@ func _on_Grid_show_munis(district):
 	$HUD/Grid/VBoxContainer/PanelContainer/Map.visible=true
 	$HUD/Grid/VBoxContainer/PanelContainer/Map.polygon=p
 	$HUD/Grid/VBoxContainer/PanelContainer/Map.color=deselect_color
-	for c in get_tree().get_nodes_in_group(district):
-		#print(c, ' ', c.name,' ', c.position)
+	for c in $Cities.of[district]:#get_tree().get_nodes_in_group(district):
+		print( c.name,' ', c.position)
 		#print(c.position-origin)
 		var city=pt.instance()
 		city.name=c.name
