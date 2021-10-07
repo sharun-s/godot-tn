@@ -1085,6 +1085,7 @@ func quest_selected(districts, quest_name=''):
 	$HUD/Grid/MarginContainer/Muni.hide()
 	uiScore.visible=true
 	uiScore.text='Check the InfoBox for Instructions'
+	$HUD/TopRight/Labels.show()
 	game_in_progress=3
 	if general_quests.has(quest_name):
 		appear()
@@ -1178,8 +1179,8 @@ func _on_Grid_on_track(d):
 #var multiquest=false
 func subjectQuest():
 	disableui()
+	$HUD/TopRight/Labels.hide()
 	$Gopal.show()
-	$HUD/TopRight/Labels.show()
 	if selected_district!='':
 		deselect()
 		$Label.text=''

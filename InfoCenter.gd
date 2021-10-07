@@ -285,7 +285,7 @@ func sea():
 	a.frames=10
 	a.fps=2
 	for i in range(1,11):
-		a.set_frame_texture(i-1, load("res://sea_"+str(i)+".png"))
+		a.set_frame_texture(i-1, load("res://pics/sea_"+str(i)+".jpg"))
 	#var cnt=11
 	#for i in range(10, 1, -1):
 	#	a.set_frame_texture(cnt, load("res://sea_"+str(i)+".png"))
@@ -297,38 +297,13 @@ func panther():
 	a.frames=6
 	a.fps=2
 	for i in range(1,7):
-		a.set_frame_texture(i-1, load("res://panther_"+str(i)+".png"))
+		a.set_frame_texture(i-1, load("res://pics/panther_"+str(i)+".jpg"))
 	return a
 
-var dummyimg=[
-	#panther(),
-	preload("res://madurai.png"),
-	preload("res://thristi.png"),	
-	preload("res://panther_3.png"),
-	preload("res://nat.png"),
-	preload("res://elephant.png"),
-	preload("res://flame.png"),
-	sea(),
-	preload("res://dance.png"),
-	preload("res://kolam.png"),
-	preload("res://dugong.png"),
-	preload("res://paddy.jpg"),
-	preload("res://kaveri.png"),
-	preload("res://templegopuram.png"),
-	preload("res://athangudi.png"),
-	preload("res://chariot.jpg"),
-	preload("res://saree.png"),
-	preload("res://saree-2.png"),
-	preload("res://zari.png"),
-	preload("res://croc.png"),
-	preload("res://beach.png"),
-	preload("res://fisherman.png"),
-	preload("res://marigold.png"),
-	preload("res://gingee.png"),
-	preload("res://lights.png")
-	]
+var dummyimg=[]
 
 func preload_from_pics_dir():
+	var ts = OS.get_ticks_usec()
 	var path = "res://pics"
 	var dir = Directory.new()
 	dir.open(path)
@@ -344,6 +319,8 @@ func preload_from_pics_dir():
 			var img=load(path + "/" + file_name)
 			dummyimg.append(img)
 	dir.list_dir_end()
+	var te = OS.get_ticks_usec()
+	print('image loading took: ', te - ts, 'us')
 
 func image_selector(district='', fact=''):
 	# if fact has image return that image
