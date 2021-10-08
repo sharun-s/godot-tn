@@ -98,7 +98,7 @@ var facts:={
 			'District was created in 1995, along with Perumbalur from northern part of Tiruchirapalli district',
 		],
 		Perumbalur=[
-			'h:Ranjankdui Fort built in the 17th century',
+			'h:Ranjankudi Fort built in the 17th century',
 			'Arambavur hand made wood carvings. The artisans of this village are famous and their carvings have recieved a GI Tag',
 			'Leads the state in Small Onion production',
 			'h:The Karai badlands - a geological heritage site - were marine fossils from the Cretaceous period have been found',
@@ -338,10 +338,12 @@ func preload_from_pics_dir():
 		if file_name == "":
 			#break the while loop when get_next() returns ""
 			break
-		elif !file_name.begins_with(".") and !file_name.ends_with(".import"):
-			#if !file_name.ends_with(".import"):
-			#print('myloader ',path + "/" + file_name)			
-			var img=load(path + "/" + file_name)
+		#elif !file_name.begins_with(".") and !file_name.ends_with(".import"):
+		elif file_name.ends_with(".import"):
+			#var img=load(path + "/" + file_name)
+			# as per godotengine.org/qa/59637/
+			# use resourceloader.load instead of load so web build is able to locate right file
+			var img = ResourceLoader.load(path+"/" + file_name.replace('.import',''))
 			dummyimg.append(img)
 	dir.list_dir_end()
 	var te = OS.get_ticks_usec()
@@ -438,6 +440,7 @@ func reload(district, neighbours, hist='',mode=state.NON_QUEST,ftype=''):
 		else:
 			# non multi quest ie intiated from Quest button rather than levelup
 			while targets.size() != NumberOfTargets:
+				rng.randomize()	
 				var idx=rng.randi_range(0, facts.size()-1)
 				if (facts.keys()[idx] in targets) == false:
 					targets.append(facts.keys()[idx])
