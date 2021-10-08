@@ -4,7 +4,8 @@ var facts:={
 		Ariyalur=[
 			'h:fields of Cretaceous age marine fossils (100 millions year old) are found here showcased in the Museum at Varanavasi', 
 			'h:Gangaikonda Cholapuram located here was the capital of the Chola Empire before it moved to Tanjore',
-			"h:The ruins of the Chola capital and the famous Temple here are now a World Heritage site"
+			"h:The ruins of the Chola capital and the famous Temple here are now a World Heritage site",
+			"District was created in 2007 from the southern part of Perumbalur district"
 			],
 		Chennai=[
 			"Kasimedu fishing harbour is the largest Fish Auction site in the country moving more than 200 tons of fish a day",
@@ -13,6 +14,7 @@ var facts:={
 			"Center of the Tamil Film Industry nicknamed Kollywood, as most studio were built in the Kodambakkam neighbourhood",
 			"Valluvar Kottam, built in honor of Tamil poet Thiruvalluvar"],
 		Chengalpattu=[
+			'District was created in 2019 from Kanchipuram',
 			'h:World heritage site of 7th century monuments, temples and caves at Mahabalipuram',
 			"Named after the Sengazhuneer poo (Red White Lily) that grows in abundance along the river banks",
 			"h:Mahaballipuram site of some of the earliest Rock Temples and Stone Sculpture that influenced the style of Temple Architecture throughout South India"],
@@ -25,6 +27,7 @@ var facts:={
 			'Manchester of South India due to extensive textile industry, fed by the surrounding cotton fields'
 		],
 		Cuddalore=[
+			'Along with Vilipuram this District was created from breakup of South Arcot in 1993',
 			'f:A large portion of Cashew Nut production of the state happens here in Panruti',
 			'c:Nataraja dance at thilai Natyanjali Dance Festival feb march on mahashivratri expand...',
 			'Pichawaram mangrove forests',
@@ -36,6 +39,7 @@ var facts:={
 			'c:Chidambaram temple',
 			'Pichawaram Mangrove forests'],
 		Dindigul=[
+			'Created in 1985 from the northern part of Madurai district',
 			'f:Periyakottai Brinjal', 
 			'Palani Murugan temple located here on the Sivagiri hill, sees 7 million pilgrims a year',
 			"f:the famous Palani temples Panchamirtham, sweet made of 5 ingredients- banana, jaggery, cow ghee, honey and cardamom",
@@ -43,11 +47,13 @@ var facts:={
 			'Kodaikanal, in tamil translates to The Gift of the Forest, is very popular hillstation located here',
 			'Palani Hills part of Western Ghats lies within this district. Its where the famous Liril commercial was shot'],
 		Dharmapuri=[
+			'District was created in 1965 from northern part of Salem district',
 			"m:Hogenakkal falls shot to fame after Chinna Chinna Asai (Roja), Mazhaiye Mazhaiye(Rhythm) and Raath Ka Nasha Abhi (Asoka) were shot here",
 			"Hogenakkal falls, which means smokey rocks, is where the river Cauvery enters Tamil Nadu",
 			"Taking a ride in the local bowl shaped boats made of woven grase called a Parisal/Coracle is very popular tourist activity here",
 			"p:Veeraappan, the notorious elephant poacher, sandalwood smuggler, wanted for the murder of 184 people was caught here"],
 		Erode=[
+			'District was created from Coimbatore in 1979',
 			"Turmeric or Manjal from here is known for its unique color. The area is the 2nd largest Tumeric market in India) and major exporter",
 			"Jamakkalam Carpets and Blankets made by the weavers of Bhavani are world famous for their patterns",
 			"Agri powerhouse due to rivers and dams",
@@ -77,29 +83,36 @@ var facts:={
 			"p:Birthplace of C. Raja Gopalachari popularly known as Rajaji, the first Governor General of India and first Chief Minister of Tamil Nadu",
 			"Largest producers of Mangoes in India",
 			"Largest city here is Hosur 40 km from Bangalore and a major manufacturing hub",
-			"The TVS 50, Indias first two seat moped was manufactured here in Hosur and was a big hit. More than 10 million mopeds being sold since."
+			"The TVS 50, Indias first two seat moped was manufactured here in Hosur and was a big hit. More than 10 million mopeds being sold since.",
+			'District was created in 2004 from the northern part of Dharmapuri district'
 		],
 		Kallakurichi=[
 			'Mainly a rural area 50 years ago increased road connectivity has turned into an emerging agricultural hub.',
 			'The Kalvarayan Hills are pristine unexplored area with the Vellimalai hilltop becoming a popular tourist spot for locals during the monsoon season.',
-			'The famous Koovagam festival held by the transgender community reenacts Krishna transforming into Mohini to marry a Prince Aravan'],
+			'The famous Koovagam festival held by the transgender community reenacts Krishna transforming into Mohini to marry a Prince Aravan',
+			'Was created from the eastern part of Vilippuram district in 2019'],
 		Karur=[
 			"h:Capital of the Chera Kings who ruled Western Tamil Nadu/Central Kerala at various times from the 1st to 12th Century", 
 			"h:A ancient trade post with the Romans who called it Karoura. They traded gold for rice. So the word rice comes from the Tamil araci", 
-			"TN Newsprint and Papers Ltd TNPL located here is the largest sugarcane based paper mill in the world"
+			"TN Newsprint and Papers Ltd TNPL located here is the largest sugarcane based paper mill in the world",
+			'District was created in 1995, along with Perumbalur from northern part of Tiruchirapalli district',
 		],
 		Perumbalur=[
 			'h:Ranjankdui Fort built in the 17th century',
 			'Arambavur hand made wood carvings. The artisans of this village are famous and their carvings have recieved a GI Tag',
 			'Leads the state in Small Onion production',
 			'h:The Karai badlands - a geological heritage site - were marine fossils from the Cretaceous period have been found',
-			'h:An 18m long 120 million year old tree (kal-maram) found here (Sathanur Fossil Park) is evidence that the area was under a shallow sea during the Cretaceous period'],
+			'h:An 18m long 120 million year old tree (kal-maram) found here (Sathanur Fossil Park) is evidence that the area was under a shallow sea during the Cretaceous period',
+			'District was created in 1995, along with Karur from Tiruchirapalli district',
+			],
 		Pudukotai=[
+			'District was created from western part of Thanjavur district in 1974',
 			'Moi Virundhu, a tradional practice where money is raised from the community by inviting everyone for a feast',
 			'Famous for its Percussinists, Manpoondia Pillai the lantern bearer, one handed kanjira, mirdangams...',
 			'Narthamalai, malaiyadapatti paintings show the differences between the chola and pallava art',
 			'h:Was a independent princely state ruled  by the Thondaimans since the 17th century'],
-		Mayiladithurai=[ 
+		Mayiladithurai=[
+			'District was created from the coastal part of Tirvarur in 2020', 
 			'Ancient Port town of Poombuhar where the Kaveri meets the sea ',
 			'Kaveri Pushkaram festival happens here every 12 yeara place where peacock dance'],	
 		Madurai=[
@@ -117,10 +130,11 @@ var facts:={
 			'Jasmine (Madurai Malli)'
 		],
 		Nagapattinam=[
+			'Created in 1991 along with Tiruvarur from coastal part of Thanjavur district',
 			'p:Sambandar of Sirkazhi and his opposition to the Jains, basis of the bakthi movement. Author of the Thirumarai  ', 
 			'c:Velankanni festival', 
 			'Was hit by the 2004 Tsunami 6000 lives lost', 
-			'Danish Fort at Tarangabadi' 
+			'The Danish Fort at Tarangabadi is located here' 
 		],
 		Nilgiris=[
 			'the famous 170 year old Botanical Garden on the lower slopes of the Doddabetta peak',
@@ -135,11 +149,12 @@ var facts:={
 			'Coffee, tea, rubber, eucalyptus plantations',
 			'Mudumalai Tiger Reserve is the largest in TN with 160 using the corridor and 103 resident ' ],
 		Namakkal=[
+			'District was created in 1997 from southern part of Salem district',
 			'p:Chairman of the Tata Group, N Chandrasekaran was born here',
 			'p:The R in R K Narayan and R K Laxman refers to the town of Rasipuram located here',
 			'f:The famous nutty flavoured Ghee made in Rasipuram, from cattle raised in the Kolli Hills used in nei dosa and mysore pak',
 			'With the fall of the Cholas in the 12th Century, for a breif period Sendamangalam located here became the capital of the Kadava kings',
-			'Cauvery flows thro, Tiruchengode...',
+			'Cauvery flows through the town of Tiruchengode located here',
 			'Known for its Poutry Farms and  Lorry body building industry', 
 			'Its name derives from Namagiri, the name of the single 65m high rock formation at the center of the Namakkal town. A Fort covering one and half acres was built on top of the rock in the 17th century'],
 		Ranipet=[
@@ -147,7 +162,8 @@ var facts:={
 			"f:Arcot Makkan Peda is a speciality - a flattened gulab jamun but filled with grated dry fruits soaked in sugar syrup",
 			"Leather goods manufacturing hub",
 			'End point of the first Passenger Railway Line built in South India in 1854 - Walajahpet-Veyasarapady (Chennai)',
-			'Built on the Palar River banks, by the Nawab of Arcot, in honour of the Rani of Gingee who committed Sati after her husband Desingh died in the Battle of Gingee'
+			'Built on the Palar River banks, by the Nawab of Arcot, in honour of the Rani of Gingee who committed Sati after her husband Desingh died in the Battle of Gingee',
+			'District was formed from eastern parts of Vellore district in 2019',
 			],
 		Ramanathapuram=[
 			"p:Birth place of A.P.J Abdul Kalam, rocket man, pokhran 2, peoples president...",
@@ -167,6 +183,7 @@ var facts:={
 			'Mettur Dam, on the Cauvery river is the largest dam in the state', 
 			'Shevaroy Hills - yercaud - orchidarium - old coffee plantations highest peak of the southern eastern ghats in TN - lots of species of snake, lizard, frogs and birds not found anywhere else'],
 		Sivagangai=[
+			'District was carved out of Ramanathapuram district in 1985 along with Virudhunagar',			
 			'm:Karaikudi, with its Chettiar palaces is a very popular film location. Aathangudi palace, Rao Bahadur palace and nearly 50 other palatial houses are occupied on most days by film crew',
 			'Kottan basket weaving from palm leafs with its vibrant colors',
 			'p:Kaniyan - Yaadhum Oore Yaavarum Kelir',
@@ -184,6 +201,7 @@ var facts:={
 			'The Meghamalai range also called the High Wavy Mountains',
 			'Meghamalai Wildlife Sanctuary'],
 		Tiruvarur=[
+			'Formed in 1991 along with Nagapattinam from eastern part of Thanjavur district',
 			'c:Somaskanda art - In a style unique to the area Murugan is depicted surrounded by Shiva and Parvathi',
 			'c:Thyagaraja Temple Chariot found here stands 96 feet tall',
 			'p:Birthplace of Saint Thyagaraja, the composer of Carnatic music'	
@@ -211,6 +229,7 @@ var facts:={
 			"p:Agastyamalai mountain is a popular pilgrimage site to Sage Agastya considered father of the Tamil Language",
 			"Kalakkad Mundanthurai Tiger Reserve (KMTR) wildlife include Lion tailed Macaques, Elephants, Tigers, Peacock, Nilgiri Langur, Gaur amd Leopards"],
 		Tiruvannamalai=[
+			'Along with Vellore this district was created from breakup of North Arcot in 1989',	
 			"the famous Karthigai Deepam festival is held here, a 10 foot tall lamp is lit at the top of the Arunachala hill",
 			"Arni silk production",
 			"Largest Rice producers",
@@ -225,6 +244,7 @@ var facts:={
 			'c:Tiruttani Murgan temple - Aadi Krittikai - kavadis',
 			'Very industrialized district manufacturing everything from cycles, tanks to trains'],
 		Thoothukudi=[
+			'District was created in 1986 from eastern part of Tirunelveli district',
 			'p:Shiv Nadar, Founder of the IT Giant HCL Technologies was born here',
 			"h:Korkai located here, was ancient pearl port and capital of the Pandya Kings before they moved to Madurai",
 			"f:the famous Kovilpatti Kadalai Mittai a groundnut and jaggery candy",
@@ -235,6 +255,7 @@ var facts:={
 			"p:V.O.Chidambaram Pillai Swadeshi Steamship Company",
 			"dugong sea grass medows"],
 		Tiruppur=[
+			'District was created in 2007 from east part of Coimbatore District',
 			"Hosiery products. Famously called the Baniyan City or Dollar City for its textile exports", 
 			"Half of Indias knitwear, innerwear exports to global brand names comes from here employing more than a 11 lak people",
 			"Coins from 2000 years ago found here in Kodumanal, indicate cotton trade route with Rome"],
@@ -257,11 +278,13 @@ var facts:={
 			"Known as the Kashi (Varanasi) of the South, its surrounded by the western ghats on three sides and is famous for its monsoon showers, known as Saaral season",
 		],	
 		Vilippuram=[
+			'Along with Cuddalore this District was created from break up of South Arcot in 1993',
 			"Surrounds the union teritory of Pondicherry",
 			"h:National Fossil Wood Park at Tiruvakkarai has fossilized trees that are nillions of years old",
 			"h:Gingee Fort is found here. Sivaji called it the most impregnable fortress in India"
 		],
 		Virudhunagar=[
+			'District was carved out of Ramanathapuram district in 1985 along with Sivagangai',
 			'f:Srivilliputtur Palkova, a sweet made from cow milk and sugar',
 			"p:Birth place of K. Kamaraj TN CM from 54-63, and Indian National Congress President after Jawaharlal Nehru's death. He made education free for the poor having had to drop out of school at age 11 to support his family",
 			'Sivakasi Fireworks',
@@ -269,6 +292,8 @@ var facts:={
 			'c:The 192 ft Gopuram of the Srivilliputhur Temple built here, dedicated to Andal the only woman among the poet saints of south india, is the symbol of the Tamil Nadu Govt'
 		],
 		Vellore=[
+			'Ranipet district was formed from eastern parts of this district in 2019',
+			'Along with Tiruvannamalai this district was created from breakup of North Arcot in 1989',
 			"Top exporter of finished Leather goods in the country accounting for 37% of Indian leather exports",
 			"h:500 year old Vellore Fort is a popular tourist attraction. Was location of the 1806 Sepoy Mutiny against the British"
 		]

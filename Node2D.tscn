@@ -223,7 +223,7 @@ custom_constants/separation = 0
 
 [node name="Explore" type="Button" parent="HUD/StartScreen/B"]
 margin_right = 400.0
-margin_bottom = 133.0
+margin_bottom = 114.0
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 4 )
 text = "Explore"
@@ -232,9 +232,9 @@ __meta__ = {
 }
 
 [node name="Quiz" type="Button" parent="HUD/StartScreen/B"]
-margin_top = 133.0
+margin_top = 114.0
 margin_right = 400.0
-margin_bottom = 266.0
+margin_bottom = 228.0
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0, 0.992157, 0.533333, 1 )
@@ -244,9 +244,9 @@ __meta__ = {
 }
 
 [node name="Timed" type="Button" parent="HUD/StartScreen/B"]
-margin_top = 266.0
+margin_top = 228.0
 margin_right = 400.0
-margin_bottom = 399.0
+margin_bottom = 342.0
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 1, 0.756863, 0.027451, 1 )
@@ -255,10 +255,22 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Quest" type="Button" parent="HUD/StartScreen/B"]
-margin_top = 399.0
+[node name="CityQuiz" type="Button" parent="HUD/StartScreen/B"]
+margin_top = 342.0
 margin_right = 400.0
-margin_bottom = 533.0
+margin_bottom = 457.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.992157, 0.929412, 0, 1 )
+text = "City Quiz"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Quest" type="Button" parent="HUD/StartScreen/B"]
+margin_top = 457.0
+margin_right = 400.0
+margin_bottom = 571.0
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 1, 0.133333, 0.027451, 1 )
@@ -268,9 +280,9 @@ __meta__ = {
 }
 
 [node name="Quest2" type="Button" parent="HUD/StartScreen/B"]
-margin_top = 533.0
+margin_top = 571.0
 margin_right = 400.0
-margin_bottom = 666.0
+margin_bottom = 685.0
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0.976471, 0.14902, 0.447059, 1 )
@@ -280,7 +292,7 @@ __meta__ = {
 }
 
 [node name="History" type="Button" parent="HUD/StartScreen/B"]
-margin_top = 666.0
+margin_top = 685.0
 margin_right = 400.0
 margin_bottom = 800.0
 size_flags_vertical = 3
@@ -379,6 +391,7 @@ speed = 200
 [connection signal="pressed" from="HUD/StartScreen/B/Explore" to="." method="_on_Explore_pressed"]
 [connection signal="pressed" from="HUD/StartScreen/B/Quiz" to="." method="_on_Quiz_pressed"]
 [connection signal="pressed" from="HUD/StartScreen/B/Timed" to="." method="_on_Timed_pressed"]
+[connection signal="pressed" from="HUD/StartScreen/B/CityQuiz" to="." method="_on_CityQuiz_pressed"]
 [connection signal="pressed" from="HUD/StartScreen/B/Quest" to="." method="_on_Quest_pressed"]
 [connection signal="pressed" from="HUD/StartScreen/B/Quest2" to="." method="subjectQuest"]
 [connection signal="pressed" from="HUD/StartScreen/B/History" to="." method="_on_History_pressed"]

@@ -526,6 +526,37 @@ func decide_action(district):
 		#quest
 		#if !moving:
 		gotoDistrict()
+	elif game_in_progress==4 and attempts < turns:
+		#CITY QUIZ
+		if district.split('/')[1] == challenge:
+			score+=1
+			attempts+=1
+			uiScore.text=str(score)+' / '+str(attempts)
+			setDistrict_Color_Text(district, selected_color_right)
+			timed_msg("[color=#"+selected_color_right.to_html(false)+"]Correct![/color]", 1)#, 2)
+			yield($Timer, "timeout")
+			if attempts < turns:
+				new_city_challenge()
+		else:
+			attempts+=1
+			uiScore.text=str(score)+' / '+str(attempts)
+			get_node(district).get_child(0).color=selected_color_wrong
+			var clist=[]
+			for i in $Cities.of[district.split('/')[1]]:
+				clist.append(i.name)
+			$HUD/Message.bbcode_text=ctmp.name+"???\n  [color=#ee2211]Try Again![/color]\nThat was "+district.split('/')[1] + ". "+str(clist)+" are located here"
+		if attempts==turns:
+			if timedcityquiz:
+				$QuizTimer.stop()
+				#TODO perf optimize pulse
+				#timed_msg('[color=#ffcc99][pulse color=#ffcc33 freq=10]Not bad! \nYou scored '+str(score)+' / '+str(turns)+'\n Taking '+str(seconds)+' seconds[/pulse][/color]',2, 8, Color.orangered)
+				timed_msg('[color=#'+Color.orangered.to_html(false) +']Not bad! \nYou scored '+str(score)+' / '+str(turns)+'\n Taking '+str(seconds)+' seconds[/color]',2.5)
+			else:
+				#timed_msg('[pulse freq=5][color=#ffcc55]Not bad! \nYou scored '+str(score)+' / '+str(turns)+'[/color][/pulse]',2, 8, Color.orangered)
+				timed_msg('Not bad! \nYou scored '+str(score)+' / '+str(turns),2.5)
+			yield($Timer, "timeout")
+			challenges_completed.clear()
+			game_over()
 	else:
 		#get_tree().set_group("dlabels", "visible", false)
 		#check if path has anything and move
@@ -656,6 +687,20 @@ func new_challenge():
 			break
 	$HUD/Message.bbcode_text=challenge+" ???"
 
+var timedcityquiz:=false
+var ctmp
+func new_city_challenge():
+	var citycount=len($Cities.Cities)
+	while true:
+		ctmp=$Cities.Cities[rng.randi_range(0,citycount-1)]
+		challenge=ctmp.district
+		if challenge in challenges_completed:
+			continue
+		else:
+			challenges_completed.append(challenge)
+			break
+	$HUD/Message.bbcode_text=ctmp.name+" ???"
+	
 func game_over():
 	deselect()
 	path.clear()
@@ -837,8 +882,9 @@ func _on_TN_ready():
 	#$HUD/HistoryControl.rect_scale=Vector2(1/scale.x, 1/scale.y)
 	uiScore=get_node("HUD/Top/R1/Score")
 	get_tree().call_group("allcities","hide")
-	#debug prints cities per district
+	#debug prints cities per district, district history etc
 	#for dt in d.keys():
+	#	print(dt, get_history(dt))
 	#	print( dt, len(get_tree().get_nodes_in_group(dt)))
 
 func disableui():
@@ -1106,6 +1152,19 @@ func _on_Timed_pressed():
 	new_challenge()
 	timedquiz=true
 	$QuizTimer.start()
+
+func _on_CityQuiz_pressed():
+	reset()
+	game_in_progress=4
+	uiScore.text=str(score)
+	uiScore.visible=true
+	#$HUD/TopRight/Clock.show()
+	$HUD/Message.show()
+	timed_msg("[pulse color=#44dd22 height=-15 freq=5]You have 10 turns\n Find the District given a City name![/pulse]",2)
+	yield($Timer,"timeout")
+	new_city_challenge()
+	#timedcityquiz=true
+	#$QuizTimer.start()
 
 #when player node moves into area 
 func showinfo(district, transition):
