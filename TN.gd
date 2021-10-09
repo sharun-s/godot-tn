@@ -528,23 +528,26 @@ func decide_action(district):
 		gotoDistrict()
 	elif game_in_progress==4 and attempts < turns:
 		#CITY QUIZ
+		$Cities._draw_cities('','',ctmp.name, ctmp.position, ctmp.radius)
+		#print(ctmp.name, ctmp.position, ctmp.radius)
 		if district.split('/')[1] == challenge:
 			score+=1
 			attempts+=1
 			uiScore.text=str(score)+' / '+str(attempts)
 			setDistrict_Color_Text(district, selected_color_right)
 			timed_msg("[color=#"+selected_color_right.to_html(false)+"]Correct![/color]", 1)#, 2)
-			yield($Timer, "timeout")
-			if attempts < turns:
-				new_city_challenge()
 		else:
 			attempts+=1
 			uiScore.text=str(score)+' / '+str(attempts)
 			get_node(district).get_child(0).color=selected_color_wrong
-			var clist=[]
-			for i in $Cities.of[district.split('/')[1]]:
-				clist.append(i.name)
-			$HUD/Message.bbcode_text=ctmp.name+"???\n  [color=#ee2211]Try Again![/color]\nThat was "+district.split('/')[1] + ". "+str(clist)+" are located here"
+#			var clist=[]
+#			for i in $Cities.of[district.split('/')[1]]:
+#				clist.append(i.name)
+#			timed_msg("[color=#ee2211]Oops!!![/color]\n"+district.split('/')[1] + "\ncontains "+str(clist).replace('[','').replace("]","")+"\n[color=#eeee11]"+ctmp.name+' is in '+challenge+"[/color]", 5)
+			timed_msg("[color=#ee2211]Oops!!![/color]\n"+ctmp.name+' is in [color=#eede11]'+challenge+"[/color]", 3)
+		yield($Timer, "timeout")
+		if attempts < turns:
+			new_city_challenge()	
 		if attempts==turns:
 			if timedcityquiz:
 				$QuizTimer.stop()
@@ -554,8 +557,10 @@ func decide_action(district):
 			else:
 				#timed_msg('[pulse freq=5][color=#ffcc55]Not bad! \nYou scored '+str(score)+' / '+str(turns)+'[/color][/pulse]',2, 8, Color.orangered)
 				timed_msg('Not bad! \nYou scored '+str(score)+' / '+str(turns),2.5)
+			#TODO disable mouse/touch event handling while showing messages to player
 			yield($Timer, "timeout")
 			challenges_completed.clear()
+			$Cities.clear()
 			game_over()
 	else:
 		#get_tree().set_group("dlabels", "visible", false)
@@ -1147,7 +1152,7 @@ func _on_Timed_pressed():
 	uiScore.visible=true
 	$HUD/TopRight/Clock.show()
 	$HUD/Message.show()
-	timed_msg("[pulse color=#44dd22 height=-15 freq=5]You have 10 turns\n Find the Districts![/pulse]",2)
+	timed_msg("[pulse color=#44dd22 height=-15 freq=5]You have 10 turns\nFind the Districts![/pulse]",2)
 	yield($Timer,"timeout")
 	new_challenge()
 	timedquiz=true
@@ -1160,7 +1165,7 @@ func _on_CityQuiz_pressed():
 	uiScore.visible=true
 	#$HUD/TopRight/Clock.show()
 	$HUD/Message.show()
-	timed_msg("[pulse color=#44dd22 height=-15 freq=5]You have 10 turns\n Find the District given a City name![/pulse]",2)
+	timed_msg("[pulse color=#44dd22 height=-15 freq=5]You have 10 turns\nFind the District given a City name![/pulse]",2)
 	yield($Timer,"timeout")
 	new_city_challenge()
 	#timedcityquiz=true
@@ -1264,6 +1269,7 @@ func _on_infobox_exit():
 			k.texture=null	
 		else:
 			k.free()
+	$Cities.clear()
 	game_over()
 
 

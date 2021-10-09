@@ -6,7 +6,7 @@ var Cities=[
 {name="Ambur",position = Vector2( 358.731, 114.127 ),group = "Municipality Selection grade",district = "Tirupathur",radius = 5},
 {name="Anakaputhur",position = Vector2( 563.136, 80.5498 ),group = "Municipality Second grade",district = "Chengalpattu",radius = 4},
 {name="Arakkonam",position = Vector2( 499.289, 70.6978 ),group = "Municipality First grade",district = "Ranipet",radius = 5},
-{name="Arani",position = Vector2( 443.066, 130.17 ),group = "Municipality First grade",district = "Kanchipuram",radius = 5},
+{name="Arani",position = Vector2( 443.066, 130.17 ),group = "Municipality First grade",district = "Tiruvannamalai",radius = 5},
 {name="Aranthangi",position = Vector2( 401.8, 495.789 ),group = "Municipality First grade",district = "Pudukotai",radius = 5},
 {name="Arcot",position = Vector2( 448.009, 83.4997 ),group = "Municipality First grade",district = "Ranipet",radius = 5},
 {name="Ariyalur",position = Vector2( 413.661, 353.718 ),group = "Municipality Second grade",district = "Ariyalur",radius = 4},
@@ -166,7 +166,7 @@ func group_by_district():
 			of[i.district].append(i)
 		else:
 			of[i.district]=[i]
-
+			
 func _ready():
 	init_label_font()
 	#init_stats()
@@ -175,8 +175,15 @@ func _ready():
 
 var mtype='all'
 var district='all'
+var city=''
+var cpos
+var crad
 
 func _draw():
+	if city!='':
+		draw_string(df, cpos, city, 'f92672')
+		draw_circle(cpos, crad, 'ff2207')
+		return
 	if district=='':
 		return
 	if district == 'all':
@@ -193,14 +200,28 @@ func _draw():
 				draw_string(df, p+Vector2(15, 0), i.name, 'f92672')		
 				draw_circle(p, i.radius, 'ff2207')
 
+func clear():
+	_draw_cities('','','')
 
-func _draw_cities(d, munitype):
+#func _draw_city(c,p,r):
+#	_draw_cities('', '', c,p,r)
+
+func _draw_cities(d, munitype, c='',p=0,r=0):
 	if d !='' and munitype!='':
 		show()
 		mtype=munitype
 		district=d
 		update()
 	else:
+		if c!='':
+			city=c
+			crad=r
+			cpos=p
+			update()
+			return
 		mtype=''
 		district=''
+		city=''
+		crad=0
+		cpos=0
 		hide()	
