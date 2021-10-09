@@ -194,6 +194,7 @@ func _process(delta):
 
 
 var citygrades=['','Muni Corporation','Municipality Selection grade','Municipality Special grade','Municipality First grade','Municipality Second grade']
+
 func _ready():
 	init_label_font()
 	var master_sound = AudioServer.get_bus_index("Master")
@@ -205,13 +206,15 @@ func _ready():
 	for i in citygrades:
 		$HUD/Top/LabelCities.add_item(i)
 	VisualServer.set_default_clear_color('001f3f')#Color("ff222222"))
-	for node in $Districts.get_children():
-		if node is Area2D:
+	#for node in $Districts.get_children():
+	#	if node is Area2D:
+	#		print(node.name, ' ', node.get_rid().get_id())
 			#node.get_child(0).color=deselect_color
-			node.connect('input_event', self, 'on_district_select',[node.name])
+	#		node.connect('input_event', self, 'on_district_select',[node.name, node])
 		#if node is Label:
 		#	node.set("custom_colors/font_color","70fa80")
-
+	$Districts/ClickDetector.connect('input_event', self, 'on_district_select',[$Districts/ClickDetector])
+	
 	var t=get_viewport_transform()
 	var viewp=get_viewport_rect()
 	var hcenter=viewp.size.x/2
@@ -462,14 +465,24 @@ func _unhandled_input(event):
 		if event.pressed and event.scancode == KEY_ESCAPE:
 			get_tree().quit()
 		
-func on_district_select(_viewport, event, _idx, district):
+func on_district_select(_viewport, event, idx, dn):
 	if event is InputEventMouseButton:
 		if event.pressed:
+			#print('mpress ', idx)
+			#print(dn.get_child(idx))
+			#SHAPE_IDX can be a large bunch of number cuz collision poly is a combo of many shapes
+			#to find the collision poly object using shape.find_owner
+			#
+			#this is probably why nodes and object counts were so high
+			var o=dn.shape_find_owner(idx)
+			#print(dn.get_child(o).name)
 			path.clear()
-			path.append("Districts/"+district)
+			path.append("Districts/"+dn.get_child(o).name)#district)
 		else:
+			#print('mrelease ', idx)
+			var o=dn.shape_find_owner(idx)
 			#on release touch check whats in path and move if required
-			decide_action("Districts/"+district)
+			decide_action("Districts/"+dn.get_child(o).name)#district)
 		#walkpath.clear_points()
 		#walkpath.add_point(get_node(district).position)
 	#on hover show label
@@ -478,10 +491,12 @@ func on_district_select(_viewport, event, _idx, district):
 	#	$Label.rect_position=center(district)
 #			#walkpath.add_point(get_node(district).position)
 	if event is InputEventScreenDrag:
+		var o=dn.shape_find_owner(idx)
+		var district = "Districts/"+dn.get_child(o).name
 		if district in path:
 			pass
 		else:
-			path.append("Districts/"+district)
+			path.append(district)
 		#walkpath.add_point(get_node(district).position)
 #		highlight_district(district, false, true)
 
@@ -498,16 +513,19 @@ func decide_action(district):
 			attempts+=1
 			uiScore.text=str(score)+' / '+str(attempts)
 			setDistrict_Color_Text(district, selected_color_right)
+			$Districts/ClickDetector.input_pickable=false
 			timed_msg("[color=#"+selected_color_right.to_html(false)+"]Correct![/color]", 1)#, 2)
 			yield($Timer, "timeout")
 			if attempts < turns:
 				new_challenge()
+				$Districts/ClickDetector.input_pickable=true
 		else:
 			attempts+=1
 			uiScore.text=str(score)+' / '+str(attempts)
 			get_node(district).get_child(0).color=selected_color_wrong
 			$HUD/Message.bbcode_text=challenge+"???\n  [color=#ee2211]Try Again![/color]\nThat was "+district.split('/')[1]
 		if attempts==turns:
+			$Districts/ClickDetector.input_pickable=false
 			if timedquiz:
 				$QuizTimer.stop()
 				#TODO perf optimize pulse
@@ -518,6 +536,7 @@ func decide_action(district):
 				timed_msg('Not bad! \nYou scored '+str(score)+' / '+str(turns),2.5)
 			yield($Timer, "timeout")
 			challenges_completed.clear()
+			$Districts/ClickDetector.input_pickable=true
 			game_over()
 	elif game_in_progress==2:
 		#history
@@ -530,6 +549,7 @@ func decide_action(district):
 		#CITY QUIZ
 		$Cities._draw_cities('','',ctmp.name, ctmp.position, ctmp.radius)
 		#print(ctmp.name, ctmp.position, ctmp.radius)
+		$Districts/ClickDetector.input_pickable=false
 		if district.split('/')[1] == challenge:
 			score+=1
 			attempts+=1
@@ -547,8 +567,10 @@ func decide_action(district):
 			timed_msg("[color=#ee2211]Oops!!![/color]\n"+ctmp.name+' is in [color=#eede11]'+challenge+"[/color]", 3)
 		yield($Timer, "timeout")
 		if attempts < turns:
-			new_city_challenge()	
+			new_city_challenge()
+			$Districts/ClickDetector.input_pickable=true
 		if attempts==turns:
+			$Districts/ClickDetector.input_pickable=false
 			if timedcityquiz:
 				$QuizTimer.stop()
 				#TODO perf optimize pulse
@@ -561,6 +583,7 @@ func decide_action(district):
 			yield($Timer, "timeout")
 			challenges_completed.clear()
 			$Cities.clear()
+			$Districts/ClickDetector.input_pickable=true
 			game_over()
 	else:
 		#get_tree().set_group("dlabels", "visible", false)
@@ -616,7 +639,7 @@ func deselect():
 	for node in $Districts.get_children():
 		if node is Label:
 			node.visible=false
-		if node is Area2D:
+		if node is Node2D and !(node is Area2D):
 			node.get_child(0).color=deselect_color
 	
 var cache={}
@@ -1165,9 +1188,11 @@ func _on_CityQuiz_pressed():
 	uiScore.visible=true
 	#$HUD/TopRight/Clock.show()
 	$HUD/Message.show()
+	$Districts/ClickDetector.input_pickable=false
 	timed_msg("[pulse color=#44dd22 height=-15 freq=5]You have 10 turns\nFind the District given a City name![/pulse]",2)
 	yield($Timer,"timeout")
 	new_city_challenge()
+	$Districts/ClickDetector.input_pickable=true
 	#timedcityquiz=true
 	#$QuizTimer.start()
 
@@ -1186,6 +1211,7 @@ func showinfo(district, transition):
 		$HUD/Grid.reload(district, neighbours(district), get_history(district.split('/')[1]), 2) 
 
 func _on_quest_over(turnstaken, cluessolved, success):
+	$Districts/ClickDetector.input_pickable=false
 	$HUD/Grid/MarginContainer/Neighbours.visible=true
 	$HUD/Grid/MarginContainer/history.visible=true
 	$HUD/Grid/MarginContainer/Back.visible=true
@@ -1208,6 +1234,7 @@ func _on_quest_over(turnstaken, cluessolved, success):
 	uiScore["custom_styles/normal"].border_color="feed5f"#selected_color_right
 	uiScore["custom_colors/font_color"]="feed5f"#selected_color_right
 	#enableui()
+	$Districts/ClickDetector.input_pickable=true
 	game_over()
 
 func _off_track(dx):

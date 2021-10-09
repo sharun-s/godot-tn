@@ -28,17 +28,11 @@ boot_splash/bg_color=Color( 0, 0.121569, 0.247059, 1 )
 config/icon="res://tn-icon-centered.png"
 config/windows_native_icon="res://icon.ico"
 
-[debug]
-
-settings/stdout/verbose_stdout=true
-
 [display]
 
 window/size/width=800
 window/size/height=800
 window/size/fullscreen=true
-window/size/test_width=360
-window/size/test_height=760
 window/stretch/mode="2d"
 window/stretch/aspect="expand"
 

@@ -207,6 +207,7 @@ func clear():
 #	_draw_cities('', '', c,p,r)
 
 func _draw_cities(d, munitype, c='',p=0,r=0):
+	
 	if d !='' and munitype!='':
 		show()
 		mtype=munitype
@@ -214,6 +215,7 @@ func _draw_cities(d, munitype, c='',p=0,r=0):
 		update()
 	else:
 		if c!='':
+			show()
 			city=c
 			crad=r
 			cpos=p
