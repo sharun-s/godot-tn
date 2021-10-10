@@ -129,7 +129,7 @@ func merge_poly(history_item):
 	var main:Polygon2D=Polygon2D.new()
 	var t=Transform2D()
 	var ddims=get_node("Districts/"+g[0]).position #d[g[0]]
-	var p1=get_node("Districts/"+g[0]+"/Poly")#.get_child(0)
+	var p1=get_node("Districts/"+g[0])#.get_child(0)
 	t.origin=Vector2(ddims[0],ddims[1])
 	var m
 	if g.size()==1:
@@ -138,7 +138,7 @@ func merge_poly(history_item):
 	else:
 		var t2=Transform2D()	
 		ddims=get_node("Districts/"+g[1]).position #d[g[1]]
-		var p2=get_node("Districts/"+g[1]+"/Poly")#.get_child(0)
+		var p2=get_node("Districts/"+g[1])#.get_child(0)
 		t2.origin=Vector2(ddims[0],ddims[1])
 		m=Geometry.merge_polygons_2d(t.xform(p1.polygon), 
 										t2.xform(p2.polygon) )
@@ -151,7 +151,7 @@ func merge_poly(history_item):
 		for i in range(2,len(g)):
 			ddims=get_node("Districts/"+g[i]).position #d[g[i]]
 			t.origin=Vector2(ddims[0],ddims[1])
-			var tp=t.xform(get_node("Districts/"+g[i]+'/Poly').polygon)
+			var tp=t.xform(get_node("Districts/"+g[i]).polygon)
 			m=Geometry.merge_polygons_2d(main.polygon, tp)
 			main.polygon=m[get_largest_poly(m)]#m[0]
 			#print(g[0],' ',g[i],' ',len(m))
@@ -213,7 +213,7 @@ func _ready():
 	#		node.connect('input_event', self, 'on_district_select',[node.name, node])
 		#if node is Label:
 		#	node.set("custom_colors/font_color","70fa80")
-	$Districts/ClickDetector.connect('input_event', self, 'on_district_select',[$Districts/ClickDetector])
+	$Districts/ClickDetector.connect('input_event', self, 'on_district_select')
 	
 	var t=get_viewport_transform()
 	var viewp=get_viewport_rect()
@@ -465,21 +465,28 @@ func _unhandled_input(event):
 		if event.pressed and event.scancode == KEY_ESCAPE:
 			get_tree().quit()
 		
-func on_district_select(_viewport, event, idx, dn):
+func on_district_select(_viewport, event, idx):
 	if event is InputEventMouseButton:
 		if event.pressed:
 			#print('mpress ', idx)
 			#print(dn.get_child(idx))
+			var dn=$Districts/ClickDetector
 			#SHAPE_IDX can be a large bunch of number cuz collision poly is a combo of many shapes
 			#to find the collision poly object using shape.find_owner
 			#
 			#this is probably why nodes and object counts were so high
 			var o=dn.shape_find_owner(idx)
+			print(dn.get_rid().get_id())
+			#print(Physics2DServer.area_get_shape_count(dn.get_rid()))
 			#print(dn.get_child(o).name)
 			path.clear()
 			path.append("Districts/"+dn.get_child(o).name)#district)
+			print(dn.get_child(o).name,' ', idx)
+			#colpol apparently doesnt have rids
+			#print('shapes within colpol ',Physics2DServer.body_get_shape_count(dn.get_child(o).get_rid()))
 		else:
 			#print('mrelease ', idx)
+			var dn=$Districts/ClickDetector
 			var o=dn.shape_find_owner(idx)
 			#on release touch check whats in path and move if required
 			decide_action("Districts/"+dn.get_child(o).name)#district)
@@ -491,6 +498,7 @@ func on_district_select(_viewport, event, idx, dn):
 	#	$Label.rect_position=center(district)
 #			#walkpath.add_point(get_node(district).position)
 	if event is InputEventScreenDrag:
+		var dn=$Districts/ClickDetector
 		var o=dn.shape_find_owner(idx)
 		var district = "Districts/"+dn.get_child(o).name
 		if district in path:
@@ -501,7 +509,7 @@ func on_district_select(_viewport, event, idx, dn):
 #		highlight_district(district, false, true)
 
 func setDistrict_Color_Text(dist, c, showlabel:=true):
-	get_node(dist).get_child(0).color=c
+	get_node(dist).color=c
 	if showlabel:
 		$Label.text=dist.split('/')[1]
 		$Label.rect_position=center(dist)
@@ -522,7 +530,7 @@ func decide_action(district):
 		else:
 			attempts+=1
 			uiScore.text=str(score)+' / '+str(attempts)
-			get_node(district).get_child(0).color=selected_color_wrong
+			get_node(district).color=selected_color_wrong
 			$HUD/Message.bbcode_text=challenge+"???\n  [color=#ee2211]Try Again![/color]\nThat was "+district.split('/')[1]
 		if attempts==turns:
 			$Districts/ClickDetector.input_pickable=false
@@ -559,7 +567,7 @@ func decide_action(district):
 		else:
 			attempts+=1
 			uiScore.text=str(score)+' / '+str(attempts)
-			get_node(district).get_child(0).color=selected_color_wrong
+			get_node(district).color=selected_color_wrong
 #			var clist=[]
 #			for i in $Cities.of[district.split('/')[1]]:
 #				clist.append(i.name)
@@ -640,7 +648,7 @@ func deselect():
 		if node is Label:
 			node.visible=false
 		if node is Node2D and !(node is Area2D):
-			node.get_child(0).color=deselect_color
+			node.color=deselect_color
 	
 var cache={}
 func draw_historic_borders():
@@ -679,7 +687,7 @@ func _draw():
 	cache.clear()
 	#TODO switch to $districts
 	for dx in d.keys():
-		var poly=PoolVector2Array(get_node('Districts/'+dx+'/Poly').polygon)
+		var poly=PoolVector2Array(get_node('Districts/'+dx).polygon)
 		var cnt=poly.size()
 		var center_at=get_node("Districts/"+dx).position #Vector2(d[dx][0], d[dx][1])
 		if dx != selected_district:
@@ -1242,7 +1250,7 @@ func _off_track(dx):
 	uiScore.text="Press CLUE if you need more hints"
 	uiScore["custom_styles/normal"].border_color=Color.red
 	uiScore["custom_colors/font_color"]=Color.red
-	get_node("Districts/"+dx+'/Poly').color=selected_color_wrong
+	get_node("Districts/"+dx).color=selected_color_wrong
 
 func _on_Grid_show_neighbours(show):
 	if show:
@@ -1250,22 +1258,22 @@ func _on_Grid_show_neighbours(show):
 			return
 		for i in neighbours(selected_district):
 			get_node('Districts/lbl'+i).visible=true
-			get_node('Districts/'+i).get_child(0).color=deselect_color.blend("79e9a5")
+			get_node('Districts/'+i).color=deselect_color.blend("79e9a5")
 	else:
 		for district in d.keys():
 			get_node('Districts/lbl'+district).visible=false
 			if selected_district == "" or selected_district==null:
-				get_node('Districts/'+district).get_child(0).color=deselect_color
+				get_node('Districts/'+district).color=deselect_color
 			else:
 				if district != selected_district.split('/')[1]:
-					get_node('Districts/'+district).get_child(0).color=deselect_color	
+					get_node('Districts/'+district).color=deselect_color	
 	#update()
 
 func _on_Grid_on_track(d):
 	#$HUD/Score.text="Well done!\nYou are on track"
 	#$HUD/Score["custom_styles/normal"].border_color=selected_color_right
 	#$HUD/Score["custom_colors/font_color"]=selected_color_right
-	get_node("Districts/"+d).get_child(0).color=selected_color_right
+	get_node("Districts/"+d).color=selected_color_right
 
 #var multiquest=false
 func subjectQuest():
@@ -1383,7 +1391,7 @@ var pt=preload("res://Point.tscn")
 func _on_Grid_show_munis(district):
 	#TODO dont redraw if pressed again and again
 	$HUD/Grid/VBoxContainer/PanelContainer/imgbox.texture=null
-	var p = get_node('Districts/'+district+'/Poly').polygon
+	var p = get_node('Districts/'+district).polygon
 	var origin=get_node('Districts/'+district).position
 	#print('origin ', origin)
 	#print(p)
