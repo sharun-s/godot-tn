@@ -1299,16 +1299,9 @@ func _on_Explore_pressed():
 	gotoDistrict()
 
 func _on_infobox_exit():
-	for k in $HUD/Grid/VBoxContainer/PanelContainer.get_children():
-		if k is Polygon2D:
-			k.visible=false #TODO this doesnt really redraw empty poly
-		elif k is TextureRect:
-			k.texture=null	
-		else:
-			k.free()
+	$HUD/Grid.clear_infobox_cities()
 	$Cities.clear()
 	game_over()
-
 
 func _on_LabelCities_item_selected(index):
 #	if index!=0:
@@ -1392,12 +1385,11 @@ func get_bounds(polygon):
 var pt=preload("res://Point.tscn")
 func _on_Grid_show_munis(district):
 	#TODO dont redraw if pressed again and again
-	$HUD/Grid/VBoxContainer/PanelContainer/imgbox.texture=null
-	var p = get_node('Districts/'+district).polygon
+	$HUD/Grid/VBoxContainer/PanelContainer/imgbox.hide()
+	var p = get_node("Districts/ClickDetector/"+district).polygon
 	var origin=get_node('Districts/'+district).position
 	#print('origin ', origin)
 	#print(p)
-	#$HUD/Grid/VBoxContainer/PanelContainer/Map	
 	var pb=get_bounds(p)
 	#print('bounds of p ',pb.size.x, pb.size.y)
 	var ib=$HUD/Grid/VBoxContainer/PanelContainer.rect_size
@@ -1411,7 +1403,7 @@ func _on_Grid_show_munis(district):
 		#print(c.position-origin)
 		var city=pt.instance()
 		city.name=c.name
-		city.radius=20/citygrades.find(c.group)
+		city.radius=c.radius#20/citygrades.find(c.group)
 		var citypos= c.position - origin
 		city.position = Vector2(citypos.x*ib.x/pb.size.x, citypos.y * ib.y/pb.size.y)
 		city.z_index=3

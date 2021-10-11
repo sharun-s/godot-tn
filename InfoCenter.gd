@@ -404,6 +404,15 @@ var backupfacts
 #if false facts is stored in backuofacts and is reset with ftype
 var generic_quest=true
 
+func clear_infobox_cities():
+	for k in $VBoxContainer/PanelContainer.get_children():
+		if k is Polygon2D:
+			k.hide() #TODO this doesnt really redraw empty poly
+		elif k is TextureRect:
+			k.show()
+		else:
+			k.free()	
+
 func reload(district, neighbours, hist='',mode=state.NON_QUEST,ftype=''):
 	show()
 	if !(district is Array):
@@ -414,13 +423,7 @@ func reload(district, neighbours, hist='',mode=state.NON_QUEST,ftype=''):
 	historytext=hist
 	n=neighbours
 	$MarginContainer/Neighbours.pressed=false
-	for k in $VBoxContainer/PanelContainer.get_children():
-		if k is Polygon2D:
-			k.visible=false#.empty() #TODO this doesnt really redraw empty poly
-		elif k is TextureRect:
-			k.texture=null	
-		else:
-			k.free()
+	clear_infobox_cities()
 	randomize()
 	#$VBoxContainer/PanelContainer/imgbox.texture=image_selector(district)
 	if mode==state.NEW_QUEST:
@@ -556,6 +559,9 @@ func _on_Neighbours_toggled(button_pressed):
 	emit_signal('show_neighbours', button_pressed)
 
 signal show_munis
-func _on_muni1_pressed():
-	if $VBoxContainer/NameBox.text in facts.keys():
+
+func _on_Muni_toggled(button_pressed):
+	if button_pressed:
 		emit_signal('show_munis',$VBoxContainer/NameBox.text)
+	else:
+		clear_infobox_cities()

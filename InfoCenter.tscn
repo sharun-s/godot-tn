@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://DroidSans.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://InfoCenter.gd" type="Script" id=3]
@@ -59,6 +59,14 @@ font_data = ExtResource( 2 )
 
 [sub_resource type="StyleBoxFlat" id=8]
 bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 0.956863, 0.490196, 0.415686, 1 )
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color( 1, 0.133333, 0.027451, 1 )
 
 [sub_resource type="DynamicFont" id=9]
 size = 30
@@ -177,7 +185,10 @@ margin_top = 84.0
 margin_right = 800.0
 margin_bottom = 126.0
 size_flags_horizontal = 3
+custom_styles/pressed = SubResource( 10 )
 custom_fonts/font = SubResource( 9 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
+toggle_mode = true
 text = "Cities"
 
 [node name="Back" type="Button" parent="MarginContainer"]
@@ -193,5 +204,5 @@ text = "Main Menu"
 [connection signal="toggled" from="MarginContainer/Neighbours" to="." method="_on_Neighbours_toggled"]
 [connection signal="pressed" from="MarginContainer/history" to="." method="_on_history_pressed"]
 [connection signal="pressed" from="MarginContainer/clue" to="." method="_on_clue_pressed"]
-[connection signal="pressed" from="MarginContainer/Muni" to="." method="_on_muni1_pressed"]
+[connection signal="toggled" from="MarginContainer/Muni" to="." method="_on_Muni_toggled"]
 [connection signal="pressed" from="MarginContainer/Back" to="." method="_on_Back_pressed"]
