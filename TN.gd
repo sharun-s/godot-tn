@@ -476,12 +476,13 @@ func on_district_select(_viewport, event, idx):
 			#
 			#this is probably why nodes and object counts were so high
 			var o=dn.shape_find_owner(idx)
-			print(dn.get_rid().get_id())
-			#print(Physics2DServer.area_get_shape_count(dn.get_rid()))
+			#.shape_owner_shape_count(o)
+			
+			#print(dn.get_rid().get_id())
 			#print(dn.get_child(o).name)
 			path.clear()
 			path.append("Districts/"+dn.get_child(o).name)#district)
-			print(dn.get_child(o).name,' ', idx)
+			#print(dn.get_child(o).name,' ', idx)
 			#colpol apparently doesnt have rids
 			#print('shapes within colpol ',Physics2DServer.body_get_shape_count(dn.get_child(o).get_rid()))
 		else:
@@ -918,6 +919,7 @@ func _on_TN_ready():
 	#$HUD/HistoryControl.rect_scale=Vector2(1/scale.x, 1/scale.y)
 	uiScore=get_node("HUD/Top/R1/Score")
 	get_tree().call_group("allcities","hide")
+	print('click map shape count', Physics2DServer.area_get_shape_count($Districts/ClickDetector.get_rid()))
 	#debug prints cities per district, district history etc
 	#for dt in d.keys():
 	#	print(dt, get_history(dt))
