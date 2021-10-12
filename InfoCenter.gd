@@ -415,11 +415,11 @@ func clear_infobox_cities():
 
 func reload(district, neighbours, hist='',mode=state.NON_QUEST,ftype=''):
 	show()
-	if !(district is Array):
-		if district == '':
-			pass
-		else:
-			district=district.split('/')[1]
+	#if !(district is Array):
+	#	if district == '':
+	#		pass
+	#	else:
+	#		district=district
 	historytext=hist
 	n=neighbours
 	$MarginContainer/Neighbours.pressed=false
