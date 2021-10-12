@@ -347,7 +347,7 @@ func add_historic_districts(year, data):
 			#if has_node('Districts/lbl'+i):
 			#	get_node('Districts/lbl'+i).add_to_group('dlabels'+year)
 			#else:
-			add_label(i, get_node('Districts/'+data[i][0][0]).position, 'dlabels'+ year)
+			add_label(i, CD.position+CD.get_node(data[i][0][0]).position, 'dlabels'+ year)
 		#else:
 		#	print(year," disolved ",i)
 	#print(year, 'added polys', nodesadded)
@@ -621,7 +621,7 @@ func _on_Quiz_pressed():
 var challenges_completed:=[]
 func new_challenge():
 	while true:
-		challenge=CD.get_child([rng.randi_range(0,CD.get_child_count()-1)]).name
+		challenge=CD.get_child(rng.randi_range(0,CD.get_child_count()-1)).name
 		if challenge in challenges_completed:
 			continue
 		else:
