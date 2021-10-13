@@ -550,61 +550,41 @@ var cache={}
 func draw_historic_borders():
 	for idx in cache:
 		var poly=cache[idx]
-		var cnt=poly.size()
-		for i in range(1, cnt):
-			draw_line(poly[i-1], poly[i], deselect_color.darkened(.05), border_width)
-		draw_line(poly[cnt-1], poly[0], deselect_color.darkened(.05), border_width)
+		draw_polyline(poly, deselect_color.darkened(.05), border_width)
 		#draw newly merged
-	#for dx in dhistory[current_year-1]:
-	#	if dhistory[current_year-1][dx][0].size() > 0:
 	for  n in get_tree().get_nodes_in_group(years[current_year-1]):
 		if n.name.find('history') > 0:
 			#var poly=PoolVector2Array(get_node(dx+'history').polygon)
 			var poly=PoolVector2Array(n.polygon)
 			cache[n.name]=poly
-			var cnt=poly.size()
-			for i in range(1, cnt):
-				draw_line(poly[i-1], poly[i], border_color, border_width)
-			draw_line(poly[cnt-1], poly[0], border_color, border_width)
+			draw_polyline(poly, border_color, border_width)
 
+#Dont add too many if conditions here. Instead set meta data like border color, selected district on some user action and then call update()
+# redraw should as fast as possible
 func _draw():
-	#var ts=OS.get_ticks_msec()
-	#debug state borders
-#	var p=get_node('debug').polygon
-#	for idx in range(1, p.size()):
-#		#draw_circle(p[idx], 10, Color.firebrick )
-#		draw_string(df, p[idx], str(idx))
-	#history
-	#print(game_in_progress, clear_borders)
+	var ts=OS.get_ticks_msec()
 	if game_in_progress==2:
 		draw_historic_borders()
 		return
 	#else:
 	#	print('clearing history cache')
 	cache.clear()
-	#TODO switch to $districts
 	var t:Transform2D=Transform2D()
 	var vro=get_viewport_transform().origin
-	for dx in CD.get_children():#d.keys():
+	for dx in CD.get_children():
 		t.origin=CD.position + dx.position
 		var poly=t.xform(PoolVector2Array(dx.polygon))#get_node('Districts/'+dx).polygon)
 		var cnt=poly.size()
 		draw_colored_polygon(poly, dx.get_meta('color'))
-		#if dx.name==selected_district:
-		#	draw_colored_polygon(poly, selected_color)
-		#else:
-		#	draw_colored_polygon(poly, deselect_color)
-		#var center_at=Vector2(0,0)#dx.position #get_node("Districts/"+dx).position #Vector2(d[dx][0], d[dx][1])
-		if dx.name != selected_district:
-			for i in range(1, cnt):
-				draw_line(poly[i-1], poly[i], border_color, border_width )
-			draw_line(poly[cnt-1], poly[0], border_color, border_width )			
-		else:		
-			for i in range(1, cnt):
-				draw_line(poly[i-1], poly[i], border_color, border_width )
-			draw_line(poly[cnt-1], poly[0], border_color, border_width )
-	#print('draw ',OS.get_ticks_msec() - ts)
-	
+		draw_polyline(poly, border_color, border_width)
+	var tpos
+	for dx in CD.get_children():
+		tpos=CD.position + dx.position + Vector2(40, 40) #+ Vector2(0, dx.polygon[10].y)  
+		draw_rect(Rect2(tpos - Vector2(labelmargin, labelfontht-labelmargin), Vector2(len(dx.name)*labelfontwd, labelfontht+2*labelmargin)), dx.get_meta('labelbgcolor'))
+		draw_rect(Rect2(tpos - Vector2(labelmargin+4, labelfontht-labelmargin), Vector2(4, labelfontht+2*labelmargin)), dx.get_meta('labelbarcolor'))
+		draw_string(df, tpos, dx.name, dx.get_meta('labelcolor'))
+	print('drawtime ',OS.get_ticks_msec() - ts)
+		
 func _on_Quiz_pressed():
 	reset()
 	game_in_progress=1
@@ -725,10 +705,15 @@ func gotoDistrict():
 var df
 var labelstyle=preload("res://labelstyle.tres")
 var labelfont=load("res://DroidSans.ttf")
+var labelfontht=16
+var labelfontwd=int(labelfontht * 12/22)+1
+var labelmargin=2
+var labelcolor=Color( 1, 0.93, 0.094, 1 )
+var labelcolor_off:=Color.transparent
 func init_label_font():
 	df=DynamicFont.new()
 	df.font_data=labelfont
-	df.size=36
+	df.size=labelfontht
 	
 # used in history mode to label old districts each step
 # why not use draw string - cause group show hide is more convenient polys and labels stay linked
@@ -747,9 +732,9 @@ func add_label(district, pos, groupname):
 #		r.collision_mask=2
 #	lcnt=lcnt+1
 	var l:Label=Label.new()
-	df.size=22
+	#df.size=labelfontht
 	l.set("custom_fonts/font",df)
-	l.set("custom_colors/font_color", Color( 1, 0.93, 0.094, 1 ))#district_label_text_color)
+	l.set("custom_colors/font_color", labelcolor)
 	l.set("custom_styles/normal", labelstyle)
 	#l.set("custom_colors/font_color_shadow", Color.black)
 	#l.set("custom_constants/shadow_offset_x",3)
@@ -761,30 +746,35 @@ func add_label(district, pos, groupname):
 	l.rect_position=pos
 	#l.rect_scale=Vector2(1/scale.x, 1/scale.y)
 	l.add_to_group(groupname)
-	#r.position=pos
-	#r.add_child(l)
-	#var c = CollisionShape2D.new()
-	#cs2d.radius=59
-	#c.shape=cs2d
-	#r.add_child(c)
 	add_child(l)
-	#print('label added ', 'lbl'+district, ' to group ', groupname )
 
 func _on_Labels_toggled(button_pressed):
 	if button_pressed:
-		get_tree().set_group("dlabels","visible",true)
+		for dx in CD.get_children():
+			dx.set_meta('labelcolor',labelcolor)
+			dx.set_meta('labelbgcolor',Color.black)
+			dx.set_meta('labelbarcolor',Color.orange)
+		#get_tree().set_group("dlabels","visible",true)
 		#$HUD/TopRight/Labels["custom_styles/normal"].bg_color = Color("#bada55")
-		$HUD/TopRight/Labels["modulate"]=district_label_text_color
+		$HUD/TopRight/Labels["modulate"]=labelcolor
 	else:
-		get_tree().set_group("dlabels","visible",false)
+		for dx in CD.get_children():
+			dx.set_meta('labelcolor',labelcolor_off)
+			dx.set_meta('labelbgcolor',labelcolor_off)
+			dx.set_meta('labelbarcolor',labelcolor_off)
+		#get_tree().set_group("dlabels","visible",false)
 		$HUD/TopRight/Labels["modulate"]=Color(1.0, 1.0, 1.0)
+	update()
 
 func _on_TN_ready():
 	#$HUD/HistoryControl.rect_scale=Vector2(1/scale.x, 1/scale.y)
 	uiScore=get_node("HUD/Top/R1/Score")
 	CD=$Districts/ClickDetector
 	for dx in CD.get_children():
-		dx.set_meta('color',deselect_color)		
+		dx.set_meta('color',deselect_color)
+		dx.set_meta('labelcolor',labelcolor_off)
+		dx.set_meta('labelbgcolor',labelcolor_off)
+		dx.set_meta('labelbarcolor',labelcolor_off)
 	get_tree().call_group("allcities","hide")
 	print('click map shape count', Physics2DServer.area_get_shape_count($Districts/ClickDetector.get_rid()))
 	#debug prints cities per district, district history etc
