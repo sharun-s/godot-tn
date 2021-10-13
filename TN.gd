@@ -344,9 +344,6 @@ func add_historic_districts(year, data):
 			add_child(tmp)
 			tmp.add_to_group(year)
 			nodesadded+=1
-			#if has_node('Districts/lbl'+i):
-			#	get_node('Districts/lbl'+i).add_to_group('dlabels'+year)
-			#else:
 			add_label(i, CD.position+CD.get_node(data[i][0][0]).position, 'dlabels'+ year)
 		#else:
 		#	print(year," disolved ",i)
@@ -404,10 +401,15 @@ func on_district_select(_viewport, event, idx):
 func setDistrict_Color_Text(dist, c, showlabel:=true):
 	#get_node(dist).color=c
 	CD.get_node(dist).set_meta('color',c)
-	update()
 	if showlabel:
-		$Label.text=dist
-		$Label.rect_position=center(dist)
+		CD.get_node(dist).set_meta('labelcolor',labelcolor)
+		CD.get_node(dist).set_meta('labelbgcolor',Color.black)
+		CD.get_node(dist).set_meta('labelbarcolor',Color.orange)
+	else:
+		CD.get_node(dist).set_meta('labelcolor',labelcolor_off)
+		CD.get_node(dist).set_meta('labelbgcolor',labelcolor_off)
+		CD.get_node(dist).set_meta('labelbarcolor',labelcolor_off)
+	update()
 
 func decide_action(district):
 	if game_in_progress==1 and attempts < turns:
@@ -415,7 +417,7 @@ func decide_action(district):
 			score+=1
 			attempts+=1
 			uiScore.text=str(score)+' / '+str(attempts)
-			setDistrict_Color_Text(district, selected_color_right)
+			setDistrict_Color_Text(district, selected_color_right, false)
 			$Districts/ClickDetector.input_pickable=false
 			timed_msg("[color=#"+selected_color_right.to_html(false)+"]Correct![/color]", 1)#, 2)
 			yield($Timer, "timeout")
@@ -426,7 +428,7 @@ func decide_action(district):
 			attempts+=1
 			uiScore.text=str(score)+' / '+str(attempts)
 			#get_node(district).color=selected_color_wrong
-			setDistrict_Color_Text(district, selected_color_wrong)
+			setDistrict_Color_Text(district, selected_color_wrong, false)
 			$HUD/Message.bbcode_text=challenge+"???\n  [color=#ee2211]Try Again![/color]\nThat was "+district
 		if attempts==turns:
 			$Districts/ClickDetector.input_pickable=false
@@ -458,12 +460,12 @@ func decide_action(district):
 			score+=1
 			attempts+=1
 			uiScore.text=str(score)+' / '+str(attempts)
-			setDistrict_Color_Text(district, selected_color_right)
+			setDistrict_Color_Text(district, selected_color_right,false)
 			timed_msg("[color=#"+selected_color_right.to_html(false)+"]Correct![/color]", 1)#, 2)
 		else:
 			attempts+=1
 			uiScore.text=str(score)+' / '+str(attempts)
-			setDistrict_Color_Text(district,selected_color_wrong)
+			setDistrict_Color_Text(district,selected_color_wrong,false)
 #			var clist=[]
 #			for i in $Cities.of[district.split('/')[1]]:
 #				clist.append(i.name)
@@ -533,10 +535,10 @@ func highlight_district(district, show_neighbours:=true):
 				update() # redraw borders
 				return state
 	selected_district=district
-	setDistrict_Color_Text(district, selected_color)
+	setDistrict_Color_Text(district, selected_color,false)
 	if show_neighbours:
 		_on_Grid_show_neighbours(true)
-	update() # redraw borders
+	#update() # redraw borders
 	return state
 			
 func deselect():
@@ -584,7 +586,6 @@ func _draw():
 		#tpos=CD.position + dx.position + Vector2(40, 40) #+ Vector2(0, dx.polygon[10].y)  
 		if len(labelpos)==0:
 			break
-		print('.')
 		tpos=labelpos[dx.name]
 		draw_rect(Rect2(tpos - Vector2(labelmargin, labelfontht-labelmargin), Vector2(len(dx.name)*labelfontwd, labelfontht+2*labelmargin)), dx.get_meta('labelbgcolor'))
 		draw_rect(Rect2(tpos - Vector2(labelmargin+4, labelfontht-labelmargin), Vector2(4, labelfontht+2*labelmargin)), dx.get_meta('labelbarcolor'))
@@ -1143,34 +1144,29 @@ func _off_track(dx):
 	uiScore["custom_styles/normal"].border_color=Color.red
 	uiScore["custom_colors/font_color"]=Color.red
 	#get_node("Districts/"+dx).color=selected_color_wrong
-	setDistrict_Color_Text(dx,selected_color_wrong)
+	setDistrict_Color_Text(dx,selected_color_wrong, false)
 
 func _on_Grid_show_neighbours(show):
 	if show:
 		if selected_district == "" or selected_district==null:
 			return
 		for i in neighbours(selected_district):
-			get_node('Districts/lbl'+i).visible=true
-			#get_node('Districts/'+i).color=deselect_color.blend("79e9a5")
-			setDistrict_Color_Text(i,deselect_color.blend("79e9a5"))
+			setDistrict_Color_Text(i,deselect_color.blend("79e9a5"),true)
 	else:
 		for district in CD.get_children():
-			get_node('Districts/lbl'+district.name).visible=false
 			if selected_district == "" or selected_district==null:
-				#get_node('Districts/'+district).color=deselect_color
-				district.set_meta('color',deselect_color)
+				setDistrict_Color_Text(district.name,deselect_color, false)
 			else:
 				if district.name != selected_district:
-					district.set_meta('color',deselect_color)
-					#get_node('Districts/'+district).color=deselect_color	
-	update()
+					setDistrict_Color_Text(district.name,deselect_color, false)
+
 
 func _on_Grid_on_track(d):
 	#$HUD/Score.text="Well done!\nYou are on track"
 	#$HUD/Score["custom_styles/normal"].border_color=selected_color_right
 	#$HUD/Score["custom_colors/font_color"]=selected_color_right
 	#get_node("Districts/"+d).color=selected_color_right
-	setDistrict_Color_Text(d,selected_color_right)
+	setDistrict_Color_Text(d,selected_color_right, false)
 
 #var multiquest=false
 func subjectQuest():
