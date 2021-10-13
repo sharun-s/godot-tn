@@ -562,7 +562,9 @@ func draw_historic_borders():
 #Dont add too many if conditions here. Instead set meta data like border color, selected district on some user action and then call update()
 # redraw should as fast as possible
 func _draw():
-	var ts=OS.get_ticks_msec()
+	var ts
+	if OS.has_feature("editor"):
+		ts=OS.get_ticks_msec()
 	if game_in_progress==2:
 		draw_historic_borders()
 		return
@@ -579,11 +581,16 @@ func _draw():
 		draw_polyline(poly, border_color, border_width)
 	var tpos
 	for dx in CD.get_children():
-		tpos=CD.position + dx.position + Vector2(40, 40) #+ Vector2(0, dx.polygon[10].y)  
+		#tpos=CD.position + dx.position + Vector2(40, 40) #+ Vector2(0, dx.polygon[10].y)  
+		if len(labelpos)==0:
+			break
+		print('.')
+		tpos=labelpos[dx.name]
 		draw_rect(Rect2(tpos - Vector2(labelmargin, labelfontht-labelmargin), Vector2(len(dx.name)*labelfontwd, labelfontht+2*labelmargin)), dx.get_meta('labelbgcolor'))
 		draw_rect(Rect2(tpos - Vector2(labelmargin+4, labelfontht-labelmargin), Vector2(4, labelfontht+2*labelmargin)), dx.get_meta('labelbarcolor'))
 		draw_string(df, tpos, dx.name, dx.get_meta('labelcolor'))
-	print('drawtime ',OS.get_ticks_msec() - ts)
+	if OS.has_feature("editor"):
+		print('drawtime ',OS.get_ticks_msec() - ts)
 		
 func _on_Quiz_pressed():
 	reset()
@@ -669,6 +676,13 @@ func reset():
 		deselect()
 		$Label.text=''
 		get_tree().set_group("dlabels","visible",false)
+
+
+func fly(flyto, ts, jumpht):
+	tw.interpolate_property($Gopal, "position:x", $Gopal.position.x, flyto.x, ts, Tween.TRANS_LINEAR,Tween.EASE_IN)
+	tw.interpolate_property($Gopal, "position:y", $Gopal.position.y, flyto.y-jumpht, ts/2, Tween.TRANS_QUAD, Tween.EASE_OUT)
+	tw.interpolate_property($Gopal, "position:y", flyto.y-jumpht, flyto.y, ts/2, Tween.TRANS_QUAD, Tween.EASE_IN, ts/2)
+
 #var moving:=false
 func gotoDistrict():
 	disableui()
@@ -687,7 +701,11 @@ func gotoDistrict():
 		var direction=$Gopal.position.direction_to(gpos)
 		$Gopal.velocity=direction
 		time=distance/$Gopal.speed
-		tw.interpolate_property($Gopal,"position",$Gopal.position,gpos,time)
+		if abs(distance) > 250 :
+			fly(gpos, time, 96)
+		else:
+			tw.interpolate_property($Gopal,"position",$Gopal.position,gpos,time)
+		# 100*direction.y)
 		tw.start()
 		var x=yield(tw, 'tween_completed')
 		#moving=false 
@@ -720,17 +738,12 @@ func init_label_font():
 #var lcnt=0
 #var cs2d=CircleShape2D.new()
 func add_label(district, pos, groupname):
-#	var r
-#	if lcnt %2 == 0:
-#		r=RigidBody2D.new()		
-#		r.constant_linear_velocity=Vector2(0.0, -3.0)
-#		r.collision_mask=2
-#		r.collision_layer=2
-#	else:
-#		r=RigidBody2D.new()
-#		r.collision_layer=2
-#		r.collision_mask=2
-#	lcnt=lcnt+1
+	var r=RigidBody2D.new()
+	r.mode=RigidBody2D.MODE_CHARACTER
+	r.gravity_scale=0
+	#r.constant_linear_velocity=Vector2(0.0, -3.0)
+	#r.collision_mask=2
+	#r.collision_layer=2
 	var l:Label=Label.new()
 	#df.size=labelfontht
 	l.set("custom_fonts/font",df)
@@ -740,13 +753,22 @@ func add_label(district, pos, groupname):
 	#l.set("custom_constants/shadow_offset_x",3)
 	#l.set("custom_constants/shadow_offset_y",3)
 	#l.set("custom_constants/shadow_as_outline",0)
-	l.visible=false
+	#l.visible=false
 	l.text=district
-	#l.name='lbl'+district
-	l.rect_position=pos
+	l.rect_position=pos +Vector2(30,30)
 	#l.rect_scale=Vector2(1/scale.x, 1/scale.y)
 	l.add_to_group(groupname)
-	add_child(l)
+	var c=CollisionShape2D.new()
+	c.modulate=Color.green
+	var r2d:RectangleShape2D=RectangleShape2D.new()
+	r2d.extents=l.rect_size/2
+	c.position=pos +Vector2(30,30)+ l.rect_size/2
+	#print(district, c.position) 
+	c.shape=r2d
+	r.add_child(c)
+	r.add_child(l)
+	#r.position=pos
+	add_child(r)
 
 func _on_Labels_toggled(button_pressed):
 	if button_pressed:
@@ -754,7 +776,7 @@ func _on_Labels_toggled(button_pressed):
 			dx.set_meta('labelcolor',labelcolor)
 			dx.set_meta('labelbgcolor',Color.black)
 			dx.set_meta('labelbarcolor',Color.orange)
-		#get_tree().set_group("dlabels","visible",true)
+		#get_tree().set_group("testlabels","visible",true)
 		#$HUD/TopRight/Labels["custom_styles/normal"].bg_color = Color("#bada55")
 		$HUD/TopRight/Labels["modulate"]=labelcolor
 	else:
@@ -762,9 +784,17 @@ func _on_Labels_toggled(button_pressed):
 			dx.set_meta('labelcolor',labelcolor_off)
 			dx.set_meta('labelbgcolor',labelcolor_off)
 			dx.set_meta('labelbarcolor',labelcolor_off)
-		#get_tree().set_group("dlabels","visible",false)
+		#get_tree().set_group("testlabels","visible",false)
 		$HUD/TopRight/Labels["modulate"]=Color(1.0, 1.0, 1.0)
 	update()
+
+var labelpos={}
+func calculate_lable_layout():
+	if len(labelpos) == 0:
+		for x in get_children():
+			if x is RigidBody2D:
+				labelpos[x.get_child(1).text]=x.transform.origin+x.get_child(1).rect_position 
+				x.queue_free()
 
 func _on_TN_ready():
 	#$HUD/HistoryControl.rect_scale=Vector2(1/scale.x, 1/scale.y)
@@ -775,8 +805,10 @@ func _on_TN_ready():
 		dx.set_meta('labelcolor',labelcolor_off)
 		dx.set_meta('labelbgcolor',labelcolor_off)
 		dx.set_meta('labelbarcolor',labelcolor_off)
+		add_label(dx.name, CD.position+dx.position, 'testlabels')
 	get_tree().call_group("allcities","hide")
 	print('click map shape count', Physics2DServer.area_get_shape_count($Districts/ClickDetector.get_rid()))
+	get_tree().call_group("testlabels","hide")
 	#debug prints cities per district, district history etc
 	#for dt in d.keys():
 	#	print(dt, get_history(dt))
@@ -868,7 +900,7 @@ func _on_History_pressed():
 	
 	#setup data for transition animation
 	# using karur as proxy center of the state from where the initial 12 districts appear
-	var old=[{node=get_node('Karur'),loc=center('Karur')}] #d['Karur']}]
+	var old=[{node=CD.get_node('Karur'),loc=center('Karur')}] #d['Karur']}]
 	var newlist=[]
 	#for timeline
 	var names=[] 
@@ -1153,6 +1185,7 @@ func subjectQuest():
 
 func _on_Explore_pressed():
 	$Gopal.show()
+	calculate_lable_layout()
 	$HUD/TopRight/Labels.show()
 	$HUD/Top/LabelCities.show()
 	var randstartidx=rng.randi_range(0,CD.get_child_count()-1)
