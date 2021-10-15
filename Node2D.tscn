@@ -11,21 +11,25 @@
 [ext_resource path="res://Cities.gd" type="Script" id=11]
 
 [sub_resource type="DynamicFont" id=1]
+size = 100
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=2]
 size = 32
 font_data = ExtResource( 3 )
 
-[sub_resource type="RichTextEffect" id=2]
+[sub_resource type="RichTextEffect" id=3]
 script = ExtResource( 5 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=4]
 size = 18
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=5]
 size = 30
 font_data = ExtResource( 3 )
 
-[sub_resource type="StyleBoxFlat" id=5]
+[sub_resource type="StyleBoxFlat" id=6]
 content_margin_left = 0.0
 content_margin_right = 0.0
 content_margin_top = 0.0
@@ -42,40 +46,55 @@ expand_margin_right = 4.0
 expand_margin_top = 2.0
 expand_margin_bottom = 2.0
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=7]
 size = 30
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=7]
+[sub_resource type="DynamicFont" id=8]
 size = 26
 font_data = ExtResource( 3 )
 
-[sub_resource type="StyleBoxFlat" id=8]
+[sub_resource type="StyleBoxFlat" id=9]
 bg_color = Color( 0, 0.121569, 0.247059, 1 )
 
-[sub_resource type="DynamicFont" id=9]
+[sub_resource type="DynamicFont" id=10]
 size = 40
 font_data = ExtResource( 3 )
 
-[sub_resource type="StyleBoxFlat" id=10]
+[sub_resource type="StyleBoxFlat" id=11]
 bg_color = Color( 0.00392157, 0.00784314, 0.0117647, 1 )
 border_width_left = 8
 border_width_bottom = 8
 border_color = Color( 0.996078, 0.929412, 0.372549, 1 )
 corner_radius_bottom_left = 8
 
-[sub_resource type="DynamicFont" id=11]
+[sub_resource type="DynamicFont" id=12]
 size = 60
 outline_size = 2
 outline_color = Color( 0.976471, 0.870588, 0.376471, 1 )
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=12]
-size = 30
-font_data = ExtResource( 3 )
-
 [node name="TN" type="Node2D"]
 script = ExtResource( 1 )
+
+[node name="Label" type="Label" parent="."]
+visible = false
+show_behind_parent = true
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -12.0
+margin_right = 44.0
+margin_bottom = 12.0
+size_flags_vertical = 1
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.439216, 0.980392, 0.501961, 0.305882 )
+custom_constants/shadow_offset_x = 2
+custom_constants/shadow_offset_y = 2
+custom_constants/shadow_as_outline = 0
+text = "1975"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
@@ -84,10 +103,10 @@ visible = false
 anchor_bottom = 1.0
 rect_min_size = Vector2( 400, 0 )
 size_flags_horizontal = 3
-custom_fonts/normal_font = SubResource( 1 )
+custom_fonts/normal_font = SubResource( 2 )
 bbcode_enabled = true
 scroll_active = false
-custom_effects = [ SubResource( 2 ) ]
+custom_effects = [ SubResource( 3 ) ]
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -97,10 +116,10 @@ visible = false
 anchor_bottom = 1.0
 rect_min_size = Vector2( 400, 0 )
 size_flags_horizontal = 3
-custom_fonts/normal_font = SubResource( 3 )
+custom_fonts/normal_font = SubResource( 4 )
 bbcode_enabled = true
 scroll_active = false
-custom_effects = [ SubResource( 2 ) ]
+custom_effects = [ SubResource( 3 ) ]
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -128,7 +147,7 @@ margin_right = 211.0
 visible = false
 margin_right = 46.0
 margin_bottom = 42.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 text = "<<"
 
 [node name="Score" type="Label" parent="HUD/Top/R1"]
@@ -136,8 +155,8 @@ visible = false
 margin_right = 58.0
 margin_bottom = 36.0
 size_flags_horizontal = 3
-custom_styles/normal = SubResource( 5 )
-custom_fonts/font = SubResource( 6 )
+custom_styles/normal = SubResource( 6 )
+custom_fonts/font = SubResource( 7 )
 custom_colors/font_color = Color( 0.996078, 0.929412, 0.372549, 1 )
 text = "test"
 align = 1
@@ -151,7 +170,7 @@ visible = false
 margin_left = 62.0
 margin_right = 108.0
 margin_bottom = 42.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 text = ">>"
 
 [node name="HistoryControl" type="HBoxContainer" parent="HUD/Top"]
@@ -164,7 +183,7 @@ margin_bottom = 46.0
 margin_right = 103.0
 margin_bottom = 42.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 toggle_mode = true
 text = "Pause"
 
@@ -173,7 +192,7 @@ margin_left = 107.0
 margin_right = 211.0
 margin_bottom = 42.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 text = "Quit"
 
 [node name="LabelCities" type="OptionButton" parent="HUD/Top"]
@@ -183,7 +202,7 @@ margin_right = 559.5
 margin_bottom = 38.0
 size_flags_horizontal = 3
 size_flags_vertical = 0
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 text = "Cities"
 align = 2
 __meta__ = {
@@ -205,8 +224,8 @@ margin_right = 400.0
 margin_bottom = 800.0
 size_flags_horizontal = 3
 size_flags_vertical = 7
-custom_styles/normal = SubResource( 8 )
-custom_fonts/font = SubResource( 9 )
+custom_styles/normal = SubResource( 9 )
+custom_fonts/font = SubResource( 10 )
 text = "Districts 
 of
 Tamil Nadu"
@@ -225,7 +244,7 @@ custom_constants/separation = 0
 margin_right = 400.0
 margin_bottom = 114.0
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 text = "Explore"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -236,7 +255,7 @@ margin_top = 114.0
 margin_right = 400.0
 margin_bottom = 228.0
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 custom_colors/font_color = Color( 0, 0.992157, 0.533333, 1 )
 text = "Quiz"
 __meta__ = {
@@ -248,7 +267,7 @@ margin_top = 228.0
 margin_right = 400.0
 margin_bottom = 342.0
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 custom_colors/font_color = Color( 1, 0.756863, 0.027451, 1 )
 text = "Timed Quiz"
 __meta__ = {
@@ -260,7 +279,7 @@ margin_top = 342.0
 margin_right = 400.0
 margin_bottom = 457.0
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 custom_colors/font_color = Color( 0.992157, 0.929412, 0, 1 )
 text = "City Quiz"
 __meta__ = {
@@ -272,7 +291,7 @@ margin_top = 457.0
 margin_right = 400.0
 margin_bottom = 571.0
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 custom_colors/font_color = Color( 1, 0.133333, 0.027451, 1 )
 text = "Quest"
 __meta__ = {
@@ -284,7 +303,7 @@ margin_top = 571.0
 margin_right = 400.0
 margin_bottom = 685.0
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 custom_colors/font_color = Color( 0.976471, 0.14902, 0.447059, 1 )
 text = "MultiQuest"
 __meta__ = {
@@ -296,7 +315,7 @@ margin_top = 685.0
 margin_right = 400.0
 margin_bottom = 800.0
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 text = "History"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -321,7 +340,7 @@ anchor_right = 1.0
 margin_left = -192.0
 margin_bottom = 55.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 toggle_mode = true
 text = "Labels"
 __meta__ = {
@@ -333,8 +352,8 @@ visible = false
 margin_right = 40.0
 margin_bottom = 71.0
 size_flags_horizontal = 3
-custom_styles/normal = SubResource( 10 )
-custom_fonts/font = SubResource( 11 )
+custom_styles/normal = SubResource( 11 )
+custom_fonts/font = SubResource( 12 )
 custom_colors/font_color = Color( 0.917647, 0.176471, 0.176471, 1 )
 align = 1
 valign = 1
@@ -355,20 +374,6 @@ script = ExtResource( 11 )
 [node name="HistoryAnimator" parent="." instance=ExtResource( 10 )]
 speed = 0.025
 
-[node name="Label" type="Label" parent="."]
-visible = false
-margin_bottom = 37.0
-custom_fonts/font = SubResource( 12 )
-custom_colors/font_color = Color( 0.439216, 0.980392, 0.501961, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_constants/shadow_offset_x = 2
-custom_constants/shadow_offset_y = 2
-custom_constants/shadow_as_outline = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Gopal" parent="." instance=ExtResource( 6 )]
 visible = false
 scale = Vector2( 0.6, 0.6 )
@@ -378,8 +383,8 @@ speed = 200
 [connection signal="infobox_exit" from="HUD/Grid" to="." method="_on_infobox_exit"]
 [connection signal="off_track" from="HUD/Grid" to="." method="_off_track"]
 [connection signal="on_track" from="HUD/Grid" to="." method="_on_Grid_on_track"]
-[connection signal="quest_over" from="HUD/Grid" to="." method="_on_quest_over"]
 [connection signal="quest_over" from="HUD/Grid" to="HUD/QMenu" method="_quest_over"]
+[connection signal="quest_over" from="HUD/Grid" to="." method="_on_quest_over"]
 [connection signal="show_munis" from="HUD/Grid" to="." method="_on_Grid_show_munis"]
 [connection signal="show_neighbours" from="HUD/Grid" to="." method="_on_Grid_show_neighbours"]
 [connection signal="subject_quests_ready" from="HUD/Grid" to="HUD/QMenu" method="_on_subject_quests_ready"]
