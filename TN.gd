@@ -17,7 +17,7 @@ var border_color=deselect_color.darkened(.1)#Color.darkgray#.black#Color.firebri
 var border_width:=3
 var tw:=Tween.new()
 #var walkpath:=Line2D.new()
-var path=[]
+#var path=[]
 
 func revert_transform(poly:Polygon2D):
 	if poly.transform != Transform2D.IDENTITY:
@@ -312,20 +312,15 @@ func _unhandled_input(event):
 func on_district_select(_viewport, event, idx):
 	if event is InputEventMouseButton:
 		if event.pressed:
-			#print('mpress ', idx)
-			#print(dn.get_child(idx))
+			#print('mpress ', idx)#print(dn.get_child(idx))
 			var dn=$Districts/ClickDetector
 			#SHAPE_IDX can be a large bunch of number cuz collision poly is a combo of many shapes
 			#to find the collision poly object using shape.find_owner
-			#
 			#this is probably why nodes and object counts were so high
 			var o=dn.shape_find_owner(idx)
-			#.shape_owner_shape_count(o)
-			
-			#print(dn.get_rid().get_id())
-			#print(dn.get_child(o).name)
-			path.clear()
-			path.append(dn.get_child(o).name)#district)
+			#.shape_owner_shape_count(o)#print(dn.get_rid().get_id())#print(dn.get_child(o).name)
+			$Gopal.path.clear()
+			$Gopal.path.append(dn.get_child(o).name)#district)
 			#print(dn.get_child(o).name,' ', idx)
 			#colpol apparently doesnt have rids
 			#print('shapes within colpol ',Physics2DServer.body_get_shape_count(dn.get_child(o).get_rid()))
@@ -346,10 +341,10 @@ func on_district_select(_viewport, event, idx):
 		var dn=$Districts/ClickDetector
 		var o=dn.shape_find_owner(idx)
 		var district = dn.get_child(o).name
-		if district in path:
+		if district in $Gopal.path:
 			pass
 		else:
-			path.append(district)
+			$Gopal.path.append(district)
 		#walkpath.add_point(get_node(district).position)
 #		highlight_district(district, false, true)
 
@@ -574,7 +569,7 @@ func new_city_challenge():
 	
 func game_over():
 	deselect()
-	path.clear()
+	$Gopal.path.clear()
 	selected_district=''
 	seconds=0
 	$HUD/TopRight/Labels.hide()
@@ -622,10 +617,8 @@ func gotoDistrict():
 	var distance
 	var time
 	CD.input_pickable=false
-#	$Gopal/CollisionShape2D.disabled = true
-#	$Gopal.initiated_by_code=true
-	while path.size() > 0 :
-		current=path.pop_front()
+	while $Gopal.path.size() > 0 :
+		current=$Gopal.path.pop_front()
 		var st=highlight_district(current,false)
 		var target=CD.position+CD.get_node(current).position#+Vector2(d[current][2]/2, d[current][3]/2 )
 		$Gopal.goto(target)
@@ -634,8 +627,6 @@ func gotoDistrict():
 		#print('selection type ', selectionType.keys()[st])
 		if st != selectionType.deselection:
 			showinfo(current, st)
-	#$Gopal.velocity=Vector2(0,0)
-	#$Gopal.initiated_by_co
 	CD.input_pickable=true
 	#$Gopal/CollisionShape2D.disabled = false
 	#if game_in_progress !=3:
@@ -1143,6 +1134,7 @@ func subjectQuest():
 		get_tree().set_group("dlabels","visible",false)
 	$HUD/QMenu.show()
 
+
 func _on_Explore_pressed():
 	$Gopal.show()
 	calculate_lable_layout()
@@ -1150,7 +1142,7 @@ func _on_Explore_pressed():
 	$HUD/Top/LabelCities.show()
 	var randstartidx=rng.randi_range(0,CD.get_child_count()-1)
 	var startat = CD.get_child(randstartidx).name
-	path.append(startat)
+	$Gopal.path.append(startat)
 	#gen_dneighbours()
 	gotoDistrict()
 	# multiplayer test
@@ -1158,14 +1150,18 @@ func _on_Explore_pressed():
 #		var sss=P.instance()
 #		sss.scale=Vector2(0.3,0.3)
 #		sss.speed=250
+#		sss.name='ss'+str(i)
 #		randstartidx=rng.randi_range(0,CD.get_child_count()-1)
 #		#sss.place_at(CD.position + CD.get_child(randstartidx).position)
 #		add_child(sss)
 #		sss.goto(CD.position + CD.get_child(randstartidx).position)
+#	$PTimer.start()
+		
 
 func _on_infobox_exit():
 	$HUD/Grid.clear_infobox_cities()
 	$Cities.clear()
+	$PTimer.stop()
 	game_over()
 
 func _on_LabelCities_item_selected(index):
@@ -1274,3 +1270,8 @@ func _on_Grid_show_munis(district):
 		city.z_index=3
 		$HUD/Grid/VBoxContainer/PanelContainer.add_child(city)
 
+func _on_PTimer_timeout():
+	var ss=get_node('ss'+str(rng.randi_range(0,9)))
+	var randidx=rng.randi_range(0,CD.get_child_count()-1)
+	ss.goto(CD.position + CD.get_child(randidx).position)
+	

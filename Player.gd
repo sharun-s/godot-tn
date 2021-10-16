@@ -10,6 +10,7 @@ export var initiated_by_code:=false
 #var acceleration=Vector2.ZERO
 #var steer_force=10.0
 var tw:=Tween.new()
+var path=[]
 
 func _ready():
 	add_child(tw)
