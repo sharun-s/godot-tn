@@ -483,7 +483,7 @@ func highlight_district(district, show_neighbours:=true):
 		else:
 			# already selected so deselect
 			if state == selectionType.deselection:
-				disappear()
+				infogrid_disappear()
 				deselect()
 				selected_district=''
 				update() # redraw borders
@@ -515,20 +515,16 @@ func _draw():
 		#if OS.has_feature("editor"):
 		#	print('histdraw took ', OS.get_ticks_msec()-ts)
 		return
-	#else:
-	#	print('clearing history cache')
-	historic_poly_cache.clear()
+	
 	var t:Transform2D=Transform2D()
-	var vro=get_viewport_transform().origin
 	for dx in CD.get_children():
 		t.origin=CD.position + dx.position
-		var poly=t.xform(PoolVector2Array(dx.polygon))#get_node('Districts/'+dx).polygon)
+		var poly=t.xform(PoolVector2Array(dx.polygon))
 		var cnt=poly.size()
 		draw_colored_polygon(poly, dx.get_meta('color'))
 		draw_polyline(poly, border_color, border_width)
 	var tpos
 	for dx in CD.get_children():
-		#tpos=CD.position + dx.position + Vector2(40, 40) #+ Vector2(0, dx.polygon[10].y)  
 		if len(labelpos)==0:
 			break
 		tpos=labelpos[dx.name]
@@ -614,9 +610,8 @@ func reset():
 	attempts=0
 	# gopal state depends on game - explore/quest/multiquest show - history/quiz/timedquiz hide
 	$Gopal.hide()
-	disableui()
-	#$HUD/Grid.hide()
-	disappear()
+	$HUD/StartScreen.hide()
+	infogrid_disappear()
 	if selected_district!='':
 		deselect()
 		get_tree().set_group("dlabels","visible",false)
@@ -631,7 +626,7 @@ func fly(flyto, ts, jumpht,e):
 
 #var moving:=false
 func gotoDistrict():
-	disableui()
+	$HUD/StartScreen.hide()
 	#moving=true
 	var current
 	var distance
@@ -777,10 +772,6 @@ func _on_TN_ready():
 	#	print(dt, get_history(dt))
 	#	print( dt, len(get_tree().get_nodes_in_group(dt)))
 
-func disableui():
-	$HUD/StartScreen.hide()
-	#$HUD/TopRight/Labels.hide()
-
 func enableui():
 	$HUD/StartScreen.show()
 	#$HUD/TopRight/Labels.hide()
@@ -850,16 +841,17 @@ func draw_historic_borders():
 			var poly=historic_poly_cache[years[0]][idx]
 			draw_polyline(poly, $HistoryAnimator.bcolor.darkened(.05), border_width)
 		return
-	for j in current_year:
-		#print('draw ', j)
-		for idx in historic_poly_cache[years[j]]:
-			var poly=historic_poly_cache[years[j]][idx]
-			draw_polyline(poly, $HistoryAnimator.bcolor.darkened(.05), border_width)
+	else:
+		for j in current_year:
+			#print('draw ', j)
+			for idx in historic_poly_cache[years[j]]:
+				var poly=historic_poly_cache[years[j]][idx]
+				draw_polyline(poly, $HistoryAnimator.bcolor.darkened(.05), border_width)
 
 
 func add_historic_districts(year, data):
 	var tmp:PoolVector2Array 
-	print('ahd', historic_poly_cache.keys())
+	#print('ahd', historic_poly_cache.keys())
 	historic_poly_cache[years[current_year]]={}
 	#print(current_year,' added')
 	#var nodesadded=0
@@ -878,35 +870,35 @@ func add_historic_districts(year, data):
 			historic_poly_cache[years[current_year]][i+'history']=tmp
 		#else:
 		#	print(year," disolved ",i)
-	#print(year, 'added polys', nodesadded)
+	#print(year, ' added ', historic_poly_cache.keys())
+
+func clear_map():
+	border_color=Color.transparent
+	for dx in CD.get_children():
+		dx.set_meta('color',Color.transparent)
+	update()
 
 var history_stopped_pressed:=false
 var history_pause_pressed:=false
 func _on_History_pressed():
 	reset()
+	clear_map()
 	$HUD/Timeline.show()
 	$Label.show()	
 	$Label.text=years[current_year].substr(0,4)#uiScore.text
 	$HUD/Timeline.bbcode_text='[color=yellow]'+years[current_year]+'[/color]'
-	#print(current_year)
-	#existing borders should be removed so map starts in black slate
+	current_year=0
 	history_stopped_pressed=false
 	history_pause_pressed=false
-	game_in_progress=2
-	#print('clear screen')
-	update() 
-	#setup ui
 	uiScore.visible=true
 	uiScore.text=years[current_year].substr(0,4)
-	#print('before ahd')
 	# generate historic districts and labels and add to group. group name is year string
 	add_historic_districts(years[current_year], dhistory[0])
-	#print('after ahd', current_year)
-	#setup data for transition animation
+	# print('after ahd', current_year)
+	# setup data for transition animation
 	# using karur as proxy center of the state from where the initial 12 districts appear
 	var old=[{node=CD.get_node('Karur'),loc=center('Karur')}] #d['Karur']}]
 	var newlist=[]
-	#for timeline
 	var names=[]
 	for n in historic_poly_cache[years[current_year]]:#get_tree().get_nodes_in_group(years[current_year]):
 		#print(n)
@@ -921,6 +913,7 @@ func _on_History_pressed():
 	$HUD/Top/HistoryControl/PlayPause.pressed=false
 	yield($HistoryAnimator, "move_complete")
 	#print('init anim move complete')
+	game_in_progress=2
 	border_color=$HistoryAnimator.bcolor
 	border_width=4
 	update()
@@ -1016,7 +1009,7 @@ func appear():
 	tw.interpolate_property($HUD/Grid, "rect_position:x", -$HUD/Grid.rect_size.x, 0,.3)
 	tw.start()
 
-func disappear():
+func infogrid_disappear():
 	#var tmpx=$HUD/Grid.rect_size.x
 	#print("<<==")
 	#showstack()
@@ -1028,7 +1021,7 @@ func disappear():
 
 
 func _on_Quest_pressed():
-	disableui()
+	$HUD/StartScreen.hide()
 	$Gopal.show()
 	$HUD/TopRight/Labels.show()
 	#$HUD/TopRight/LabelCities.show()
@@ -1121,7 +1114,7 @@ func _on_quest_over(turnstaken, cluessolved, success):
 	$HUD/Grid/MarginContainer/Back.visible=true
 	$HUD/Grid/MarginContainer/Muni.show()
 	$HUD/Grid.hide()
-	disappear()
+	infogrid_disappear()
 	uiScore.visible=false
 	$HUD/Message.show()
 	if success:
@@ -1173,7 +1166,7 @@ func _on_Grid_on_track(d):
 
 #var multiquest=false
 func subjectQuest():
-	disableui()
+	$HUD/StartScreen.hide()
 	$HUD/TopRight/Labels.hide()
 	$Gopal.show()
 	if selected_district!='':
@@ -1222,7 +1215,7 @@ func quit_history_mode():
 		#get_tree().call_group(years[i],"hide")
 		#get_tree().call_group("dlabels"+years[i],"hide")
 		for tmpx in get_tree().get_nodes_in_group("dlabels"+years[i]):
-			print('freeing ', tmpx.get_parent())
+			#print('freeing ', tmpx.get_parent())
 			tmpx.get_parent().queue_free()
 			#else:
 			#	print('not freeing', tmpx.name)	

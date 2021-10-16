@@ -57,6 +57,7 @@ func start(o, n):
 		#$Tween.interpolate_method(self, "movecell", oldcenters[0], Vector2(i.loc[0], i.loc[1]), .8)	
 		$Tween.interpolate_method(self, "movecell", oldcenters[0], i.loc, 1.0)
 	drawcenters=true
+	show()
 	$Tween.start()
 
 var todraw=[]
@@ -146,5 +147,6 @@ func stop():
 	newcenters.clear()
 	todraw.clear()
 	set_process(false)
+	hide()
 	#current_transition=transitions[randi() % len(transitions)]	
 	
