@@ -74,12 +74,12 @@ var citygrades=['','Muni Corporation','Municipality Selection grade','Municipali
 
 func _ready():
 	init_label_font()
+	add_child(tw)
 	var master_sound = AudioServer.get_bus_index("Master")
 	AudioServer.set_bus_mute(master_sound, true)
 	#shore=ShaderMaterial.new()
 	#shore.shader=load("res://shore1.shader")
 	rng.randomize()
-	add_child(tw)
 	for i in citygrades:
 		$HUD/Top/LabelCities.add_item(i)
 	VisualServer.set_default_clear_color('001f3f')#Color("ff222222"))
@@ -345,7 +345,7 @@ func on_district_select(_viewport, event, idx):
 	if event is InputEventScreenDrag:
 		var dn=$Districts/ClickDetector
 		var o=dn.shape_find_owner(idx)
-		var district = "Districts/"+dn.get_child(o).name
+		var district = dn.get_child(o).name
 		if district in path:
 			pass
 		else:
@@ -616,62 +616,28 @@ func reset():
 		deselect()
 		get_tree().set_group("dlabels","visible",false)
 
-
-func fly(flyto, ts, jumpht,e):
-	#$Gopal.fly(target)
-	tw.interpolate_property($Gopal, "position:x", $Gopal.position.x, flyto.x, ts, Tween.TRANS_LINEAR)
-	#tw.interpolate_property($Gopal, "position:y", $Gopal.position.y, flyto.y, ts/2, Tween.TRANS_QUAD, e[0])
-	tw.interpolate_property($Gopal, "position:y", $Gopal.position.y, jumpht, ts/2, Tween.TRANS_EXPO, e[1])
-	tw.interpolate_property($Gopal, "position:y", jumpht, flyto.y, ts/2, Tween.TRANS_SINE, e[1], ts/2)
-
-#var moving:=false
 func gotoDistrict():
 	$HUD/StartScreen.hide()
-	#moving=true
 	var current
 	var distance
 	var time
 	CD.input_pickable=false
-	$Gopal/CollisionShape2D.disabled = true
-	$Gopal.initiated_by_code=true
+#	$Gopal/CollisionShape2D.disabled = true
+#	$Gopal.initiated_by_code=true
 	while path.size() > 0 :
 		current=path.pop_front()
 		var st=highlight_district(current,false)
 		var target=CD.position+CD.get_node(current).position#+Vector2(d[current][2]/2, d[current][3]/2 )
-		distance=$Gopal.position.distance_to(target)
-		var direction=$Gopal.position.direction_to(target)
-		$Gopal.velocity=direction
-		time=distance/$Gopal.speed
-#		if abs(distance) > 250 :
-#			var jumpht
-#			var e
-#			if target.y < $Gopal.position.y: # head down
-#				jumpht=target.y-40
-#				e=[Tween.EASE_IN, Tween.EASE_IN]
-#			else:
-#				jumpht=$Gopal.position.y-20
-#				e=[Tween.EASE_OUT, Tween.EASE_OUT]
-#			fly(target, time, jumpht, e)
-##			print(direction.y,' ', $Gopal.position,' ', gpos,' ', distance)
-##			if direction.y >0:# up
-##				print('down', rad2deg($Gopal.position.angle_to_point(gpos)))
-##				fly(gpos, time, -2*96, [Tween.EASE_IN, Tween.EASE_IN])
-##			else:
-##				print('up', rad2deg($Gopal.position.angle_to_point(gpos)))
-##				fly(gpos, time, -96,[Tween.EASE_IN, Tween.EASE_OUT] )
-#		else:
-		tw.interpolate_property($Gopal,"position",$Gopal.position,target,time)
-		tw.start()
-		var x=yield(tw, 'tween_all_completed')
-		#moving=false 
+		$Gopal.goto(target)
+		var x=yield($Gopal.tw, 'tween_all_completed')
 		#TODO test what happens when clicking around while Gopal is moving to target
 		#print('selection type ', selectionType.keys()[st])
 		if st != selectionType.deselection:
 			showinfo(current, st)
-	$Gopal.velocity=Vector2(0,0)
-	$Gopal.initiated_by_code=false
+	#$Gopal.velocity=Vector2(0,0)
+	#$Gopal.initiated_by_co
 	CD.input_pickable=true
-	$Gopal/CollisionShape2D.disabled = false
+	#$Gopal/CollisionShape2D.disabled = false
 	#if game_in_progress !=3:
 	#	enableui()
 		
@@ -767,6 +733,9 @@ func _on_TN_ready():
 	$Label.rect_position=-1*transform.origin
 	$Label.rect_scale = Vector2(400/$Label.rect_size.x, 800/$Label.rect_size.y)
 	$Label["custom_colors/font_color"]="#42006680"#$HistoryAnimator.bcolor.lightened(.5)
+
+		
+	
 	#debug prints cities per district, district history etc
 	#for dt in d.keys():
 	#	print(dt, get_history(dt))
@@ -1184,6 +1153,15 @@ func _on_Explore_pressed():
 	path.append(startat)
 	#gen_dneighbours()
 	gotoDistrict()
+	# multiplayer test
+#	for i in 10:
+#		var sss=P.instance()
+#		sss.scale=Vector2(0.3,0.3)
+#		sss.speed=250
+#		randstartidx=rng.randi_range(0,CD.get_child_count()-1)
+#		#sss.place_at(CD.position + CD.get_child(randstartidx).position)
+#		add_child(sss)
+#		sss.goto(CD.position + CD.get_child(randstartidx).position)
 
 func _on_infobox_exit():
 	$HUD/Grid.clear_infobox_cities()
@@ -1268,6 +1246,8 @@ func get_bounds(polygon):
 	return Rect2(min_vec, max_vec-min_vec)
 
 var pt=preload("res://Point.tscn")
+var P=preload("res://Player.tscn")
+
 func _on_Grid_show_munis(district):
 	#TODO dont redraw if pressed again and again
 	$HUD/Grid/VBoxContainer/PanelContainer/imgbox.hide()
