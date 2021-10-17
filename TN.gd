@@ -147,6 +147,37 @@ func _ready():
 #		for j in neighbours('Districts/'+i):
 #			printraw('"',j,'",')
 #		print('],')
+
+func _on_TN_ready():
+	#$HUD/HistoryControl.rect_scale=Vector2(1/scale.x, 1/scale.y)
+	uiScore=get_node("HUD/Top/R1/Score")
+	CD=$Districts/ClickDetector
+	for dx in CD.get_children():
+		dx.set_meta('color',deselect_color)
+		dx.set_meta('labelcolor',labelcolor_off)
+		dx.set_meta('labelbgcolor',labelcolor_off)
+		dx.set_meta('labelbarcolor',labelcolor_off)
+		add_label(dx.name, CD.position+dx.position, 'testlabels')
+	get_tree().call_group("allcities","hide")
+	print('click map shape count', Physics2DServer.area_get_shape_count($Districts/ClickDetector.get_rid()))
+	get_tree().call_group("testlabels","hide")
+	$Label.rect_position=-1*transform.origin
+	$Label.rect_scale = Vector2(400/$Label.rect_size.x, 800/$Label.rect_size.y)
+	$Label["custom_colors/font_color"]="#42006680"#$HistoryAnimator.bcolor.lightened(.5)
+	#debug prints cities per district, district history etc
+	#for dt in d.keys():
+	#	print(dt, get_history(dt))
+	#	print( dt, len(get_tree().get_nodes_in_group(dt)))
+var minion_count=40
+func _on_PTimer_timeout():
+	for i in minion_count:
+		var ss=get_node('ss'+str(i))
+		if rng.randi_range(0,1) == 1:
+			ss.modulate=Color(randf(), randf(),.7)
+			var randidx=rng.randi_range(0,len($Cities.Cities)-1)
+			ss.goto($Cities.Cities[randidx].position)
+		else:
+			ss.modulate=Color.orange
 	
 var dneighbours={
 Ariyalur=["Cuddalore","Perumbalur","Thanjavur","Tiruchirapalli",],
@@ -708,30 +739,6 @@ func calculate_lable_layout():
 				labelpos[x.get_child(1).text]=x.transform.origin+x.get_child(1).rect_position
 				x.queue_free()
 
-func _on_TN_ready():
-	#$HUD/HistoryControl.rect_scale=Vector2(1/scale.x, 1/scale.y)
-	uiScore=get_node("HUD/Top/R1/Score")
-	CD=$Districts/ClickDetector
-	for dx in CD.get_children():
-		dx.set_meta('color',deselect_color)
-		dx.set_meta('labelcolor',labelcolor_off)
-		dx.set_meta('labelbgcolor',labelcolor_off)
-		dx.set_meta('labelbarcolor',labelcolor_off)
-		add_label(dx.name, CD.position+dx.position, 'testlabels')
-	get_tree().call_group("allcities","hide")
-	print('click map shape count', Physics2DServer.area_get_shape_count($Districts/ClickDetector.get_rid()))
-	get_tree().call_group("testlabels","hide")
-	$Label.rect_position=-1*transform.origin
-	$Label.rect_scale = Vector2(400/$Label.rect_size.x, 800/$Label.rect_size.y)
-	$Label["custom_colors/font_color"]="#42006680"#$HistoryAnimator.bcolor.lightened(.5)
-
-		
-	
-	#debug prints cities per district, district history etc
-	#for dt in d.keys():
-	#	print(dt, get_history(dt))
-	#	print( dt, len(get_tree().get_nodes_in_group(dt)))
-
 func enableui():
 	$HUD/StartScreen.show()
 	#$HUD/TopRight/Labels.hide()
@@ -1134,7 +1141,6 @@ func subjectQuest():
 		get_tree().set_group("dlabels","visible",false)
 	$HUD/QMenu.show()
 
-
 func _on_Explore_pressed():
 	$Gopal.show()
 	calculate_lable_layout()
@@ -1146,21 +1152,28 @@ func _on_Explore_pressed():
 	#gen_dneighbours()
 	gotoDistrict()
 	# multiplayer test
-#	for i in 10:
-#		var sss=P.instance()
-#		sss.scale=Vector2(0.3,0.3)
-#		sss.speed=250
-#		sss.name='ss'+str(i)
-#		randstartidx=rng.randi_range(0,CD.get_child_count()-1)
-#		#sss.place_at(CD.position + CD.get_child(randstartidx).position)
-#		add_child(sss)
-#		sss.goto(CD.position + CD.get_child(randstartidx).position)
-#	$PTimer.start()
+	for i in minion_count:
+		var sss=P.instance()
+		sss.scale=Vector2(0.3,0.3)
+		sss.speed=rng.randi_range(60, 100)
+		sss.monitorable=false
+		sss.monitoring=false
+		sss.input_pickable=false
+		sss.modulate=Color.orangered
+		sss.name='ss'+str(i)
+		randstartidx=rng.randi_range(0,len($Cities.Cities)-1)#get_child_count()-1)
+		#sss.place_at(CD.position + CD.get_child(randstartidx).position)
+		add_child(sss)
+		sss.goto($Cities.Cities[randstartidx].position)
+	$PTimer.start()
 		
 
 func _on_infobox_exit():
 	$HUD/Grid.clear_infobox_cities()
 	$Cities.clear()
+	for i in get_children():
+		if i.name.begins_with('ss'):
+			i.queue_free()
 	$PTimer.stop()
 	game_over()
 
@@ -1270,8 +1283,3 @@ func _on_Grid_show_munis(district):
 		city.z_index=3
 		$HUD/Grid/VBoxContainer/PanelContainer.add_child(city)
 
-func _on_PTimer_timeout():
-	var ss=get_node('ss'+str(rng.randi_range(0,9)))
-	var randidx=rng.randi_range(0,CD.get_child_count()-1)
-	ss.goto(CD.position + CD.get_child(randidx).position)
-	
