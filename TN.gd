@@ -651,7 +651,8 @@ func gotoDistrict():
 	while $Gopal.path.size() > 0 :
 		current=$Gopal.path.pop_front()
 		var st=highlight_district(current,false)
-		var target=CD.position+CD.get_node(current).position#+Vector2(d[current][2]/2, d[current][3]/2 )
+		var target=$Cities.of[current][0].position
+		#var target=CD.position+CD.get_node(current).position#+Vector2(d[current][2]/2, d[current][3]/2 )
 		$Gopal.goto(target)
 		var x=yield($Gopal.tw, 'tween_all_completed')
 		#TODO test what happens when clicking around while Gopal is moving to target
