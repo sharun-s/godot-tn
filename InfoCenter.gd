@@ -24,7 +24,8 @@ var facts:={
 			'f:Kalakki meaning to mix is popular street food here (super soft omelet with masala)',
 			'Wet Grinder used for idli/dosa was invented here. More than 800 factories manufacture it and the area has received the GI Tag from Govt of India',
 			'Eastern end of the Palakkad Gap, the lowest pass through the Western Ghats linking Kerala and Tamil Nadu. Also called Kovai',
-			'Manchester of South India due to extensive textile industry, fed by the surrounding cotton fields'
+			'Manchester of South India due to extensive textile industry, fed by the surrounding cotton fields',
+			'p:C Subramaniam, Bharath Ratna Awardee for his role in Indias Agri/Dairy Revolution was from Pollachi located here'		
 		],
 		Cuddalore=[
 			'Along with Vilipuram this District was created from breakup of South Arcot in 1993',
@@ -57,7 +58,9 @@ var facts:={
 			"Turmeric or Manjal from here is known for its unique color. The area is the 2nd largest Tumeric market in India) and major exporter",
 			"Jamakkalam Carpets and Blankets made by the weavers of Bhavani are world famous for their patterns",
 			"Agri powerhouse due to rivers and dams",
-			"Sathyamangalam Tiger Reserve home to 83 tigers and 111 Leopards"
+			"Sathyamangalam Tiger Reserve home to 83 tigers and 111 Leopards",
+			"p:Freedom fighter Tiruppur Kumaran was born here. Protesting the arrest of Gandhi in 1932, while holding a banned Flag of India he was beaten to death by the British Police",
+			"p:E V Ramasamy known as Periyar or Father of Dravidian movement to eradicate caste inequality that lead to emergence of DMK & ADMK was from here"
 		],
 		Kanyakumari=[
 			"Martandam town located here is famous for honey production",
@@ -75,12 +78,13 @@ var facts:={
 			"p:Headquarters of the Kanchi matha, founded by Adi Sankaracharya",
 			"Famous for the hand woven silk sarees, the Kanchi Pattu Pudavai. Wedding saree being a speciality",
 			"Silk from here has received the GI Tag",
+			"p:C N Annadurai, Founder of the DMK and 1st Chief Minister of Tamil Nadu State was from here",
 			"c:Ekambareswarar Temple covers 25 acres is one of the largest temple complexes in India. The Southern Gopuram is 11 stories tall making it one of the taller temple towers. Showcasing the architecture of the Vijayanagara dynasty",
 			"c:Kailasanathar Temple, panamalai talagireeshwarar and the Vaikunta Perumal Temple found here are nearly 1350 years old",
 			"h:Gunduperumbedu fossil bed where plant fossils from 400 million years ago, called poo-kal by locals are found in abundance"
 		],
 		Krishnagiri=[
-			"p:Birthplace of C. Raja Gopalachari popularly known as Rajaji, the first Governor General of India and first Chief Minister of Tamil Nadu",
+			"p:Birthplace of C. Raja Gopalachari popularly known as Rajaji, the first Governor General of India and first Chief Minister of Madras State",
 			"Largest producers of Mangoes in India",
 			"Largest city here is Hosur 40 km from Bangalore and a major manufacturing hub",
 			"The TVS 50, Indias first two seat moped was manufactured here in Hosur and was a big hit. More than 10 million mopeds being sold since.",
@@ -130,6 +134,7 @@ var facts:={
 			'Jasmine (Madurai Malli)'
 		],
 		Nagapattinam=[
+			'p:V. R. Nedunchezhiyan, founder of DMK and Finance Minister under 4 CMs Annadurai, MGR, Karunanidhi & Jayalalitha was born here',
 			'Created in 1991 along with Tiruvarur from coastal part of Thanjavur district',
 			'p:Sambandar of Sirkazhi and his opposition to the Jains, basis of the bakthi movement. Author of the Thirumarai  ', 
 			'c:Velankanni festival', 
@@ -188,7 +193,8 @@ var facts:={
 			'Kottan basket weaving from palm leafs with its vibrant colors',
 			'p:Kaniyan - Yaadhum Oore Yaavarum Kelir',
 			'Chettinad formed by a prosperous banking and business community built from trading with Burma, Ceylon and Malaysia',
-			'Athangudi tiles', 
+			'Athangudi tiles',
+			'h:home of the famous Maruthu Brothers who fought the East India Company in the Polygar Wars', 
 			'f:Known for the famous Chettinad cuisine',
 			'h:Found here is the 2500 year old Keezhadi excavation site, including plates with the Tamil-Brahmi script'
 		],
@@ -278,6 +284,7 @@ var facts:={
 			"Known as the Kashi (Varanasi) of the South, its surrounded by the western ghats on three sides and is famous for its monsoon showers, known as Saaral season",
 		],	
 		Vilippuram=[
+			'p:Sivaji Ganesan, an Icon of Tamil Cinema was born here',
 			'Along with Cuddalore this District was created from break up of South Arcot in 1993',
 			"Surrounds the union teritory of Pondicherry",
 			"h:National Fossil Wood Park at Tiruvakkarai has fossilized trees that are nillions of years old",
