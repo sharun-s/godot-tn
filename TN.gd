@@ -169,15 +169,19 @@ func _on_TN_ready():
 	#	print(dt, get_history(dt))
 	#	print( dt, len(get_tree().get_nodes_in_group(dt)))
 var minion_count=40
-func _on_PTimer_timeout():
-	for i in minion_count:
-		var ss=get_node('ss'+str(i))
-		if rng.randi_range(0,1) == 1:
-			ss.modulate=Color(randf(), randf(),.7)
-			var randidx=rng.randi_range(0,len($Cities.Cities)-1)
-			ss.goto($Cities.Cities[randidx].position)
-		else:
-			ss.modulate=Color.orange
+#func _on_PTimer_timeout():
+#	for i in minion_count:
+#		var ss=get_node('ss'+str(i))
+#		if rng.randi_range(0,1) == 1:
+#			ss.modulate=Color(randf(), randf(),.7)
+#			var randidx=rng.randi_range(0,len($Cities.Cities)-1)
+#			ss.goto($Cities.Cities[randidx].position)
+#		else:
+#			ss.modulate=Color.orange
+
+func _give_minion_new_destination(m):
+	var randidx=rng.randi_range(0,len($Cities.Cities)-1)
+	m.goto($Cities.Cities[randidx].position)
 	
 var dneighbours={
 Ariyalur=["Cuddalore","Perumbalur","Thanjavur","Tiruchirapalli",],
@@ -1166,16 +1170,15 @@ func _on_Explore_pressed():
 		#sss.place_at(CD.position + CD.get_child(randstartidx).position)
 		add_child(sss)
 		sss.goto($Cities.Cities[randstartidx].position)
-	$PTimer.start()
+		sss.connect("waiting_for_orders", self,"_give_minion_new_destination", [sss])
 		
-
 func _on_infobox_exit():
 	$HUD/Grid.clear_infobox_cities()
 	$Cities.clear()
 	for i in get_children():
 		if i.name.begins_with('ss'):
 			i.queue_free()
-	$PTimer.stop()
+	#$PTimer.stop()
 	game_over()
 
 func _on_LabelCities_item_selected(index):

@@ -366,9 +366,6 @@ one_shot = true
 
 [node name="QuizTimer" type="Timer" parent="."]
 
-[node name="PTimer" type="Timer" parent="."]
-wait_time = 5.0
-
 [node name="Districts" parent="." instance=ExtResource( 8 )]
 
 [node name="Cities" type="Node2D" parent="."]
@@ -405,4 +402,3 @@ speed = 200
 [connection signal="pressed" from="HUD/StartScreen/B/History" to="." method="_on_History_pressed"]
 [connection signal="toggled" from="HUD/TopRight/Labels" to="." method="_on_Labels_toggled"]
 [connection signal="timeout" from="QuizTimer" to="." method="_on_QuizTimer_timeout"]
-[connection signal="timeout" from="PTimer" to="." method="_on_PTimer_timeout"]

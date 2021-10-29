@@ -1,5 +1,6 @@
 extends Area2D
 #signal hit
+signal waiting_for_orders
 
 # Declare member variables here. Examples:
 export var speed = 400
@@ -19,12 +20,19 @@ func _ready():
 	set_process(false)
 	set_physics_process(false)
 	show()
+	if name!='Gopal':
+		modulate=Color(randf(), randf(),.7)
 
 func destination_reached():
 	velocity=Vector2(0,0)
 	initiated_by_code=false
 	$CollisionShape2D.disabled=false
 	#set_process(false)
+	#modulate=Color.orange
+	if name!='Gopal':
+		$Timer.start(rand_range(1.0,10.0))
+		yield($Timer, "timeout")
+		emit_signal("waiting_for_orders")
 
 #func fly(flyto, ts, jumpht,e):
 #	#$Gopal.fly(target)
@@ -67,6 +75,7 @@ func goto(pos):
 	tw.interpolate_property(self,"position", position, pos, time)
 	tw.start()
 	var x=yield(tw, 'tween_all_completed')
+
 
 func _process(delta):
 #	if Input.is_action_pressed("ui_right"):
