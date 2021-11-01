@@ -63,8 +63,9 @@ func destination_reached():
 #		_target=null
 #		set_physics_process(false)
 #		emit_signal('reached')
-
-func goto(pos):
+var heading:=''
+func goto(pos, posname):
+	heading=posname
 	initiated_by_code=true
 	$CollisionShape2D.disabled = true
 	set_process(true)
@@ -75,6 +76,7 @@ func goto(pos):
 	tw.interpolate_property(self,"position", position, pos, time)
 	tw.start()
 	var x=yield(tw, 'tween_all_completed')
+	$CollisionShape2D.disabled = false
 
 
 func _process(delta):
@@ -121,12 +123,14 @@ func place_at(pos):
 	show()
 	$CollisionShape2D.disabled = false
 
-#func _on_Player_area_entered(area):
+#func _on_Player_area_shape_entered(a_id, a, s, ls):
 	#emit_signal('hit',area.name)
-	#print(area.name+' entered')
+#	print(a.name+' entered', a, ' ' , s,' ' , ls)
 	#pass # Replace with function body.
-
-
+	#var o=a.shape_find_owner(s)
+	#print(s)
+	#print(a.get_child(o).name + 'entered')
+	#print(a_id, ' ', ls)
 		#distance=$Gopal.position.distance_to(target)
 		#var direction=$Gopal.position.direction_to(target)
 		#$Gopal.velocity=direction

@@ -368,6 +368,9 @@ one_shot = true
 
 [node name="Districts" parent="." instance=ExtResource( 8 )]
 
+[node name="ClickDetector" parent="Districts" index="0"]
+monitoring = true
+
 [node name="Cities" type="Node2D" parent="."]
 script = ExtResource( 11 )
 
@@ -402,3 +405,6 @@ speed = 200
 [connection signal="pressed" from="HUD/StartScreen/B/History" to="." method="_on_History_pressed"]
 [connection signal="toggled" from="HUD/TopRight/Labels" to="." method="_on_Labels_toggled"]
 [connection signal="timeout" from="QuizTimer" to="." method="_on_QuizTimer_timeout"]
+[connection signal="area_shape_entered" from="Districts/ClickDetector" to="." method="_on_ClickDetector_area_shape_entered"]
+
+[editable path="Districts"]

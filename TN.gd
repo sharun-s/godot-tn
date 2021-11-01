@@ -168,20 +168,6 @@ func _on_TN_ready():
 	#for dt in d.keys():
 	#	print(dt, get_history(dt))
 	#	print( dt, len(get_tree().get_nodes_in_group(dt)))
-var minion_count=40
-#func _on_PTimer_timeout():
-#	for i in minion_count:
-#		var ss=get_node('ss'+str(i))
-#		if rng.randi_range(0,1) == 1:
-#			ss.modulate=Color(randf(), randf(),.7)
-#			var randidx=rng.randi_range(0,len($Cities.Cities)-1)
-#			ss.goto($Cities.Cities[randidx].position)
-#		else:
-#			ss.modulate=Color.orange
-
-func _give_minion_new_destination(m):
-	var randidx=rng.randi_range(0,len($Cities.Cities)-1)
-	m.goto($Cities.Cities[randidx].position)
 	
 var dneighbours={
 Ariyalur=["Cuddalore","Perumbalur","Thanjavur","Tiruchirapalli",],
@@ -657,7 +643,7 @@ func gotoDistrict():
 		var st=highlight_district(current,false)
 		var target=$Cities.of[current][0].position
 		#var target=CD.position+CD.get_node(current).position#+Vector2(d[current][2]/2, d[current][3]/2 )
-		$Gopal.goto(target)
+		$Gopal.goto(target, current)
 		var x=yield($Gopal.tw, 'tween_all_completed')
 		#TODO test what happens when clicking around while Gopal is moving to target
 		#print('selection type ', selectionType.keys()[st])
@@ -1161,7 +1147,7 @@ func _on_Explore_pressed():
 		var sss=P.instance()
 		sss.scale=Vector2(0.3,0.3)
 		sss.speed=rng.randi_range(60, 100)
-		sss.monitorable=false
+		sss.monitorable=true
 		sss.monitoring=false
 		sss.input_pickable=false
 		sss.modulate=Color.orangered
@@ -1169,8 +1155,14 @@ func _on_Explore_pressed():
 		randstartidx=rng.randi_range(0,len($Cities.Cities)-1)#get_child_count()-1)
 		#sss.place_at(CD.position + CD.get_child(randstartidx).position)
 		add_child(sss)
-		sss.goto($Cities.Cities[randstartidx].position)
+		sss.goto($Cities.Cities[randstartidx].position, $Cities.Cities[randstartidx].district)
 		sss.connect("waiting_for_orders", self,"_give_minion_new_destination", [sss])
+
+var minion_count=4
+func _give_minion_new_destination(m:Area2D):
+	#print(m.name, m.heading)
+	var randidx=rng.randi_range(0,len($Cities.Cities)-1)
+	m.goto($Cities.Cities[randidx].position, $Cities.Cities[randidx].district)
 		
 func _on_infobox_exit():
 	$HUD/Grid.clear_infobox_cities()
@@ -1178,7 +1170,6 @@ func _on_infobox_exit():
 	for i in get_children():
 		if i.name.begins_with('ss'):
 			i.queue_free()
-	#$PTimer.stop()
 	game_over()
 
 func _on_LabelCities_item_selected(index):
@@ -1287,3 +1278,11 @@ func _on_Grid_show_munis(district):
 		city.z_index=3
 		$HUD/Grid/VBoxContainer/PanelContainer.add_child(city)
 
+
+func _on_ClickDetector_area_shape_entered(area_id, area, area_shape, local_shape):
+	#print(area_id,' ', area.name,' ', area_shape,' ', local_shape)
+	if area.name!='Gopal':
+		var o=CD.shape_find_owner(local_shape)
+		#print(area.name, ' entered ',CD.get_child(o).name)
+		CD.get_child(o).set_meta('color',area.modulate)
+		update()
