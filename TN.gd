@@ -70,8 +70,6 @@ func merge_poly(history_item):
 func _process(delta):
 	OS.set_window_title( " | fps: " + str(Engine.get_frames_per_second()))
 
-var citygrades=['','Muni Corporation','Municipality Selection grade','Municipality Special grade','Municipality First grade','Municipality Second grade']
-
 func _ready():
 	init_label_font()
 	add_child(tw)
@@ -80,7 +78,7 @@ func _ready():
 	#shore=ShaderMaterial.new()
 	#shore.shader=load("res://shore1.shader")
 	rng.randomize()
-	for i in citygrades:
+	for i in Data.citygrades:
 		$HUD/Top/LabelCities.add_item(i)
 	VisualServer.set_default_clear_color('001f3f')#Color("ff222222"))
 	$Districts/ClickDetector.connect('input_event', self, 'on_district_select')
@@ -168,156 +166,6 @@ func _on_TN_ready():
 	#for dt in d.keys():
 	#	print(dt, get_history(dt))
 	#	print( dt, len(get_tree().get_nodes_in_group(dt)))
-	
-var dneighbours={
-Ariyalur=["Cuddalore","Perumbalur","Thanjavur","Tiruchirapalli",],
-Chengalpattu=["Chennai","Kanchipuram","Tiruvallur","Tiruvannamalai","Vilippuram",],
-Chennai=["Chengalpattu","Tiruvallur",],
-Coimbatore=["Erode","Nilgiris","Tiruppur",],
-Cuddalore=["Ariyalur","Kallakurichi","Perumbalur","Vilippuram","Mayiladithurai",],
-Dharmapuri=["Kallakurichi","Krishnagiri","Salem","Tiruvannamalai",],
-Dindigul=["Karur","Madurai","Theni","Tiruchirapalli","Tiruppur",],
-Erode=["Coimbatore","Karur","Namakkal","Salem","Nilgiris","Tiruppur",],
-Kallakurichi=["Cuddalore","Dharmapuri","Perumbalur","Salem","Tiruvannamalai","Vilippuram",],
-Kanchipuram=["Chengalpattu","Ranipet","Tiruvallur","Tiruvannamalai",],
-Kanyakumari=["Tirunelveli",],
-Karur=["Dindigul","Erode","Namakkal","Tiruchirapalli","Tiruppur",],
-Krishnagiri=["Dharmapuri","Tirupathur","Tiruvannamalai",],
-Madurai=["Dindigul","Sivagangai","Theni","Virudhunagar",],
-Mayiladithurai=["Cuddalore","Thanjavur","Tiruvarur",],
-Nagapattinam=["Thanjavur","Tiruvarur",],
-Namakkal=["Erode","Karur","Salem","Tiruchirapalli",],
-Nilgiris=["Coimbatore","Erode",],
-Perumbalur=["Ariyalur","Cuddalore","Kallakurichi","Salem","Tiruchirapalli",],
-Pudukotai=["Ramanathapuram","Sivagangai","Thanjavur","Tiruchirapalli",],
-Ramanathapuram=["Pudukotai","Sivagangai","Virudhunagar",'Thoothukudi'],
-Ranipet=["Kanchipuram","Tiruvallur","Tiruvannamalai","Vellore",],
-Salem=["Dharmapuri","Erode","Kallakurichi","Namakkal","Perumbalur","Tiruchirapalli",],
-Sivagangai=["Madurai","Pudukotai","Ramanathapuram","Tiruchirapalli","Virudhunagar",],
-Tenkasi=["Thoothukudi","Tirunelveli","Virudhunagar",],
-Thanjavur=["Ariyalur","Pudukotai","Tiruchirapalli","Nagapattinam","Mayiladithurai","Tiruvarur",],
-Theni=["Dindigul","Madurai","Virudhunagar",],
-Thoothukudi=["Tenkasi","Tirunelveli","Virudhunagar","Ramanathapuram"],
-Tiruchirapalli=["Ariyalur","Dindigul","Karur","Namakkal","Perumbalur","Pudukotai","Salem","Sivagangai","Thanjavur",],
-Tirunelveli=["Kanyakumari","Tenkasi","Thoothukudi",],
-Tirupathur=["Krishnagiri","Tiruvannamalai","Vellore",],
-Tiruppur=["Coimbatore","Dindigul","Erode","Karur",],
-Tiruvallur=["Chengalpattu","Chennai","Kanchipuram","Ranipet",],
-Tiruvannamalai=["Chengalpattu","Dharmapuri","Kallakurichi","Kanchipuram","Krishnagiri","Ranipet","Tirupathur","Vellore","Vilippuram",],
-Tiruvarur=["Thanjavur","Nagapattinam","Mayiladithurai",],
-Vellore=["Ranipet","Tirupathur","Tiruvannamalai",],
-Vilippuram=["Chengalpattu","Cuddalore","Kallakurichi","Tiruvannamalai",],
-Virudhunagar=["Madurai","Ramanathapuram","Sivagangai","Tenkasi","Theni","Thoothukudi",]
-}
-var dhistory=[{
-	Salem=[['Salem', 'Dharmapuri', 'Namakkal', 'Krishnagiri'],Color.mediumspringgreen],
-	Coimbatore=[['Tiruppur', 'Coimbatore', 'Erode'], Color.darkgreen],#006400
-	Madurai=[['Madurai', 'Dindigul', 'Theni'], Color.lightgreen],#90ee90
-	Ramanathapuram=[['Ramanathapuram', 'Sivagangai','Virudhunagar'], Color('fffa90')], #fffacd
-	Tirunelveli=[['Tirunelveli', 'Thoothukudi', 'Tenkasi'], Color.honeydew],#f0fff0
-	"North Arcot":[['Tiruvannamalai', 'Vellore', 'Tirupathur','Ranipet'],Color.indigo],
-	"South Arcot":[['Cuddalore','Vilippuram','Kallakurichi'], Color.violet],
-	"Chinglepet":[['Chengalpattu','Kanchipuram','Tiruvallur'],Color('aa22aa')],
-	"Tiruchirapalli":[['Karur','Tiruchirapalli','Perumbalur','Ariyalur'],Color('ffd711')], #fa8072
-	Thanjavur=[['Pudukotai','Thanjavur','Tiruvarur','Nagapattinam','Mayiladithurai'],Color.peachpuff], #ffda89
-	Madras=[['Chennai'], Color.lightgoldenrod],
-	Nilgiris=[['Nilgiris'],Color('adff2f')],
-	Kanyakumari=[['Kanyakumari'],Color.gold],
-	},
-	{
-		Salem=[['Salem','Namakkal'], Color.mediumspringgreen],
-		Dharmapuri=[['Dharmapuri','Krishnagiri'],Color.mediumspringgreen.darkened(.4)]
-	},
-	{
-		Thanjavur=[['Thanjavur','Tiruvarur','Nagapattinam','Mayiladithurai'],Color.peachpuff], #ffda89
-		Pudukotai=[['Pudukotai'], Color.peachpuff.darkened(.3)]
-	},
-	{
-		Coimbatore=[['Tiruppur','Coimbatore'], Color.darkgreen],#006400
-		Erode=[['Erode'], Color.darkgreen.lightened(.2)]
-	},
-	{
-		Ramanathapuram=[['Ramanathapuram'], Color('fffa90')],
-		Sivagangai=[['Sivagangai'], Color('fffa90').lightened(.2)],
-		Virudhunagar=[['Virudhunagar'], Color.lightgreen.lightened(.3)], #fffacd
-	},
-	{
-		Madurai=[['Madurai','Theni'], Color.lightgreen],
-		Dindigul=[['Dindigul'], Color.lightgreen.lightened(.1)],
-	},
-	{
-		Tirunelveli=[['Tirunelveli','Tenkasi'],Color.honeydew],#f0fff0
-		Thoothukudi=[['Thoothukudi'],Color.honeydew.darkened(.2)]#f0fff0
-	},
-	{
-		"North Arcot":[[],Color.transparent],
-		Tiruvannamalai=[['Tiruvannamalai','Tirupathur'],Color.indigo],
-		Vellore=[['Vellore','Ranipet'],Color.indigo.lightened(.3)]
-	},
-	{
-		Thanjavur=[['Thanjavur'], Color.skyblue], #ffda89
-		Tiruvarur=[['Tiruvarur','Mayiladithurai'], Color.skyblue.darkened(.2)], #ffda89
-		Nagapattinam=[['Nagapattinam'], Color.skyblue.darkened(.4)] #ffda89
-	},
-	{
-		"South Arcot":[[],Color.transparent],
-		"Cuddalore":[['Cuddalore'], Color.violet],
-		"Vilippuram":[['Vilippuram','Kallakurichi'], Color.violet.lightened(.3)],
-	},
-	{
-		'Tiruchirapalli':[['Tiruchirapalli'], Color('ffd711')],
-		"Perumbalur":[['Perumbalur','Ariyalur'], Color('ffd711').darkened(.2)],
-		"Karur":[['Karur'], Color('ffd711').darkened(.4)]
-	},
-	{
-		Madurai=[['Madurai'], Color.lightgreen],#90ee90
-		Theni=[['Theni'], Color.lightgreen.darkened(.3)]#90ee90
-	},
-	{
-		Salem=[['Salem'], Color.mediumspringgreen],
-		"Namakkal":[['Namakkal'], Color.mediumspringgreen.darkened(.3)],
-	},
-	{
-		"Chinglepet":[[],Color.transparent],
-		"Tiruvallur":[['Tiruvallur'],Color('aa22aa')],
-		"Kanchipuram":[['Chengalpattu','Kanchipuram'],Color('bb55bb')],
-	},
-	{	Dharmapuri=[['Dharmapuri'],Color.mediumspringgreen.darkened(.4)],
-		"Krishnagiri":[['Krishnagiri'],Color.mediumspringgreen.darkened(.7)]
-	},
-	{
-		"Perumbalur":[['Perumbalur'],Color('ddd711')],
-		"Ariyalur":[['Ariyalur'],Color('ddd711').lightened(.3)]
-	},
-	{
-		Coimbatore=[['Coimbatore'], Color.darkgreen],
-		"Tiruppur":[['Tiruppur'], Color.darkgreen.lightened(.5)],
-	},
-	{
-		Tirunelveli=[['Tirunelveli'],Color.honeydew],
-		"Tenkasi":[['Tenkasi'],Color.honeydew.darkened(.3)],
-	},
-	{
-		"Vilippuram":[['Vilippuram'], Color.violet.lightened(.3)],
-		"Kallakurichi":[['Kallakurichi'], Color.violet.lightened(.8)],
-	},
-	{
-		Tiruvannamalai=[['Tiruvannamalai'],Color.indigo],
-		"Tirupathur":[['Tirupathur'],Color.indigo.darkened(.4)],
-	},
-	{
-		Vellore=[['Vellore'],Color.indigo.lightened(.3)],
-		"Ranipet":[['Ranipet'],Color.indigo.lightened(.6)],
-	},
-	{
-		"Kanchipuram":[['Kanchipuram'],Color('bb55bb')],
-		"Chengalpattu":[['Chengalpattu'],Color('bb55bb').darkened(.4)],
-	},
-	{
-		Tiruvarur=[['Tiruvarur'],Color.skyblue.darkened(.2)], #ffda89
-		"Mayiladithurai":[['Mayiladithurai'],Color.skyblue.darkened(.6)], #ffda89
-	}
-	]
 
 var uiScore
 
@@ -577,9 +425,9 @@ func new_challenge():
 var timedcityquiz:=false
 var ctmp
 func new_city_challenge():
-	var citycount=len($Cities.Cities)
+	var citycount=len(Data.Cities)
 	while true:
-		ctmp=$Cities.Cities[rng.randi_range(0,citycount-1)]
+		ctmp=Data.Cities[rng.randi_range(0,citycount-1)]
 		challenge=ctmp.district
 		if challenge in challenges_completed:
 			continue
@@ -737,7 +585,7 @@ func enableui():
 #overlapping areas will likely only work if col pols are in individual areas
 #todo not sure what happens with single area2d - also monitorable and monitoring are turned off
 func neighbours(districtname):
-	return dneighbours[districtname]
+	return Data.neighbours[districtname]
 #	var l=get_node(districtname).get_overlapping_areas()
 #	var n=[]
 #	for i in l:
@@ -745,12 +593,6 @@ func neighbours(districtname):
 #			n.append(i.name)
 #	return n
 
-var years=["1956","1965","1974","1979","1985",
-"1985x2","1986","1989","1991",
-"1993","1995","1996","1997","1997x2",
-"2004","2007","2007x2",
-"2019","2019x2","2019x3","2019x4","2019x5",
-"2020"]
 var current_year=0
 
 func name(n):
@@ -795,22 +637,22 @@ func draw_historic_borders():
 	#if current year is 0 for loop below doesnt run
 	if current_year==0:
 		#print('draw ', current_year)
-		for idx in historic_poly_cache[years[0]]:
-			var poly=historic_poly_cache[years[0]][idx]
+		for idx in historic_poly_cache[Data.years[0]]:
+			var poly=historic_poly_cache[Data.years[0]][idx]
 			draw_polyline(poly, $HistoryAnimator.bcolor.darkened(.05), border_width)
 		return
 	else:
 		for j in current_year:
 			#print('draw ', j)
-			for idx in historic_poly_cache[years[j]]:
-				var poly=historic_poly_cache[years[j]][idx]
+			for idx in historic_poly_cache[Data.years[j]]:
+				var poly=historic_poly_cache[Data.years[j]][idx]
 				draw_polyline(poly, $HistoryAnimator.bcolor.darkened(.05), border_width)
 
 
 func add_historic_districts(year, data):
 	var tmp:PoolVector2Array 
 	#print('ahd', historic_poly_cache.keys())
-	historic_poly_cache[years[current_year]]={}
+	historic_poly_cache[Data.years[current_year]]={}
 	#print(current_year,' added')
 	#var nodesadded=0
 	for i in data.keys():
@@ -825,7 +667,7 @@ func add_historic_districts(year, data):
 		#	get_node(i+'history').free()
 		if tmp!=null and len(tmp)!=0:
 			add_label(i, CD.position+CD.get_node(data[i][0][0]).position, 'dlabels'+ year)
-			historic_poly_cache[years[current_year]][i+'history']=tmp
+			historic_poly_cache[Data.years[current_year]][i+'history']=tmp
 		#else:
 		#	print(year," disolved ",i)
 	#print(year, ' added ', historic_poly_cache.keys())
@@ -843,25 +685,25 @@ func _on_History_pressed():
 	clear_map()
 	$HUD/Timeline.show()
 	$Label.show()	
-	$Label.text=years[current_year].substr(0,4)#uiScore.text
-	$HUD/Timeline.bbcode_text='[color=yellow]'+years[current_year]+'[/color]'
+	$Label.text=Data.years[current_year].substr(0,4)#uiScore.text
+	$HUD/Timeline.bbcode_text='[color=yellow]'+Data.years[current_year]+'[/color]'
 	current_year=0
 	history_stopped_pressed=false
 	history_pause_pressed=false
 	uiScore.visible=true
-	uiScore.text=years[current_year].substr(0,4)
+	uiScore.text=Data.years[current_year].substr(0,4)
 	# generate historic districts and labels and add to group. group name is year string
-	add_historic_districts(years[current_year], dhistory[0])
+	add_historic_districts(Data.years[current_year], Data.history[0])
 	# print('after ahd', current_year)
 	# setup data for transition animation
 	# using karur as proxy center of the state from where the initial 12 districts appear
 	var old=[{node=CD.get_node('Karur'),loc=center('Karur')}] #d['Karur']}]
 	var newlist=[]
 	var names=[]
-	for n in historic_poly_cache[years[current_year]]:#get_tree().get_nodes_in_group(years[current_year]):
+	for n in historic_poly_cache[Data.years[current_year]]:#get_tree().get_nodes_in_group(years[current_year]):
 		#print(n)
 		names.append(n.replace('history',''))
-		newlist.append({node=historic_poly_cache[years[current_year]][n], loc=center(  name(n) )})
+		newlist.append({node=historic_poly_cache[Data.years[current_year]][n], loc=center(  name(n) )})
 	#print('anim setup ready')
 	$HistoryAnimator.start(old, newlist)
 	# HistoryControl ie stop button is shown only after animation starts
@@ -882,7 +724,7 @@ func _on_History_pressed():
 	current_year=current_year+1
 	
 	while history_stopped_pressed==false and history_pause_pressed==false:
-		if current_year>=len(years):
+		if current_year>=len(Data.years):
 			quit_history_mode()
 			return
 		history_next_animate()
@@ -902,32 +744,32 @@ func _on_History_pressed():
 
 func history_next_animate():
 	#get_tree().call_group("dlabels"+years[current_year-1],"queue_free")
-	for tmpx in get_tree().get_nodes_in_group("dlabels"+years[current_year-1]):
+	for tmpx in get_tree().get_nodes_in_group("dlabels"+Data.years[current_year-1]):
 		tmpx.get_parent().queue_free()
-	add_historic_districts(years[current_year], dhistory[current_year])
-	uiScore.text=years[current_year].substr(0,4)
-	$Label.text=years[current_year].substr(0,4)
-	$HUD/Timeline.append_bbcode('\n[color=yellow]'+years[current_year]+'[/color]')
+	add_historic_districts(Data.years[current_year], Data.history[current_year])
+	uiScore.text=Data.years[current_year].substr(0,4)
+	$Label.text=Data.years[current_year].substr(0,4)
+	$HUD/Timeline.append_bbcode('\n[color=yellow]'+Data.years[current_year]+'[/color]')
 	var names=[]
 	var newlist=[]
-	var key=dhistory[current_year].keys()[0]
+	var key=Data.history[current_year].keys()[0]
 	var old=[{loc=center(name(key))}]
-	for n in historic_poly_cache[years[current_year]]:#get_tree().get_nodes_in_group(years[current_year]):
+	for n in historic_poly_cache[Data.years[current_year]]:#get_tree().get_nodes_in_group(years[current_year]):
 		names.append(n.replace('history',''))
-		newlist.append({node=historic_poly_cache[years[current_year]][n], loc=center(name(n))})
+		newlist.append({node=historic_poly_cache[Data.years[current_year]][n], loc=center(name(n))})
 	$HistoryAnimator.start(old, newlist)
 	add_to_dist_timeline(names)
 
 func history_next():
 	#get_tree().call_group("dlabels"+years[current_year-1],"queue_free")
-	for tmpx in get_tree().get_nodes_in_group("dlabels"+years[current_year-1]):
+	for tmpx in get_tree().get_nodes_in_group("dlabels"+Data.years[current_year-1]):
 		tmpx.get_parent().queue_free()	
-	add_historic_districts(years[current_year], dhistory[current_year])
-	uiScore.text=years[current_year].substr(0,4)
-	$Label.text=years[current_year].substr(0,4)
-	$HUD/Timeline.append_bbcode('\n[color=yellow]'+years[current_year]+'[/color]')
+	add_historic_districts(Data.years[current_year], Data.history[current_year])
+	uiScore.text=Data.years[current_year].substr(0,4)
+	$Label.text=Data.years[current_year].substr(0,4)
+	$HUD/Timeline.append_bbcode('\n[color=yellow]'+Data.years[current_year]+'[/color]')
 	var names=[]
-	for n in historic_poly_cache[years[current_year]]:
+	for n in historic_poly_cache[Data.years[current_year]]:
 		names.append(n.replace('history',''))
 	add_to_dist_timeline(names)
 
@@ -938,15 +780,15 @@ func get_history(dd):
 	if dd in histcache:
 		return histcache[dd]
 	while true:
-		if cur_year>=len(years):
+		if cur_year>=len(Data.years):
 			histcache[dd]=text
 			return text
-		if dd in dhistory[cur_year]:
+		if dd in Data.history[cur_year]:
 			if cur_year==0:
-				text='Created in ' + years[cur_year] +'\n'
+				text='Created in ' + Data.years[cur_year] +'\n'
 			else:
-				text=text+'Divided in '+ years[cur_year] + ' with '
-				var tmp=dhistory[cur_year].keys().duplicate()
+				text=text+'Divided in '+ Data.years[cur_year] + ' with '
+				var tmp=Data.history[cur_year].keys().duplicate()
 				tmp.erase(dd)
 				text=text +' '+ str(tmp).replace('[','').replace(']','') +'\n'
 		cur_year=cur_year+1
@@ -1152,17 +994,17 @@ func _on_Explore_pressed():
 		sss.input_pickable=false
 		sss.modulate=Color.orangered
 		sss.name='ss'+str(i)
-		randstartidx=rng.randi_range(0,len($Cities.Cities)-1)#get_child_count()-1)
+		randstartidx=rng.randi_range(0,len(Data.Cities)-1)#get_child_count()-1)
 		#sss.place_at(CD.position + CD.get_child(randstartidx).position)
 		add_child(sss)
-		sss.goto($Cities.Cities[randstartidx].position, $Cities.Cities[randstartidx].district)
+		sss.goto(Data.Cities[randstartidx].position, Data.Cities[randstartidx].district)
 		sss.connect("waiting_for_orders", self,"_give_minion_new_destination", [sss])
 
 var minion_count=4
 func _give_minion_new_destination(m:Area2D):
 	#print(m.name, m.heading)
-	var randidx=rng.randi_range(0,len($Cities.Cities)-1)
-	m.goto($Cities.Cities[randidx].position, $Cities.Cities[randidx].district)
+	var randidx=rng.randi_range(0,len(Data.Cities)-1)
+	m.goto(Data.Cities[randidx].position, Data.Cities[randidx].district)
 		
 func _on_infobox_exit():
 	$HUD/Grid.clear_infobox_cities()
@@ -1178,7 +1020,7 @@ func _on_LabelCities_item_selected(index):
 #		get_tree().call_group(citygrades[index],"show")
 #	else:
 #		get_tree().call_group("allcities","hide")
-	$Cities._draw_cities('all', citygrades[index])
+	$Cities._draw_cities('all', Data.citygrades[index])
 
 # Handles 2 states either while loop is running and quit button is pressed
 # NextPrev non while loop code is running and quit button is pressed
@@ -1193,10 +1035,10 @@ func quit_history_mode():
 	game_in_progress=0 #stops the draw
 	$HUD/Timeline.hide()
 	$HistoryAnimator.stop()
-	for i in range(0,len(years)):
+	for i in range(0,len(Data.years)):
 		#get_tree().call_group(years[i],"hide")
 		#get_tree().call_group("dlabels"+years[i],"hide")
-		for tmpx in get_tree().get_nodes_in_group("dlabels"+years[i]):
+		for tmpx in get_tree().get_nodes_in_group("dlabels"+Data.years[i]):
 			#print('freeing ', tmpx.get_parent())
 			tmpx.get_parent().queue_free()
 			#else:
@@ -1224,7 +1066,7 @@ func _on_PlayPause_toggled(button_pressed):
 		$HUD/Top/R1/Previous.hide()
 
 func _on_Next_pressed():
-	if current_year>=len(years):
+	if current_year>=len(Data.years):
 		quit_history_mode()
 		return
 	history_next()
